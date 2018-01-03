@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>我的账户</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <link href="packages/raty@2.5.2/demo/css/application.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=16.12.375" rel="stylesheet"/>
+    <style type="text/css">
+        .mui-content {
+            background: none;
+            text-align: center;
+        }
+
+        .userInfo {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            text-align: center;
+        }
+
+        .userInfo img {
+            width: 135px;
+            height: 135px;
+            border: none;
+        }
+
+        .tip {
+            font-size: 16px;
+            color: #ffffff;
+            margin-top: 10px;
+        }
+
+        .bgImg1 {
+            width: auto;
+            height: 286px;
+            background: url(images/20171212/bg1.png) center no-repeat;
+            background-size: cover;
+        }
+
+        .bgImg2 {
+            width: auto;
+            height: 286px;
+            background: url(images/20171212/bg2.png) center no-repeat;
+            background-size: cover;
+        }
+
+        .bgImg3 {
+            width: auto;
+            height: 286px;
+            background: url(images/20171212/bg3.png) center no-repeat;
+            background-size: cover;
+        }
+
+        .star img {
+            width: 17px;
+            height: 17px;
+            vertical-align: middle;
+        }
+
+        .userManageList {
+            width: 100%;
+            margin-top: 25px;
+            padding: 0 20px;
+            background: #f8f8f8;
+            position: relative;
+        }
+
+        .black {
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            font-size: 14px;
+            color: #9b9b9b;
+            display: none;
+            height: 44px;
+            line-height: 44px;
+            background-color:#f8f8f8;
+        }
+    </style>
+</head>
+<body style="background: #f8f8f8">
+<div class="mui-content">
+    <div class="bg" style="height:286px">
+    </div>
+    <div class="userInfo">
+        <img class="icon" style="margin-top:40px"/>
+        <div style="text-align:center">
+            <div class="star" style="display:inline-block"></div>
+        </div>
+        <div class="tip"></div>
+    </div>
+    <div class="userManageList">
+        <img src="images/20171212/line.png" style="width:100%">
+        <div style="font-size:18px;color:#646464;position:absolute;top:-5px;text-align:center;left: 0;right:0">
+            逾期记录
+        </div>
+    </div>
+    <div style="margin-top:20px;font-size:14px;color:#777778" id="divLog">
+    </div>
+    <div style="height:40px">
+    </div>
+    <div class="black">
+        申请除名请致电：400-921-5508
+    </div>
+    <img src="images/20171212/inquiryanswer.png" style="width:24px;height:24px;position: absolute;top:20px;right:20px" onclick="answer()"/>
+</div>
+</body>
+</html>
+<script type="text/html" id="tplLog">
+    <div style="text-align:left;padding: 0 20px;height: 44px;line-height: 44px">
+        实际付款日：{0}
+    </div>
+    <div style="text-align:left;background:#ffffff;box-shadow:0 1px 2px 0 rgba(0,0,0,0.05);width:100%;height:44px;line-height:44px;padding: 0 20px">
+        账单到期日：{1}<span style="float:right;font-size:14px;color:#fb9329;">逾期{2}天</span>
+    </div>
+</script>
+<script type="text/html" id="tplLog2">
+    <img src="images/20171212/tip31.png" style="margin-top:60px;width: 90px;height: 85px"/>
+    <div style="font-size:16px;color:#999999;margin-top:20px">无逾期记录，请继续保持哦~</div>
+</script>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="packages/raty@2.5.2/lib/jquery.raty.min.js"></script>
+<script src="script/constants.js?ver=16.12.375"></script>
+<script src="script/service.js?ver=16.12.375"></script>
+<script src="script/credit.js?ver=16.12.375"></script>
+<script type="text/javascript">
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+</script>

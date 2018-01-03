@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>我的账户</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <link href="packages/raty@2.5.2/demo/css/application.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=16.12.375" rel="stylesheet"/>
+    <style type="text/css">
+        .mui-content {
+            background: none;
+            text-align: center;
+        }
+
+        .userInfoDiv {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            text-align: center;
+        }
+
+        .bgImg {
+            width: auto;
+            height: 242px;
+            background: url(images/20171212/user.png) center no-repeat;
+            background-size: cover;
+        }
+
+        .userName {
+            font-size: 20px;
+            color: #ffffff;
+            margin-top: 50px;
+        }
+
+        .accountNo {
+            margin-top: 5px;
+            border: 1px solid #ffffff;
+            border-radius: 57px;
+            font-size: 14px;
+            color: #ffffff;
+            padding: 2px 10px;
+        }
+
+        .userInfoDiv img {
+            margin-top: 5px;
+            width: 120px;
+            height: 120px;
+        }
+
+        ul.userManageList {
+            width: 100%;
+            margin: 0;
+            margin-top: 25px;
+            padding: 0;
+            background: #ffffff;
+        }
+
+        ul.userManageList li {
+            list-style: none;
+            height: 60px;
+            width: 100%;
+        }
+
+        ul.userManageList li a {
+            display: block;
+            position: relative;
+            padding-left:35px;
+            font-size: 16px;
+            color: #646464;
+            height: 60px;
+            width: 100%;
+            line-height: 60px;
+            text-align: left;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        ul.userManageList li a.item1 {
+            background: url(images/ic_password.png) no-repeat;
+            background-size: 24px 24px;
+            background-position: 0 18px;
+        }
+
+        ul.userManageList li a.item2 {
+            background: url(images/ic_verify.png) no-repeat;
+            background-size: 24px 24px;
+            background-position: 0 18px;
+        }
+
+        ul.userManageList li a.item3 {
+            background: url(images/ic_Credit.png) no-repeat;
+            background-size: 24px 24px;
+            background-position: 0 18px;
+        }
+
+        ul.userManageList li a:after {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            width: 18px;
+            height: 18px;
+            content: "";
+            background: url(images/ic_grey_arrow.png) no-repeat center;
+            background-size: 100% 100%;
+        }
+
+        #needVerify {
+            display: none;
+        }
+
+        .loginOut {
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            background-color: #ffffff;
+            height: 55px;
+            line-height: 55px;
+            font-size: 16px;
+            color: #646464;
+        }
+        #star img {
+            width: 14px;
+            height: 14px;
+        }
+    </style>
+</head>
+<body style="background: #f8f8f8">
+<div class="mui-content">
+    <div class="bgImg">
+    </div>
+    <div class="userInfoDiv">
+        <p class="userName"></p>
+        <p class="mui-clearfix"><span class="accountNo">ID: <span id="accountNo"></span></span></p>
+        <img src="images/20171212/ic_userImg.png"/>
+    </div>
+    <div style="font-size:14px;color:#666666;text-align:center;margin-top:15px;white-space:nowrap">
+        信用等级<div id="star" style="display:inline-block;margin-left:10px"></div>
+    </div>
+    <div style="padding-left:20px;background-color:#ffffff">
+        <ul class="userManageList">
+            <li>
+                <a class="item1" href="resetPassword.html">密码管理</a>
+            </li>
+            <li id="needPhoto" style="display:none">
+                <a class="item2" href="photo.html">用户信息</a>
+            </li>
+            <li id="needVerify" style="display:none">
+                <a class="item2" href="verify.html">用户信息</a>
+            </li>
+            <li>
+                <a class="item3" href="credit.html" style=" border-bottom: none">信用管理</a>
+            </li>
+        </ul>
+    </div>
+    <div class="loginOut" onclick="loginOut()">退出</div>
+    <div style="height:40px"></div>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="packages/raty@2.5.2/lib/jquery.raty.min.js"></script>
+<script src="script/constants.js?ver=16.12.375"></script>
+<script src="script/service.js?ver=16.12.375"></script>
+<script src="script/user.js?ver=16.12.375"></script>
+<script type="text/javascript">
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+</script>

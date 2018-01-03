@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>身份认证</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <link href="packages/mui@3.4.0/examples/hello-mui/css/mui.picker.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=16.12.375" rel="stylesheet"/>
+    <style type="text/css">
+        input[type=text] {
+            padding: 5px;
+            border: 0;
+            margin-bottom: 0;
+        }
+
+        .mui-media-body span {
+            display: inline-block;
+            margin-top: 8px;
+            color: #646464
+        }
+
+        .mui-table-view:before, .mui-table-view-cell:after, .mui-table-view:after {
+            height: 0;
+        }
+
+        .mui-table-view-chevron .mui-table-view-cell {
+            padding-right: 45px;
+        }
+
+        .mui-navigate-right:after {
+            right: 30px;
+        }
+
+        .mui-table-view-cell {
+            text-align: left;
+        }
+    </style>
+</head>
+<body style="background-color:#f7f7f7">
+<div class="mui-content" style="background-color:#f7f7f7">
+    <div style="margin:0;padding:0">
+        <div style="margin-top:20px">
+            <img src="images/apply1.png" style="width:100%">
+        </div>
+        <div style="text-align:center;margin-top:40px;color:#646464">
+            请输入<span style="color:#fb9329">认证信息</span>
+        </div>
+        <div style="height:20px">
+        </div>
+    </div>
+    <div style="padding-left:20px;padding-right:20px;background-color:#ffffff;display:none" class="step0">
+        <div style="border-bottom:1px solid #d8d8d8;height:60px;line-height:60px">
+            <input id="txtRealName" type="text" placeholder="请输入真实姓名" maxlength="10">
+        </div>
+        <div style="border-bottom:1px solid #d8d8d8;height:60px;line-height:60px">
+            <input id="txtCredentialNo" type="text" placeholder="请输入身份证号" maxlength="18">
+        </div>
+        <div style="height:60px;line-height:60px">
+            <input id="txtCellphone" type="text" placeholder="请输入手机号" maxlength="11">
+        </div>
+    </div>
+    <div style="padding-left:20px;padding-right:20px;margin-top:50px;display:none" class="step0">
+        <button class="btnActive"
+                style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:100%;border:none"
+                onclick="apply()">下一步
+        </button>
+    </div>
+    <div style="background-color:#ffffff;display:block" class="step1">
+        <ul class="mui-table-view mui-table-view-chevron">
+            <li class="mui-table-view-cell mui-media" style="box-shadow:0 2px 0 0 rgba(0,0,0,0.05)">
+                <a>
+                    <div class="mui-media-body">
+                        <span>手机号</span><input type="text" id="txtCellphone2" placeholder="请输入手机号" maxlength="11"
+                                               style="width:160px;text-align:right;float:right">
+                    </div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media" style="box-shadow:0 2px 0 0 rgba(0,0,0,0.05)">
+                <a>
+                    <div class="mui-media-body">
+                        <span>验证码</span>
+                        <span id="btnSendCaptcha"
+                              style="float:right;font-size:16px;color:#fd8b14;padding-left:5px;border-left:2px solid #d8d8d8"
+                              onclick="sendCaptcha()">发送验证码</span>
+                        <input id="txtCaptcha" type="text" placeholder="请输入验证码" maxlength="6"
+                               style="width:120px;text-align:right;float:right"/>
+                    </div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media">
+                <a class="mui-navigate-right" href="#divSource">
+                    <div class="mui-media-body">
+                        <span>手机号所属</span><input type="text" id="txtSource" placeholder="请选择号码所属"
+                                                 style="width:160px;text-align:right;float:right">
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div style="padding-left:20px;padding-right:20px;margin-top:50px;display:block" class="step1">
+        <button class="btnActive"
+                style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:100%;border:none"
+                onclick="moblieApply()">下一步
+        </button>
+    </div>
+    <div style="height:30px"></div>
+</div>
+<div id="divSource" class="mui-popover mui-popover-action mui-popover-bottom mui-scroll-wrapper"
+     style="height:215px;bottom:0;top:auto">
+    <div class="mui-scroll">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a data-key="source">本人刚办理</a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a data-key="source">配偶</a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a data-key="source">父母</a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a data-key="source">兄弟姐妹</a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a data-key="source">同事</a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a data-key="source">朋友</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="msg-content">
+    <table style='width:100%;height:100%'>
+        <tr>
+            <td style='vertical-align:middle'>
+                <div class='msg-body'>
+                    <div class='msg-icon'></div>
+                    <div class='msg-tip'></div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="packages/mui@3.4.0/examples/hello-mui/js/mui.picker.min.js"></script>
+<script src="script/constants.js?ver=16.12.375"></script>
+<script src="script/service.js?ver=16.12.375"></script>
+<script src="script/apply1.js?ver=16.12.375"></script>
+<script type="text/javascript">
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+    mui('#divSource').scroll({scrollX: false, scrollY: true});
+    mui('body').on('tap', '.mui-popover-action li>a', function () {
+        var a = this, parent;
+        //根据点击按钮，反推当前是哪个actionsheet
+        for (parent = a.parentNode; parent != document.body; parent = parent.parentNode) {
+            if (parent.classList.contains('mui-popover-action')) {
+                break;
+            }
+        }
+        //关闭actionsheet
+        $("#txtSource").val(a.innerHTML);
+        mui('#divSource').popover('toggle');
+    });
+</script>

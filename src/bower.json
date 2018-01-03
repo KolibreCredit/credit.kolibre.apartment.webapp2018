@@ -1,0 +1,13 @@
+{
+  "name": "kolibre",
+  "private": "true",
+  "dependencies": {
+    "jquery": "",
+    "bootstrap": "",
+    "moment": "",
+    "mui": "https://github.com/dcloudio/mui.git"
+  },
+  "resolutions": {
+    "jquery": ""
+  }
+}

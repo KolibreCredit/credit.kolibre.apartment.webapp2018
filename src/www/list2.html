@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的租约</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=16.12.375" rel="stylesheet"/>
+    <style type="text/css">
+        input[type=text], input[type=password] {
+            padding: 5px;
+            border: 0;
+            margin-bottom: 0;
+        }
+
+        .btnPay {
+            border: 1px solid #ff8c14;
+            border-radius: 100px;
+            width: 86px;
+            height: 30px;
+            font-size: 14px;
+            color: #ff8c14;
+            float: right;
+            margin-right: 10px;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+<div class="mui-content" style="background:none">
+    <div id="ulLeases">
+    </div>
+    <div id="divNoDate" style="text-align:center;display:none">
+        <img src="images/leasenodata2.png" style="width:283px;height:218px;margin-top:70px"/>
+        <div style="margin-top:20px;color:#999999;font-size:16px">
+            亲，您还没有租约信息呢
+        </div>
+        <div style="color:#999999;font-size:16px;margin-top:5px">
+            赶快去添加
+        </div>
+        <div style="margin-top:30px;text-align:center">
+            <button class="btnActive"
+                    style="background:#fb9329;height:40px;color:#ffffff;font-size:16px;border:none;border-radius:100px;width:180px"
+                    onclick="addHouse()">添加租约信息
+            </button>
+        </div>
+    </div>
+    <div class="msg-alert">
+        <table style='width:100%;height:100%'>
+            <tr>
+                <td style='vertical-align:middle;text-align:center'>
+                    <div class="msg-body" style="height:auto;width:100%;background-color:#ffffff">
+                        <div style="text-align:center;margin-top:30px">
+                            <img src="images/leasemsg3.png" style="height:40px;width:40px"/>
+                        </div>
+                        <div style="margin-top:30px;font-size:16px;color:#646464;line-height:25px">
+                            确定要取消该房间的退租操作？
+                        </div>
+                        <div style="margin-top:40px;padding:0 40px">
+                            <button style="border:1px solid #ff8c14;border-radius:100px;height:40px;color:#ff8c14;font-size:18px;width:118px;float:left"
+                                    onclick="hideMsg()">取消
+                            </button>
+                            <button style="background-color:#ff8c14;border-radius:100px;height:40px;color:#ffffff;font-size:18px;width:118px;float:right;border:none"
+                                    onclick="cancelCheckout()" class="btnActive">确定
+                            </button>
+                        </div>
+                        <div style="height:30px;clear:both">
+                            <span id="lbLeaseId" style="display:none"></span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/html" id="tplLeases">
+    <div style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.05)" onclick="view('{0}')">
+        <div style='font-size:14px;color:#adadad; background-color:#ffffff;line-height:40px;padding-left:20px'>
+            创建日期：{1}<span style="float:right;margin-right:12px;font-size:14px;color:#ff7e71">{7}</span>
+        </div>
+        <div style="background-color:#fafafa;color:#646464;font-weight:bold;font-size:16px;line-height:30px;padding-left:20px">
+            {2}
+        </div>
+        <div style='font-size:16px;color:#646464;line-height:30px;background-color:#fafafa;line-height:30px;padding-left:20px'>
+            <img src="images/iconroom.png" style="height:16px;width:16px;vertical-align:middle;margin-right:2px"/>{3}室
+        </div>
+        <div style="background-color:#ffffff;font-size:16px;color:#646464;line-height:40px;padding-left:20px">
+            ¥{4}/月，{5}{6}
+        </div>
+    </div>
+    <div style="background-color:#f7f7f7;height:20px"></div>
+</script>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="script/constants.js?ver=16.12.375"></script>
+<script src="script/service.js?ver=16.12.375"></script>
+<script src="script/list2.js?ver=16.12.375"></script>
+<script type="text/javascript">
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+</script>

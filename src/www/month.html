@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>月付产品介绍</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+  <!--App自定义的css-->
+  <link href="css/app.css?ver=16.12.375" rel="stylesheet"/>
+  <style type="text/css">
+    p {
+      font-size: 14px;
+      color: #ffffff;
+      text-align: center;
+      margin-bottom: 0;
+      line-height: 24px;
+    }
+
+    .mui-badge-yellow {
+      background: #ffb266;
+      width: 20px;
+      height: 20px;
+      border-radius: 100%;
+      display: block;
+      text-align: center;
+    }
+
+    td {
+      padding: 5px;
+      font-size: 14px;
+      color: #646464;
+      line-height: 18px;
+    }
+
+    .badge {
+      vertical-align: top;
+      padding-left: 10px
+    }
+  </style>
+</head>
+<body>
+<div class="mui-content">
+  <div>
+    <img src="images/monthHead.png" style="width:100%">
+  </div>
+  <div style="height:72px;top:20px;position:absolute;left: 0; right:0;text-align:center;color:white">
+    <p>蜂鸟屋房租按月支付</p>
+    <p>摆脱“付三”、“付六”等传统</p>
+    <p>支付方式的束缚。</p>
+  </div>
+  <div style="padding-left:20px;padding-right:20px;margin-top:-30px">
+    <div style="border:2px dashed rgba(253,139,19,0.70);border-radius:6px;height:214px;width:100%">
+      <div style="font-size:18px;color:#fb9329;text-align:center;margin-top:30px">产品特点</div>
+      <table style="margin-top:10px">
+        <tr>
+          <td class="badge"><span class="mui-badge-yellow">1</span></td>
+          <td>支持信用卡、储蓄卡、微信钱包余额多种方式付房租；</td>
+        </tr>
+        <tr>
+          <td class="badge"><span class="mui-badge-yellow">2</span></td>
+          <td> 按月付房租，缓解资金压力，租房更轻松；</td>
+        </tr>
+        <tr>
+          <td class="badge"><span class="mui-badge-yellow">3</span></td>
+          <td>免手续费，申请便捷。</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div style="padding-left:20px;padding-right:20px;margin-top:50px">
+    <button class="btnActive" style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:100%;border:none" onclick="apply()">立即申请</button>
+  </div>
+  <div style="height:30px"></div>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="script/constants.js?ver=16.12.375"></script>
+<script src="script/service.js?ver=16.12.375"></script>
+<script src="script/month.js?ver=16.12.375"></script>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>登录</title>
+  <meta http-equiv="Expires" content="0"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta http-equiv="Cache-control" content="no-cache"/>
+  <meta http-equiv="Cache" content="no-cache"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+  <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+  <!--App自定义的css-->
+  <link href="css/app.css?ver=16.12.375" rel="stylesheet"/>
+  <style type="text/css">
+    input[type=text], input[type=password] {
+      padding: 5px;
+      border: 0;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+<div class="mui-content">
+  <div>
+    <img src="images/head.png" style="width:100%;height:200px">
+    <div style="top:50px;position:absolute;left: 0;right: 0;text-align:center">
+      <img src="images/logo2.png" style="width: 120px;height:120px;">
+    </div>
+  </div>
+  <div style="padding-left:20px;padding-right:20px">
+      <div style=" margin-top: 20px; overflow: hidden;">
+      <span id="lb0" onclick="tablogin(0)" style="padding: 0 18px 12px 18px;border-bottom: 2px solid #ff8c14;color:#ff8c14; float:left;font-size:16px;cursor:pointer">密码登录</span>
+      <span id="lb1" onclick="tablogin(1)" style="padding: 0 18px 12px 18px;border-bottom: 2px solid #ffffff;color:#999999; float:right; font-size:16px;cursor:pointer">快速登录</span>
+    </div>
+    <div id="div0">
+      <div style="border-bottom:1px solid #d8d8d8;margin-top:30px;position:relative">
+        <input type="text" id="txtPhone" placeholder="请输入手机号" maxlength="11">
+      </div>
+      <div class="mui-input-row mui-password" style="border-bottom:1px solid #d8d8d8;margin-top:30px;position:relative">
+        <input type="password" id="txtPassword" class="mui-input-password" placeholder="请输入登录密码"/>
+      </div>
+      <div style="text-align:center;margin-top:30px">
+        <button class="btnActive" style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:100%;border:none" onclick="loginByPassword()">登录</button>
+      </div>
+      <div style="margin-bottom:30px;margin-top:30px;font-size:14px;color:#646464;padding-left:5px">
+        <span>还没有账号？</span>
+        <a style="color:#ff9e00;text-decoration:underline" href="register.html">立即注册</a>
+        <a href="resetPassword.html" style="float:right;color:#646464;margin-right:5px;text-decoration:underline">忘记密码</a>
+      </div>
+    </div>
+    <div id="div1" style="display:none">
+      <div style="border-bottom:1px solid #d8d8d8;margin-top:30px;position:relative">
+        <input type="text" id="txtPhone2" placeholder="请输入手机号" maxlength="11">
+      </div>
+      <div style="border-bottom:1px solid #d8d8d8;margin-top:30px;position:relative">
+        <input type="text" id="txtCaptcha" placeholder="请输入验证码" style="padding-right:100px" maxlength="6">
+        <span style="position: absolute;right:10px;top:10px;color:#ff9e00;cursor:pointer" id="btnSendCaptcha" onclick="sendCaptcha()">发送验证码</span>
+      </div>
+      <div style="text-align:center;margin-top:30px">
+        <button class="btnActive" style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:100%;border:none" onclick="loginByCaptcha()">登录</button>
+      </div>
+      <div style="margin-bottom:30px;margin-top:30px;font-size:14px;color:#646464;padding-left:5px">
+        <span>还没有账号？</span>
+        <a style="color:#ff9e00;text-decoration:underline" href="register.html">立即注册</a>
+      </div>
+    </div>
+  </div>
+  <div class="msg-post">
+    <table style='width:100%;height:100%'>
+      <tr>
+        <td style='vertical-align:middle'>
+          <div>
+            <img src="images/loading.gif" style="width:auto;height:40px">
+          </div>
+          <div style="font-size:16px">
+             正在登录请等待...
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="script/constants.js?ver=16.12.375"></script>
+<script src="script/service.js?ver=16.12.375"></script>
+<script src="script/login.js?ver=16.12.375"></script>
+<script type="text/javascript">
+  mui.init({
+    swipeBack: true //启用右滑关闭功能
+  });
+</script>
