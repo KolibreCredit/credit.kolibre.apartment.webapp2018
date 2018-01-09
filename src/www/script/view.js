@@ -1,107 +1,68 @@
 /**
  * Created by long.jiang on 2016/12/14.
  */
-
-var leaseId = "";
-
-function bill() {
-    setCookie(constants.COOKIES.LEASEID2, leaseId);
-    if (isWeixin()) {
-        window.location.href = constants.URLS.WEIXIBILL2;
-    } else {
-        window.location.href = constants.URLS.BILL2;
-    }
-}
+var contractId = "";
 
 function apply() {
-    setCookie(constants.COOKIES.LEASEID, leaseId);
-    getInvoke(constants.URLS.GETCURRENTHOUSEACCOUNTINFO, function (res) {
-        if (res.isVerified) {
-            window.location.href = "apply2.html";
-        } else {
-            var data = {
-                realName: res.realName,
-                idCardNo: res.credentialNo,
-                cellphone: res.cellphone
-            };
-            postInvoke(constants.URLS.THREEFACTORVERIFY, data, function (res1) {
-                if (res1.succeeded) {
-                    window.location.href = "apply2.html";
-                } else {
-                    window.location.href = "apply1.html";
-                }
-            }, function (err) {
-                mui.toast(err.message);
-            });
+    setCookie(constants.COOKIES.CONTRACTID, contractId);
+    var data = {contractId: contractId};
+    postInvoke(constants.URLS.CREATECONFIRMINFO, data, function (response) {
+        if (response.succeeded) {
+            var res = response.data;
+            setCookie(constants.COOKIES.CONTRACTCONFIRMINFOID, res.contractConfirmInfoId);
+            if (!res.verifyResult) {
+                window.location.href = "apply1.html";
+            } else if (res.contractPictures == null) {
+                window.location.href = "apply2.html";
+            }
+            else if (res.selfiePhoto == null) {
+                window.location.href = "apply3.html";
+            }
+            else if (res.contactInfo == null) {
+                window.location.href = "apply4.html";
+            } else {
+                window.location.href = "apply5.html";
+            }
         }
     });
 }
 
-
-function getRentalType(resType) {
+function getPayPeriod(payPeriod) {
     var rentalType = "";
-    if (resType === "Monthly") {
-        rentalType = "月付";
-    }
-    else if (resType === "ForceMonthly") {
-        rentalType = "全额付";
-    }
-    else if (resType === "Quarterly") {
+    if (payPeriod == 3) {
         rentalType = "季付";
     }
-    else if (resType === "SixMonthly") {
+    else if (payPeriod == 6) {
         rentalType = "半年付";
     }
-    else {
+    else if (payPeriod == 12) {
+        rentalType = "年付";
+    }
+    else if (payPeriod == 0) {
         rentalType = "全额付";
     }
     return rentalType;
 }
 
-function getLeaseInfo() {
-    getInvoke(constants.URLS.GETLEASEINFO.format(leaseId), function (res) {
-        if (res != null) {
-            var item = res;
-            if (item.hasOrders) {
-                $("#lbBill").show();
-            } else {
-                $("#lbApply").show();
-            }
+$(document).ready(function () {
+    contractId = getURLQuery("contractId");
+    getInvoke(constants.URLS.GETCONTRACTDETAILS.format(contractId), function (res) {
+        if (res.succeeded && res.data != null) {
+            var item = res.data;
             var tplLeaseInfo = $("#tplLeaseInfo").html();
-            var LeaseInfoHtml = tplLeaseInfo.format(
-                item.houseInfo.source,
-                item.houseInfo.roomNumber,
-                item.houseInfo.floor,
-                item.houseInfo.decoration,
-                item.outerContractNo,
-                (item.monthRentalAmount / 100).toFixed(2),
-                item.leaseTerm,
-                item.leaseOrderDay,
-                item.leaseStartTime,
-                item.leaseExpiryTime,
+            var htmlLeaseInfo = tplLeaseInfo.format(
+                item.roomDetails.apartmentName,
+                item.roomDetails.roomNumber,
+                (item.monthlyAmount / 100).toFixed(2),
+                (item.propertyManagementAmount / 100).toFixed(2),
                 (item.depositAmount / 100).toFixed(2),
-                (item.isPaidDeposit ? "已支付" : "未支付"),
-                (item.tenementAmount / 100).toFixed(2),
-                getRentalType(item.rentalType));
-            $("#divLeaseInfo").html(LeaseInfoHtml);
-            if (item.rentalState == "Checkout") {
-                $("#imgRental").show();
-            }
-            if (item.isStaged) {
-                $(".staged").show();
-            }
-            if (item.checkoutInfo != null) {
-                var checkoutInfo = item.checkoutInfo;
-                var tplCheckoutInfo = $("#tplCheckoutInfo").html();
-                $("#divCheckoutInfo").html(tplCheckoutInfo.format((checkoutInfo.actualCheckoutTime != null ? checkoutInfo.actualCheckoutTime.substring(0, 10) : checkoutInfo.checkoutTime.substring(0, 10)), checkoutInfo.checkoutReason, checkoutInfo.notes));
-            }
+                item.term,
+                item.rentStartTime.substring(0, 10),
+                item.rentEndTime.substring(0, 10),
+                getPayPeriod(item.payPeriod));
+            $("#divLeaseInfo").html(htmlLeaseInfo);
         }
     }, function (err) {
         mui.toast(err.message);
     });
-}
-
-$(document).ready(function () {
-    leaseId = getURLQuery("leaseId");
-    getLeaseInfo();
 });

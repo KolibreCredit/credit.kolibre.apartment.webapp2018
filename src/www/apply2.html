@@ -8,7 +8,7 @@
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <link href="packages/swiper@3.3.1/dist/css/swiper.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=16.12.375" rel="stylesheet"/>
+    <link href="css/app.css?ver=16.12.376" rel="stylesheet"/>
     <style type="text/css">
         input[type=text] {
             padding: 5px;
@@ -16,63 +16,30 @@
             margin-bottom: 0;
         }
 
+        .swiper-slide {
+            display: block;
+            text-align: center;
+            background: none;
+        }
+
         .slide-container {
             background: #ffffff;
             border: 2px dotted #fd8b14;
             border-radius: 6px;
+            height: 200px;
             width: 100%;
-            height: 310px;
+            display: inline-block;
         }
 
         .slide-container .photo {
-            width: 172px;
-            height: 270px;
-            border-radius: 6px;
-            padding-top: 10px;
-            padding-bottom: 10px;
+            height: 200px;
+            width: 100%;
         }
-
-        .swiper-slide {
+        .swiper-pagination-bullet {
             display: none;
         }
-
-        .swiper-pagination {
-            left: 0;
-            right: 0;
-        }
-
-        .swiper-pagination-bullet {
-            padding: 5px;
-            width: 8px;
-            height: 8px;
-            border-radius: 100%;
-            display: inline-block;
-            margin-left: 10px;
-        }
-
-        .swiper-pagination-bullet-active {
-            background: #fb9329;
-        }
-
-        .title {
-            font-size: 16px;
-            color: #b2b2b2;
-        }
-
-        .camera {
-            left: 0;
-            right: 0;
-            top: 65px;
-            position: absolute;
-            text-align: center;
-        }
-
-        .camera img {
-            width: 150px;
-            height: 150px;
-            display: inline-block;
-            font-size: 0;
-            line-height: 0;
+        .choose {
+            width: 50%;
         }
     </style>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
@@ -84,61 +51,26 @@
             <img src="images/apply2.png" style="width:100%">
         </div>
         <div style="text-align:center;margin-top:20px;color:#646464">
-            请上传租房合同<span style="color:#fb9329" id="lbPages">（第2、3、6、8页）</span>照片
+            请上传租房合同照片
         </div>
-        <div style="height:10px">
+        <div style="height:20px">
         </div>
     </div>
-    <div id="divContainer" style="padding-left:2px;padding-right:2px">
+    <div style="padding-left:2px;padding-right:2px">
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide">
+                <div class="swiper-slide" id="divChoose">
                     <div class="slide-container">
-                        <img id="img1" class="photo" src="images/demo3.png"/>
-                        <div id="div1" class="camera">
-                            <img src="images/camera.png" id="chooseImg1"/>
-                        </div>
-                        <div class="title">
-                            租房合同<span style="color:#fb9329" id="lbPage1">第2页</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="slide-container">
-                        <img id="img2" class="photo" src="images/demo3.png"/>
-                        <div id="div2" class="camera">
-                            <img src="images/camera.png" id="chooseImg2"/>
-                        </div>
-                        <div class="title">
-                            租房合同<span style="color:#fb9329" id="lbPage2">第3页</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="slide-container">
-                        <img id="img3" class="photo" src="images/demo3.png"/>
-                        <div id="div3" class="camera">
-                            <img src="images/camera.png" id="chooseImg3"/>
-                        </div>
-                        <div class="title">
-                            租房合同<span style="color:#fb9329" id="lbPage3">第6页</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="slide-container">
-                        <img id="img4" class="photo" src="images/demo3.png"/>
-                        <div id="div4" class="camera">
-                            <img src="images/camera.png" id="chooseImg4"/>
-                        </div>
-                        <div class="title">
-                            租房合同<span style="color:#fb9329" id="lbPage4">第8页</span>
+                        <div style="height:70px"></div>
+                        <img id="imgChoose" src="images/20180103/add.png" style="width:36px;height:36px"/>
+                        <div style="text-align:center;font-size:14px;color:#646464">
+                            上传合同
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="swiper-pagination" style="margin-top:10px">
+        <div class="swiper-pagination">
         </div>
     </div>
     <div style="padding-left:20px;padding-right:20px;margin-top:50px">
@@ -165,9 +97,16 @@
 </div>
 </body>
 </html>
+<script type="text/html" id="tplItem">
+    <div class="swiper-slide">
+        <div class="slide-container">
+            <img class="photo" src="{0}"/>
+        </div>
+    </div>
+</script>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/swiper@3.3.1/dist/js/swiper.jquery.min.js"></script>
-<script src="script/constants.js?ver=16.12.375"></script>
-<script src="script/service.js?ver=16.12.375"></script>
-<script src="script/apply2.js?ver=16.12.375"></script>
+<script src="script/constants.js?ver=16.12.376"></script>
+<script src="script/service.js?ver=16.12.376"></script>
+<script src="script/apply2.js?ver=16.12.376"></script>

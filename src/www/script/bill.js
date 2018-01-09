@@ -1,5 +1,6 @@
 var currentTab = 0;
 var openId = "";
+
 function selectTabToggle(index) {
     if (currentTab != index) {
         currentTab = index;
@@ -16,21 +17,21 @@ function findAllLeaseOrder(index) {
     var nodataSpantext = '';
     $('#addHouseBtn').hide();
     if (index == 0) {
-        orderState = 'Unfinished';
+        orderState = 'NotPaid';
         nodataSpantext = '亲，本期账单已支付完成';
     }
     else {
-        orderState = 'Finished';
+        orderState = 'Paid';
         nodataSpantext = '亲，您没有已完成账单';
     }
     $('#nodataSpan').html(nodataSpantext);
-    getInvoke(constants.URLS.FINDLEASEORDERV2.format(orderState), function (res) {
-        var billLists = res;
-        if (!billLists || billLists.length == 0) {
+    getInvoke(constants.URLS.QUERYALLORDERS.format(orderState), function (res) {
+        if (res.data == null) {
             $('.billList').html("");
             $('.nodataDiv').show();
         }
         else {
+            var billLists = res.data;
             var tplBill = $('#tplBill').html();
             var billHtmls = "";
             //
@@ -48,25 +49,25 @@ function findAllLeaseOrder(index) {
             var item = null;
             for (var i = 0; i < billLists.length; i++) {
                 item = billLists[i];
-                if (item.feeAmount > 0) {
-                    free = "含{0}元手续费".format((item.feeAmount / 100).toFixed(2));
+                if (item.serviceCharge > 0) {
+                    free = "含{0}元手续费".format((item.serviceCharge / 100).toFixed(2));
                 }
                 if (item.penaltyAmount > 0) {
                     free = "含{0}元违约金".format((item.penaltyAmount / 100).toFixed(2));
                 }
-                if (item.feeAmount > 0 && item.penaltyAmount > 0) {
-                    free = "含{0}元手续费、{1}元违约金".format((item.feeAmount / 100).toFixed(2), (item.penaltyAmount / 100).toFixed(2));
+                if (item.serviceCharge > 0 && item.penaltyAmount > 0) {
+                    free = "含{0}元手续费、{1}元违约金".format((item.serviceCharge / 100).toFixed(2), (item.penaltyAmount / 100).toFixed(2));
                 }
                 //
-                if (item.leaseOrderState == 'Created') {
+                if (item.orderState == 'Created') {
                     lbState = '<span class="state {0}">未支付</span>'.format((item.isCurrent ? "created" : ""));
                     lbTime = '账单到期日：' + moment(item.paymentTime).format('YYYY-MM-DD');
                 }
-                else if (item.leaseOrderState == 'Overdue') {
+                else if (item.orderState == 'Overdue') {
                     lbState = '<span class="state overdue">已逾期</span>';
                     lbTime = '账单到期日：' + moment(item.paymentTime).format('YYYY-MM-DD');
                 }
-                else if (item.leaseOrderState == 'Canceled') {
+                else if (item.orderState == 'Canceled') {
                     lbState = '<span class="state">已取消</span>';
                     lbTime = '退租日期：' + moment(item.checkoutTime).format('YYYY-MM-DD');
                     imgRental = '<img src="images/leasetip1.png" style="width:65px;height:67px;position:absolute;bottom:0;right:0">'
@@ -75,22 +76,22 @@ function findAllLeaseOrder(index) {
                     lbState = '<span class="state">已完成</span>';
                     lbTime = '实际支付时间：' + moment(item.actualPaymentTime).format('YYYY-MM-DD HH:mm');
                 }
-                if (item.leaseOrderState == "Finished" || item.leaseOrderState == "Canceled") {
+                if (item.orderState == "Paid" || item.orderState == "Canceled") {
                     totalAmount = (item.totalAmount / 100).toFixed(2).replace(/\B(?=(?:\d{3})+\b)/g, ',');
                     lbNotPay = "";
                     notPaidAmount = "";
                     btnBillPay = "";
                 } else {
-                    if (item.notPaidAmount == item.totalAmount) {
+                    if (item.paidAmount == 0) {
                         totalAmount = "";
                     } else {
                         totalAmount = (item.totalAmount / 100).toFixed(2).replace(/\B(?=(?:\d{3})+\b)/g, ',');
                     }
-                    notPaidAmount = (item.notPaidAmount / 100).toFixed(2).replace(/\B(?=(?:\d{3})+\b)/g, ',');
+                    notPaidAmount = ((item.totalAmount - item.paidAmount) / 100).toFixed(2).replace(/\B(?=(?:\d{3})+\b)/g, ',');
                     lbNotPay = "<span class='tip {0}'>待支付</span>".format((item.isCurrent ? 'active' : 'normal'));
-                    btnBillPay = (item.isCurrent ? '<span class="billbtnPay btnActive" onclick="isLeaseOrderStaging(\'' + item.leaseOrderId + '\')">立即支付</span>' : '<span class="billbtnNotPay">立即支付</span>');
+                    btnBillPay = (item.isCurrent ? '<span class="billbtnPay btnActive" onclick="isLeaseOrderStaging(\'' + item.orderId + '\')">立即支付</span>' : '<span class="billbtnNotPay">立即支付</span>');
                 }
-                if (item.leaseOrderType == 'Deposit') {
+                if (item.orderState == 'Deposit') {
                     lbOrderType = '<img src="{0}" /><span>押金 {1}</span>'.format((item.isCurrent ? 'images/ic_bill_deposit.png' : 'images/ic_bill_normal.png'), totalAmount);
                 }
                 else {
@@ -99,7 +100,7 @@ function findAllLeaseOrder(index) {
                 if (free != "") {
                     free = "<p class='free'>{0}</p>".format(free);
                 }
-                billHtmls += tplBill.format(lbTime, lbState, lbOrderType, item.leaseOrderNo, notPaidAmount, lbNotPay, btnBillPay, free, imgRental, 'item');
+                billHtmls += tplBill.format(lbTime, lbState, lbOrderType, item.orderNo, notPaidAmount, lbNotPay, btnBillPay, free, imgRental, 'item');
                 free = "";
                 imgRental = "";
             }
@@ -136,7 +137,7 @@ function closeApply() {
 
 //
 var isApply = true;
-//
+
 function apply() {
     if (!isApply) {
         return false;

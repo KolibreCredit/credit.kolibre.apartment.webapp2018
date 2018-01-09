@@ -9,6 +9,10 @@ function bill() {
     }
 }
 
-$(document).ready(function () {
-    setCookie(constants.COOKIES.TAG, "");
-});
+function uesr() {
+    window.location.href = "user.html";
+}
+
+function list() {
+    window.location.href = "list.html";
+}

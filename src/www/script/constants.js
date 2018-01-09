@@ -3,7 +3,7 @@
  */
 var constants = {
     URLS: {
-        REGISTER: 'http://server-apartment.dev.kolibre.credit/HouseAccount/Platform/HouseAccount/Register',
+     /*   REGISTER: 'http://server-apartment.dev.kolibre.credit/HouseAccount/Platform/HouseAccount/Register',
         SENDSMSCODE: "http://server-apartment.dev.kolibre.credit/HouseAccount/Platform/HouseAccount/SendSmsCode",
         VERIFYSMSCODE: "http://server-apartment.dev.kolibre.credit/HouseAccount/Platform/HouseAccount/VerifySmsCode",
         SMSCODEVERIFY: "http://server-apartment.dev.kolibre.credit/Credit/SmsCodeVerify",
@@ -43,7 +43,7 @@ var constants = {
         CONFIRMCONTRACTCHANGE: "http://server-apartment.dev.kolibre.credit/HouseAccount/Platform/HouseAccount/ConfirmContractChange",
         GETYOUTHAPARTMENTINFO:"http://server-apartment.dev.kolibre.credit/HouseAccount/Platform/HouseInformation/GetYouthApartmentInfo?source={0}",
         SIGNATURE: "http://server-apartment.dev.kolibre.credit/WeChatApplet/Platform/WeChatApplet/Signature?url={0}",
-        GETACCOUNTCREDITINFO:"http://server-apartment.dev.kolibre.credit/HouseAccount/Platform/HouseAccount/GetAccountCreditInfo",
+        GETACCOUNTCREDITINFO:"http://server-apartment.dev.kolibre.credit/HouseAccount/Platform/HouseAccount/GetAccountCreditInfo",*/
         //
         WEIXINPAY: "http://test.fengniaowu.com/weixin/WebPay.aspx?openId={0}&leaseOrderId={1}",
         WEIXINPAY2: "http://test.fengniaowu.com/weixin/WebPay2.aspx?openId={0}&leaseOrderId={1}",
@@ -52,17 +52,34 @@ var constants = {
         BILL: "bill.html?openId=0",
         BILL2: "bill2.html?openId=0",
         WEBPAY: "http://test.fengniaowu.com/zhifubao/WebPay.aspx?leaseOrderId={0}",
-        LOG: "http://test.fengniaowu.com/service/log.ashx?op={0}&cellphone={1}&businessType={2}"
+        LOG: "http://test.fengniaowu.com/service/log.ashx?op={0}&cellphone={1}&businessType={2}",
+
+        //weixin
+        SIGNATURE:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/FileController/Signature?url={0}",
+        WEIXINUPLOADIMAGES:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/FileController/UploadImagesWeiXin",
+        UPLOADIMAGESQR:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/FileController/UploadImagesQR",
+        //
+        GETCURRENTCONTRACTS:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/GetCurrentContracts",
+        GETCONTRACTDETAILS:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/GetContractDetails?contractId={0}",
+        GETCURRENTTENANT:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/GetCurrentTenant",
+        QUERYALLORDERS:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Order/QueryAllOrders?orderState={0}",
+        CREATECHECKOUTAPPLY:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/CreateCheckoutApply",
+        CREATECONFIRMINFO:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/CreateConfirmInfo",
+        UPLOADPICTURES:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/UploadPictures",
+        UPDATECONTACTINFO:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/UpdateContactInfo",
+        CONFIRMCONTRACT:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/ConfirmContract",
+        GETCONFIRMCONTRACTRESULT:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/GetConfirmContractResult?confirmContractProcessId={0}"
     },
     COOKIES: {
         AUTH: 'X-KC-SID',
-        LEASEID: "X-KC-LEASEID",
         LEASEID2: "X-KC-LEASEID2",
         REPORTID: 'X-KC-REPORTID',
         BATCHID: 'X-KC-BATCHID',
         ACCOUNTEXTENSIONINFOID: 'X-KC-ACCOUNTEXTENSIONINFOID',
         TAG: 'X-KC-TAG',
-        YUEFU:"X-KC-YUEFU"
+        YUEFU:"X-KC-YUEFU",
+        CONTRACTID:"X-KC-CONTRACTID",
+        CONTRACTCONFIRMINFOID:"X-KC-CONTRACTCONFIRMINFOID"
     },
     REGEX: {
         CELLPHONE: /^(13|14|15|16|17|18)\d{9}$/,
@@ -132,12 +149,14 @@ var constants = {
         depositAmounterr: "押金格式错误",
         tenementAmounterr: "物业费格式错误",
         imgContracterr: "租房合同第{0}页不能为空",
+        imgContracterr2: "租房合同不能为空",
         imgIDCarderr: "本人手持身份证照片为空",
         imgContract: "租房合同上传成功",
         imgIDCard: "身份证自拍照上传成功",
         linkRealName: "联系人姓名为空",
         linkCellphone: "联系人手机号为空",
         linkRelationship: "联系人关系为空",
+        contactInfo:"联系人提交成功",
         rentalTypeerr: "付款方式不能为空",
         accountCellphone: "联系人手机号不能为{0}",
         accountName: "联系人不能为{0}"

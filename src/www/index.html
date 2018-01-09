@@ -8,7 +8,7 @@
     <meta name="format-detection" content="telephone=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=16.12.375" rel="stylesheet"/>
+    <link href="css/app.css?ver=16.12.376" rel="stylesheet"/>
     <style type="text/css">
         .mui-content {
             padding: 0 20px;
@@ -17,171 +17,47 @@
         }
 
         .logoImg {
-            width: 94px;
-            height: 94px;
-            margin-top: 84px;
+            width: 110px;
+            height: 158px;
+            margin-top: 50px;
             z-index: 10;
         }
 
-        .listDiv {
-            width: 100%;
-            background-image: linear-gradient(-180deg, rgba(255, 255, 255, 0.80) 0%, rgba(255, 255, 255, 0.95) 71%);
-            box-shadow: 0 4px 10px 0 rgba(255, 140, 19, 0.50);
-            border-radius: 8px;
-            margin-top: -47px;
-            padding: 30px 40px;
-        }
-
-        .listDiv ul {
-            width: 100%;
-            padding: 0;
-            marign: 0;
-        }
-
-        .listDiv ul li {
-            width: 100%;
-            list-style: none;
-            border-bottom: 1px solid rgba(228, 228, 228, 0.4);
-        }
-
-        .listDiv ul li:last-child {
-            border-bottom: none
-        }
-
-        .listDiv ul li a {
-            position: relative;
-            width: 100%;
-            text-align: center;
-            font-size: 16px;
-            color: #ff8c14;
-            display: block;
-            padding: 25px 0;
-        }
-
-        .listDiv ul li a:after {
-            position: absolute;
-            right: 10px;
-            top: 32px;
-            width: 18px;
-            height: 18px;
-            content: "";
-            background: url(images/ic_rightArrow.png) no-repeat center;
-            background-size: 100% 100%;
-        }
-
-        .item1 {
-            background: url(images/ic_homeList1.png) no-repeat;
-            background-size: 50px 50px;
-            background-position: 0 15px;
-        }
-
-        .item2 {
-            background: url(images/ic_homeList2.png) no-repeat;
-            background-size: 50px 50px;
-            background-position: 0 15px;
-        }
-
-        .item3 {
-            background: url(images/ic_homeList3.png) no-repeat;
-            background-size: 50px 50px;
-            background-position: 0 15px;
-        }
-
-        .item4 {
-            background: url(images/ic_homeList4.png) no-repeat;
-            background-size: 50px 50px;
-            background-position: 0 15px;
-        }
-
-        .item5 {
-            background: url(images/ic_homeList5.png) no-repeat;
-            background-size: 50px 50px;
-            background-position: 0 15px;
-        }
-
-        .userPage {
-            display: block;
-            background: #ff8c14;
-            border-radius: 100px;
-            font-size: 17px;
-            color: #ffffff;
-            letter-spacing: 2px;
-            line-height: 50px;
-            height: 50px;
-            width: 80%;
-            text-align: center;
-            margin: -25px auto 20px auto;
-            z-index: 20;
-        }
-
-        a.userPage:active {
-            color: #ffffff;
-        }
-
         .contactUs {
-            font-size: 15px;
-            color: #ffffff;
-        }
-
-        @media screen and (min-width: 375px) {
-            .contactUs {
-                position: fixed;
-                bottom: 30px;
-                left: 0;
-                right: 0;
-                font-size: 14px;
-                text-align: center;
-                color: #ffffff;
-            }
-        }
-
-        @media screen and (min-width: 414px) {
-            .listDiv ul li a {
-                padding: 30px 0;
-            }
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 30px;
+            font-size: 14px;
+            color: #666666;
+            text-align: center;
         }
     </style>
 </head>
-<body style="background: #ffbc76 url(images/bg_home.jpg)  no-repeat center;  background-position: 0 0;  background-size: 100% auto;">
+<body style="background: #ffbc76 url(images/20180103/background.jpg)  no-repeat center;  background-position: 0 0;  background-size: 100% auto;">
 <div class="mui-content">
-    <img class="logoImg" src="images/logo.png"/>
-    <div class="listDiv">
-        <ul>
-            <li>
-                <a href="javascript:void(0)" class="item1" onclick="bill()">
-                    <span class="iconTitle">付房租</span>
-                </a>
-            </li>
-            <li style="display:none">
-                <a href="house.html" class="item2">
-                    <span class="iconTitle">添加租约</span>
-                </a>
-            </li>
-            <li>
-                <a href="list.html" class="item3">
-                    <span class="iconTitle">租约信息</span>
-                </a>
-            </li>
-            <li>
-                <a href="month.html" class="item4">
-                    <span class="iconTitle">申请月付</span>
-                </a>
-            </li>
-            <li>
-                <a href="list2.html" class="item5">
-                    <span class="iconTitle">申请退租</span>
-                </a>
-            </li>
-        </ul>
+    <img class="logoImg" src="images/20180103/logo.png"/>
+    <div style="margin-top:30px;text-align:center">
+        <img src="images/20180103/slogan.png" style="width: 237px;height:30px"/>
     </div>
-    <a href="user.html" class="userPage btnActive">我的账户</a>
-    <span class="contactUs">客服电话:4009215508</span>
-    <div style="height: 30px;"></div>
+    <div style="margin-top:50px;text-align:center">
+        <img src="images/20180103/bill.png" style="width:170px;height:170px" onclick="bill()"/>
+    </div>
+    <div style="position:absolute;bottom:75px;left:0;right:0;font-size: 14px;color:#666666">
+        <div style=" width:50px;height:56px;margin-left:40px;text-align:center;float:left" onclick="list()">
+            <img src="images/20180103/lease.png" style="width:40px;height:40px"/>
+            租约
+        </div>
+        <div style=" width:50px;height:56px;margin-right:40px;text-align:center;float:right" onclick="uesr()">
+            <img src="images/20180103/user.png" style="width:40px;height:40px"/>账户
+        </div>
+    </div>
+    <div class="contactUs">客服电话：400-921-5508</div>
 </div>
 </body>
 </html>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
-<script src="script/constants.js?ver=16.12.375"></script>
-<script src="script/service.js?ver=16.12.375"></script>
-<script src="script/index.js?ver=16.12.375"></script>
+<script src="script/constants.js?ver=16.12.376"></script>
+<script src="script/service.js?ver=16.12.376"></script>
+<script src="script/index.js?ver=16.12.376"></script>

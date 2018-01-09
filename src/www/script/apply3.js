@@ -3,21 +3,22 @@
  */
 var imgUrl1 = "";
 var ispostData = true;
-
 //
 function V2UploadImages(imgData, imgIndex) {
     var data = {
-        type: "Selfie",
-        base64String: imgData,
-        index: imgIndex
+        sequenceNo: imgIndex,
+        kind: "Selfie",
+        base64String:[imgData]
     };
-    postInvoke(constants.URLS.V2UPLOADIMAGES, data, function (res) {
-        imgUrl1 = res.url;
-        document.getElementById("img1-0").style.display = 'none';
-        document.getElementById("div1-0").style.display = 'none';
-        document.getElementById('img1-1').setAttribute('src', imgData);
-        document.getElementById("img1-1").style.display = 'inline-block';
-        $('#img1').replaceWith('<input type="file" accept="image/*" id="img1" name="img1" class="input-upload-image"/>');
+    postInvoke(constants.URLS.UPLOADIMAGESQR, data, function (res) {
+        if (res.succeeded) {
+            imgUrl1 = res.data.url;
+            document.getElementById("img1-0").style.display = 'none';
+            document.getElementById("div1-0").style.display = 'none';
+            document.getElementById('img1-1').setAttribute('src', imgData);
+            document.getElementById("img1-1").style.display = 'inline-block';
+            $('#img1').replaceWith('<input type="file" accept="image/*" id="img1" name="img1" class="input-upload-image"/>');
+        }
     });
 }
 
@@ -32,13 +33,13 @@ function apply() {
     }
     ispostData = false;
     $(".msg-post").show();
-    var accountExtensionInfoId = getCookie(constants.COOKIES.ACCOUNTEXTENSIONINFOID);
+    var contractConfirmInfoId = getCookie(constants.COOKIES.CONTRACTCONFIRMINFOID);
     var data = {
-        accountExtensionInfoId: accountExtensionInfoId,
-        imagesUrl: [imgUrl1],
-        imageType: "Selfie"
+        contractConfirmInfoId: contractConfirmInfoId,
+        pictureType: "Selfie",
+        pictureUrls: [imgUrl1]
     };
-    postInvoke(constants.URLS.V2UPLOADAPARTMENTIMAGES, data, function (res) {
+    postInvoke(constants.URLS.UPLOADPICTURES, data, function (res) {
         $(".msg-post").hide();
         ispostData = true;
         if (res.succeeded) {
@@ -57,14 +58,16 @@ function apply() {
 }
 
 $(document).ready(function () {
-    getInvoke(constants.URLS.GETCURRENTHOUSEACCOUNTINFO, function (res) {
-        if (res != null && res.credentialType === "IDCard") {
-            $("#img1-0").attr("src", "images/demo4.png");
-            $("#lbTitle").html("本人手持身份证照片");
+    getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
+        if (res.succeeded) {
+            if (res.data.credentialType == "IDCard") {
+                $("#img1-0").attr("src", "images/demo4.png");
+                $("#lbTitle").html("本人手持身份证照片");
 
-        } else {
-            $("#img1-0").attr("src", "images/hz4.png");
-            $("#lbTitle").html("本人手持护照照片");
+            } else {
+                $("#img1-0").attr("src", "images/hz4.png");
+                $("#lbTitle").html("本人手持护照照片");
+            }
         }
     });
 });

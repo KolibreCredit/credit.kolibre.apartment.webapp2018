@@ -2,21 +2,20 @@
  * Created by long.jiang on 2016/12/14.
  */
 
-var leaseId = "";
-var url = "";
+var contractId = "";
+
 $(document).ready(function () {
-    leaseId = getURLQuery("leaseId");
-    url = getURLQuery("url");
-    getInvoke(constants.URLS.GETLEASEINFO.format(leaseId), function (res) {
-        if (res != null) {
-            var item = res;
+    contractId = getURLQuery("contractId");
+    getInvoke(constants.URLS.GETCONTRACTDETAILS.format(contractId), function (res) {
+        if (res.succeeded) {
+            var item = res.data;
             var tplLeaseInfo = $("#tplLeaseInfo").html();
             var LeaseInfoHtml = tplLeaseInfo.format(
-                item.houseInfo.source,
-                item.houseInfo.floor,
-                item.houseInfo.roomNumber,
-                item.leaseStartTime,
-                item.leaseExpiryTime);
+                item.roomDetails.apartmentName,
+                item.roomDetails.floor,
+                item.roomDetails.roomNumber,
+                item.rentStartTime.substring(0, 10),
+                item.rentEndTime.substring(0, 10));
             $("#divLeaseInfo").html(LeaseInfoHtml);
         }
     }, function (err) {
@@ -26,12 +25,12 @@ $(document).ready(function () {
 
 function apply() {
     var data = {
-        leaseId: leaseId,
+        contractId: contractId,
         checkoutTime: $("#lbLeaseDate").html(),
         checkoutReason: $("#lbReason").html(),
         notes: $("#txtMemo").val()
     };
-    postInvoke(constants.URLS.APPLYCHECKOUT, data, function (res) {
+    postInvoke(constants.URLS.CREATECHECKOUTAPPLY, data, function (res) {
         if (res.succeeded) {
             $(".msg-alert").show();
         } else {
@@ -45,6 +44,6 @@ function apply() {
 function hideMsg() {
     $(".msg-alert").hide();
     setTimeout(function () {
-        window.location.href = url;
+        window.location.href = "list.html";
     }, 200);
 }
