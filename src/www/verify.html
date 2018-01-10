@@ -9,6 +9,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="format-detection" content="telephone=no">
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <link href="packages/mui@3.4.0/examples/hello-mui/css/mui.picker.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
     <link href="css/app.css?ver=16.12.376" rel="stylesheet"/>
     <style type="text/css">
@@ -94,7 +95,40 @@
             top: -8px;
             right: -8px;
         }
+
+        .step1 {
+            display: none;
+        }
+
+        .btnActive {
+            background: #ff8c14;
+            border-radius: 44px;
+            height: 44px;
+            color: #ffffff;
+            font-size: 18px;
+            width: 100%;
+        }
+
+        #div10, #div20, #div30 {
+            margin-top: 20px;
+            height: 180px;
+            text-align: center;
+            background-color: #ffffff;
+            padding-top: 20px;
+            cursor: pointer;
+            border: 1px dashed #fd8b14;
+            border-radius: 6px;
+        }
+
+        #div11, #div21, #div31 {
+            margin-top: 20px;
+            height: 180px;
+            text-align: center;
+            background-color: #ffffff;
+            display: none;
+        }
     </style>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 </head>
 <body style="background-color:#f0f0f0">
 <div class="mui-content" style="background:none">
@@ -133,63 +167,67 @@
     <div class="step0" style="text-align:center;margin-top:30px;background-color:#f0f0f0">
         <button class="btnActive"
                 style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:90%"
-                onclick="step()">下一步
+                onclick="twoFactorVerify()">下一步
         </button>
     </div>
-    <div class="step1" style="padding-left:20px;padding-right:20px;display:none">
-        <div id="lbTitle1"
-             style="height:30px;line-height:30px;font-size:16px;color:#646464;text-align: center;margin-top:30px">
-            请上传您的有效二代身份证
+    <div class="step1" style="background-color:#f0f0f0;padding:0 20px">
+        <div style="height:60px;line-height:60px;font-size: 16px;color:#646464;text-align:center">
+            上传<span class="chooseTip">有效二代身份证</span>照片
         </div>
-        <div id="divIdentity1"
-             style="margin-top: 20px;height:180px;background-color: #ffffff;padding-top:20px;cursor:pointer;border:1px dashed #fd8b14;border-radius:6px">
+        <div id="div10" style="margin-top:0">
             <div style="text-align:center">
-                <div style="height:110px;width:160px;display:inline-block">
-                    <input type="file" accept="image/*" id="img1" name="img2" class="input-upload-image"/>
-                    <img id="imgDemo1" src="images/sfz1.png" class="upload-btn events-pointer-none"
-                         style="height:110px;width:160px"/>
-                </div>
+                <img class="demo" src="images/sfz1-2.png" style="width:160px;height:96px"/>
             </div>
-            <div id="lbTitle2" style="text-align:center;margin-top:5px">
-                上传身份证正面
+            <div style="text-align:center;margin-top:-77px">
+                <img src="images/camera2.png" style="width:58px;height:58px" id="chooseImg1"/>
+            </div>
+            <div class="title" style="text-align:center;margin-top:20px">
+                身份证<span style="color:#f58a00">正面</span>
             </div>
         </div>
-        <div id="divIdentity1Img"
-             style="margin-top: 20px;height:180px;text-align:center;background-color: #ffffff;display:none">
-            <img id="imgIdentity1" src="images/demo1.jpg" style="width:100%;height:100%;border-radius:6px">
+        <div id="div11" style="margin-top:0">
+            <img id="img12" src="images/loading.gif" style="width:100%;height:100%;border-radius:6px">
         </div>
-        <div id="divIdentity2"
-             style="margin-top: 20px;height:180px;text-align:center;background-color: #ffffff;padding-top:20px;cursor:pointer;border:1px dashed #fd8b14;border-radius:6px">
+        <div id="div20">
             <div style="text-align:center">
-                <div style="height:110px;width:160px;display:inline-block">
-                    <input type="file" accept="image/*" id="img2" name="img2" class="input-upload-image2"/>
-                    <img id="imgDemo2" src="images/sfz2.png" class="upload-btn2 events-pointer-none"
-                         style="height:110px;width:160px"/>
-                </div>
+                <img class="demo" src="images/sfz2-2.png" style="width:160px;height:96px"/>
             </div>
-            <div id="lbTitle3" style="text-align:center;margin-top:5px">
-                上传身份证背面
+            <div style="text-align:center;margin-top:-77px">
+                <img src="images/camera2.png" style="width:58px;height:58px" id="chooseImg2"/>
+            </div>
+            <div class="title" style="text-align:center;margin-top:20px">
+                身份证<span style="color:#f58a00">背面</span>
             </div>
         </div>
-        <div id="divIdentity2Img"
-             style="margin-top: 20px;height:180px;text-align:center;background-color: #ffffff;display:none">
-            <img id="imgIdentity2" src="images/demo2.jpg" style="width: 100%;height:100%;border-radius:6px">
+        <div id="div21">
+            <img id="img22" src="images/loading.gif" style="width:100%;height:100%;border-radius:6px">
+        </div>
+        <div id="div30">
+            <div style="text-align:center">
+                <img class="demo" src="images/sfz3-2.png" style="width:160px;height:96px"/>
+            </div>
+            <div style="text-align:center;margin-top:-77px">
+                <img src="images/camera2.png" style="width:58px;height:58px" id="chooseImg3"/>
+            </div>
+            <div class="title" style="text-align:center;margin-top:20px">
+                <span style="color:#f58a00">手持</span>证件照
+            </div>
+        </div>
+        <div id="div31">
+            <img id="img32" src="images/loading.gif" style="width: 100%;height:100%;border-radius:6px">
         </div>
         <div style="text-align:center;margin-top:30px">
-            <button id="btnlease" class="btnActive"
-                    style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:100%"
-                    onclick="verify()">提交
-            </button>
+            <button class="btnActive" onclick="confirmTenantInfo()">提交</button>
         </div>
-        <div style="height:30px"></div>
     </div>
+    <div style="height:30px"></div>
 </div>
 <div class="msg-post">
     <table style='width:100%;height:100%'>
         <tr>
             <td style='vertical-align:middle'>
-                <div>
-                    <img src="images/loading.gif" style="width:auto;height:40px">
+                <div style="text-align:center">
+                    <img src="images/loading.gif" style="width:62px;height:62px"/>
                 </div>
                 <div style="font-size:16px">
                     提交中，请等待...
@@ -205,43 +243,3 @@
 <script src="script/constants.js?ver=16.12.376"></script>
 <script src="script/service.js?ver=16.12.376"></script>
 <script src="script/verify.js?ver=16.12.376"></script>
-<script type="text/javascript">
-    // 照片的最大边压缩到该值
-    var maxSize = 200 * 1024;
-    var compress = function (res, fileSize, imgIndex) {
-        var img = new Image();
-        img.onload = function () {
-            var ratio = (fileSize >= maxSize ? 0.2 : 1);
-            var width = img.width;
-            var height = img.height;
-            var cvs = document.createElement('canvas');
-            var ctx = cvs.getContext('2d');
-            cvs.width = width;
-            cvs.height = height;
-            ctx.fillRect(0, 0, cvs.width, cvs.height);
-            ctx.drawImage(img, 0, 0, width, height);
-            var data = cvs.toDataURL('image/jpeg', ratio);
-            V2UploadImages(data, imgIndex)
-
-        };
-        img.src = res;
-    };
-    mui.init({
-        swipeBack: true //启用右滑关闭功能
-    });
-    document.getElementById('img1').addEventListener('change', function () {
-        var reader = new FileReader();
-        reader.onload = function () {
-            compress(this.result, this.result.length, 0);
-        };
-        reader.readAsDataURL(this.files[0]);
-    }, false);
-
-    document.getElementById('img2').addEventListener('change', function () {
-        var reader = new FileReader();
-        reader.onload = function () {
-            compress(this.result, this.result.length, 1);
-        };
-        reader.readAsDataURL(this.files[0]);
-    }, false);
-</script>

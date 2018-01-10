@@ -112,7 +112,7 @@ module.exports = function (grunt) {
                     'www/resetPassword.html',
                     'www/user.html',
                     'www/verify.html',
-                    'www/verify2.html',
+                    'www/verify.html',
                     'www/view.html',
                     'www/yuju.html'
                 ],

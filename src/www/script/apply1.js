@@ -1,17 +1,14 @@
 /**
  * Created by long.jiang on 2017/1/9.
  */
-
 var waitCount = 0;
 var waitTimer = null;
-var token = "";
 var isSendCaptcha = true;
-
 //
 function sendWaitTimer() {
     if (waitCount > 0) {
         $('#btnSendCaptcha').text(waitCount + 'S');
-        waitCount2 = waitCount - 1;
+        waitCount = waitCount - 1;
     } else {
         clearInterval(waitTimer);
         $('#btnSendCaptcha').text('获取验证码');
@@ -32,7 +29,7 @@ function sendCaptcha() {
             return false;
         }
         isSendCaptcha = false;
-        var businessType = 500;
+        var businessType = "TenantThreeFactoryVerify";
         var data = {
             cellphone: cellphone,
             businessType: businessType
@@ -41,29 +38,23 @@ function sendCaptcha() {
             sendWaitTimer();
         }, 1000);
         isSendCaptcha = false;
-        postInvoke(constants.URLS.SENDSMSCODE, data,
-            function (res) {
-                isSendCaptcha = true;
-                if (res.succeeded) {
-                    token = res.data.token;
-                    mui.toast(constants.msgInfo.send);
-                } else {
-                    waitCount = 0;
-                    mui.toast(res.message);
-                }
-            }, function (res) {
-                isSendCaptcha = true;
+        postInvoke(constants.URLS.SEND, data, function (res) {
+            isSendCaptcha = true;
+            if (res.succeeded) {
+                mui.toast(constants.msgInfo.send);
+            } else {
                 waitCount = 0;
                 mui.toast(res.message);
-            });
+            }
+        }, function (res) {
+            isSendCaptcha = true;
+            waitCount = 0;
+            mui.toast(res.message);
+        });
     }
 }
 
 function apply() {
-    if (token == '') {
-        mui.toast(constants.msgInfo.tokenerr);
-        return false;
-    }
     var cellphone = $("#txtCellphone").val();
     if (cellphone == '') {
         mui.toast(constants.msgInfo.phone);
@@ -89,13 +80,14 @@ function apply() {
         return false;
     }
     var verify = {
-        token: token,
-        smsCode: captcha
+        cellphone: cellphone,
+        businessType: "TenantThreeFactoryVerify",
+        validateCode: captcha
     };
-    postInvoke(constants.URLS.VERIFYSMSCODE, verify, function (res) {
+    postInvoke(constants.URLS.VERIFY, verify, function (res) {
         if (res.succeeded) {
             var data = {
-                token: token,
+                authCode: res.data.authCode,
                 cellphoneBelong: cellphoneBelong
             };
             postInvoke(constants.URLS.SMSCODEVERIFY, data, function (res1) {
@@ -111,7 +103,7 @@ function apply() {
                     $(".msg-tip").html("认证失败");
                     $(".msg-content").show();
                     setTimeout(function () {
-                        window.location.href = constants.URLS.WEIXIBILL;
+                        bill();
                     }, 2000);
                 }
             }, function (err) {

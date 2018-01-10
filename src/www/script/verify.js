@@ -1,15 +1,17 @@
 /**
  * Created by long.jiang on 2016/12/13.
  */
-var credentialType = "";
 var credentialTabIndex = -1;
 //
 var realName = "";
 var credentialNo = "";
 //
-var facePhotoUrl = "";
-var backPhotoUrl = "";
-var url = "";
+var kinds = ["IDCardFace", "IDCardBack", "Selfie"];
+var credientalFacePhotoUrl = "";
+var credientalBackPhotoUrl = "";
+var selfiePhotoUrl = "";
+//
+var backUrl = "";
 
 //
 function chooseType(tabIndex) {
@@ -18,7 +20,8 @@ function chooseType(tabIndex) {
     $(".selecttype").removeClass("active").eq(tabIndex).addClass("active").find(".selectv").show();
 }
 
-function step() {
+//
+function twoFactorVerify() {
     if (credentialTabIndex == -1) {
         mui.toast(constants.msgInfo.credentialType);
         return false;
@@ -44,87 +47,69 @@ function step() {
             realName: realName,
             idCardNo: credentialNo
         };
-        postInvoke(constants.URLS.IDENTITYVERIFY, data, function (res) {
+        $(".msg-post").show();
+        postInvoke(constants.URLS.TWOFACTORVERIFY, data, function (res) {
+            $(".msg-post").hide();
             if (res.succeeded) {
-                credentialType = "IDCard";
-                $("#lbTitle1").html("请上传您的有效二代身份证");
-                $("#lbTitle2").html("上传身份证正面");
-                $("#lbTitle3").html("上传身份证背面");
-                $("#imgDemo1").attr("src", "images/sfz1.png");
-                $("#imgDemo2").attr("src", "images/sfz2.png");
+                $(".chooseTip").html("有效二代身份证");
+                $("#div10 .title").html("身份证<span style=\"color:#f58a00\">正面</span>");
+                $("#div20 .title").html("身份证<span style=\"color:#f58a00\">背面</span>");
+                $("#div10 .demo").attr("src", "images/sfz1-2.png");
+                $("#div20 .demo").attr("src", "images/sfz2-2.png");
+                $("#div30 .demo").attr("src", "images/sfz3-2.png");
                 $(".step0").hide();
                 $(".step1").show();
             } else {
                 mui.toast(res.message);
             }
         }, function (err) {
+            $(".msg-post").hide();
             mui.toast(err.message);
         });
     } else {
-        credentialType = "Passport";
-        $("#lbTitle1").html("请上传您的有效护照");
-        $("#lbTitle2").html("上传护照个人信息页");
-        $("#lbTitle3").html("上传护照签证信息页");
-        $("#imgDemo1").attr("src", "images/hz1.png");
-        $("#imgDemo2").attr("src", "images/hz2.png");
+        $(".chooseTip").html("有效护照");
+        $("#div10 .title").html("护照<span style=\"color:#f58a00\">个人信息页</span>");
+        $("#div20 .title").html("护照<span style=\"color:#f58a00\">签证信息页</span>");
+        $("#div10 .demo").attr("src", "images/hz1-2.png");
+        $("#div20 .demo").attr("src", "images/hz2-2.png");
+        $("#div30 .demo").attr("src", "images/hz3-2.png");
         $(".step0").hide();
         $(".step1").show();
     }
 }
 
-function V2UploadImages(imgData, imgIndex) {
-    var data = {
-        type: credentialType,
-        base64String: imgData,
-        index: imgIndex,
-        credentialNo: credentialNo,
-        credentialFace: (imgIndex == 0 ? true : false)
-    };
-    postInvoke(constants.URLS.V2UPLOADIMAGES, data, function (res) {
-        if (res.index == 0) {
-            facePhotoUrl = res.url;
-        } else {
-            backPhotoUrl = res.url;
-        }
-        if (imgIndex == 0) {
-            document.getElementById('imgIdentity1').setAttribute('src', imgData);
-            document.getElementById("divIdentity1").style.display = 'none';
-            document.getElementById("divIdentity1Img").style.display = 'block';
-            $('#img1').replaceWith('<input type="file" accept="image/*" id="img1" name="img1" class="input-upload-image"/>');
-        } else {
-            document.getElementById('imgIdentity2').setAttribute('src', imgData);
-            document.getElementById("divIdentity2").style.display = 'none';
-            document.getElementById("divIdentity2Img").style.display = 'block';
-            $('#img2').replaceWith('<input type="file" accept="image/*" id="img2" name="img2" class="input-upload-image"/>');
-        }
-    });
-}
-
-function verify() {
-    if (facePhotoUrl == '') {
-        mui.toast(constants.msgInfo.img1err);
+function confirmTenantInfo() {
+    if (credientalFacePhotoUrl == '') {
+        mui.toast((credentialTabIndex == 0 ? constants.msgInfo.img10err : constants.msgInfo.img11err));
         return false;
     }
-    if (backPhotoUrl == '') {
-        mui.toast(constants.msgInfo.img2err);
+    if (credientalBackPhotoUrl == '') {
+        mui.toast((credentialTabIndex == 0 ? constants.msgInfo.img20err : constants.msgInfo.img21err));
+        return false;
+    }
+    if (selfiePhotoUrl == '') {
+        mui.toast(constants.msgInfo.img3err);
         return false;
     }
     var data = {
-        credentialType: credentialType,
-        credentialNo: credentialNo,
         realName: realName,
-        credentialFacePhotoUrl: facePhotoUrl,
-        credentialBackPhotoUrl: backPhotoUrl,
-        client: "M"
+        credentialType: (credentialTabIndex == 0 ? "IDCard" : "Passport"),
+        credentialNo: credentialNo,
+        credientalFacePhotoUrl: credientalFacePhotoUrl,
+        updateFacePhoto: true,
+        credentialBackUrl: credientalBackPhotoUrl,
+        updateBackPhoto: true,
+        selfiePhotoUrl: selfiePhotoUrl,
+        updateSelfPhoto: true
     };
     $(".msg-post").show();
-    postInvoke(constants.URLS.CREATEACCOUNTINFO, data, function (res) {
+    postInvoke(constants.URLS.CONFIRMTENANTINFO, data, function (res) {
         if (res.succeeded) {
             $(".msg-post").hide();
-            mui.toast(constants.msgInfo.verify);
+            mui.toast(constants.msgInfo.verify.format(credentialTabIndex == 0 ? "身份证" : "护照"));
             setTimeout(function () {
-                if (url != "") {
-                    window.location.href = url;
+                if (backUrl != "") {
+                    window.location.href = backUrl;
                 } else {
                     window.location.href = "user.html";
                 }
@@ -139,6 +124,113 @@ function verify() {
     });
 }
 
+function V2UploadImages(serverId, imgIndex) {
+    var data = {
+        serverId: serverId,
+        kind: kinds[imgIndex],
+        index: imgIndex
+    };
+    postInvoke(constants.URLS.UPLOADIMAGES, data, function (res) {
+        if (res.index == 0) {
+            credientalFacePhotoUrl = res.url;
+            $('#img12').attr('src', credientalFacePhotoUrl);
+            setTimeout(function () {
+                $("#div10").hide();
+                $("#div11").show();
+            }, 500);
+
+        } else if (res.index == 1) {
+            credientalBackPhotoUrl = res.url;
+            $('#img22').attr('src', credientalBackPhotoUrl);
+            setTimeout(function () {
+                $("#div20").hide();
+                $("#div21").show();
+            }, 500);
+        }
+        else {
+            selfiePhotoUrl = res.url;
+            $('#img32').attr('src', selfiePhotoUrl);
+            setTimeout(function () {
+                $("#div30").hide();
+                $("#div31").show();
+            }, 500);
+        }
+    });
+}
+
+function weixinSign() {
+    var signUrl = constants.URLS.SIGNATURE.format(encodeURIComponent(window.location.href));
+    $.ajax({
+        type: 'get',
+        url: signUrl,
+        contentType: 'application/json'
+    })
+        .done(function (res) {
+            wx.config({
+                debug: false,
+                appId: res.appId,
+                timestamp: res.timestamp,
+                nonceStr: res.nonceStr,
+                signature: res.signature,
+                jsApiList: ['checkJsApi', 'chooseImage', 'uploadImage']
+            });
+        })
+        .fail(function () {
+            alert('获取认证异常');
+        });
+    document.querySelector('#chooseImg1').onclick = function () {
+        wx.chooseImage({
+            count: 1,
+            sizeType: ['original', 'compressed'],
+            sourceType: ['album', 'camera'],
+            success: function (res) {
+                wx.uploadImage({
+                    localId: res.localIds[0],
+                    isShowProgressTips: 1,
+                    success: function (res1) {
+                        V2UploadImages(res1.serverId, 0);
+                    }
+                });
+            }
+        });
+    };
+    //
+    document.querySelector('#chooseImg2').onclick = function () {
+        wx.chooseImage({
+            count: 1,
+            sizeType: ['original', 'compressed'],
+            sourceType: ['album', 'camera'],
+            success: function (res) {
+                wx.uploadImage({
+                    localId: res.localIds[0],
+                    isShowProgressTips: 1,
+                    success: function (res1) {
+                        V2UploadImages(res1.serverId, 1);
+                    }
+                });
+            }
+        });
+    };
+    //
+    document.querySelector('#chooseImg3').onclick = function () {
+        wx.chooseImage({
+            count: 1,
+            sizeType: ['original', 'compressed'],
+            sourceType: ['album', 'camera'],
+            success: function (res) {
+                wx.uploadImage({
+                    localId: res.localIds[0],
+                    isShowProgressTips: 1,
+                    success: function (res1) {
+                        V2UploadImages(res1.serverId, 2);
+                    }
+                });
+            }
+        });
+    };
+}
+
 $(document).ready(function () {
-    url = getURLQuery("url");
+    backUrl = decodeURIComponent(getURLQuery("url"));
+    weixinSign();
 });

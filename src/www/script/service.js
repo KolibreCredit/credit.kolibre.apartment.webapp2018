@@ -184,21 +184,7 @@ function postInvoke(url, data, callSuccess, callError) {
         error: function (res) {
             if (res.status == 401) {
                 var rurl = encodeURIComponent(window.location.href);
-                if (getCookie(constants.COOKIES.TAG) == 'yuju') {
-                    window.location.href = COMMONPATH.PAGE.LOGINV2.replace('##rurl##', rurl);
-                }
-                else if (getCookie(constants.COOKIES.TAG) == 'boke') {
-                    window.location.href = COMMONPATH.PAGE.LOGINV2.replace('##rurl##', rurl);
-                }
-                else if (getCookie(constants.COOKIES.TAG) == 'kangdou') {
-                    window.location.href = COMMONPATH.PAGE.LOGINV2.replace('##rurl##', rurl);
-                }
-                else if (getCookie(constants.COOKIES.TAG) == 'mozu') {
-                    window.location.href = COMMONPATH.PAGE.LOGINV2.replace('##rurl##', rurl);
-                }
-                else {
-                    window.location.href = COMMONPATH.PAGE.LOGIN.replace('##rurl##', rurl);
-                }
+                window.location.href = COMMONPATH.PAGE.LOGIN.replace('##rurl##', rurl);
             }
             else if (res.status == 400) {
                 if (!callError({message: JSON.parse(res.responseText).message})) {
@@ -238,21 +224,7 @@ function getInvoke(url, callSuccess, callError) {
         error: function (res) {
             if (res.status == 401) {
                 var rurl = encodeURIComponent(window.location.href);
-                if (getCookie(constants.COOKIES.TAG) == 'yuju') {
-                    window.location.href = COMMONPATH.PAGE.LOGINV2.replace('##rurl##', rurl);
-                }
-                else if (getCookie(constants.COOKIES.TAG) == 'boke') {
-                    window.location.href = COMMONPATH.PAGE.LOGINV2.replace('##rurl##', rurl);
-                }
-                else if (getCookie(constants.COOKIES.TAG) == 'kangdou') {
-                    window.location.href = COMMONPATH.PAGE.LOGINV2.replace('##rurl##', rurl);
-                }
-                else if (getCookie(constants.COOKIES.TAG) == 'mozu') {
-                    window.location.href = COMMONPATH.PAGE.LOGINV2.replace('##rurl##', rurl);
-                }
-                else {
-                    window.location.href = COMMONPATH.PAGE.LOGIN.replace('##rurl##', rurl);
-                }
+                window.location.href = COMMONPATH.PAGE.LOGIN.replace('##rurl##', rurl);
             }
             else if (res.status == 400) {
                 if (!callError({message: JSON.parse(res.responseText).message})) {

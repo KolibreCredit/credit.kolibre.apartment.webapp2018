@@ -1,7 +1,6 @@
 /**
  * Created by long.jiang on 2016/12/12.
  */
-
 function tablogin(tabIndex) {
     if (tabIndex === 0) {
         $("#div0").show();
@@ -105,22 +104,27 @@ function loginByCaptcha() {
         if (res.succeeded) {
             postInvoke(constants.URLS.LOGINAUTHCODE, {authCode: res.data.authCode}, function (res1) {
                 if (res1.succeeded) {
-                    setToken(res1.headers["x-KC-SID"]);
-                    mui.toast(constants.msgInfo.loginSuccess);
-                    retlogin();
-                    // whetherConfirmContractChange();
+                    if (res.data.loginState == "Succeed") {
+                        setToken(res1.headers["x-KC-SID"]);
+                        mui.toast(constants.msgInfo.loginSuccess);
+                        retlogin();
+                        // whetherConfirmContractChange();
+                    }
+                    else {
+                        enumLoginState(res.data.loginState);
+                    }
                 } else {
                     mui.toast(res1.message);
                 }
-            }, function (res1) {
-                mui.toast(res1.message);
+            }, function (err) {
+                mui.toast(err.message);
             });
         } else {
             mui.toast(res.message);
         }
-    }, function (res) {
+    }, function (err) {
         hideloading();
-        mui.toast(res.message);
+        mui.toast(err.message);
     });
 }
 
@@ -150,11 +154,15 @@ function loginByPassword() {
     };
     postInvoke(constants.URLS.LOGINBYPASSWORD, data, function (res) {
         hideloading();
-        if (res.succeeded && res.data.loginState == "Succeed") {
-            setToken(res.headers["x-KC-SID"]);
-            mui.toast(constants.msgInfo.loginSuccess);
-            retlogin();
-            // whetherConfirmContractChange();
+        if (res.succeeded) {
+            if (res.data.loginState == "Succeed") {
+                setToken(res.headers["x-KC-SID"]);
+                mui.toast(constants.msgInfo.loginSuccess);
+                retlogin();
+                // whetherConfirmContractChange();
+            } else {
+                enumLoginState(res.data.loginState);
+            }
         } else {
             mui.toast(res.message);
         }
@@ -164,10 +172,25 @@ function loginByPassword() {
     });
 }
 
+var enumLoginState = function (loginState) {
+    if (loginState == "PasswordError") {
+        mui.toast(constants.msgInfo.loginErr1);
+    }
+    else if (loginState == "PasswordNotExist") {
+        mui.toast(constants.msgInfo.loginErr2);
+    }
+    else if (loginState == "Locked") {
+        mui.toast(constants.msgInfo.loginErr3);
+    }
+    else {
+        mui.toast(constants.msgInfo.loginErr4);
+    }
+};
+
 function whetherConfirmContractChange() {
     getInvoke(constants.URLS.WHETHERCONFIRMCONTRACTCHANGE, function (res) {
         if (res.data.operationCode == 1) {
-            window.location.href = "verify2.html?url=" + url;
+            window.location.href = "verify.html?url=" + url;
         } else if (res.data.operationCode == 2) {
             window.location.href = "contractChange.html?url=" + url;
         } else {
