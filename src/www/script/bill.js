@@ -173,9 +173,9 @@ function apply() {
 $(document).ready(function () {
     openId = getURLQuery("openId");
     findAllLeaseOrder(0);
-    getInvoke(constants.URLS.WHETHERCONFIRMCONTRACTCHANGE, function (res) {
+    /*getInvoke(constants.URLS.WHETHERCONFIRMCONTRACTCHANGE, function (res) {
         if (res.data.operationCode == 1) {
             window.location.href = "verify2.html?url=" + encodeURIComponent(window.location.href);
         }
-    });
+    });*/
 });

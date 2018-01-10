@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>合同信息</title>
-    <meta name="viewport"
-          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <link href="packages/swiper@3.3.1/dist/css/swiper.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
@@ -15,13 +14,11 @@
             border: 0;
             margin-bottom: 0;
         }
-
         .swiper-slide {
             display: block;
             text-align: center;
             background: none;
         }
-
         .slide-container {
             background: #ffffff;
             border: 2px dotted #fd8b14;
@@ -30,13 +27,9 @@
             width: 100%;
             display: inline-block;
         }
-
         .slide-container .photo {
             height: 200px;
             width: 100%;
-        }
-        .swiper-pagination-bullet {
-            display: none;
         }
         .choose {
             width: 50%;
@@ -59,18 +52,16 @@
     <div style="padding-left:2px;padding-right:2px">
         <div class="swiper-container">
             <div class="swiper-wrapper">
-                <div class="swiper-slide" id="divChoose">
+                <div class="swiper-slide addSlide">
                     <div class="slide-container">
                         <div style="height:70px"></div>
-                        <img id="imgChoose" src="images/20180103/add.png" style="width:36px;height:36px"/>
+                        <img id="chooseImg" src="images/20180103/add.png" style="width:36px;height:36px"/>
                         <div style="text-align:center;font-size:14px;color:#646464">
                             上传合同
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="swiper-pagination">
         </div>
     </div>
     <div style="padding-left:20px;padding-right:20px;margin-top:50px">

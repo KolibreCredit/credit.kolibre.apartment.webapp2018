@@ -3,9 +3,11 @@
  */
 var ispostData = true;
 var waitCount = 0;
-var waitCount2 = 0;
 var accountCellphone = "";
 var accountName = "";
+//
+var contractConfirmInfoId = "";
+var contractConfirmInfo = null;
 
 var showMsg = function (icon, tip) {
     $(".msg-post").hide();
@@ -13,82 +15,43 @@ var showMsg = function (icon, tip) {
     $(".msg-tip").html(tip);
     $(".msg-content").show();
     setTimeout(function () {
-        window.location.href = constants.URLS.WEIXIBILL;
+        bill();
     }, 2000);
 };
 
 var showfail = function (message) {
     ispostData = false;
-    showMsg("fail", "申请月付失败\<br/>联系客服:\<br/>400-921-5508<br/>{0}".format(message));
+    showMsg("fail", "合同确认失败\<br/>联系客服:\<br/>400-921-5508<br/>{0}".format(message));
 };
 
-var retryResult = function (apartmentReportId) {
-    waitCount2 = waitCount2 + 1;
-    setTimeout(function () {
-        getCreditAuditResult(apartmentReportId);
-    }, 3000);
-};
-
-function getCreditAuditResult(apartmentReportId) {
-    getInvoke(constants.URLS.GETCREDITAUDITRESULT.format(apartmentReportId), function (res) {
+function getConfirmContractResult(confirmContractProcessId) {
+    getInvoke(constants.URLS.GETCONFIRMCONTRACTRESULT.format(confirmContractProcessId), function (res) {
         if (res.succeeded) {
-            if (res.data.auditResult === "Pass") {
+            if (res.data.confirmContractResult == "Success") {
                 ispostData = false;
                 showMsg("success", "申请月付成功");
             }
-            else if (res.data.auditResult === "Observing") {
-                ispostData = false;
-                showMsg("success", "申请月付成功");
-            }
-            else if (res.data.auditResult === "Refuse") {
-                showfail(res.message);
-            } else {
-                if (waitCount2 < 20) {
-                    retryResult(apartmentReportId);
+            else if (res.data.confirmContractResult == "Processing") {
+                if (waitCount < 20) {
+                    waitCount = waitCount + 1;
+                    getConfirmContractResult(confirmContractProcessId);
                 } else {
                     showfail(res.message);
                 }
-            }
-        } else {
-            if (waitCount2 < 20) {
-                retryResult(apartmentReportId);
             } else {
                 showfail(res.message);
             }
+        } else {
+            setTimeout(function () {
+                getConfirmContractResult(confirmContractProcessId);
+            }, 1000);
         }
     }, function (res) {
         showfail(res.message);
     });
 }
 
-function createApartmentReport(apartmentReport) {
-    postInvoke(constants.URLS.CREATEAPARTMENTREPORT, apartmentReport, function (res) {
-        if (res.succeeded) {
-            setCookie(constants.COOKIES.YUEFU, "");
-            if (res.data.productMark == 2) {
-                setTimeout(function () {
-                    showMsg("success", "已生成账单");
-                }, 2000);
-            }
-            else {
-                getCreditAuditResult(res.data.apartmentReportId);
-            }
-        } else {
-            waitCount = waitCount + 1;
-            if (waitCount < 3) {
-                setTimeout(function () {
-                    createApartmentReport(apartmentReport);
-                }, 2000);
-            } else {
-                showfail(res.message);
-            }
-        }
-    }, function (res) {
-        showfail(res.message);
-    });
-}
-
-function apply() {
+function confirmcCntract() {
     if (!ispostData) {
         mui.toast(constants.msgInfo.postData);
         return false;
@@ -127,36 +90,10 @@ function apply() {
     ispostData = false;
     //
     $(".msg-post").show();
-    postInvoke(constants.URLS.CREATEDIGITALCONTRACT, {
-        leaseId: getCookie(constants.COOKIES.LEASEID),
-        contractTypeName: ['BJBLoan', 'BJBAuth']
-    }, function (res) {
-        console.log(res);
-    });
-    //
-    var accountExtensionInfoId = getCookie(constants.COOKIES.ACCOUNTEXTENSIONINFOID);
-    var data = {
-        accountExtensionInfoId: accountExtensionInfoId,
-        contacts: [{
-            realName: realName,
-            cellphone: cellphone,
-            relationship: relationship
-        }]
-    };
-    postInvoke(constants.URLS.ADDCONTACTINFO, data, function (res) {
+    postInvoke(constants.URLS.CONFIRMCONTRACT, contractConfirmInfo, function (res) {
         if (res.succeeded) {
-            var leaseId = getCookie(constants.COOKIES.LEASEID);
-            var reportId = getCookie(constants.COOKIES.REPORTID);
-            var batchId = getCookie(constants.COOKIES.BATCHID);
-            var yuefu = (getCookie(constants.COOKIES.YUEFU) == "true" ? true : false);
-            var apartmentReport = {
-                accountExtensionInfoId: accountExtensionInfoId,
-                leaseId: leaseId,
-                reportId: reportId,
-                batchId: batchId,
-                yueFu: yuefu
-            };
-            createApartmentReport(apartmentReport);
+            waitCount = 20;
+            getConfirmContractResult(res.data.confirmContractProcessId);
         } else {
             ispostData = true;
             $(".msg-post").hide();
@@ -169,17 +106,27 @@ function apply() {
     });
 }
 
-function agreement(curImg) {
-    if (curImg.src.indexOf("check1.png") != -1) {
-        curImg.src = "images/check0.png";
-    } else {
-        curImg.src = "images/check1.png";
-    }
-}
-
 $(document).ready(function () {
-    getInvoke(constants.URLS.GETCURRENTHOUSEACCOUNTINFO, function (res) {
-        accountCellphone = res.cellphone;
-        accountName = res.realName;
+    contractConfirmInfoId = getCookie(constants.COOKIES.CONTRACTCONFIRMINFOID);
+    getInvoke(constants.URLS.GETCONTRACTCONFIRMINFO.format(contractConfirmInfoId), function (res) {
+        if (res.succeeded) {
+            contractConfirmInfo = res.data;
+            accountCellphone = contractConfirmInfo.cellphone;
+            accountName = contractConfirmInfo.realName;
+            $("#txtRealName").val(contractConfirmInfo.contactInfo.realName);
+            $("#txtCellphone").val(contractConfirmInfo.contactInfo.cellphone);
+            $("#txtRelation").val(contractConfirmInfo.contactInfo.relationship);
+            //
+            new Swiper('#swipercontainer1', {
+                slidesPerView: 1.4,
+                spaceBetween: 10,
+                freeMode: true
+            });
+            new Swiper('#swipercontainer2', {
+                slidesPerView: 2,
+                spaceBetween: 10,
+                freeMode: true
+            });
+        }
     });
 });

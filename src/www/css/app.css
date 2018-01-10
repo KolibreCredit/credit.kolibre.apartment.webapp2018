@@ -6,6 +6,7 @@ body {
     /* 上下拉动滚动条时卡顿、慢*/
     -webkit-overflow-scrolling: touch;
     overflow-scrolling: touch;
+    font-size: 16px;
 }
 
 .mui-content {
@@ -15,17 +16,19 @@ body {
 .btnActive {
     border: none;
 }
-
 .btnActive:active {
     background: #F96718 !important;
     box-shadow: 0 2px 6px 0 rgba(251, 146, 40, 0.70);
+}
+button {
+    padding: 0;
 }
 
 button:enabled:active {
     background: rgba(253, 139, 20, 0.15);
     box-shadow: 0 2px 4px 0 rgba(78, 40, 0, 0.20);
+    color: #ff8c14;
 }
-
 .swiper-container {
     width: 100%;
     height: auto;

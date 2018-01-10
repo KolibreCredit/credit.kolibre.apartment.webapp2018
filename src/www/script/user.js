@@ -1,28 +1,41 @@
+function bill() {
+    if (isWeixin()) {
+        window.location.href = constants.URLS.WEIXIBILL;
+    } else {
+        window.location.href = constants.URLS.BILL;
+    }
+}
+
 $(document).ready(function () {
-    getInvoke(constants.URLS.GETCURRENTHOUSEACCOUNT, function (res) {
-        if (res != null) {
-            $('p.userName').html(res.accountName);
-            $('#accountNo').html(res.accountNo);
-            if (res.isExistAccountInfo) {
+    getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
+        if (res.succeeded) {
+            $('#lbRealName').text(res.data.realName);
+            $('#lbCellphone').text(res.data.cellphone);
+            if (res.data.hasInfo) {
                 $("#needPhoto").show();
             } else {
                 $("#needVerify").show();
             }
+            var creditLevel = 4;
             $('#star').raty({
-                score: parseFloat(res.creditLevel) / 2,
+                score: parseFloat(creditLevel) / 2,
                 path: 'images/star',
                 readOnly: true,
                 size: 15
             });
         }
     });
+
+    getInvoke(constants.URLS.GETUNCONFIRMEDCONTRACTCOUNT, function (res) {
+        if (res.succeeded) {
+            if (res.data > 0) {
+                $("a.item1 span").show();
+            }
+        }
+    });
 });
 
 function loginOut() {
     clearToken();
-    if (getCookie(constants.COOKIES.TAG) == 'yuju') {
-        window.location.href = 'yuju.html';
-    } else {
-        window.location.href = 'index.html';
-    }
+    window.location.href = 'index.html';
 }

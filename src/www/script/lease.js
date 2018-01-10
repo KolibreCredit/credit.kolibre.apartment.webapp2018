@@ -45,5 +45,5 @@ function hideMsg() {
     $(".msg-alert").hide();
     setTimeout(function () {
         window.location.href = "list.html";
-    }, 200);
+    }, 1000);
 }

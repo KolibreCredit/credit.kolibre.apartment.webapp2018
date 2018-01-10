@@ -1,6 +1,7 @@
 /**
  * Created by long.jiang on 2016/12/12.
  */
+
 function tablogin(tabIndex) {
     if (tabIndex === 0) {
         $("#div0").show();
@@ -15,7 +16,6 @@ function tablogin(tabIndex) {
     }
 }
 
-var token = "";
 var waitTimer = null;
 var waitCount = 60;
 var isSendCaptcha = true;
@@ -44,29 +44,26 @@ function sendCaptcha() {
             mui.toast(constants.msgInfo.phoneerr);
             return false;
         }
-        var businessType = "201";
+        var businessType = "TenantLogin";
         var data = {
             cellphone: cellphone,
             businessType: businessType
         };
-        logSendCaptcha("login", cellphone, businessType);
         isSendCaptcha = false;
         waitTimer = setInterval(function () {
             sendWaitTimer();
         }, 1000);
-        postInvoke(constants.URLS.SENDSMSCODE, data,
-            function (res) {
-                if (res.succeeded) {
-                    token = res.data.token;
-                    mui.toast(constants.msgInfo.send);
-                } else {
-                    waitCount = 0;
-                    mui.toast(res.message);
-                }
-            }, function (res) {
+        postInvoke(constants.URLS.SEND, data, function (res) {
+            if (res.succeeded) {
+                mui.toast(constants.msgInfo.send);
+            } else {
                 waitCount = 0;
                 mui.toast(res.message);
-            });
+            }
+        }, function (res) {
+            waitCount = 0;
+            mui.toast(res.message);
+        });
     }
 }
 
@@ -79,10 +76,6 @@ function hideloading() {
 }
 
 function loginByCaptcha() {
-    if (token == '') {
-        mui.toast(constants.msgInfo.tokenerr);
-        return false;
-    }
     var cellphone = $("#txtPhone2").val();
     if (cellphone == '') {
         mui.toast(constants.msgInfo.phone);
@@ -101,27 +94,27 @@ function loginByCaptcha() {
         mui.toast(constants.msgInfo.captchaerr);
         return false;
     }
-    showloading();
     var verify = {
-        token: token,
-        smsCode: captcha
+        cellphone: cellphone,
+        businessType: "TenantLogin",
+        validateCode: captcha
     };
-    postInvoke(constants.URLS.VERIFYSMSCODE, verify, function (res) {
+    showloading();
+    postInvoke(constants.URLS.VERIFY, verify, function (res) {
         hideloading();
         if (res.succeeded) {
-            postInvoke(constants.URLS.LOGINBYSMSCODE, {token: token},
-                function (res1) {
-                    if (res1.succeeded) {
-                        setAuth(res1.authId);
-                        mui.toast(constants.msgInfo.loginSuccess);
-                        // retlogin();
-                        whetherConfirmContractChange();
-                    } else {
-                        mui.toast(res1.message);
-                    }
-                }, function (res1) {
+            postInvoke(constants.URLS.LOGINAUTHCODE, {authCode: res.data.authCode}, function (res1) {
+                if (res1.succeeded) {
+                    setToken(res1.headers["x-KC-SID"]);
+                    mui.toast(constants.msgInfo.loginSuccess);
+                    retlogin();
+                    // whetherConfirmContractChange();
+                } else {
                     mui.toast(res1.message);
-                });
+                }
+            }, function (res1) {
+                mui.toast(res1.message);
+            });
         } else {
             mui.toast(res.message);
         }
@@ -129,7 +122,6 @@ function loginByCaptcha() {
         hideloading();
         mui.toast(res.message);
     });
-
 }
 
 function loginByPassword() {
@@ -153,26 +145,24 @@ function loginByPassword() {
     }
     showloading();
     var data = {
-        cellphone: cellphone,
+        loginInfoAccount: cellphone,
         password: password
     };
-    postInvoke(constants.URLS.LOGINBYPASSWORD, data,
-        function (res) {
-            hideloading();
-            if (res.succeeded) {
-                setAuth(res.authId);
-                mui.toast(constants.msgInfo.loginSuccess);
-                // retlogin();
-                whetherConfirmContractChange();
-            } else {
-                mui.toast(res.message);
-            }
-        }, function (res) {
-            hideloading();
+    postInvoke(constants.URLS.LOGINBYPASSWORD, data, function (res) {
+        hideloading();
+        if (res.succeeded && res.data.loginState == "Succeed") {
+            setToken(res.headers["x-KC-SID"]);
+            mui.toast(constants.msgInfo.loginSuccess);
+            retlogin();
+            // whetherConfirmContractChange();
+        } else {
             mui.toast(res.message);
-        });
+        }
+    }, function (res) {
+        hideloading();
+        mui.toast(res.message);
+    });
 }
-
 
 function whetherConfirmContractChange() {
     getInvoke(constants.URLS.WHETHERCONFIRMCONTRACTCHANGE, function (res) {

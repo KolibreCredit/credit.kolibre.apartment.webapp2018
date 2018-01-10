@@ -4,11 +4,10 @@
 var contractId = "";
 
 function apply() {
-    setCookie(constants.COOKIES.CONTRACTID, contractId);
     var data = {contractId: contractId};
-    postInvoke(constants.URLS.CREATECONFIRMINFO, data, function (response) {
-        if (response.succeeded) {
-            var res = response.data;
+    postInvoke(constants.URLS.CREATECONFIRMINFO, data, function (result) {
+        if (result.succeeded) {
+            var res = result.data;
             setCookie(constants.COOKIES.CONTRACTCONFIRMINFOID, res.contractConfirmInfoId);
             if (!res.verifyResult) {
                 window.location.href = "apply1.html";

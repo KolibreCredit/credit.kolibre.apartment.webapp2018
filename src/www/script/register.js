@@ -4,7 +4,7 @@
 var waitTimer = null;
 var waitCount = 60;
 var isSendCaptcha = true;
-var token = "";
+//
 function sendWaitTimer() {
     if (waitCount > 0) {
         $('#btnSendCaptcha').text(waitCount + 'S');
@@ -29,26 +29,25 @@ function sendCaptcha() {
             return false;
         }
         isSendCaptcha = false;
-        var businessType = 103;
+        var businessType = "TenantRegister";
         var data = {
             cellphone: cellphone,
             businessType: businessType
         };
-        waitTimer = setInterval(function() {
+        waitTimer = setInterval(function () {
             sendWaitTimer();
         }, 1000);
         isSendCaptcha = false;
-        postInvoke(constants.URLS.SENDSMSCODE, data,
-            function(res) {
+        postInvoke(constants.URLS.SEND, data,
+            function (res) {
                 isSendCaptcha = true;
                 if (res.succeeded) {
-                    token = res.data.token;
                     mui.toast(constants.msgInfo.send);
                 } else {
                     waitCount = 0;
                     mui.toast(res.message);
                 }
-            }, function(res) {
+            }, function (res) {
                 isSendCaptcha = true;
                 waitCount = 0;
                 mui.toast(res.message);
@@ -57,10 +56,6 @@ function sendCaptcha() {
 }
 
 function register() {
-    if (token === '') {
-        mui.toast(constants.msgInfo.tokenerr);
-        return false;
-    }
     var cellphone = $("#txtPhone").val();
     if (cellphone === '') {
         mui.toast(constants.msgInfo.phone);
@@ -106,34 +101,32 @@ function register() {
         return false;
     }
     var verify = {
-        token: token,
-        smsCode: captcha
+        cellphone: cellphone,
+        businessType: "TenantRegister",
+        validateCode: captcha
     };
-    postInvoke(constants.URLS.VERIFYSMSCODE, verify, function(res) {
+    postInvoke(constants.URLS.VERIFY, verify, function (res) {
         if (res.succeeded) {
             var data = {
-                token: token,
-                accountType: "Tenant",
-                isPersonal: true,
-                client: "M",
+                authCode: res.data.authCode,
+                description: "M注册",
                 password: password
             };
-            postInvoke(constants.URLS.REGISTER, data,
-                function(res1, status, xhr) {
-                    if (res1.succeeded) {
-                        setCookie(constants.COOKIES.AUTH, xhr.getResponseHeader('X-KC-SID'));
-                        mui.toast(constants.msgInfo.register);
-                        setTimeout(function() {
-                            window.location.href = "index.html";
-                        }, 1000);
-                    } else {
-                        mui.toast(constants.msgInfo.registererr);
-                    }
-                }, function(res) {
-                    mui.toast(res.message);
-                });
+            postInvoke(constants.URLS.TENANT, data, function (res1) {
+                if (res1.succeeded) {
+                    setToken(res1.headers['x-KC-SID']);
+                    mui.toast(constants.msgInfo.register);
+                    setTimeout(function () {
+                        window.location.href = "index.html";
+                    }, 1000);
+                } else {
+                    mui.toast(constants.msgInfo.registererr);
+                }
+            }, function (res) {
+                mui.toast(res.message);
+            });
         }
-    }, function(res) {
+    }, function (res) {
         mui.toast(res.message);
     });
 }
@@ -145,7 +138,3 @@ function agreement(curImg) {
         curImg.src = "images/check1.png";
     }
 }
-
-$(document).ready(function() {
-    $(".msg-alert").hide();
-});

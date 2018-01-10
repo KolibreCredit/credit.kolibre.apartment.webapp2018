@@ -138,23 +138,18 @@ function getCookie(key) {
     return auth;
 }
 
-function clearToken() {
-    setCookie(constants.COOKIES.AUTH, '');
-}
-
-function getAuth() {
-    return getCookie(constants.COOKIES.AUTH);
-}
-
-function setAuth(newAuth) {
-    if (newAuth) {
-        setCookie(constants.COOKIES.AUTH, newAuth);
+function setToken(newToken) {
+    if (newToken) {
+        setCookie(constants.COOKIES.XKCSID, newToken);
     }
 }
 
-function islogin() {
-    var auth = getAuth();
-    return (auth != '');
+function getToken() {
+    return getCookie(constants.COOKIES.XKCSID);
+}
+
+function clearToken() {
+    setCookie(constants.COOKIES.XKCSID, '');
 }
 
 function isWeixin() {
@@ -165,14 +160,15 @@ function isWeixin() {
     return false;
 }
 
-function logSendCaptcha(op, cellphone, businessType) {
-    getInvoke(constants.URLS.LOG.format(op, cellphone, businessType), function (res) {
-        console.log(res);
-    })
+function bill() {
+    if (isWeixin()) {
+        window.location.href = constants.URLS.WEIXIBILL;
+    } else {
+        window.location.href = constants.URLS.BILL;
+    }
 }
 
 function postInvoke(url, data, callSuccess, callError) {
-    var auth = getAuth();
     $.ajax({
         type: 'POST',
         data: JSON.stringify(data),
@@ -180,7 +176,7 @@ function postInvoke(url, data, callSuccess, callError) {
         dataType: "json",
         contentType: "application/json;charset=utf-8",
         beforeSend: function (request) {
-            request.setRequestHeader(constants.COOKIES.AUTH, auth);
+            request.setRequestHeader(constants.COOKIES.XKCSID, getToken());
         },
         success: function (res, status, xhr) {
             callSuccess(res, status, xhr);
@@ -228,14 +224,13 @@ function postInvoke(url, data, callSuccess, callError) {
 }
 
 function getInvoke(url, callSuccess, callError) {
-    var auth = getAuth();
     $.ajax({
         type: 'GET',
         url: url,
         dataType: "json",
         contentType: "application/json",
         beforeSend: function (request) {
-            request.setRequestHeader(constants.COOKIES.AUTH, auth);
+            request.setRequestHeader(constants.COOKIES.XKCSID, getToken());
         },
         success: function (res, status, xhr) {
             callSuccess(res, status, xhr);

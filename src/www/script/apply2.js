@@ -5,6 +5,7 @@
 var pictureUrls = [];
 var tplItem = "";
 var ispostData = true;
+
 //
 function apply() {
     if (!ispostData) {
@@ -48,13 +49,9 @@ function V2UploadImages(serverId) {
     postInvoke(constants.URLS.WEIXINUPLOADIMAGES, data, function (res) {
         if (res.succeeded) {
             pictureUrls.push(res.data.url);
-            $("#divChoose").before(tplItem.format(res.data.url));
-            $(".slide-container").removeClass("choose");
-            //
+            $(".addSlide").before(tplItem.format(res.data.url)).find(".slide-container").removeClass("choose");
             var swiper = new Swiper('.swiper-container', {
-                pagination: '.swiper-pagination',
                 slidesPerView: 2,
-                paginationClickable: true,
                 spaceBetween: 10,
                 freeMode: true
             });
@@ -83,7 +80,7 @@ function weixinSign() {
         .fail(function () {
             alert('获取认证异常');
         });
-    document.querySelector('#imgChoose').onclick = function () {
+    document.querySelector('#chooseImg').onclick = function () {
         wx.chooseImage({
             count: 1,
             sizeType: ['original'],
@@ -104,5 +101,5 @@ function weixinSign() {
 $(document).ready(function () {
     weixinSign();
     tplItem = $("#tplItem").html();
-    $(".slide-container").addClass("choose");
+    $(".addSlide").find(".slide-container").addClass("choose");
 });

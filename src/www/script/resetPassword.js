@@ -1,11 +1,11 @@
 /**
  * Created by long.jiang on 2016/12/12.
  */
-var token = "";
 var waitTimer = null;
 var waitCount = 60;
 var isResetPassword = true;
 var isSendCaptcha = true;
+
 function sendWaitTimer() {
     if (waitCount > 0) {
         $('#btnSendCaptcha').text(waitCount + 'S');
@@ -30,26 +30,24 @@ function sendCaptcha() {
             return false;
         }
         isSendCaptcha = false;
-        var businessType = "301";
+        var businessType = "AccountChangePassword";
         var data = {
             cellphone: cellphone,
             businessType: businessType
         };
-        waitTimer = setInterval(function() {
+        waitTimer = setInterval(function () {
             sendWaitTimer();
         }, 1000);
-        postInvoke(constants.URLS.SENDSMSCODE, data,
-            function(res) {
-                if (res.succeeded) {
-                    token = res.data.token;
-                    mui.toast(constants.msgInfo.send);
-                } else {
-                    mui.toast(constants.msgInfo.senderr);
-                }
-            }, function(res) {
-                waitCount = 0;
-                mui.toast(res.message);
-            });
+        postInvoke(constants.URLS.SEND, data, function (res) {
+            if (res.succeeded) {
+                mui.toast(constants.msgInfo.send);
+            } else {
+                mui.toast(constants.msgInfo.senderr);
+            }
+        }, function (res) {
+            waitCount = 0;
+            mui.toast(res.message);
+        });
     }
 }
 
@@ -62,10 +60,6 @@ function changePassword() {
         }
         if (!constants.REGEX.CELLPHONE.test(cellphone)) {
             mui.toast(constants.msgInfo.phoneerr);
-            return false;
-        }
-        if (token === '') {
-            mui.toast(constants.msgInfo.tokenerr);
             return false;
         }
         var captcha = $("#txtCaptcha").val();
@@ -88,37 +82,37 @@ function changePassword() {
         }
         isResetPassword = false;
         var verify = {
-            token: token,
-            smsCode: captcha
+            cellphone: cellphone,
+            businessType: "AccountChangePassword",
+            validateCode: captcha
         };
-        postInvoke(constants.URLS.VERIFYSMSCODE, verify, function(res) {
+        postInvoke(constants.URLS.VERIFY, verify, function (res) {
             if (res.succeeded) {
                 var data = {
-                    token: token,
-                    password: password
+                    authCode: res.data.authCode,
+                    newPassword: password
                 };
-                postInvoke(constants.URLS.CHANGEPASSWORD, data,
-                    function(res) {
-                        isResetPassword = true;
-                        if (res.succeeded) {
-                            mui.toast(constants.msgInfo.resetPassword);
-                            setTimeout(function() {
-                                window.location.href = "login.html";
-                            }, 1000);
-                        } else {
-                            mui.toast(constants.msgInfo.resetPassworderr);
-                        }
-                    }, function(res) {
-                        isResetPassword = true;
-                        mui.toast(res.message);
-                    });
+                postInvoke(constants.URLS.SETPASSWORD, data, function (res1) {
+                    isResetPassword = true;
+                    if (res1.succeeded) {
+                        mui.toast(constants.msgInfo.resetPassword);
+                        setTimeout(function () {
+                            window.location.href = "login.html";
+                        }, 1000);
+                    } else {
+                        mui.toast(constants.msgInfo.resetPassworderr);
+                    }
+                }, function (err) {
+                    isResetPassword = true;
+                    mui.toast(err.message);
+                });
             } else {
                 isResetPassword = true;
                 mui.toast(res.message);
             }
-        }, function(res) {
+        }, function (err) {
             isResetPassword = true;
-            mui.toast(res.message);
+            mui.toast(err.message);
         });
     }
 }
