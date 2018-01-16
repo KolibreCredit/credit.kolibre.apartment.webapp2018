@@ -3,12 +3,10 @@
  */
 var ispostData = true;
 var waitCount = 0;
-var accountCellphone = "";
-var accountName = "";
 //
 var contractConfirmInfoId = "";
 var contractConfirmInfo = null;
-
+var imgIndex = -1;
 var showMsg = function (icon, tip) {
     $(".msg-post").hide();
     $(".msg-icon").addClass(icon);
@@ -29,12 +27,14 @@ function getConfirmContractResult(confirmContractProcessId) {
         if (res.succeeded) {
             if (res.data.confirmContractResult == "Success") {
                 ispostData = false;
-                showMsg("success", "申请月付成功");
+                showMsg("success", "合同确认成功");
             }
             else if (res.data.confirmContractResult == "Processing") {
                 if (waitCount < 20) {
                     waitCount = waitCount + 1;
-                    getConfirmContractResult(confirmContractProcessId);
+                    setTimeout(function () {
+                        getConfirmContractResult(confirmContractProcessId);
+                    }, 1000);
                 } else {
                     showfail(res.message);
                 }
@@ -61,8 +61,8 @@ function confirmcCntract() {
         mui.toast(constants.msgInfo.linkRealName);
         return false;
     }
-    if (accountName == realName) {
-        mui.toast(constants.msgInfo.accountName.format(accountName));
+    if (realName == contractConfirmInfo.realName) {
+        mui.toast(constants.msgInfo.accountName.format(realName));
         return false;
     }
     var cellphone = $("#txtCellphone").val();
@@ -74,8 +74,8 @@ function confirmcCntract() {
         mui.toast(constants.msgInfo.phoneerr);
         return false;
     }
-    if (accountCellphone == cellphone) {
-        mui.toast(constants.msgInfo.accountCellphone.format(accountCellphone));
+    if (cellphone == contractConfirmInfo.cellphone) {
+        mui.toast(constants.msgInfo.accountCellphone.format(cellphone));
         return false;
     }
     var relationship = $("#txtRelation").val();
@@ -83,16 +83,16 @@ function confirmcCntract() {
         mui.toast(constants.msgInfo.linkRelationship);
         return false;
     }
-    if ($("#chkAgreement").attr("src").indexOf('check1.png') === -1) {
-        mui.toast(constants.msgInfo.agreement3);
-        return false;
-    }
     ispostData = false;
-    //
     $(".msg-post").show();
+    contractConfirmInfo.contactInfo = {
+        realName: realName,
+        cellphone: cellphone,
+        relationship: relationship
+    };
     postInvoke(constants.URLS.CONFIRMCONTRACT, contractConfirmInfo, function (res) {
         if (res.succeeded) {
-            waitCount = 20;
+            waitCount = 1;
             getConfirmContractResult(res.data.confirmContractProcessId);
         } else {
             ispostData = true;
@@ -106,27 +106,179 @@ function confirmcCntract() {
     });
 }
 
+//
+function chooseImage(index) {
+    imgIndex = index;
+    document.getElementById("imgChoose1").click();
+}
+
+var kinds = ["IDCardFace", "IDCardBack", "Selfie"];
+
+function V2UploadImages(serverId) {
+    var data = {
+        serverId: serverId,
+        kind: kinds[imgIndex],
+        index: imgIndex
+    };
+    postInvoke(constants.URLS.UPLOADIMAGESWEIXIN, data, function (res) {
+        if (res.succeeded) {
+            if (res.data.index == 0) {
+                contractConfirmInfo.credentialFacePhoto = res.data.url;
+                $("#imgCredentialFacePhoto").attr("src", contractConfirmInfo.credentialFacePhoto);
+            }
+            else if (res.data.index == 1) {
+                contractConfirmInfo.credentialBackPhoto = res.data.url;
+                $("#imgCredentialBackPhoto").attr("src", contractConfirmInfo.credentialBackPhoto);
+            }
+            else {
+                contractConfirmInfo.selfiePhoto = res.data.url;
+                $("#imgSelfiePhoto").attr("src", contractConfirmInfo.selfiePhoto);
+            }
+        }
+    });
+}
+
+//
+function chooseImage2(index) {
+    imgIndex = index;
+    document.getElementById("imgChoose2").click();
+}
+
+function V2UploadImages2(serverId) {
+    var data = {
+        serverId: serverId,
+        kind: "Contract",
+        index: imgIndex
+    };
+    postInvoke(constants.URLS.UPLOADIMAGESWEIXIN, data, function (res) {
+        if (res.succeeded) {
+            contractConfirmInfo.contractPictures[res.data.index] = res.data.url;
+            $("#swipercontainer2 .contract").eq(res.data.index).attr("src", res.data.url);
+        }
+    });
+}
+
+var contractPictures = function (contractPictures, total) {
+    $("#divAddSlide").before(contractPictures);
+    $("#lbPage").text(total);
+    new Swiper('#swipercontainer2', {
+        slidesPerView: 2,
+        spaceBetween: 10,
+        freeMode: true
+    });
+};
+//
+var tplContractPicture = "";
+var itemContractPictures = "";
+
+function V2UploadImages3(serverId) {
+    var data = {
+        serverId: serverId,
+        kind: "Contract"
+    };
+    postInvoke(constants.URLS.UPLOADIMAGESWEIXIN, data, function (res) {
+        if (res.succeeded) {
+            contractConfirmInfo.contractPictures.push(res.data.url);
+            itemContractPictures = tplContractPicture.format(res.data.url, contractConfirmInfo.contractPictures.length - 1);
+            contractPictures(itemContractPictures, contractConfirmInfo.contractPictures.length);
+        }
+    });
+}
+
 $(document).ready(function () {
+    tplContractPicture = $("#tplContractPicture").html();
     contractConfirmInfoId = getCookie(constants.COOKIES.CONTRACTCONFIRMINFOID);
     getInvoke(constants.URLS.GETCONTRACTCONFIRMINFO.format(contractConfirmInfoId), function (res) {
         if (res.succeeded) {
             contractConfirmInfo = res.data;
-            accountCellphone = contractConfirmInfo.cellphone;
-            accountName = contractConfirmInfo.realName;
+            $("#lbRealName").text(contractConfirmInfo.realName);
+            $("#lbCellphone").text(contractConfirmInfo.cellphone);
+            $("#lbCredentialNo").text(contractConfirmInfo.credentialNo);
+            //
             $("#txtRealName").val(contractConfirmInfo.contactInfo.realName);
             $("#txtCellphone").val(contractConfirmInfo.contactInfo.cellphone);
             $("#txtRelation").val(contractConfirmInfo.contactInfo.relationship);
             //
+            $("#imgCredentialFacePhoto").attr("src", contractConfirmInfo.credentialFacePhoto);
+            $("#lbCredentialFacePhoto").text((contractConfirmInfo.credentialType == "IDCard" ? "身份证正面" : "护照个人信息页"));
+            //
+            $("#imgCredentialBackPhoto").attr("src", contractConfirmInfo.credentialBackPhoto);
+            $("#lbCredentialBackPhoto").text((contractConfirmInfo.credentialType == "IDCard" ? "身份证背面" : "护照签证信息页"));
+            //
+            $("#imgSelfiePhoto").attr("src", contractConfirmInfo.selfiePhoto);
             new Swiper('#swipercontainer1', {
                 slidesPerView: 1.4,
                 spaceBetween: 10,
                 freeMode: true
             });
-            new Swiper('#swipercontainer2', {
-                slidesPerView: 2,
-                spaceBetween: 10,
-                freeMode: true
-            });
+            //contractPictures
+            for (var i = 0; i < contractConfirmInfo.contractPictures.length; i++) {
+                itemContractPictures += tplContractPicture.format(contractConfirmInfo.contractPictures[i], i);
+            }
+            contractPictures(itemContractPictures, contractConfirmInfo.contractPictures.length);
         }
+    });
+    //
+    var signUrl = constants.URLS.SIGNATURE.format(encodeURIComponent(window.location.href.split("?")[0]));
+    signInvoke(signUrl, function (res) {
+        wx.config({
+            debug: false,
+            appId: res.data.appId,
+            timestamp: res.data.timestamp,
+            nonceStr: res.data.nonceStr,
+            signature: res.data.signature,
+            jsApiList: ['checkJsApi', 'chooseImage', 'uploadImage']
+        });
+        //
+        document.querySelector('#imgChoose1').onclick = function () {
+            wx.chooseImage({
+                count: 1,
+                sizeType: ['original'],
+                sourceType: ['album', 'camera'],
+                success: function (res) {
+                    wx.uploadImage({
+                        localId: res.localIds[0],
+                        isShowProgressTips: 1,
+                        success: function (res1) {
+                            V2UploadImages(res1.serverId);
+                        }
+                    });
+                }
+            });
+        };
+        //
+        document.querySelector('#imgChoose2').onclick = function () {
+            wx.chooseImage({
+                count: 1,
+                sizeType: ['original'],
+                sourceType: ['album', 'camera'],
+                success: function (res) {
+                    wx.uploadImage({
+                        localId: res.localIds[0],
+                        isShowProgressTips: 1,
+                        success: function (res1) {
+                            V2UploadImages2(res1.serverId);
+                        }
+                    });
+                }
+            });
+        };
+        //
+        document.querySelector('#divAddSlide').onclick = function () {
+            wx.chooseImage({
+                count: 1,
+                sizeType: ['original'],
+                sourceType: ['album', 'camera'],
+                success: function (res) {
+                    wx.uploadImage({
+                        localId: res.localIds[0],
+                        isShowProgressTips: 1,
+                        success: function (res1) {
+                            V2UploadImages3(res1.serverId);
+                        }
+                    });
+                }
+            });
+        };
     });
 });

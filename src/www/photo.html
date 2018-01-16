@@ -1,60 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>用户信息</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
-  <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
-  <!--App自定义的css-->
-  <link href="css/app.css?ver=16.12.376" rel="stylesheet"/>
-  <style type="text/css">
-    label {
-      font-size:16px;
-      color:#646464;
-    }
+    <meta charset="UTF-8">
+    <title>用户信息</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=16.12.376" rel="stylesheet"/>
+    <style type="text/css">
+        label {
+            font-size: 16px;
+            color: #646464;
+        }
 
-    span {
-      display: block;
-      float: right;
-      font-size:16px;
-      color:#999999;
-    }
-  </style>
+        span {
+            display: block;
+            float: right;
+            font-size: 16px;
+            color: #999999;
+        }
+
+        .item {
+            background-color: #ffffff;
+            padding-top: 20px;
+            border: 1px solid #ffffff;
+            border-radius: 6px;
+        }
+
+        .item .original {
+            height: 175px;
+            position: relative;
+            display: block;
+        }
+
+        .item .camera {
+            height: 175px;
+            position: relative;
+            display: none;
+        }
+
+        .item .cameraMask {
+            height: 175px;
+            position: relative;
+            margin-top: -175px;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+        }
+
+        .choose {
+            position: absolute;
+            right: 15px;
+            bottom: 15px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .photo {
+            width: 100%;
+            height: 100%;
+            border-radius: 6px;
+        }
+
+        .save {
+            position: absolute;
+            width: 45px;
+            height: 70px;
+            left: 50px;
+            top: 55px;
+        }
+
+        .save img {
+            width: 45px;
+            height: 70px;
+        }
+
+        .cancel {
+            position: absolute;
+            width: 45px;
+            height: 70px;
+            right: 50px;
+            top: 55px;
+        }
+
+        .cancel img {
+            width: 45px;
+            height: 70px;
+        }
+    </style>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 </head>
-<body style="background-color:#f7f7f7">
-<div class="mui-content" style="background-color:#f7f7f7">
-  <div style="padding-left:20px;padding-right:20px;background-color:#ffffff">
-    <div style="border-bottom:1px solid #d8d8d8;margin-top:10px;height:60px;line-height:60px">
-      <label>真实姓名</label><span id="lbRealName"></span>
-    </div>
-    <div style="height:60px;line-height:60px">
-     <label>证件号码</label> <span id="lbCredentialNo"></span>
-    </div>
-  </div>
-  <div style="padding-left:20px;padding-right:20px">
-    <div style="margin-top: 20px;background-color: #ffffff;padding-top:20px;cursor:pointer;border:1px solid #ffffff;border-radius:6px">
-      <div style="text-align:center">
-        <div style="height:128px;width:235px;display:inline-block">
-          <img id="imgCredentialFacePhotoUrl" src="images/sfz1.png" style="height:128px;width:235px">
+<body style="background-color:#ffffff">
+<div class="mui-content">
+    <div style="padding-left:20px;padding-right:20px">
+        <div style="border-bottom:1px solid #e8e8e8;height:60px;line-height:60px">
+            <label>真实姓名</label><span id="lbRealName"></span>
         </div>
-      </div>
-      <div id="lbTitle1" style="text-align:center;margin-bottom:10px">
-        身份证正面
-      </div>
-    </div>
-    <div style="margin-top:20px;text-align:center;background-color: #ffffff;padding-top:20px;cursor:pointer;border:1px solid #ffffff;border-radius:6px">
-      <div style="text-align:center">
-        <div style="height:128px;width:235px;display:inline-block">
-          <img id="imgCredentialBackPhotoUrl" src="images/sfz2.png" style="height:128px;width:235px">
+        <div style="height:60px;line-height:60px;border-bottom:1px solid #e8e8e8">
+            <label>证件类型</label> <span id="lbCredentialType"></span>
         </div>
-      </div>
-      <div id="lbTitle2" style="text-align:center;margin-bottom:10px">
-        身份证背面
-      </div>
+        <div style="height:60px;line-height:60px">
+            <label>证件号码</label> <span id="lbCredentialNo"></span>
+        </div>
     </div>
-  </div>
-  <div style="height:20px">
-  </div>
+    <div style="background-color:rgba(254,148,54,0.1);color:#646464;height:40px;line-height:40px;padding-left:40px;position:relative">
+        <img src="images/20180103/tip.png" style="width:16px;height:16px;position:absolute;left:20px;top:12px"/><span
+            style="color:#fb9329;font-size:14px;float:left">以下信息若填写有误，请及时修改</span>
+    </div>
+    <div style="padding-left:20px;padding-right:20px">
+        <div class="item">
+            <div class="original">
+                <img id="imgCredentialFacePhotoUrl" class="photo"/>
+                <img class="choose" src="images/20180103/choose.png" onclick="chooseImage(0)"/>
+            </div>
+            <div class="camera">
+                <img id="imgCredentialFacePhotoUrl1" class="photo"/>
+            </div>
+            <div class="cameraMask">
+                <div class="save">
+                    <img src="images/20180103/save.png" onclick="saveImage(0)"/>
+                </div>
+                <div class="cancel">
+                    <img src="images/20180103/cancel.png" onclick="cancelImage(0)"/>
+                </div>
+            </div>
+            <div style="text-align:center;margin-top:15px">
+                <label id="lbTitle1">身份证正面</label>
+            </div>
+        </div>
+        <img src="images/20180103/line2.png" style="width:100%;height:100%"/>
+        <div class="item">
+            <div class="original">
+                <img id="imgCredentialBackPhotoUrl" class="photo"/>
+                <img class="choose" src="images/20180103/choose.png" onclick="chooseImage(1)"/>
+            </div>
+            <div class="camera">
+                <img id="imgCredentialBackPhotoUrl1" class="photo"/>
+            </div>
+            <div class="cameraMask">
+                <img class="save" src="images/20180103/save.png" onclick="saveImage(1)"/>
+                <img class="cancel" src="images/20180103/cancel.png" onclick="cancelImage(1)"/>
+            </div>
+            <div style="text-align:center;margin-top:15px">
+                <label id="lbTitle2">身份证背面</label>
+            </div>
+        </div>
+        <img src="images/20180103/line2.png" style="width:100%;height:100%"/>
+        <div class="item">
+            <div class="original">
+                <img id="imgSelfiePhotoUrl" class="photo"/>
+                <img class="choose" src="images/20180103/choose.png" onclick="chooseImage(2)"/>
+            </div>
+            <div class="camera">
+                <img id="imgSelfiePhotoUrl1" class="photo"/>
+            </div>
+            <div class="cameraMask">
+                <img class="save" src="images/20180103/save.png" onclick="saveImage(2)"/>
+                <img class="cancel" src="images/20180103/cancel.png" onclick="cancelImage(2)"/>
+            </div>
+            <div style="text-align:center;margin-top:15px">
+                <label>手持证照片</label>
+            </div>
+        </div>
+    </div>
+    <div style="height:20px">
+        <img id="imgChoose1" src="images/20180103/choose.png" style="display:none"/>
+    </div>
 </div>
 </body>
 </html>
@@ -63,8 +174,3 @@
 <script src="script/constants.js?ver=16.12.376"></script>
 <script src="script/service.js?ver=16.12.376"></script>
 <script src="script/photo.js?ver=16.12.376"></script>
-<script type="text/javascript">
-  mui.init({
-    swipeBack: true //启用右滑关闭功能
-  });
-</script>

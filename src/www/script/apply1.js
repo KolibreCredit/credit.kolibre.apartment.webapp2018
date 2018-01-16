@@ -1,7 +1,7 @@
 /**
  * Created by long.jiang on 2017/1/9.
  */
-var waitCount = 0;
+var waitCount = 60;
 var waitTimer = null;
 var isSendCaptcha = true;
 //
@@ -28,7 +28,6 @@ function sendCaptcha() {
             mui.toast(constants.msgInfo.phoneerr);
             return false;
         }
-        isSendCaptcha = false;
         var businessType = "TenantThreeFactoryVerify";
         var data = {
             cellphone: cellphone,
@@ -64,7 +63,6 @@ function apply() {
         mui.toast(constants.msgInfo.phoneerr);
         return false;
     }
-
     var captcha = $("#txtCaptcha").val();
     if (captcha == '') {
         mui.toast(constants.msgInfo.captcha);
@@ -88,9 +86,9 @@ function apply() {
         if (res.succeeded) {
             var data = {
                 authCode: res.data.authCode,
-                cellphoneBelong: cellphoneBelong
+                cellphoneAscription: cellphoneBelong
             };
-            postInvoke(constants.URLS.SMSCODEVERIFY, data, function (res1) {
+            postInvoke(constants.URLS.TENANTVALIDATECODEVERIFY, data, function (res1) {
                 if (res1.succeeded) {
                     $(".msg-icon").removeClass("fail").addClass("success");
                     $(".msg-tip").html("认证成功");

@@ -1,6 +1,5 @@
-var currentTab = 0;
-var openId = "";
 
+var currentTab = 0;
 function selectTabToggle(index) {
     if (currentTab != index) {
         currentTab = index;
@@ -26,7 +25,7 @@ function findAllLeaseOrder(index) {
     }
     $('#nodataSpan').html(nodataSpantext);
     getInvoke(constants.URLS.QUERYALLORDERS.format(orderState), function (res) {
-        if (res.data == null) {
+        if (res.data.length == 0) {
             $('.billList').html("");
             $('.nodataDiv').show();
         }
@@ -89,18 +88,13 @@ function findAllLeaseOrder(index) {
                     }
                     notPaidAmount = ((item.totalAmount - item.paidAmount) / 100).toFixed(2).replace(/\B(?=(?:\d{3})+\b)/g, ',');
                     lbNotPay = "<span class='tip {0}'>待支付</span>".format((item.isCurrent ? 'active' : 'normal'));
-                    btnBillPay = (item.isCurrent ? '<span class="billbtnPay btnActive" onclick="isLeaseOrderStaging(\'' + item.orderId + '\')">立即支付</span>' : '<span class="billbtnNotPay">立即支付</span>');
+                    btnBillPay = (item.isCurrent ? '<span class="billbtnPay btnActive" onclick="createTransaction(\'' + item.orderId + '\')">立即支付</span>' : '<span class="billbtnNotPay">立即支付</span>');
                 }
-                if (item.orderState == 'Deposit') {
-                    lbOrderType = '<img src="{0}" /><span>押金 {1}</span>'.format((item.isCurrent ? 'images/ic_bill_deposit.png' : 'images/ic_bill_normal.png'), totalAmount);
-                }
-                else {
-                    lbOrderType = '<img src="{0}" /><span>租金及物业费 {1}</span>'.format((item.isCurrent ? 'images/ic_bill_deposit.png' : 'images/ic_bill_normal.png'), totalAmount);
-                }
+                lbOrderType = '<img src="{0}" /><span>{1}{2}</span>'.format((item.isCurrent ? 'images/ic_bill_deposit.png' : 'images/ic_bill_normal.png'), getOrderType(item.orderType), totalAmount);
                 if (free != "") {
                     free = "<p class='free'>{0}</p>".format(free);
                 }
-                billHtmls += tplBill.format(lbTime, lbState, lbOrderType, item.orderNo, notPaidAmount, lbNotPay, btnBillPay, free, imgRental, 'item');
+                billHtmls += tplBill.format(lbTime, lbState, lbOrderType, item.orderId, notPaidAmount, lbNotPay, btnBillPay, free, imgRental, 'item');
                 free = "";
                 imgRental = "";
             }
@@ -109,73 +103,20 @@ function findAllLeaseOrder(index) {
     });
 }
 
-function leaseTransactionCreate(leaseOrderId) {
+function createTransaction(orderId) {
     if (isWeixin()) {
-        window.location.href = constants.URLS.WEIXINPAY2.format(openId, leaseOrderId);
+        var redirect_uri = window.encodeURIComponent(constants.URLS.WEBPAYURL.format(orderId));
+        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + constants.CONFIGS.APPID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base#wechat_redirect";
     } else {
-        window.location.href = constants.URLS.WEBPAY.format(leaseOrderId);
+        window.location.href = constants.URLS.WEBPAYURL.format(orderId);
     }
 }
 
-function isLeaseOrderStaging(leaseOrderId) {
-    postInvoke(constants.URLS.ISLEASEORDERSTAGING, {leaseOrderId: leaseOrderId}, function (res) {
-        if (res.succeeded && res.data.needStaging) {
-            $("#lbleaseId").text(res.data.leaseId);
-            $(".msg-alert").show();
-
-        } else {
-            leaseTransactionCreate(leaseOrderId);
-        }
-    }, function (err) {
-        mui.toast(err.message);
-    });
-}
-
-function closeApply() {
-    $(".msg-alert").hide();
-}
-
-//
-var isApply = true;
-
-function apply() {
-    if (!isApply) {
-        return false;
-    }
-    isApply = false;
-    setTimeout(function () {
-        isApply = true;
-    }, 5000);
-    var leaseId = $("#lbleaseId").text();
-    setCookie(constants.COOKIES.LEASEID, leaseId);
-    getInvoke(constants.URLS.GETCURRENTHOUSEACCOUNTINFO, function (res) {
-        if (res.isVerified) {
-            window.location.href = "apply2.html";
-        } else {
-            var data = {
-                realName: res.realName,
-                idCardNo: res.credentialNo,
-                cellphone: res.cellphone
-            };
-            postInvoke(constants.URLS.THREEFACTORVERIFY, data, function (res1) {
-                if (res1.succeeded) {
-                    window.location.href = "apply2.html";
-                } else {
-                    window.location.href = "apply1.html";
-                }
-            }, function (err) {
-                mui.toast(err.message);
-            });
-        }
-    });
+function view(orderId) {
+    window.location.href = "billView.html?orderId={0}".format(orderId);
 }
 
 $(document).ready(function () {
-    openId = getURLQuery("openId");
     findAllLeaseOrder(0);
-    /*getInvoke(constants.URLS.WHETHERCONFIRMCONTRACTCHANGE, function (res) {
-        if (res.data.operationCode == 1) {
-            window.location.href = "verify.html?url=" + encodeURIComponent(window.location.href);
-        }
-    });*/
 });
+

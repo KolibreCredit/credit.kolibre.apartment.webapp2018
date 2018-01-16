@@ -13,11 +13,12 @@
     <!--App自定义的css-->
     <link href="css/app.css?ver=16.12.376" rel="stylesheet"/>
     <style type="text/css">
-        input[type=text], input[type=password] {
+        input[type=text] {
             padding: 5px;
             border: 0;
             margin-bottom: 0;
         }
+
         .selecttype {
             background-color: #ffffff;
             border-radius: 6px;
@@ -59,23 +60,26 @@
             width: 100%;
         }
 
-        #div10, #div20, #div30 {
-            margin-top: 20px;
-            height: 180px;
+        .camera {
             text-align: center;
-            background-color: #ffffff;
-            padding-top: 20px;
-            cursor: pointer;
-            border: 1px dashed #fd8b14;
-            border-radius: 6px;
+            position: relative;
         }
 
-        #div11, #div21, #div31 {
-            margin-top: 20px;
-            height: 180px;
+        .photo {
+            height: 172px;
+            width: 100%;
+        }
+        .choose {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            right: 10px;
+            bottom: 10px;
+        }
+        .title {
+            height: 50px;
+            line-height: 50px;
             text-align: center;
-            background-color: #ffffff;
-            display: none;
         }
     </style>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
@@ -120,51 +124,35 @@
                 onclick="twoFactorVerify()">下一步
         </button>
     </div>
-    <div class="step1" style="background-color:#f0f0f0;padding:0 20px">
+    <div class="step1">
         <div style="height:60px;line-height:60px;font-size: 16px;color:#646464;text-align:center">
             上传<span class="chooseTip">有效二代身份证</span>照片
         </div>
-        <div id="div10" style="margin-top:0">
-            <div style="text-align:center">
-                <img class="demo" src="images/sfz1-2.png" style="width:160px;height:96px"/>
+        <div style="background-color:#FFFFFF;padding:0 40px">
+            <div style="height:30px"></div>
+            <div class="camera">
+                <img id="imgCredientalFacePhotoUrl" class="photo" src="images/sfz1-2.png"/>
+                <img src="images/20180103/choose.png" class="choose" id="chooseImg1"/>
             </div>
-            <div style="text-align:center;margin-top:-77px">
-                <img src="images/camera2.png" style="width:58px;height:58px" id="chooseImg1"/>
-            </div>
-            <div class="title" style="text-align:center;margin-top:20px">
+            <div class="title" id="lbTitle1">
                 身份证<span style="color:#f58a00">正面</span>
             </div>
-        </div>
-        <div id="div11" style="margin-top:0">
-            <img id="img12" src="images/loading.gif" style="width:100%;height:100%;border-radius:6px">
-        </div>
-        <div id="div20">
-            <div style="text-align:center">
-                <img class="demo" src="images/sfz2-2.png" style="width:160px;height:96px"/>
+            <img src="images/20180103/line2.png" style="width:100%;vertical-align: top"/>
+            <div class="camera">
+                <img id="imgCredientalBackPhotoUrl" class="photo" src="images/sfz2-2.png"/>
+                <img src="images/20180103/choose.png" class="choose" id="chooseImg2"/>
             </div>
-            <div style="text-align:center;margin-top:-77px">
-                <img src="images/camera2.png" style="width:58px;height:58px" id="chooseImg2"/>
-            </div>
-            <div class="title" style="text-align:center;margin-top:20px">
+            <div class="title" id="lbTitle2">
                 身份证<span style="color:#f58a00">背面</span>
             </div>
-        </div>
-        <div id="div21">
-            <img id="img22" src="images/loading.gif" style="width:100%;height:100%;border-radius:6px">
-        </div>
-        <div id="div30">
-            <div style="text-align:center">
-                <img class="demo" src="images/sfz3-2.png" style="width:160px;height:96px"/>
+            <img src="images/20180103/line2.png" style="width:100%;vertical-align: top"/>
+            <div class="camera">
+                <img id="imgSelfiePhotoUrl" class="photo" src="images/sfz3-2.png"/>
+                <img id="chooseImg3" class="choose" src="images/20180103/choose.png"/>
             </div>
-            <div style="text-align:center;margin-top:-77px">
-                <img src="images/camera2.png" style="width:58px;height:58px" id="chooseImg3"/>
-            </div>
-            <div class="title" style="text-align:center;margin-top:20px">
+            <div class="title">
                 <span style="color:#f58a00">手持</span>证件照
             </div>
-        </div>
-        <div id="div31">
-            <img id="img32" src="images/loading.gif" style="width: 100%;height:100%;border-radius:6px">
         </div>
         <div style="text-align:center;margin-top:30px">
             <button class="btnActive" onclick="confirmTenantInfo()">提交</button>

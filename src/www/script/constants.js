@@ -3,31 +3,27 @@
  */
 var constants = {
     URLS: {
-        //
-        WEIXINPAY: "http://test.fengniaowu.com/weixin/WebPay.aspx?openId={0}&leaseOrderId={1}",
-        WEIXINPAY2: "http://test.fengniaowu.com/weixin/WebPay2.aspx?openId={0}&leaseOrderId={1}",
-        WEIXIBILL: "http://test.fengniaowu.com/weixin/WeiXinBill.aspx",
-        WEIXIBILL2: "http://test.fengniaowu.com/weixin/WeiXinBill2.aspx",
-        BILL: "bill.html?openId=0",
-        BILL2: "bill2.html?openId=0",
-        WEBPAY: "http://test.fengniaowu.com/zhifubao/WebPay.aspx?leaseOrderId={0}",
+        BILL: "bill.html",
+        WEBPAYURL: "http://test.fengniaowu.com/webpay.html?orderId={0}",
         //
         SEND: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/ValidateCode/Send",
         VERIFY: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/ValidateCode/Verify",
         TENANT: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Register/Tenant",
         LOGINBYPASSWORD: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/PasswordLogin/Tenant/Login",
-        LOGINAUTHCODE:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/ValidateCodeLogin/Tenant/Login",
-        SETPASSWORD:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Password/Set",
+        LOGINAUTHCODE: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/ValidateCodeLogin/Tenant/Login",
+        SETPASSWORD: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Password/Set",
         GETCURRENTTENANT: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/GetCurrentTenant",
-        TWOFACTORVERIFY:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/TwoFactorVerify",
-        CONFIRMTENANTINFO:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/ConfirmTenantInfo",
+        TWOFACTORVERIFY: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/TwoFactorVerify",
+        CONFIRMTENANTINFO: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/ConfirmTenantInfo",
         //
         SIGNATURE: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/FileController/Signature?url={0}",
-        WEIXINUPLOADIMAGES: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/FileController/UploadImagesWeiXin",
+        UPLOADIMAGESWEIXIN: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/FileController/UploadImagesWeiXin",
         UPLOADIMAGESQR: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/FileController/UploadImagesQR",
-        GETUNCONFIRMEDCONTRACTCOUNT:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/GetUnConfirmedContractCount",
+        //
+        GETUNCONFIRMEDCONTRACTCOUNT: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/GetUnConfirmedContractCount",
         GETCURRENTCONTRACTS: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/GetCurrentContracts",
         GETCONTRACTDETAILS: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/GetContractDetails?contractId={0}",
+        TENANTVALIDATECODEVERIFY: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/TenantValidateCodeVerify",
         CREATECONFIRMINFO: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/CreateConfirmInfo",
         UPLOADPICTURES: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/UploadPictures",
         UPDATECONTACTINFO: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/UpdateContactInfo",
@@ -38,7 +34,14 @@ var constants = {
         CANCELCHECKOUTAPPLY: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/CancelCheckoutApply",
         //
         QUERYALLORDERS: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Order/QueryAllOrders?orderState={0}",
-        CREATEYUEFUORDERS:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Order/CreateYueFuOrders"
+        CREATEYUEFUORDERS: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Order/CreateYueFuOrders",
+        //
+        GETORDERBYORDERID:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Order/GetOrderByOrderId?orderId={0}",
+        CREATETRANSACTION:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Transaction/CreateTransaction",
+        GETTRANSACTION:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Transaction/GetTransaction?transactionId={0}",
+        GETWECHATOPENID:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Payment/GetWeChatOpenId",
+        ORDERPAYMENT:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Payment/OrderPayment",
+        GETTENANTCREDITINFO:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/GetTenantCreditInfo"
     },
     COOKIES: {
         XKCSID: 'X-KC-SID',
@@ -84,12 +87,12 @@ var constants = {
         realName: "姓名不能为空",
         credentialNo: "证件号码不能为空",
         credentialNoerr: "证件号码格式错误",
-        img10err:"身份证正面不能为空",
-        img20err:"身份证背面不能为空",
-        img11err:"护照个人信息页不能为空",
-        img21err:"护照签证信息页不能为空",
-        img3err:"手持证件不能为空",
-        verify:"{0}提交成功",
+        img10err: "身份证正面不能为空",
+        img20err: "身份证背面不能为空",
+        img11err: "护照个人信息页不能为空",
+        img21err: "护照签证信息页不能为空",
+        img3err: "手持证件不能为空",
+        verify: "{0}提交成功",
         verifyerr: "请提交个人身份信息",
         uploaderr: "身份证上传失败",
         resetPassword: "密码重置成功",
@@ -130,12 +133,13 @@ var constants = {
         rentalTypeerr: "付款方式不能为空",
         accountCellphone: "联系人手机号不能为{0}",
         accountName: "联系人不能为{0}"
+    },
+    CONFIGS: {
+        APPID: "wxa74d300625108685"
     }
 };
-
 var COMMONPATH = {
     PAGE: {
-        LOGIN: 'login.html?url=##rurl##',
-        LOGINV2: 'loginv2.html?url=##rurl##'
+        LOGIN: 'login.html?url=##rurl##'
     }
 };

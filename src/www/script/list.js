@@ -28,6 +28,10 @@ function hideApply() {
     $(".msg-post").hide();
 }
 
+function contractConfirm(contractId) {
+    window.location.href = "view.html?contractId={0}&confirmed=0".format(contractId);
+}
+
 function view(contractId) {
     window.location.href = "view.html?contractId={0}".format(contractId);
 }
@@ -77,6 +81,9 @@ var getPayPeriod = function (payPeriod) {
     else if (payPeriod == 0) {
         rentalType = "全额付";
     }
+    else if (payPeriod == 1) {
+        rentalType = "月付";
+    }
     return rentalType;
 };
 
@@ -87,7 +94,7 @@ function getCurrentcontracts() {
             var tplLeases = $("#tplLeases").html();
             var item = null;
             var btnControls = "";
-            var btnConfirm = "<button onclick='view(\"{0}\")' class='btnPay btnActive'>确认租约</button>";
+            var btnConfirm = "<button onclick='contractConfirm(\"{0}\")' class='btnPay btnActive'>确认租约</button>";
             var btnApply = "<button onclick='showApply(\"{0}\")' class='btnPay btnActive' style='margin-left:10px'>申请月付</button>";
             var btnEviction = "<button onclick='eviction(\"{0}\")' class='btnEviction btnCancel'>申请退租</button>";
             var btnQuash = "<button onclick='showQuash(\"{0}\")' class='btnQuash btnCancel'>取消退租</button>";
@@ -131,7 +138,8 @@ function getCurrentcontracts() {
                     btnControls,
                     icon,
                     titleColor,
-                    title
+                    title,
+                    item.contractId
                 );
             }
             $("#divLeases").html(leasesHtml);

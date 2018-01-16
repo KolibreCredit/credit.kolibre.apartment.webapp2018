@@ -1,10 +1,3 @@
-function bill() {
-    if (isWeixin()) {
-        window.location.href = constants.URLS.WEIXIBILL;
-    } else {
-        window.location.href = constants.URLS.BILL;
-    }
-}
 
 $(document).ready(function () {
     getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
@@ -16,9 +9,8 @@ $(document).ready(function () {
             } else {
                 $("#needVerify").show();
             }
-            var creditLevel = 4;
             $('#star').raty({
-                score: parseFloat(creditLevel) / 2,
+                score: parseFloat(res.data.creditRating) / 2,
                 path: 'images/star',
                 readOnly: true,
                 size: 15

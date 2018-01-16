@@ -9,12 +9,6 @@
     <!--App自定义的css-->
     <link href="css/app.css?ver=17.10.143" rel="stylesheet"/>
     <style type="text/css">
-        input[type=text], input[type=password] {
-            padding: 5px;
-            border: 0;
-            margin-bottom: 0;
-        }
-
         .mui-table-view {
             margin-top: 10px;
         }
@@ -38,6 +32,19 @@
         .mui-navigate-right:after, .mui-push-left:after, .mui-push-right:after {
             top: 50px;
             z-index: 999;
+        }
+
+        .mui-media-body {
+            position: relative;
+            width: 100%;
+        }
+
+        .ic_grey_arrow {
+            position: absolute;
+            right: 0;
+            top: 42px;
+            width: 18px;
+            height: 18px;
         }
 
         .mui-ellipsis {
@@ -66,6 +73,7 @@
             float: right;
             height: 30px;
         }
+
         .lbPay {
             font-size: 14px;
             color: #7ed321;
@@ -89,6 +97,7 @@
         .eviction {
             color: #ff7e71;
         }
+
         .msg-alert {
             z-index: 2;
         }
@@ -114,16 +123,20 @@
                         <div style="text-align:center">
                             <img src="images/20180103/mian.png" style="width:190px;height:170px"/>
                         </div>
-                       <div style="font-size:20px;color:#646464;text-align:center;line-height:30px;margin-top:-15px">
+                        <div style="font-size:20px;color:#646464;text-align:center;line-height:30px;margin-top:-15px">
                             月付房租，免手续费
                         </div>
                         <div style="font-size:20px;color:#646464;text-align:center;line-height:30px">
                             租房更轻松～
                         </div>
                         <div style="padding: 0 30px;margin-top:30px">
-                            <button style="background-color:#ff8c14;border-radius:100px;height:40px;color:#ffffff;font-size:16px;width:100%;border:none"  onclick="apply()" class="btnActive">确认申请</button>
+                            <button style="background-color:#ff8c14;border-radius:100px;height:40px;color:#ffffff;font-size:16px;width:100%;border:none"
+                                    onclick="apply()" class="btnActive">确认申请
+                            </button>
                         </div>
-                        <img src="images/close.png" style="width:24px;height:24px;position: absolute;top:20px;right:20px" onclick="hideApply()"/>
+                        <img src="images/close.png"
+                             style="width:24px;height:24px;position: absolute;top:20px;right:20px"
+                             onclick="hideApply()"/>
                     </div>
                 </td>
             </tr>
@@ -163,25 +176,25 @@
 <script type="text/html" id="tplLeases">
     <div class="mui-table-view">
         <div class="mui-table-view-cell mui-media" style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.05)">
-            <div class="mui-media-body" style="width:100%">
+            <div class="mui-media-body">
                 <div class="mui-ellipsis">
-                    <span style='font-size:14px;color:#adadad'>创建日期：{0}</span><span style="float:right"
-                                                                                    class="{7}">{8}</span>
+                    <span style='font-size:14px;color:#adadad'>创建日期：{0}</span><span style="float:right"  class="{7}">{8}</span>
                 </div>
             </div>
         </div>
         <div class="mui-table-view-cell mui-media" style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.05)">
-            <div class="mui-media-body" style="width:100%">
+            <div class="mui-media-body" onclick="view('{9}')">
                 <div class="mui-ellipsis" style="font-size:18px;color:#646464;margin-top:10px">{1}</div>
                 <div class="mui-ellipsis" style='font-size:16px;color:#777777'>
                     <img src="images/iconroom.png"
                          style="height:16px;width:16px;vertical-align:middle;margin-right:2px"/>{2}室
                 </div>
                 <div class="mui-ellipsis" style="font-size:16px;color:#646464">¥{3}/月，按{4}</div>
+                <img class="ic_grey_arrow" src="images/ic_grey_arrow.png"/>
             </div>
         </div>
         <div class="mui-table-view-cell mui-media" style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.05)">
-            <div class="mui-media-body" style="width:100%">
+            <div class="mui-media-body">
                 {5}
             </div>
         </div>

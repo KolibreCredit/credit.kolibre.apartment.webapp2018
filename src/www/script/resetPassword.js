@@ -30,7 +30,7 @@ function sendCaptcha() {
             return false;
         }
         isSendCaptcha = false;
-        var businessType = "AccountChangePassword";
+        var businessType = "TenantChangePassword";
         var data = {
             cellphone: cellphone,
             businessType: businessType
@@ -83,7 +83,7 @@ function changePassword() {
         isResetPassword = false;
         var verify = {
             cellphone: cellphone,
-            businessType: "AccountChangePassword",
+            businessType: "TenantChangePassword",
             validateCode: captcha
         };
         postInvoke(constants.URLS.VERIFY, verify, function (res) {

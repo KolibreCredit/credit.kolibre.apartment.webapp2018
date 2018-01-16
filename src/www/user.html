@@ -39,7 +39,7 @@
 
         .accountNo {
             margin-top: 5px;
-            border: 1px solid #ffffff;
+            border: 1px solid #FEC798;
             border-radius: 57px;
             font-size: 14px;
             color: #ffffff;
@@ -85,9 +85,11 @@
             background-size: 24px 24px;
             background-position: 0 18px;
         }
+
         a.item1 span {
             display: none;
         }
+
         ul.userManageList li a.item2 {
             background: url(images/user/bill.png) no-repeat;
             background-size: 24px 24px;
@@ -126,16 +128,21 @@
             display: none;
         }
         .loginOut {
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-            background-color: #ffffff;
-            height: 55px;
-            line-height: 55px;
-            font-size: 16px;
+            background-color: #FFFFFF;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            font-size: 18px;
             color: #646464;
+            margin-top: 40px;
         }
-
+        @media screen and (min-height:736px) {
+            .loginOut {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+            }
+        }
         #star img {
             width: 14px;
             height: 14px;
@@ -151,13 +158,15 @@
         <img src="images/20171212/ic_userImg.png"/>
     </div>
     <div style="font-size:14px;color:#666666;text-align:center;white-space:nowrap">
-        信用等级<div id="star" style="display:inline-block;margin-left:10px"></div>
+        信用等级
+        <div id="star" style="display:inline-block;margin-left:10px"></div>
     </div>
     <div style="background-color:#ffffff">
         <ul class="userManageList">
             <li>
                 <a class="item1" href="list.html">
-                    我的租约<span style="font-size:16px;color:#333333;position: absolute;right:50px">待处理<span  style="background:#ff0100;width:7px;height:7px;border-radius:100%;display:inline-block;margin-left:5px"></span></span>
+                    我的租约<span style="font-size:16px;color:#333333;position: absolute;right:50px">待处理<span
+                        style="background:#ff0100;width:7px;height:7px;border-radius:100%;display:inline-block;margin-left:5px"></span></span>
                 </a>
             </li>
             <li>
@@ -179,8 +188,9 @@
             </li>
         </ul>
     </div>
-    <div class="loginOut" onclick="loginOut()">退出</div>
-    <div style="height:40px"></div>
+    <div class="loginOut" onclick="loginOut()">
+        退出登录
+    </div>
 </div>
 </body>
 </html>

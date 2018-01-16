@@ -2,6 +2,7 @@
  * Created by long.jiang on 2016/12/14.
  */
 var contractId = "";
+var confirmed = "";
 
 function apply() {
     var data = {contractId: contractId};
@@ -45,6 +46,7 @@ function getPayPeriod(payPeriod) {
 
 $(document).ready(function () {
     contractId = getURLQuery("contractId");
+    confirmed = getURLQuery("confirmed");
     getInvoke(constants.URLS.GETCONTRACTDETAILS.format(contractId), function (res) {
         if (res.succeeded && res.data != null) {
             var item = res.data;
@@ -60,6 +62,15 @@ $(document).ready(function () {
                 item.rentEndTime.substring(0, 10),
                 getPayPeriod(item.payPeriod));
             $("#divLeaseInfo").html(htmlLeaseInfo);
+            if (confirmed != "0") {
+                if (item.confirmed) {
+                    $(".btnNext").hide();
+                } else {
+                    $(".btnNext").html("确认租约").show()
+                }
+            } else {
+                $(".btnNext").show();
+            }
         }
     }, function (err) {
         mui.toast(err.message);

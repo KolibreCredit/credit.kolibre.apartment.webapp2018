@@ -58,37 +58,48 @@
         .slide-container {
             background: #ffffff;
             width: 100%;
+        }
+        .slide-container .picture {
             position: relative;
         }
+
         .slide-container .photo {
             width: 100%;
             height: 140px;
+            border-radius:6px;
         }
-
-        .slide-container .contract{
+        .slide-container .contract {
             width: 100%;
             height: 200px;
+            border-radius:6px;
         }
         .slide-container .title {
             color: #333333;
             font-size: 16px;
-            height: 60px;
-            line-height: 60px;
+            height: 50px;
+            line-height: 50px;
         }
-        .swiper-pagination-bullet {
-            display: none;
+        .slide-container .camera {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            right: 8px;
+            bottom: 8px;
         }
     </style>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 </head>
 <body style="background-color:#f7f7f7">
 <div class="mui-content" style="background-color:#f7f7f7">
     <div style="background: url('images/20180103/apply5.jpg');background-size:cover;padding:20px;text-align:center">
         <img src="images/20180103/user1.png" style="width:67px;height:40px;z-index:2;position:relative"/>
-        <div style="background:#FEF3EB;border-radius:6px;height:118px;position:relative;margin-top:-11px">
+        <div style="background:#FEF3EB;border-radius:6px;height:118px;position:relative;margin-top:-12px">
             <div style="font-size:16px;color:#7f7f7f;padding:20px">
-                <div style="text-align:left">姓名<span style="margin-left:20px">xxx</span></div>
-                <div style="padding: 5px 0;text-align:left">手机号<span style="margin-left:20px">15221094470</span></div>
-                <div style="text-align:left">证件号<span style="margin-left:20px">522224198210085033</span></div>
+                <div style="text-align:left">姓名<span style="margin-left:20px" id="lbRealName">xxx</span></div>
+                <div style="padding: 5px 0;text-align:left">手机号<span style="margin-left:20px" id="lbCellphone">15221094470</span>
+                </div>
+                <div style="text-align:left">证件号<span style="margin-left:20px"
+                                                      id="lbCredentialNo">522224198210085033</span></div>
             </div>
         </div>
     </div>
@@ -135,25 +146,35 @@
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
                         <div class="slide-container">
-                            <img src="images/sfz1-2.png" class="photo"/>
+                            <div class="picture">
+                                <img id="imgCredentialFacePhoto" class="photo"/>
+                                <img src="images/20180103/choose.png" class="camera" onclick="chooseImage(0)"/>
+                            </div>
                             <div class="title">
-                                上传合同
+                                <span id="lbCredentialFacePhoto"></span>
                             </div>
                         </div>
                     </div>
                     <div class="swiper-slide">
                         <div class="slide-container">
-                            <img src="images/sfz2-2.png" class="photo"/>
-                            <div class="title">
-                                上传合同
+                            <div class="picture">
+                                <img id="imgCredentialBackPhoto" class="photo"/>
+                                <img src="images/20180103/choose.png" class="camera" onclick="chooseImage(1)"/>
                             </div>
+                            <div class="title">
+                                <span id="lbCredentialBackPhoto"></span>
+                            </div>
+
                         </div>
                     </div>
                     <div class="swiper-slide">
                         <div class="slide-container">
-                            <img src="images/sfz3-2.png" class="photo"/>
+                            <div class="picture">
+                                <img id="imgSelfiePhoto" class="photo"/>
+                                <img src="images/20180103/choose.png" class="camera" onclick="chooseImage(2)"/>
+                            </div>
                             <div class="title">
-                                上传合同
+                                手持证件照
                             </div>
                         </div>
                     </div>
@@ -167,41 +188,37 @@
         <div style="line-height:60px;padding-left:20px;font-size:20px;color:#646464">
             合同信息
         </div>
-        <div style="margin:0 20px;height:200px;">
+        <div style="margin:0 20px">
             <div class="swiper-container" id="swipercontainer2">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide">
+                    <div class="swiper-slide" id="divAddSlide" style="border:2px dotted #fd8b14;border-radius:6px;height:200px">
                         <div class="slide-container">
-                            <img src="images/demo3.png" class="contract"/>
+                            <div style="height:70px"></div>
+                            <img src="images/20180103/add.png" style="width:36px;height:36px"/>
+                            <div style="text-align:center;font-size:14px;color:#646464">
+                                追加合同
+                            </div>
                         </div>
                     </div>
-                    <div class="swiper-slide">
-                        <div class="slide-container">
-                            <img src="images/demo3.png" class="contract"/>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="slide-container">
-                            <img src="images/demo3.png" class="contract"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-pagination">
                 </div>
             </div>
         </div>
-        <div style="line-height:60px;padding-left:20px;font-size:20px;color:#646464;text-align:center">
-            共5页
+        <div style="text-align:center;font-size:16px;color:#333333;line-height:50px">
+            共<span id="lbPage" style="padding:0 10px;color:#ff9e00">0</span> 页
         </div>
     </div>
     <div style="margin-top:20px;padding-left:30px;line-height:24px;cursor:pointer;position: relative;font-size:12px">
         <img src="images/check1.png" style="width:18px;position: absolute;top:4px;left:20px"/>
-        <span style="padding-left:15px;padding-right:5px">同意</span><a style="color:#ff9e00;text-decoration:underline" href="#divAgreement">《蜂鸟屋服务协议》</a>
+        <span style="padding-left:15px;padding-right:5px">同意</span><a style="color:#ff9e00;text-decoration:underline"
+                                                                      href="#divAgreement">《蜂鸟屋服务协议》</a>
     </div>
     <div style="position: fixed;bottom:0;right:0;left:0;z-index:2">
         <button class="btnActive" onclick="confirmcCntract()" style="border-radius:inherit">确认并提交</button>
     </div>
-    <div style="height:60px"></div>
+    <div style="display:none">
+        <img id="imgChoose1" src="images/20180103/choose.png" style="width:36px;height:36px"/>
+        <img id="imgChoose2" src="images/20180103/choose.png" style="width:36px;height:36px"/>
+    </div>
     <div id="divRelation" class="mui-popover mui-popover-action mui-popover-bottom mui-scroll-wrapper"
          style="height:215px;bottom:0;top:auto">
         <div class="mui-scroll">
@@ -230,12 +247,15 @@
             </ul>
         </div>
     </div>
-    <div id="divAgreement" class="mui-popover mui-popover-action mui-popover-bottom"  style="background-color: rgba(0, 0,0, 0.1); padding:20px; position: fixed; top: 0; bottom: 0; left: 0; right: 0;">
+    <div id="divAgreement" class="mui-popover mui-popover-action mui-popover-bottom"
+         style="background-color: rgba(0, 0,0, 0.1); padding:20px; position: fixed; top: 0; bottom: 0; left: 0; right: 0;">
         <div style="text-align:center;height:48px;line-height:48px;background:#fd8b14;border-radius:8px 8px 0 0;font-size:16px;color:#ffffff;padding-left:30px">
             蜂鸟屋服务协议<span style="float:right;width:30px">X</span>
         </div>
-        <div id="divAgreementDetail" class="mui-scroll-wrapper"  style="border-bottom: 20px solid #fff; border-top: 10px solid #fff;margin:0;background:#ffffff;border-radius:0 0 8px 8px;position: absolute;width: auto;bottom: 20px;right: 20px;left: 20px;top: 68px;">
-            <div class="mui-scroll" style="padding: 0 20px; margin-bottom: 20px;font-size:16px; color:#646464; text-indent: 20px; ">
+        <div id="divAgreementDetail" class="mui-scroll-wrapper"
+             style="border-bottom: 20px solid #fff; border-top: 10px solid #fff;margin:0;background:#ffffff;border-radius:0 0 8px 8px;position: absolute;width: auto;bottom: 20px;right: 20px;left: 20px;top: 68px;">
+            <div class="mui-scroll"
+                 style="padding: 0 20px; margin-bottom: 20px;font-size:16px; color:#646464; text-indent: 20px; ">
                 <p>
                     合同编号：
                 </p>
@@ -711,7 +731,7 @@
         </div>
         <div style="height:10px"></div>
     </div>
-    <div class="msg-content">
+    <div class="msg-content" style="z-index:9">
         <table style='width:100%;height:100%'>
             <tr>
                 <td style='vertical-align:middle'>
@@ -723,7 +743,7 @@
             </tr>
         </table>
     </div>
-    <div class="msg-post">
+    <div class="msg-post" style="z-index:8">
         <table style='width:100%;height:100%'>
             <tr>
                 <td style='vertical-align:middle'>
@@ -740,6 +760,16 @@
 </div>
 </body>
 </html>
+<script type="text/html" id="tplContractPicture">
+    <div class="swiper-slide">
+        <div class="slide-container">
+            <div class="picture">
+                <img src="{0}" class="contract"/>
+                <img src="images/20180103/choose.png" class="camera" onclick="chooseImage2({1})"/>
+            </div>
+        </div>
+    </div>
+</script>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/mui@3.4.0/examples/hello-mui/js/mui.picker.min.js"></script>

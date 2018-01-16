@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<input type="tel" id="phone" onfocus="getCursortPosition(this);" onclick="getCursortPosition(this);" onkeyup="format(this);" maxlength="13"/>
+<script>
+    var CaretPos = -1;
+    var numLength = 0;
+    function valid(value){
+        if(value && !/^\d{0,25}$/g.test(value)){
+            return value.replace(/[^0-9]/ig, '');
+        }
+        return value;
+    }
+    function format(obj){
+        var value=valid(obj.value);
+        value=value.replace(/\s*/g,"");
+        var result=[];
+        for(var i=0;i<value.length;i++){
+            if(i==3 || i==7){
+                result.push(" "+value.charAt(i));
+            }else{
+                result.push(value.charAt(i));
+            }
+        }
+        obj.value=result.join("");
+        if(obj.value.length < numLength){
+            if(CaretPos == 10 || CaretPos == 5){
+                CaretPos -= 2;
+            } else {
+                CaretPos -= 1;
+            }
+            setCaretPosition(obj, CaretPos);
+        }
+        console.log(CaretPos);
+        if(obj.value.length > numLength){
+            if(CaretPos == 8 || CaretPos == 3){
+                CaretPos += 2;
+            } else {
+                CaretPos += 1;
+            }
+            setCaretPosition(obj, CaretPos);
+
+        }
+        numLength = obj.value.length;
+    }
+    function getCursortPosition (ctrl) {
+        if (document.selection) {
+            ctrl.focus ();
+            var Sel = document.selection.createRange();
+            Sel.moveStart ('character', -ctrl.value.length);
+            CaretPos = Sel.text.length;
+        }else if (ctrl.selectionStart || ctrl.selectionStart == '0')
+            CaretPos = ctrl.selectionStart;
+    }
+    function setCaretPosition(ctrl, pos){
+        if(ctrl.setSelectionRange)
+        {
+            ctrl.focus();
+            ctrl.setSelectionRange(pos,pos);
+        }
+        else if (ctrl.createTextRange) {
+            var range = ctrl.createTextRange();
+            range.collapse(true);
+            range.moveEnd('character', pos);
+            range.moveStart('character', pos);
+            range.select();
+        }
+
+        //https://q.cnblogs.com/q/87897/
+    }
+</script>
+
+
+</body>
+</html>
+

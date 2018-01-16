@@ -9,12 +9,6 @@
     <!--App自定义的css-->
     <link href="css/app.css?ver=16.12.376" rel="stylesheet"/>
     <style type="text/css">
-        input[type=text] {
-            padding: 5px;
-            border: 0;
-            margin-bottom: 0;
-        }
-
         .slide-container {
             background: #ffffff;
             border: 2px dotted #fd8b14;
@@ -24,51 +18,32 @@
             text-align: center;
             position: relative;
         }
-
-        .slide-container .demo, .photo {
-            width: 230px;
+        .slide-container .photo {
+            width: 100%;
             height: 100%;
             border-radius: 6px;
-            padding-top: 10px;
-            padding-bottom: 10px;
         }
-
-        .camera-container {
-            left: 0;
-            right: 0;
-            top: 50px;
-            text-align: center;
-            position: absolute;
-        }
-
         .camera {
-            width: 150px;
-            height: 150px;
-            display: inline-block;
-            font-size: 0;
-            line-height: 0;
+            width: 100%;
+            position: absolute;
+            text-align:center;
+            top:50px;
         }
-
-        .camera .input-upload-image {
-            width: 150px;
-            height: 150px;
-            z-index: 888;
-        }
-
-        .input-upload-image {
-            z-index: 1;
-            border: none;
-            -webkit-opacity: 0;
-            opacity: 0;
-        }
-
         .camera img {
             width: 150px;
             height: 150px;
-            z-index: 999;
-            margin-top: -150px;
+        }
+        .btnActive {
+            background: #ff8c14;
+            border-radius: 44px;
+            height: 44px;
+            color: #ffffff;
+            font-size: 18px;
+            width: 100%;
+            border: none
         }
     </style>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 </head>
 <body style="background-color:#f7f7f7">
 <div class="mui-content" style="background-color:#f7f7f7">
@@ -85,23 +60,15 @@
     <div style="padding-left:20px;padding-right:20px">
         <div style="background-color:#ffffff">
             <div class="slide-container">
-                <img id="img1-0" class="demo" src="images/demo4.png">
-                <img id="img1-1" class="photo" src="images/demo3.png" style="display:none">
-                <div id="div1-0" class="camera-container">
-                    <div class="camera">
-                        <input type="file" accept="image/*" id="img1" name="img1"
-                               class="input-upload-image"/>
-                        <img src="images/camera.png"/>
-                    </div>
+                <img id="imgSelfiePhotoUrl" class="photo" src="images/demo4.png"/>
+                <div class="camera">
+                    <img id="chooseImage" src="images/camera.png"/>
                 </div>
             </div>
         </div>
     </div>
     <div style="padding-left:20px;padding-right:20px;margin-top:30px">
-        <button class="btnActive"
-                style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:100%;border:none"
-                onclick="apply()">下一步
-        </button>
+        <button class="btnActive" onclick="apply()">下一步</button>
     </div>
     <div class="msg-post" style="z-index:2">
         <table style='width:100%;height:100%'>
@@ -126,34 +93,3 @@
 <script src="script/constants.js?ver=16.12.376"></script>
 <script src="script/service.js?ver=16.12.376"></script>
 <script src="script/apply3.js?ver=16.12.376"></script>
-<script type="text/javascript">
-    // 照片的最大边压缩到该值
-    var maxSize = 200 * 1024;
-    var compress = function (res, fileSize, imgIndex) {
-        var img = new Image();
-        img.onload = function () {
-            var ratio = (fileSize >= maxSize ? 0.2 : 1);
-            var width = img.width;
-            var height = img.height;
-            var cvs = document.createElement('canvas');
-            var ctx = cvs.getContext('2d');
-            cvs.width = width;
-            cvs.height = height;
-            ctx.fillRect(0, 0, cvs.width, cvs.height);
-            ctx.drawImage(img, 0, 0, width, height);
-            var data = cvs.toDataURL('image/jpeg', ratio);
-            V2UploadImages(data, imgIndex);
-        };
-        img.src = res;
-    };
-    //
-    $(document).ready(function () {
-        document.getElementById('img1').addEventListener('change', function () {
-            var reader = new FileReader();
-            reader.onload = function () {
-                compress(this.result, this.result.length, 0);
-            };
-            reader.readAsDataURL(this.files[0]);
-        }, false);
-    });
-</script>

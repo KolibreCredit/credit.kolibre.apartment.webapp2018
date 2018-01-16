@@ -1,8 +1,8 @@
 $(document).ready(function () {
-    getInvoke(constants.URLS.GETACCOUNTCREDITINFO, function (res) {
-        if (res != null) {
+    getInvoke(constants.URLS.GETTENANTCREDITINFO, function (res) {
+        if (res.succeeded) {
             var path = "";
-            var score = parseFloat(res.creditLevel) / 2;
+            var score = parseFloat(res.data.creditRating)/ 2;
             if (score > 0 && score <= 2.5) {
                 $(".bg").addClass("bgImg1");
                 $(".icon").attr("src", "images/20171212/tip1.png");
@@ -38,8 +38,8 @@ $(document).ready(function () {
                 var htmllog = "";
                 var tpllog = $("#tplLog").html();
                 var item = null;
-                for (var i = 0; i < res.overdueRecords.length; i++) {
-                    item = res.overdueRecords[i];
+                for (var i = 0; i < res.data.overdueRecords.length; i++) {
+                    item = res.data.overdueRecords[i];
                     htmllog += tpllog.format(item.actualPaymentTime.substring(0, 10), item.orderPaymentTime.substring(0, 10), item.overdueDays);
                 }
                 $("#divLog").html(htmllog);

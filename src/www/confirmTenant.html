@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人信息确认</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <link href="packages/mui@3.4.0/examples/hello-mui/css/mui.picker.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=16.12.376" rel="stylesheet"/>
+    <style type="text/css">
+        input[type=text] {
+            padding: 5px;
+            border: 0;
+            margin-bottom: 0;
+            float: right;
+        }
+
+        .mui-media-body {
+            width: 110%;
+            position: relative;
+        }
+
+        .mui-media-body span {
+            font-size: 16px;
+            color: #646464;
+            position: absolute;
+            top: 10px;
+        }
+
+        .item {
+            padding-top: 20px;
+            border: 1px solid #ffffff;
+            border-radius: 6px;
+        }
+
+        .item .original {
+            height: 175px;
+            position: relative;
+        }
+
+        .choose {
+            position: absolute;
+            right: 15px;
+            bottom: 15px;
+            width: 40px;
+            height: 40px;
+        }
+
+        .photo {
+            width: 100%;
+            height: 100%;
+            border-radius: 6px;
+        }
+
+        .mui-table-view:before {
+            height: 0;
+        }
+
+        .btnSubmit {
+            height: 50px;
+            line-height: 50px;
+            background: #fb9329;
+            text-align: center;
+            font-size: 18px;
+            color: #FFFFFF;
+            margin-top: 50px;
+        }
+    </style>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+</head>
+<body style="background-color:#f7f7f7">
+<div class="mui-content" style="background-color:#f7f7f7">
+    <div style="background-color:rgba(254,148,54,0.1);color:#646464;height:40px;line-height:40px;padding-left:40px;position:relative">
+        <img src="images/20180103/tip.png" style="width:16px;height:16px;position:absolute;left:20px;top:12px"/><span
+            style="color:#fb9329;font-size:14px;float:left">以下信息若填写有误，请及时修改</span>
+    </div>
+    <ul class="mui-table-view mui-table-view-chevron">
+        <li class="mui-table-view-cell mui-media">
+            <div class="mui-media-body">
+                <span>真实姓名</span><input type="text" id="txtRealName" placeholder="请输入真实姓名" maxlength="10"
+                                        style="width:180px;text-align:right"/>
+            </div>
+        </li>
+        <li class="mui-table-view-cell mui-media">
+            <a class="mui-navigate-right" href="#divCredentialType">
+                <div class="mui-media-body">
+                    <span>证件类型</span><input type="text" id="txtCredentialType" placeholder="请选择证件类型" readonly="readonly"
+                                            style="text-align:right;margin-right:5px"/>
+                </div>
+            </a>
+        </li>
+        <li class="mui-table-view-cell mui-media">
+            <div class="mui-media-body">
+                <span>证件号码</span><input type="text" id="txtCredentialNo" placeholder="请输入证件号码" maxlength="18"
+                                        style="width:180px;text-align:right"/>
+            </div>
+        </li>
+    </ul>
+    <div style="padding-left:20px;padding-right:20px;margin-top:10px;background-color: #ffffff">
+        <div class="item">
+            <div class="original">
+                <img id="imgCredentialFacePhotoUrl" class="photo"/>
+                <img class="choose" src="images/20180103/choose.png" onclick="chooseImage(0)"/>
+            </div>
+            <div style="text-align:center;margin-top:15px">
+                <label id="lbTitle1">身份证正面</label>
+            </div>
+        </div>
+        <img src="images/20180103/line2.png" style="width:100%;height:100%"/>
+        <div class="item">
+            <div class="original">
+                <img id="imgCredentialBackPhotoUrl" class="photo"/>
+                <img class="choose" src="images/20180103/choose.png" onclick="chooseImage(1)"/>
+            </div>
+            <div style="text-align:center;margin-top:15px">
+                <label id="lbTitle2">身份证背面</label>
+            </div>
+        </div>
+        <img src="images/20180103/line2.png" style="width:100%;height:100%"/>
+        <div class="item">
+            <div class="original">
+                <img id="imgSelfiePhotoUrl" class="photo"/>
+                <img class="choose" src="images/20180103/choose.png" onclick="chooseImage(2)"/>
+            </div>
+            <div style="text-align:center;margin-top:15px">
+                <label>手持证照片</label>
+            </div>
+        </div>
+        <div style="height:10px"></div>
+    </div>
+    <div class="btnSubmit" onclick="confirmTenantInfo()">
+        确认并提交
+    </div>
+    <div id="divCredentialType" class="mui-popover mui-popover-action mui-popover-bottom mui-scroll-wrapper"
+         style="height:102px;bottom:0;top:auto">
+        <div class="mui-scroll">
+            <ul class="mui-table-view">
+                <li class="mui-table-view-cell">
+                    <a>身份证</a>
+                </li>
+                <li class="mui-table-view-cell">
+                    <a>护照</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <img id="imgChoose1" src="images/20180103/choose.png" style="display:none"/>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="packages/mui@3.4.0/examples/hello-mui/js/mui.picker.min.js"></script>
+<script src="script/constants.js?ver=16.12.376"></script>
+<script src="script/service.js?ver=16.12.376"></script>
+<script src="script/confirmTenant.js?ver=16.12.376"></script>
+<script type="text/javascript">
+    mui('#divDecoration').scroll({scrollX: false, scrollY: true});
+    mui('body').on('tap', '.mui-popover-action li>a', function () {
+        var a = this, parent;
+        //根据点击按钮，反推当前是哪个actionsheet
+        for (parent = a.parentNode; parent != document.body; parent = parent.parentNode) {
+            if (parent.classList.contains('mui-popover-action')) {
+                break;
+            }
+        }
+        $("#txtCredentialType").val(a.innerHTML);
+        if (a.innerHTML == "身份证") {
+            $("#lbTitle1").html("身份证正面");
+            $("#lbTitle2").html("身份证背面");
+        } else {
+            $("#lbTitle1").html("护照个人信息页");
+            $("#lbTitle2").html("护照签证信息页");
+        }
+        mui('#' + parent.id).popover('toggle');
+    });
+</script>

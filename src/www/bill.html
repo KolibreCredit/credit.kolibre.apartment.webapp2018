@@ -54,6 +54,7 @@
             list-style: none;
             padding: 0;
             box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            position: relative;
         }
 
         .billList .topDiv {
@@ -63,6 +64,7 @@
             color: #646464;
             text-align: left;
             line-height: 14px;
+            position: relative;
         }
 
         .state {
@@ -157,7 +159,7 @@
 
         .tip.normal {
             border: 1px solid #cccccc;
-            color: #99999;
+            color: #999999;
         }
 
         .tip.active {
@@ -174,6 +176,13 @@
             height: auto;
             text-align: center;
             display: inline-block;
+        }
+        .ic_grey_arrow {
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            top: 10px;
+            right: 0;
         }
     </style>
 </head>
@@ -198,9 +207,10 @@
     </div>
     <script type="text/html" id="tplBill">
         <div class="{9}">
-            <div class="topDiv">
+            <div class="topDiv" onclick="view('{3}')">
                 {0}
                 {1}
+                <img class="ic_grey_arrow" src="images/ic_grey_arrow.png"/>
             </div>
             <div class="bottomDiv" style="position:relative">
                 <p class="billType">
@@ -261,8 +271,3 @@
 <script src="script/constants.js?ver=16.12.376"></script>
 <script src="script/service.js?ver=16.12.376"></script>
 <script src="script/bill.js?ver=16.12.376"></script>
-<script type="text/javascript">
-    mui.init({
-        swipeBack: true //启用右滑关闭功能
-    });
-</script>

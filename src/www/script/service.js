@@ -161,11 +161,7 @@ function isWeixin() {
 }
 
 function bill() {
-    if (isWeixin()) {
-        window.location.href = constants.URLS.WEIXIBILL;
-    } else {
-        window.location.href = constants.URLS.BILL;
-    }
+    window.location.href = constants.URLS.BILL;
 }
 
 function postInvoke(url, data, callSuccess, callError) {
@@ -178,32 +174,17 @@ function postInvoke(url, data, callSuccess, callError) {
         beforeSend: function (request) {
             request.setRequestHeader(constants.COOKIES.XKCSID, getToken());
         },
-        success: function (res, status, xhr) {
-            callSuccess(res, status, xhr);
-        },
-        error: function (res) {
-            if (res.status == 401) {
+        success: function (res) {
+            if (res.code == 130078401) {
                 var rurl = encodeURIComponent(window.location.href);
                 window.location.href = COMMONPATH.PAGE.LOGIN.replace('##rurl##', rurl);
+            } else {
+                callSuccess(res);
             }
-            else if (res.status == 400) {
-                if (!callError({message: JSON.parse(res.responseText).message})) {
-                    return false;
-                }
-            }
-            else if (res.status == 0 || res.status == -1) {
-                if (!callError({message: "网络链接异常，请稍后"})) {
-                    return false;
-                }
-            } else if (res.status >= 500 && res.status <= 505) {
-                if (!callError({message: "服务繁忙,请稍后"})) {
-                    return false;
-                }
-            }
-            else {
-                if (!callError({message: "系统升级,请稍后" + res.status})) {
-                    return false;
-                }
+        },
+        error: function () {
+            if (!callError({message: "服务繁忙,请稍后"})) {
+                return false;
             }
         }
     });
@@ -218,33 +199,63 @@ function getInvoke(url, callSuccess, callError) {
         beforeSend: function (request) {
             request.setRequestHeader(constants.COOKIES.XKCSID, getToken());
         },
-        success: function (res, status, xhr) {
-            callSuccess(res, status, xhr);
-        },
-        error: function (res) {
-            if (res.status == 401) {
+        success: function (res) {
+            if (res.code == 130078401) {
                 var rurl = encodeURIComponent(window.location.href);
                 window.location.href = COMMONPATH.PAGE.LOGIN.replace('##rurl##', rurl);
             }
-            else if (res.status == 400) {
-                if (!callError({message: JSON.parse(res.responseText).message})) {
-                    return false;
-                }
-            }
-            else if (res.status == 0 || res.status == -1) {
-                if (!callError({message: "网络链接异常，请稍后"})) {
-                    return false;
-                }
-            } else if (res.status >= 500 && res.status <= 505) {
-                if (!callError({message: "服务繁忙,请稍后"})) {
-                    return false;
-                }
-            }
             else {
-                if (!callError({message: "系统升级,请稍后" + res.status})) {
-                    return false;
-                }
+                callSuccess(res);
+            }
+        },
+        error: function () {
+            if (!callError({message: "服务繁忙,请稍后"})) {
+                return false;
             }
         }
     });
 }
+
+function signInvoke(signUrl, callSuccess) {
+    $.ajax({
+        type: 'get',
+        url: signUrl,
+        contentType: 'application/json',
+        success: function (res) {
+            callSuccess(res);
+        },
+        error: function () {
+            alert('获取认证异常');
+        }
+    });
+}
+
+
+var getOrderType = function (orderType) {
+    switch (orderType) {
+        case "HouseRental":
+            return "房租金";
+        case "HouseDeposit":
+            return "房租押金";
+        case "AccessCardDeposit":
+            return "门禁卡押金";
+        case "ParkDeposit":
+            return "停车费押金";
+        case "OtherDeposit":
+            return "其他押金";
+        case "TenementFee":
+            return "物业费";
+        case "HotWaterFee":
+            return "热水费";
+        case "ElectricityFee":
+            return "冷水费";
+        case "ParkFee":
+            return "停车费";
+        case "LaundryFee":
+            return "洗衣费";
+        case "CleaningFee":
+            return "保洁费";
+        case "BroadBandFee":
+            return "宽带费";
+    }
+};

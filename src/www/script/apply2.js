@@ -44,12 +44,12 @@ function apply() {
 function V2UploadImages(serverId) {
     var data = {
         serverId: serverId,
-        type: "Contract"
+        kind: "Contract"
     };
-    postInvoke(constants.URLS.WEIXINUPLOADIMAGES, data, function (res) {
+    postInvoke(constants.URLS.UPLOADIMAGESWEIXIN, data, function (res) {
         if (res.succeeded) {
             pictureUrls.push(res.data.url);
-            $(".addSlide").before(tplItem.format(res.data.url)).find(".slide-container").removeClass("choose");
+            $("#divAddSlide").before(tplItem.format(res.data.url)).find(".slide-container").removeClass("choose");
             var swiper = new Swiper('.swiper-container', {
                 slidesPerView: 2,
                 spaceBetween: 10,
@@ -60,46 +60,35 @@ function V2UploadImages(serverId) {
     });
 }
 
-function weixinSign() {
-    var signUrl = constants.URLS.SIGNATURE.format(encodeURIComponent(window.location.href.split("?")[0]));
-    $.ajax({
-        type: 'get',
-        url: signUrl,
-        contentType: 'application/json'
-    })
-        .done(function (res) {
-            wx.config({
-                debug: false,
-                appId: res.appId,
-                timestamp: res.timestamp,
-                nonceStr: res.nonceStr,
-                signature: res.signature,
-                jsApiList: ['checkJsApi', 'chooseImage', 'uploadImage']
-            });
-        })
-        .fail(function () {
-            alert('获取认证异常');
-        });
-    document.querySelector('#chooseImg').onclick = function () {
-        wx.chooseImage({
-            count: 1,
-            sizeType: ['original'],
-            sourceType: ['album', 'camera'],
-            success: function (res) {
-                wx.uploadImage({
-                    localId: res.localIds[0],
-                    isShowProgressTips: 1,
-                    success: function (res1) {
-                        V2UploadImages(res1.serverId);
-                    }
-                });
-            }
-        });
-    };
-}
-
 $(document).ready(function () {
-    weixinSign();
     tplItem = $("#tplItem").html();
-    $(".addSlide").find(".slide-container").addClass("choose");
+    $("#divAddSlide").find(".slide-container").addClass("choose");
+    //
+    var signUrl = constants.URLS.SIGNATURE.format(encodeURIComponent(window.location.href.split("?")[0]));
+    signInvoke(signUrl, function (res) {
+        wx.config({
+            debug: false,
+            appId: res.data.appId,
+            timestamp: res.data.timestamp,
+            nonceStr: res.data.nonceStr,
+            signature: res.data.signature,
+            jsApiList: ['checkJsApi', 'chooseImage', 'uploadImage']
+        });
+        document.querySelector('#divAddSlide').onclick = function () {
+            wx.chooseImage({
+                count: 1,
+                sizeType: ['original'],
+                sourceType: ['album', 'camera'],
+                success: function (res) {
+                    wx.uploadImage({
+                        localId: res.localIds[0],
+                        isShowProgressTips: 1,
+                        success: function (res1) {
+                            V2UploadImages(res1.serverId);
+                        }
+                    });
+                }
+            });
+        };
+    });
 });

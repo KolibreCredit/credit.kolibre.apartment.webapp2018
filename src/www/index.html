@@ -27,33 +27,38 @@
             position: absolute;
             left: 0;
             right: 0;
-            bottom: 30px;
+            bottom: 20px;
             font-size: 14px;
             color: #666666;
             text-align: center;
         }
     </style>
 </head>
-<body style="background: #ffbc76 url(images/20180103/background.jpg)  no-repeat center;  background-position: 0 0;  background-size: 100% auto;">
+<body style="background: #ffbc76 url(images/20180103/bg1.jpg); background-position: 0 0;  background-size:cover">
 <div class="mui-content">
     <img class="logoImg" src="images/20180103/logo.png"/>
     <div style="margin-top:30px;text-align:center">
         <img src="images/20180103/slogan.png" style="width: 237px;height:30px"/>
     </div>
-    <div style="margin-top:50px;text-align:center">
-        <img src="images/20180103/bill.png" style="width:170px;height:170px" onclick="bill()"/>
-    </div>
-    <div style="position:absolute;bottom:75px;left:0;right:0;font-size: 14px;color:#666666">
-        <div style=" width:50px;height:56px;margin-left:40px;text-align:center;float:left" onclick="list()">
-            <img src="images/20180103/lease.png" style="width:40px;height:40px"/>
-            租约
-        </div>
-        <div style=" width:50px;height:56px;margin-right:40px;text-align:center;float:right" onclick="uesr()">
-            <img src="images/20180103/user.png" style="width:40px;height:40px"/>账户
-        </div>
-    </div>
-    <div class="contactUs">客服电话：400-921-5508</div>
 </div>
+<div style="position:absolute;bottom:0;width:100%">
+    <div style="position: absolute;top:-80px;width:100%">
+        <div style="text-align:center">
+            <img src="images/20180103/bill.png" style="width:170px;height:170px" onclick="bill()"/>
+        </div>
+        <div style="font-size: 14px;color:#666666">
+            <div style=" width:50px;height:56px;margin-left:40px;text-align:center;float:left;position:relative" onclick="list()">
+                <span id="lbUnConfirmedContractCount" style="background:#ff0100;width:7px;height:7px;border-radius:100%;display:inline-block;margin-left:5px;position:absolute;right:0;top:5px;display:none"></span>
+                <img src="images/20180103/lease.png" style="width:40px;height:40px"/>租约
+            </div>
+            <div style=" width:50px;height:56px;margin-right:40px;text-align:center;float:right" onclick="uesr()">
+                <img src="images/20180103/user.png" style="width:40px;height:40px"/>账户
+            </div>
+        </div>
+    </div>
+    <img src="images/20180103/bg2.png" style="width:100%;height:223px;vertical-align:bottom"/>
+</div>
+<div class="contactUs">客服电话：400-921-5508</div>
 </body>
 </html>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>

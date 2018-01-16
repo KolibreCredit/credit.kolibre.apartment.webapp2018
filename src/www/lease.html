@@ -30,9 +30,12 @@
 
         .mui-table-view:before {
             left: 20px;
+            height: 0;
         }
-
         #ulMemo.mui-table-view:before {
+            height: 0;
+        }
+        .mui-table-view:after {
             height: 0;
         }
     </style>
@@ -46,15 +49,14 @@
         退租详情
     </div>
     <ul class="mui-table-view mui-table-view-chevron">
-        <li id="dtLeaseDate" class="mui-table-view-cell mui-media"
-            style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.05)">
+        <li id="dtLeaseDate" class="mui-table-view-cell mui-media">
             <a class="mui-navigate-right">
                 <div class="mui-media-body" style="width:110%">
                     <span class="star">*</span><span>退租日期</span><label id="lbLeaseDate"></label>
                 </div>
             </a>
         </li>
-        <li class="mui-table-view-cell mui-media" style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.05)">
+        <li class="mui-table-view-cell mui-media">
             <a class="mui-navigate-right" href="#divReason">
                 <div class="mui-media-body" style="width:110%">
                     <span class="star">*</span><span>退租原因</span><label id="lbReason">合同到期了</label>
@@ -62,9 +64,9 @@
             </a>
         </li>
     </ul>
-    <div style="background-color:#f0f0f0;height:10px"></div>
+   <div style="background-color:#f0f0f0;height:10px"></div>
     <ul id="ulMemo" class="mui-table-view mui-table-view-chevron">
-        <li class="mui-table-view-cell mui-media" style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.05)">
+        <li class="mui-table-view-cell mui-media">
             <a>
                 <div class="mui-media-body">
                     <input type="text" id="txtMemo" placeholder="备注" style="border:none;margin-bottom:0"/>
