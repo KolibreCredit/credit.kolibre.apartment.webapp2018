@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <title>账单支付</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
     <link href="css/app.css?ver=17.10.143" rel="stylesheet"/>
@@ -76,16 +77,20 @@
     </style>
 </head>
 <body style="background-color: white">
-<div style="margin-top:40px;text-align:center;font-size:16px;color:#999999">
-    支付金额
+<div style="height:40px"></div>
+<div style="text-align:center;font-size:36px;color:#646464;line-height:40px;height:40px">
+    ¥<span id="lbTotalAmount"></span>
 </div>
-<div style="text-align:center;font-size:24px;color:#646464;line-height:40px">
-    <span id="lbTotalAmount"></span>
+<div style="font-size:12px;color:#646464;text-align:center;line-height:30px">
+    账单日: <span id="lbPaymentTime"></span>
+</div>
+<div style="text-align:center;font-size:16px;color:#646464;margin-top:30px">
+    请保存二维码并使用支付宝
 </div>
 <div style="text-align:center;font-size:16px;color:#646464">
-    请保存二维码并使用支付宝<br/>扫码完成付款
+    扫码完成付款
 </div>
-<div style="margin-top:10px;text-align:center">
+<div style="text-align:center">
     <img id="imgPay" src="images/loading.gif" style="width:210px;height:210px;display:none"/>
     <div class="spinner">
         <div class="rect1"></div>
@@ -95,7 +100,7 @@
         <div class="rect5"></div>
     </div>
 </div>
-<div style="margin-top:10px;text-align:center;font-size:12px;color:#999999;line-height:21px">
+<div style="text-align:center;font-size:12px;color:#999999;line-height:20px">
     <img src="images/tip.png" style="width:14px;height:14px;vertical-align:text-bottom;margin-right:2px"/>如不能保存图片请使用手机截图
 </div>
 </body>

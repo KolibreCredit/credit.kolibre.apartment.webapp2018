@@ -4,6 +4,7 @@
 var orderId = "";
 var totalAmount = 0;
 var amount = "";
+var paymentTime = "";
 //
 var transactionId = "";
 var isTransaction = true;
@@ -45,7 +46,7 @@ var createTransaction = function (transactionMethod, callSuccess) {
 function zhifubao() {
     createTransaction("AliPay", function (res) {
         transactionId = res.data.transactionId;
-        window.location.href = "precreate.html?transactionId={0}&amount={1}".format(transactionId, amount);
+        window.location.href = "precreate.html?transactionId={0}&amount={1}&paymentTime={2}".format(transactionId, amount, paymentTime.substring(0, 10));
     });
 }
 
@@ -58,7 +59,7 @@ var weixinpay = function () {
             appId: constants.CONFIGS.APPID,
             code: code
         };
-        postInvoke(constants.URLS.GETWECHATOPENID,user,function (res1) {
+        postInvoke(constants.URLS.GETWECHATOPENID, user, function (res1) {
             if (res1.succeeded) {
                 var pay = {
                     openId: res1.data,
@@ -121,6 +122,7 @@ var queryOrderbyOrderId = function () {
     orderId = getURLQuery("orderId");
     getInvoke(constants.URLS.GETORDERBYORDERID.format(orderId), function (res) {
         if (res.succeeded) {
+            paymentTime = res.data.paymentTime;
             totalAmount = res.data.totalAmount;
             $("#lbTotalAmount").html((res.data.totalAmount * 0.01).toFixed(2));
             $("#lbNotPaidAmount").html((res.data.repayAmount * 0.01).toFixed(2));

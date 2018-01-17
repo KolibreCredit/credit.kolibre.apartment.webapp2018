@@ -4,6 +4,7 @@
 
 var isTransaction = true;
 var transactionId = "";
+var amount = "";
 //
 var queryTransaction = function () {
     if (transactionId != "" && isTransaction) {
@@ -18,9 +19,11 @@ var queryTransaction = function () {
 };
 
 $(document).ready(function () {
-    var amount = getURLQuery("amount");
     transactionId = getURLQuery("transactionId");
+    amount = getURLQuery("amount");
+    paymentTime = getURLQuery("paymentTime");
     $("#lbTotalAmount").html((amount / 100).toFixed(2));
+    $("#lbPaymentTime").html(paymentTime);
     var pay = {
         transactionId: transactionId
     };
