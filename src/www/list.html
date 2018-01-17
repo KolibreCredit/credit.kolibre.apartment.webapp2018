@@ -87,7 +87,6 @@
             position: absolute;
             right: 0;
             top: 0;
-            z-index: 1;
         }
 
         .staged {
@@ -153,7 +152,7 @@
                         <div style="margin-top:30px;font-size:16px;color:#646464;line-height:25px">
                             确定要取消该房间的退租操作？
                         </div>
-                        <div style="margin-top:40px;text-align: center">
+                        <div style="margin-top:40px;text-align: center;">
                             <button style="border:1px solid #ff8c14;border-radius:100px;height:40px;color:#ff8c14;font-size:16px;width:110px"
                                     onclick="hideQuash()">取消
                             </button>
@@ -175,14 +174,14 @@
 </html>
 <script type="text/html" id="tplLeases">
     <div class="mui-table-view">
-        <div class="mui-table-view-cell mui-media" style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.05)">
+        <div class="mui-table-view-cell" style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.05)">
             <div class="mui-media-body">
                 <div class="mui-ellipsis">
                     <span style='font-size:14px;color:#adadad'>创建日期：{0}</span><span style="float:right"  class="{7}">{8}</span>
                 </div>
             </div>
         </div>
-        <div class="mui-table-view-cell mui-media" style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.05)">
+        <div class="mui-table-view-cell" style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.05)">
             <div class="mui-media-body" onclick="view('{9}')">
                 <div class="mui-ellipsis" style="font-size:18px;color:#646464;margin-top:10px">{1}</div>
                 <div class="mui-ellipsis" style='font-size:16px;color:#777777'>
@@ -193,7 +192,7 @@
                 <img class="ic_grey_arrow" src="images/ic_grey_arrow.png"/>
             </div>
         </div>
-        <div class="mui-table-view-cell mui-media" style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.05)">
+        <div class="mui-table-view-cell" style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.05);display:{10}">
             <div class="mui-media-body">
                 {5}
             </div>

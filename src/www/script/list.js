@@ -101,11 +101,13 @@ function getCurrentcontracts() {
             var title = "";
             var titleColor = "";
             var icon = "";
+            var quash = "block";
             for (var i = 0; i < res.data.length; i++) {
                 icon = "";
                 titleColor = "";
                 title = "";
                 btnControls = "";
+                quash = "block";
                 item = res.data[i];
                 if (item.confirmed) {
                     if (item.checkoutStatus == "NotCheckout") {
@@ -124,6 +126,7 @@ function getCurrentcontracts() {
                     }
                     else {
                         icon = "<img src='images/icon_quash.png' class='icon'/>";
+                        quash = "none";
                     }
                 } else {
                     icon = "<img src='images/icon_queren.png' class='icon'/>";
@@ -139,8 +142,7 @@ function getCurrentcontracts() {
                     icon,
                     titleColor,
                     title,
-                    item.contractId
-                );
+                    item.contractId, quash);
             }
             $("#divLeases").html(leasesHtml);
         } else {

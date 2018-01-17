@@ -2,24 +2,6 @@
  * Created by long.jiang on 2016/12/14.
  */
 var orderId = "";
-
-function getPayPeriod(payPeriod) {
-    var rentalType = "";
-    if (payPeriod == 3) {
-        rentalType = "季付";
-    }
-    else if (payPeriod == 6) {
-        rentalType = "半年付";
-    }
-    else if (payPeriod == 12) {
-        rentalType = "年付";
-    }
-    else if (payPeriod == 0) {
-        rentalType = "全额付";
-    }
-    return rentalType;
-}
-
 $(document).ready(function () {
     orderId = getURLQuery("orderId");
     getInvoke(constants.URLS.GETORDERBYORDERID.format(orderId), function (res) {
@@ -50,6 +32,7 @@ $(document).ready(function () {
                 tipTitle1 = item.actualPaymentTime.substring(0, 10);
             }
             $("#imgOrderState").attr("src", tipUrl);
+            $(".fang").show();
             var htmlLeaseInfo = tplLeaseInfo.format(
                 tipTitle,
                 getOrderType(item.orderType),
