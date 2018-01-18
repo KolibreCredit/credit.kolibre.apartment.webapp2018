@@ -3,7 +3,7 @@
  */
 var contractId = "";
 var confirmed = "";
-
+//
 function apply() {
     var data = {contractId: contractId};
     postInvoke(constants.URLS.CREATECONFIRMINFO, data, function (result) {

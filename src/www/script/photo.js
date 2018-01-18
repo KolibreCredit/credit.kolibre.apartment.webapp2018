@@ -59,10 +59,7 @@ function chooseImage(index) {
 }
 
 var kinds = ["IDCardFace", "IDCardBack", "Selfie"];
-var credentialFacePhotoUrl = "";
-var credentialBackPhotoUrl = "";
-var selfiePhotoUrl = "";
-
+var photoUrls = ["", "", ""];
 function V2UploadImages(serverId) {
     var data = {
         serverId: serverId,
@@ -72,16 +69,16 @@ function V2UploadImages(serverId) {
     postInvoke(constants.URLS.UPLOADIMAGESWEIXIN, data, function (res) {
         if (res.succeeded) {
             if (res.data.index == 0) {
-                credentialFacePhotoUrl = res.data.url;
-                $("#imgCredentialFacePhotoUrl1").attr("src", credentialFacePhotoUrl);
+                photoUrls[0] = res.data.url;
+                $("#imgCredentialFacePhotoUrl1").attr("src", res.data.url);
             }
             else if (res.data.index == 1) {
-                credentialBackPhotoUrl = res.data.url;
-                $("#imgCredentialBackPhotoUrl1").attr("src", credentialBackPhotoUrl);
+                photoUrls[1] = res.data.url;
+                $("#imgCredentialBackPhotoUrl1").attr("src", res.data.url);
             }
             else {
-                selfiePhotoUrl = res.data.url;
-                $("#imgSelfiePhotoUrl1").attr("src", selfiePhotoUrl);
+                photoUrls[2] = res.data.url;
+                $("#imgSelfiePhotoUrl1").attr("src", res.data.url);
             }
             $(".original").eq(res.data.index).hide();
             $(".camera").eq(res.data.index).show();
@@ -91,35 +88,31 @@ function V2UploadImages(serverId) {
 }
 
 function saveImage(index) {
-    /*   var data = {
-           credientalFacePhotoUrl: credientalFacePhotoUrl,
-           credientalBackPhotoUrl: credientalBackPhotoUrl,
-           selfiePhotoUrl: selfiePhotoUrl
-       };
-       $(".msg-post").show();
-       postInvoke(constants.URLS.CONFIRMTENANTINFO, data, function (res) {
-           if (res.succeeded) {
-
-           } else {
-               $(".msg-post").hide();
-               mui.toast(res.message);
-           }
-       }, function (err) {
-           $(".msg-post").hide();
-           mui.toast(err.message);
-       });*/
-    if (index == 0) {
-        $("#imgCredentialFacePhotoUrl").attr("src", credentialFacePhotoUrl);
-    }
-    else if (index == 1) {
-        $("#imgCredentialBackPhotoUrl").attr("src", credentialBackPhotoUrl);
-    }
-    else {
-        $("#imgSelfiePhotoUrl").attr("src", selfiePhotoUrl);
-    }
-    $(".original").eq(index).show();
-    $(".camera").eq(index).hide();
-    $(".cameraMask").eq(index).hide();
+    var data = {
+        photoType: kinds[index],
+        photoUrl: photoUrls[index]
+    };
+    $(".msg-post").show();
+    postInvoke(constants.URLS.UPDATETENANTPHOTO, data, function (res) {
+        if (res.succeeded) {
+            if (index == 0) {
+                $("#imgCredentialFacePhotoUrl").attr("src", photoUrls[0]);
+            }
+            else if (index == 1) {
+                $("#imgCredentialBackPhotoUrl").attr("src", photoUrls[1]);
+            }
+            else {
+                $("#imgSelfiePhotoUrl").attr("src", photoUrls[2]);
+            }
+            cancelImage(index);
+        } else {
+            $(".msg-post").hide();
+            mui.toast(res.message);
+        }
+    }, function (err) {
+        $(".msg-post").hide();
+        mui.toast(err.message);
+    });
 }
 
 function cancelImage(index) {

@@ -1,6 +1,7 @@
 /**
  * Created by long.jiang on 2016/12/12.
  */
+var url = "";
 function tablogin(tabIndex) {
     if (tabIndex === 0) {
         $("#div0").show();
@@ -18,7 +19,6 @@ function tablogin(tabIndex) {
 var waitTimer = null;
 var waitCount = 60;
 var isSendCaptcha = true;
-var url = "";
 
 function sendWaitTimer() {
     if (waitCount > 0) {
@@ -30,11 +30,14 @@ function sendWaitTimer() {
         waitCount = 60;
         isSendCaptcha = true;
     }
+    if (waitCount == 40) {
+        $("#divVoiceCall").show();
+    }
 }
 
 function sendCaptcha() {
     if (isSendCaptcha) {
-        var cellphone = $("#txtPhone2").val();
+        var cellphone = $("#txtPhone2").val().trimPhone();
         if (cellphone == '') {
             mui.toast(constants.msgInfo.phone);
             return false;
@@ -43,7 +46,7 @@ function sendCaptcha() {
             mui.toast(constants.msgInfo.phoneerr);
             return false;
         }
-        var businessType = "TenantLogin";
+        var businessType = "TenantRegisterOrLogin";
         var data = {
             cellphone: cellphone,
             businessType: businessType
@@ -66,6 +69,51 @@ function sendCaptcha() {
     }
 }
 
+//
+var waitTimer2 = null;
+var waitCount2 = 60;
+var isSendCaptcha2 = true;
+
+function sendWaitTimer2() {
+    if (waitCount2 > 0) {
+        waitCount2 = waitCount2 - 1;
+    } else {
+        clearInterval(waitTimer2);
+        waitCount2 = 60;
+        isSendCaptcha2 = true;
+    }
+}
+
+function voiceCallCaptcha() {
+    if (isSendCaptcha2) {
+        var cellphone = $("#txtPhone2").val().trimPhone();
+        if (cellphone == '') {
+            mui.toast(constants.msgInfo.phone);
+            return false;
+        }
+        if (!constants.REGEX.CELLPHONE.test(cellphone)) {
+            mui.toast(constants.msgInfo.phoneerr);
+            return false;
+        }
+        var businessType = "TenantRegisterOrLogin";
+        var data = {
+            cellphone: cellphone,
+            businessType: businessType,
+            byVoiceCall: true
+        };
+        waitTimer2 = setInterval(function () {
+            sendWaitTimer2();
+        }, 1000);
+        isSendCaptcha2 = false;
+        postInvoke(constants.URLS.SEND, data, function (res) {
+            console.log(res);
+        }, function (err) {
+            isSendCaptcha2 = true;
+            console.log(err);
+        });
+    }
+}
+
 function showloading() {
     $(".msg-post").show();
 }
@@ -75,7 +123,7 @@ function hideloading() {
 }
 
 function loginByCaptcha() {
-    var cellphone = $("#txtPhone2").val();
+    var cellphone = $("#txtPhone2").val().trimPhone();
     if (cellphone == '') {
         mui.toast(constants.msgInfo.phone);
         return false;
@@ -95,24 +143,23 @@ function loginByCaptcha() {
     }
     var verify = {
         cellphone: cellphone,
-        businessType: "TenantLogin",
+        businessType: "TenantRegisterOrLogin",
         validateCode: captcha
     };
     showloading();
     postInvoke(constants.URLS.VERIFY, verify, function (res) {
         hideloading();
         if (res.succeeded) {
-            postInvoke(constants.URLS.LOGINAUTHCODE, {authCode: res.data.authCode}, function (res1) {
+            postInvoke(constants.URLS.QUICKLOGIN, {authCode: res.data.authCode}, function (res1) {
                 if (res1.succeeded) {
                     if (res1.data.loginState == "Succeed") {
                         setToken(res1.headers["x-KC-SID"]);
                         mui.toast(constants.msgInfo.loginSuccess);
-                        if (!res1.data.tenantResponse.confirmed) {
-                            if (url != "") {
-                                window.location.href = "confirmTenant.html?url={0}".format(url);
-                            } else {
-                                window.location.href = "confirmTenant.html";
-                            }
+                        if (!res1.data.hasInfo) {
+                            window.location.href = "verify.html?url={0}".format(url);
+                        }
+                        else if (!res1.data.tenantResponse.confirmed) {
+                            window.location.href = "confirmTenant.html?url={0}".format(url);
                         } else {
                             retlogin();
                         }
@@ -136,7 +183,7 @@ function loginByCaptcha() {
 }
 
 function loginByPassword() {
-    var cellphone = $("#txtPhone").val();
+    var cellphone = $("#txtPhone").val().trimPhone();
     if (cellphone == '') {
         mui.toast(constants.msgInfo.phone);
         return false;
@@ -165,12 +212,11 @@ function loginByPassword() {
             if (res.data.loginState == "Succeed") {
                 setToken(res.headers["x-KC-SID"]);
                 mui.toast(constants.msgInfo.loginSuccess);
-                if (!res.data.tenantResponse.confirmed) {
-                    if (url != "") {
-                        window.location.href ="confirmTenant.html?url={0}".format(url);
-                    } else {
-                        window.location.href = "confirmTenant.html";
-                    }
+                if (!res.data.hasInfo) {
+                    window.location.href = "verify.html?url={0}".format(url);
+                }
+                else if (!res.data.tenantResponse.confirmed) {
+                    window.location.href = "confirmTenant.html?url={0}".format(url);
                 } else {
                     retlogin();
                 }

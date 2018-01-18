@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
 </head>
 <body>
-<input type="tel" id="phone" onfocus="getCursortPosition(this);" onclick="getCursortPosition(this);" onkeyup="format(this);" maxlength="13"/>
+<input type="tel" id="phone" onfocus="getCursortPosition(this);" onclick="getCursortPosition(this);" onkeyup="phoneFormat(this);" maxlength="13"/>
 <script>
     var CaretPos = -1;
     var numLength = 0;
@@ -13,7 +13,7 @@
         }
         return value;
     }
-    function format(obj){
+    function phoneFormat(obj){
         var value=valid(obj.value);
         value=value.replace(/\s*/g,"");
         var result=[];

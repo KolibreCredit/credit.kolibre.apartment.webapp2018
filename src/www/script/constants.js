@@ -11,10 +11,12 @@ var constants = {
         TENANT: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Register/Tenant",
         LOGINBYPASSWORD: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/PasswordLogin/Tenant/Login",
         LOGINAUTHCODE: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/ValidateCodeLogin/Tenant/Login",
+        QUICKLOGIN:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/ValidateCodeLogin/Tenant/QuickLogin",
         SETPASSWORD: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Password/Set",
         GETCURRENTTENANT: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/GetCurrentTenant",
         TWOFACTORVERIFY: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/TwoFactorVerify",
         CONFIRMTENANTINFO: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/ConfirmTenantInfo",
+        UPDATETENANTPHOTO:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/UpdateTenantPhoto",
         //
         SIGNATURE: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/FileController/Signature?url={0}",
         UPLOADIMAGESWEIXIN: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/FileController/UploadImagesWeiXin",

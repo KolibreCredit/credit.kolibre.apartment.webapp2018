@@ -97,6 +97,38 @@ StringBuffer.prototype.size = function () {
     return this.__strings__.length;
 }
 
+function validPhone(value) {
+    if (value && !/^\d{0,13}$/g.test(value)) {
+        return value.replace(/[^0-9]/ig, '');
+    }
+    return value;
+}
+
+function formatPhone(obj) {
+    var value = validPhone(obj.value);
+    value = value.replace(/\s*/g, "");
+    var result = [];
+    for (var i = 0; i < value.length; i++) {
+        if (i == 3 || i == 7) {
+            result.push(" " + value.charAt(i));
+        } else {
+            result.push(value.charAt(i));
+        }
+    }
+    obj.value = result.join("");
+}
+
+String.prototype.trimPhone = function () {
+    var result = [];
+    for (var i = 0; i < this.length; i++) {
+        // console.log(this.charAt(i));
+        if (this.charAt(i) != " ") {
+            result.push(this.charAt(i));
+        }
+    }
+    return result.join("");
+}
+
 function replaceStr(str, start) {
     var res = '';
     var end = str.length;
