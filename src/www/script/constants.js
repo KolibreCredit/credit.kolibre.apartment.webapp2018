@@ -15,6 +15,7 @@ var constants = {
         SETPASSWORD: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Password/Set",
         GETCURRENTTENANT: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/GetCurrentTenant",
         TWOFACTORVERIFY: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/TwoFactorVerify",
+        UPLOADTENANTINFO:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/UploadTenantInfo",
         CONFIRMTENANTINFO: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/ConfirmTenantInfo",
         UPDATETENANTPHOTO:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/UpdateTenantPhoto",
         //
@@ -51,7 +52,7 @@ var constants = {
         CONTRACTCONFIRMINFOID: "X-KC-CONTRACTCONFIRMINFOID"
     },
     REGEX: {
-        CELLPHONE: /^(13|14|15|16|17|18)\d{9}$/,
+        CELLPHONE: /^(13|14|15|16|17|18|19|10)\d{9}$/,
         PASSWORD: /^[a-zA-Z\d~!@#$%^&*_]{6,18}$/,
         PAYMENT_PASSWORD: /^(?![^a-zA-Z~!@#$%^&*_]+$)(?!\D+$).{8,18}$/,
         URL: /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[:?\d]*)\S*$/,

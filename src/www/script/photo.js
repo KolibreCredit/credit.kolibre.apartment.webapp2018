@@ -1,11 +1,11 @@
 /**
  * Created by long.jiang on 2016/12/23.
  */
-var tenantInfo = null;
+
 $(document).ready(function () {
     getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
         if (res.succeeded) {
-            tenantInfo = res.data;
+            var tenantInfo = res.data;
             if (tenantInfo.credentialType == "IDCard") {
                 $("#lbTitle1").html("身份证正面");
                 $("#lbTitle2").html("身份证背面");
@@ -60,6 +60,7 @@ function chooseImage(index) {
 
 var kinds = ["IDCardFace", "IDCardBack", "Selfie"];
 var photoUrls = ["", "", ""];
+
 function V2UploadImages(serverId) {
     var data = {
         serverId: serverId,

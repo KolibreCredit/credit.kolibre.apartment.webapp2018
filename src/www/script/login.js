@@ -2,6 +2,7 @@
  * Created by long.jiang on 2016/12/12.
  */
 var url = "";
+
 function tablogin(tabIndex) {
     if (tabIndex === 0) {
         $("#div0").show();
@@ -155,7 +156,7 @@ function loginByCaptcha() {
                     if (res1.data.loginState == "Succeed") {
                         setToken(res1.headers["x-KC-SID"]);
                         mui.toast(constants.msgInfo.loginSuccess);
-                        if (!res1.data.hasInfo) {
+                        if (!res1.data.tenantResponse.hasInfo) {
                             window.location.href = "verify.html?url={0}".format(url);
                         }
                         else if (!res1.data.tenantResponse.confirmed) {
@@ -212,7 +213,7 @@ function loginByPassword() {
             if (res.data.loginState == "Succeed") {
                 setToken(res.headers["x-KC-SID"]);
                 mui.toast(constants.msgInfo.loginSuccess);
-                if (!res.data.hasInfo) {
+                if (!res.data.tenantResponse.hasInfo) {
                     window.location.href = "verify.html?url={0}".format(url);
                 }
                 else if (!res.data.tenantResponse.confirmed) {

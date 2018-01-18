@@ -155,5 +155,17 @@ function getCurrentcontracts() {
 }
 
 $(document).ready(function () {
-    getCurrentcontracts();
+    getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
+            if (res.succeeded) {
+                if (!res.data.hasInfo) {
+                    window.location.href = "verify.html?url={0}".format("list.html");
+                }
+                else if (!res.data.confirmed) {
+                    window.location.href = "confirmTenant.html?url={0}".format("list.html");
+                } else {
+                    getCurrentcontracts();
+                }
+            }
+        }
+    );
 });

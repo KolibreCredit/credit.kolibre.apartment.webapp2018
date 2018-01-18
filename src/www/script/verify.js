@@ -11,7 +11,6 @@ var kinds = ["IDCardFace", "IDCardBack", "Selfie"];
 var credientalFacePhotoUrl = "";
 var credientalBackPhotoUrl = "";
 var selfiePhotoUrl = "";
-
 //
 function chooseType(tabIndex) {
     credentialTabIndex = tabIndex;
@@ -94,14 +93,11 @@ function confirmTenantInfo() {
         credentialType: (credentialTabIndex == 0 ? "IDCard" : "Passport"),
         credentialNo: credentialNo,
         credientalFacePhotoUrl: credientalFacePhotoUrl,
-        updateFacePhoto: true,
         credientalBackPhotoUrl: credientalBackPhotoUrl,
-        updateBackPhoto: true,
-        selfiePhotoUrl: selfiePhotoUrl,
-        updateSelfPhoto: true
+        selfiePhotoUrl: selfiePhotoUrl
     };
     $(".msg-post").show();
-    postInvoke(constants.URLS.CONFIRMTENANTINFO, data, function (res) {
+    postInvoke(constants.URLS.UPLOADTENANTINFO, data, function (res) {
         if (res.succeeded) {
             $(".msg-post").hide();
             mui.toast(constants.msgInfo.verify.format(credentialTabIndex == 0 ? "身份证" : "护照"));

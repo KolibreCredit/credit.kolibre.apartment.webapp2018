@@ -128,11 +128,8 @@ function confirmTenantInfo() {
         credentialType: (credentialTabIndex == 0 ? "IDCard" : "Passport"),
         credentialNo: credentialNo,
         credientalFacePhotoUrl: credentialFacePhotoUrl,
-        updateFacePhoto: true,
         credientalBackPhotoUrl: credentialBackPhotoUrl,
-        updateBackPhoto: true,
-        selfiePhotoUrl: selfiePhotoUrl,
-        updateSelfPhoto: true
+        selfiePhotoUrl: selfiePhotoUrl
     };
     $(".msg-post").show();
     postInvoke(constants.URLS.CONFIRMTENANTINFO, data, function (res) {
