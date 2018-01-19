@@ -10,11 +10,12 @@ function list() {
     window.location.href = "list.html";
 }
 
-/*
-getInvoke(constants.URLS.GETUNCONFIRMEDCONTRACTCOUNT, function (res) {
-    if (res.succeeded) {
-        if (res.data > 0) {
-            $("#lbUnConfirmedContractCount").show();
+$(document).ready(function () {
+    getInvoke2(constants.URLS.GETUNCONFIRMEDCONTRACTCOUNT, function (res) {
+        if (res.succeeded) {
+            if (res.data > 0) {
+                $("#lbUnConfirmedContractCount").show();
+            }
         }
-    }
-});*/
+    });
+});

@@ -11,7 +11,7 @@ var queryTransaction = function () {
         isTransaction = false;
         getInvoke(constants.URLS.GETTRANSACTION.format(transactionId), function (res) {
             isTransaction = true;
-            if (res.transactionState === "Succeed") {
+            if (res.data.transactionState == "Succeed") {
                 window.location.href = "bill.html";
             }
         });

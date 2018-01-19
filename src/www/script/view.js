@@ -5,43 +5,31 @@ var contractId = "";
 var confirmed = "";
 //
 function apply() {
+    $(".msg-post").show();
     var data = {contractId: contractId};
-    postInvoke(constants.URLS.CREATECONFIRMINFO, data, function (result) {
-        if (result.succeeded) {
-            var res = result.data;
-            setCookie(constants.COOKIES.CONTRACTCONFIRMINFOID, res.contractConfirmInfoId);
-            if (!res.verifyResult) {
+    postInvoke(constants.URLS.CREATECONFIRMINFO, data, function (res) {
+        if (res.succeeded) {
+            setCookie(constants.COOKIES.CONTRACTCONFIRMINFOID, res.data.contractConfirmInfoId);
+            if (!res.data.verifyResult) {
                 window.location.href = "apply1.html";
-            } else if (res.contractPictures == null) {
+            } else if (res.data.contractPictures == null) {
                 window.location.href = "apply2.html";
             }
-            else if (res.selfiePhoto == null) {
+            else if (res.data.selfiePhoto == null) {
                 window.location.href = "apply3.html";
             }
-            else if (res.contactInfo == null) {
+            else if (res.data.contactInfo == null) {
                 window.location.href = "apply4.html";
             } else {
                 window.location.href = "apply5.html";
             }
+        } else {
+            $(".msg-post").hide();
         }
+    }, function (err) {
+        $(".msg-post").hide();
+        mui.toast(err.message);
     });
-}
-
-function getPayPeriod(payPeriod) {
-    var rentalType = "";
-    if (payPeriod == 3) {
-        rentalType = "季付";
-    }
-    else if (payPeriod == 6) {
-        rentalType = "半年付";
-    }
-    else if (payPeriod == 12) {
-        rentalType = "年付";
-    }
-    else if (payPeriod == 0) {
-        rentalType = "全额付";
-    }
-    return rentalType;
 }
 
 $(document).ready(function () {

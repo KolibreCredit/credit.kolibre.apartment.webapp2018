@@ -7,7 +7,7 @@ var isSendCaptcha = true;
 //
 function sendWaitTimer() {
     if (waitCount > 0) {
-        $('#btnSendCaptcha').text(waitCount + 'S');
+        $('#btnSendCaptcha').text(waitCount + '秒');
         waitCount = waitCount - 1;
     } else {
         clearInterval(waitTimer);

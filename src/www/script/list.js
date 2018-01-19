@@ -67,26 +67,6 @@ function hideQuash() {
     $(".msg-alert").hide();
 }
 
-var getPayPeriod = function (payPeriod) {
-    var rentalType = "";
-    if (payPeriod == 3) {
-        rentalType = "季付";
-    }
-    else if (payPeriod == 6) {
-        rentalType = "半年付";
-    }
-    else if (payPeriod == 12) {
-        rentalType = "年付";
-    }
-    else if (payPeriod == 0) {
-        rentalType = "全额付";
-    }
-    else if (payPeriod == 1) {
-        rentalType = "月付";
-    }
-    return rentalType;
-};
-
 function getCurrentcontracts() {
     getInvoke(constants.URLS.GETCURRENTCONTRACTS, function (res) {
         if (res.succeeded && res.data.length > 0) {
@@ -113,7 +93,7 @@ function getCurrentcontracts() {
                     if (item.checkoutStatus == "NotCheckout") {
                         btnControls = btnEviction.format(item.contractId);
                         if (item.yueFu) {
-                            title = "已分期";
+                            title = "";
                             titleColor = "staged";
                         } else {
                             btnControls = btnApply.format(item.contractId) + btnEviction.format(item.contractId);

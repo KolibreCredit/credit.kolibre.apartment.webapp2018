@@ -248,6 +248,26 @@ function getInvoke(url, callSuccess, callError) {
     });
 }
 
+function getInvoke2(url, callSuccess, callError) {
+    $.ajax({
+        type: 'GET',
+        url: url,
+        dataType: "json",
+        contentType: "application/json",
+        beforeSend: function (request) {
+            request.setRequestHeader(constants.COOKIES.XKCSID, getToken());
+        },
+        success: function (res) {
+            callSuccess(res);
+        },
+        error: function () {
+            if (!callError({message: "服务繁忙,请稍后"})) {
+                return false;
+            }
+        }
+    });
+}
+
 function signInvoke(signUrl, callSuccess) {
     $.ajax({
         type: 'get',
@@ -290,4 +310,24 @@ var getOrderType = function (orderType) {
         case "BroadBandFee":
             return "宽带费";
     }
+};
+
+var getPayPeriod = function (payPeriod) {
+    var rentalType = "";
+    if (payPeriod == 3) {
+        rentalType = "季付";
+    }
+    else if (payPeriod == 6) {
+        rentalType = "半年付";
+    }
+    else if (payPeriod == 12) {
+        rentalType = "年付";
+    }
+    else if (payPeriod == 0) {
+        rentalType = "全额付";
+    }
+    else if (payPeriod == 1) {
+        rentalType = "月付";
+    }
+    return rentalType;
 };
