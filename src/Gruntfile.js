@@ -79,42 +79,24 @@ module.exports = function (grunt) {
                     'www/apply2.html',
                     'www/apply3.html',
                     'www/apply4.html',
+                    'www/apply5.html',
                     'www/bill.html',
-                    'www/bill2.html',
-                    'www/boke.html',
-                    'www/contractChange.html',
+                    'www/billView.html',
+                    'www/confirmTenant.html',
                     'www/credit.html',
-                    'www/house.html',
-                    'www/house1.html',
-                    'www/house1boke.html',
-                    'www/house1kangdou.html',
-                    'www/house1nex.html',
-                    'www/house1qiannianhui.html',
-                    'www/house1yuju.html',
-                    'www/house2.html',
-                    'www/houseboke.html',
-                    'www/housekangdou.html',
-                    'www/housemozu.html',
-                    'www/houseyuju.html',
+                    'www/default.html',
                     'www/index.html',
-                    'www/kangdou.html',
                     'www/lease.html',
                     'www/list.html',
-                    'www/list2.html',
                     'www/login.html',
-                    'www/loginv2.html',
-                    'www/month.html',
-                    'www/monthboke.html',
-                    'www/monthkangdou.html',
-                    'www/mozu.html',
                     'www/photo.html',
+                    'www/precreate.html',
                     'www/register.html',
                     'www/resetPassword.html',
                     'www/user.html',
                     'www/verify.html',
-                    'www/verify.html',
                     'www/view.html',
-                    'www/yuju.html'
+                    'www/webpay.html'
                 ],
                 overwrite: true,
                 replacements: [
@@ -129,12 +111,16 @@ module.exports = function (grunt) {
                 overwrite: true,
                 replacements: [
                     {
-                        from: 'http://server-apartment.kolibre.credit',
-                        to: 'http://server-apartment.dev.kolibre.credit'
+                        from: 'http://kc-fengniaowu-talos.kolibre.credit',
+                        to: 'http://kc-fengniaowu-talos.dev.kolibre.credit'
                     },
                     {
-                        from: 'http://m.fengniaowu.com',
-                        to: 'http://test.fengniaowu.com'
+                        from: 'wx4a172ee460dacedd',
+                        to: 'wxa74d300625108685'
+                    },
+                    {
+                        from: 'http://m.fengniaowu.com/webpay.html',
+                        to: 'http://test.fengniaowu.com/webpay.html'
                     }
                 ]
             },
@@ -143,12 +129,16 @@ module.exports = function (grunt) {
                 overwrite: true,
                 replacements: [
                     {
-                        from: 'http://server-apartment.dev.kolibre.credit',
-                        to: 'http://server-apartment.kolibre.credit'
+                        from: 'http://kc-fengniaowu-talos.dev.kolibre.credit',
+                        to: 'http://kc-fengniaowu-talos.kolibre.credit'
                     },
                     {
-                        from: 'http://test.fengniaowu.com',
-                        to: 'http://m.fengniaowu.com'
+                        from: 'wxa74d300625108685',
+                        to: 'wx4a172ee460dacedd'
+                    },
+                    {
+                        from: 'http://test.fengniaowu.com/webpay.html',
+                        to: 'http://m.fengniaowu.com/webpay.html'
                     }
                 ]
             }

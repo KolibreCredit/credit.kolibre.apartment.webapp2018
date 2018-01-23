@@ -11,13 +11,13 @@ var constants = {
         TENANT: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Register/Tenant",
         LOGINBYPASSWORD: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/PasswordLogin/Tenant/Login",
         LOGINAUTHCODE: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/ValidateCodeLogin/Tenant/Login",
-        QUICKLOGIN:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/ValidateCodeLogin/Tenant/QuickLogin",
+        QUICKLOGIN: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/ValidateCodeLogin/Tenant/QuickLogin",
         SETPASSWORD: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Password/Set",
         GETCURRENTTENANT: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/GetCurrentTenant",
         TWOFACTORVERIFY: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/TwoFactorVerify",
-        UPLOADTENANTINFO:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/UploadTenantInfo",
+        UPLOADTENANTINFO: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/UploadTenantInfo",
         CONFIRMTENANTINFO: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/ConfirmTenantInfo",
-        UPDATETENANTPHOTO:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/UpdateTenantPhoto",
+        UPDATETENANTPHOTO: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/UpdateTenantPhoto",
         //
         SIGNATURE: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/FileController/Signature?url={0}",
         UPLOADIMAGESWEIXIN: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/FileController/UploadImagesWeiXin",
@@ -39,12 +39,12 @@ var constants = {
         QUERYALLORDERS: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Order/QueryAllOrders?orderState={0}",
         CREATEYUEFUORDERS: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Order/CreateYueFuOrders",
         //
-        GETORDERBYORDERID:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Order/GetOrderByOrderId?orderId={0}",
-        CREATETRANSACTION:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Transaction/CreateTransaction",
-        GETTRANSACTION:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Transaction/GetTransaction?transactionId={0}",
-        GETWECHATOPENID:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Payment/GetWeChatOpenId",
-        ORDERPAYMENT:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Payment/OrderPayment",
-        GETTENANTCREDITINFO:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/GetTenantCreditInfo"
+        GETORDERBYORDERID: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Order/GetOrderByOrderId?orderId={0}",
+        CREATETRANSACTION: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Transaction/CreateTransaction",
+        GETTRANSACTION: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Transaction/GetTransaction?transactionId={0}",
+        GETWECHATOPENID: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Payment/GetWeChatOpenId",
+        ORDERPAYMENT: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Payment/OrderPayment",
+        GETTENANTCREDITINFO: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/GetTenantCreditInfo"
     },
     COOKIES: {
         XKCSID: 'X-KC-SID',

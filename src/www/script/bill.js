@@ -1,5 +1,5 @@
-
 var currentTab = 0;
+
 function selectTabToggle(index) {
     if (currentTab != index) {
         currentTab = index;
@@ -76,7 +76,7 @@ function findAllLeaseOrder(index) {
                     lbTime = '实际支付时间：' + moment(item.actualPaymentTime).format('YYYY-MM-DD HH:mm');
                 }
                 if (item.orderState == "Paid" || item.orderState == "Canceled") {
-                    totalAmount = (item.totalAmount / 100).toFixed(2).replace(/\B(?=(?:\d{3})+\b)/g, ',');
+                    totalAmount = "¥" + (item.totalAmount / 100).toFixed(2);
                     lbNotPay = "";
                     notPaidAmount = "";
                     btnBillPay = "";
@@ -84,13 +84,13 @@ function findAllLeaseOrder(index) {
                     if (item.paidAmount == 0) {
                         totalAmount = "";
                     } else {
-                        totalAmount = (item.totalAmount / 100).toFixed(2).replace(/\B(?=(?:\d{3})+\b)/g, ',');
+                        totalAmount = "¥" + (item.totalAmount / 100).toFixed(2);
                     }
-                    notPaidAmount = ((item.totalAmount - item.paidAmount) / 100).toFixed(2).replace(/\B(?=(?:\d{3})+\b)/g, ',');
+                    notPaidAmount = "¥" + ((item.totalAmount - item.paidAmount) / 100).toFixed(2);
                     lbNotPay = "<span class='tip {0}'>待支付</span>".format((item.isCurrent ? 'active' : 'normal'));
                     btnBillPay = (item.isCurrent ? '<span class="billbtnPay btnActive" onclick="createTransaction(\'' + item.orderId + '\')">立即支付</span>' : '<span class="billbtnNotPay">立即支付</span>');
                 }
-                lbOrderType = '<img src="{0}" /><span>{1}{2}</span>'.format((item.isCurrent ? 'images/ic_bill_deposit.png' : 'images/ic_bill_normal.png'), getOrderType(item.orderType), totalAmount);
+                lbOrderType = '<img src="{0}" /><span>{1}&nbsp;&nbsp;{2}</span>'.format((item.isCurrent ? 'images/ic_bill_deposit.png' : 'images/ic_bill_normal.png'), getOrderType(item.orderType), totalAmount);
                 if (free != "") {
                     free = "<p class='free'>{0}</p>".format(free);
                 }
@@ -105,7 +105,7 @@ function findAllLeaseOrder(index) {
 
 function createTransaction(orderId) {
     if (isWeixin()) {
-        var redirect_uri = window.encodeURIComponent(constants.URLS.WEBPAYURL.format(orderId));
+        var redirect_uri = encodeURIComponent(constants.URLS.WEBPAYURL.format(orderId));
         window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + constants.CONFIGS.APPID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base#wechat_redirect";
     } else {
         window.location.href = constants.URLS.WEBPAYURL.format(orderId);

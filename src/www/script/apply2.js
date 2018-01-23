@@ -5,7 +5,6 @@
 var pictureUrls = [];
 var tplItem = "";
 var ispostData = true;
-
 //
 function apply() {
     if (!ispostData) {
@@ -28,9 +27,10 @@ function apply() {
         $(".msg-post").hide();
         if (res.succeeded) {
             mui.toast(constants.msgInfo.imgContract);
-            setTimeout(function () {
+            getContractConfirmInfo();
+       /*     setTimeout(function () {
                 window.location.href = "apply3.html";
-            }, 1000);
+            }, 1000);*/
         } else {
             mui.toast(res.message);
         }
@@ -38,6 +38,26 @@ function apply() {
         ispostData = true;
         $(".msg-post").hide();
         mui.toast(err.message);
+    });
+}
+
+function getContractConfirmInfo() {
+    contractConfirmInfoId = getCookie(constants.COOKIES.CONTRACTCONFIRMINFOID);
+    getInvoke(constants.URLS.GETCONTRACTCONFIRMINFO.format(contractConfirmInfoId), function (res) {
+        if (res.succeeded) {
+            if (res.data.selfiePhoto == null) {
+                window.location.href = "apply3.html";
+            }
+            else if (res.data.contactInfo == null) {
+                window.location.href = "apply4.html";
+            } else {
+                window.location.href = "apply5.html";
+            }
+        } else {
+            window.location.href = "apply3.html";
+        }
+    }, function () {
+        window.location.href = "apply3.html";
     });
 }
 

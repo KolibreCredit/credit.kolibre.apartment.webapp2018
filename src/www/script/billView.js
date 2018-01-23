@@ -35,8 +35,8 @@ $(document).ready(function () {
             $(".fang").show();
             var htmlLeaseInfo = tplLeaseInfo.format(
                 tipTitle,
-                getOrderType(item.orderType),
                 (item.totalAmount / 100).toFixed(2),
+                getOrderType(item.orderType),
                 (item.orderAmount / 100).toFixed(2),
                 (item.serviceCharge / 100).toFixed(2),
                 (item.depositAmount / 100).toFixed(2),

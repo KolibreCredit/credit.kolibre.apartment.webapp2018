@@ -51,12 +51,22 @@ function getConfirmContractResult(confirmContractProcessId) {
     });
 }
 
-function confirmcCntract() {
-    if (!ispostData) {
-        mui.toast(constants.msgInfo.postData);
-        return false;
-    }
-    var realName = $("#txtRealName").val();
+function showNext() {
+    $(".step0").hide();
+    $(".step1").show();
+    new Swiper('#swipercontainer1', {
+        slidesPerView: 1.2,
+        spaceBetween: 10,
+        freeMode: true
+    });
+}
+
+var realName = "";
+var cellphone = "";
+var relationship = "";
+
+function confirmcCntract0() {
+    realName = $("#txtRealName").val();
     if (!realName) {
         mui.toast(constants.msgInfo.linkRealName);
         return false;
@@ -65,7 +75,7 @@ function confirmcCntract() {
         mui.toast(constants.msgInfo.accountName.format(realName));
         return false;
     }
-    var cellphone = $("#txtCellphone").val();
+    cellphone = $("#txtCellphone").val();
     if (cellphone == '') {
         mui.toast(constants.msgInfo.linkCellphone);
         return false;
@@ -78,9 +88,18 @@ function confirmcCntract() {
         mui.toast(constants.msgInfo.accountCellphone.format(cellphone));
         return false;
     }
-    var relationship = $("#txtRelation").val();
+    relationship = $("#txtRelation").val();
     if (relationship == '') {
         mui.toast(constants.msgInfo.linkRelationship);
+        return false;
+    }
+    $(".step0").show();
+    $(".step1").hide();
+}
+
+function confirmcCntract1() {
+    if (!ispostData) {
+        mui.toast(constants.msgInfo.postData);
         return false;
     }
     ispostData = false;
@@ -138,17 +157,19 @@ function V2UploadImages(serverId) {
     });
 }
 
-//
-function chooseImage2(index) {
-    imgIndex = index;
-    document.getElementById("imgChoose2").click();
+
+function showChooseImages() {
+    $("#imgAdd").show();
+    $("#imgChoose").show();
 }
+
+var mySwiper = null;
 
 function V2UploadImages2(serverId) {
     var data = {
         serverId: serverId,
         kind: "Contract",
-        index: imgIndex
+        index: mySwiper.realIndex
     };
     postInvoke(constants.URLS.UPLOADIMAGESWEIXIN, data, function (res) {
         if (res.succeeded) {
@@ -159,13 +180,18 @@ function V2UploadImages2(serverId) {
 }
 
 var contractPictures = function (contractPictures, total) {
-    $("#divAddSlide").before(contractPictures);
+    $("#swipercontainer2 .swiper-wrapper").append(contractPictures);
     $("#lbPage").text(total);
-    new Swiper('#swipercontainer2', {
-        slidesPerView: 2,
-        spaceBetween: 10,
-        freeMode: true
-    });
+    if (mySwiper == null) {
+        mySwiper = new Swiper('#swipercontainer2', {
+            roundLengths: true,
+            slidesPerView: "auto",
+            centeredSlides: true,
+            followFinger: false
+        });
+    } else {
+        mySwiper.updateSlides();
+    }
 };
 //
 var tplContractPicture = "";
@@ -191,6 +217,12 @@ $(document).ready(function () {
     getInvoke(constants.URLS.GETCONTRACTCONFIRMINFO.format(contractConfirmInfoId), function (res) {
         if (res.succeeded) {
             contractConfirmInfo = res.data;
+            //contractPictures
+            for (var i = 0; i < contractConfirmInfo.contractPictures.length; i++) {
+                itemContractPictures += tplContractPicture.format(contractConfirmInfo.contractPictures[i], i);
+            }
+            contractPictures(itemContractPictures, contractConfirmInfo.contractPictures.length);
+            //
             $("#lbRealName").text(contractConfirmInfo.realName);
             $("#lbCellphone").text(contractConfirmInfo.cellphone);
             $("#lbCredentialNo").text(contractConfirmInfo.credentialNo);
@@ -206,18 +238,9 @@ $(document).ready(function () {
             $("#lbCredentialBackPhoto").text((contractConfirmInfo.credentialType == "IDCard" ? "身份证背面" : "护照签证信息页"));
             //
             $("#imgSelfiePhoto").attr("src", contractConfirmInfo.selfiePhoto);
-            new Swiper('#swipercontainer1', {
-                slidesPerView: 1.4,
-                spaceBetween: 10,
-                freeMode: true
-            });
-            //contractPictures
-            for (var i = 0; i < contractConfirmInfo.contractPictures.length; i++) {
-                itemContractPictures += tplContractPicture.format(contractConfirmInfo.contractPictures[i], i);
-            }
-            contractPictures(itemContractPictures, contractConfirmInfo.contractPictures.length);
         }
     });
+
     //
     var signUrl = constants.URLS.SIGNATURE.format(encodeURIComponent(window.location.href.split("?")[0]));
     signInvoke(signUrl, function (res) {
@@ -247,7 +270,7 @@ $(document).ready(function () {
             });
         };
         //
-        document.querySelector('#imgChoose2').onclick = function () {
+        document.querySelector('#imgChoose').onclick = function () {
             wx.chooseImage({
                 count: 1,
                 sizeType: ['original'],
@@ -264,7 +287,7 @@ $(document).ready(function () {
             });
         };
         //
-        document.querySelector('#divAddSlide').onclick = function () {
+        document.querySelector('#imgAdd').onclick = function () {
             wx.chooseImage({
                 count: 1,
                 sizeType: ['original'],

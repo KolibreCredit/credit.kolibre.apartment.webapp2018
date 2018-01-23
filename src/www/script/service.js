@@ -210,12 +210,19 @@ function postInvoke(url, data, callSuccess, callError) {
             if (res.code == 130078401) {
                 var rurl = encodeURIComponent(window.location.href);
                 window.location.href = COMMONPATH.PAGE.LOGIN.replace('##rurl##', rurl);
-            } else {
+            }
+            else if (res.code == 130078500) {
+                callSuccess({
+                    succeeded: false,
+                    message: "服务繁忙，请稍后！"
+                });
+            }
+            else {
                 callSuccess(res);
             }
         },
         error: function () {
-            if (!callError({message: "服务繁忙,请稍后"})) {
+            if (!callError({message: "服务繁忙，请稍后"})) {
                 return false;
             }
         }
@@ -236,12 +243,18 @@ function getInvoke(url, callSuccess, callError) {
                 var rurl = encodeURIComponent(window.location.href);
                 window.location.href = COMMONPATH.PAGE.LOGIN.replace('##rurl##', rurl);
             }
+            else if (res.code == 130078500) {
+                callSuccess({
+                    succeeded: false,
+                    message: "服务繁忙，请稍后！"
+                });
+            }
             else {
                 callSuccess(res);
             }
         },
         error: function () {
-            if (!callError({message: "服务繁忙,请稍后"})) {
+            if (!callError({message: "服务繁忙，请稍后"})) {
                 return false;
             }
         }
@@ -261,7 +274,7 @@ function getInvoke2(url, callSuccess, callError) {
             callSuccess(res);
         },
         error: function () {
-            if (!callError({message: "服务繁忙,请稍后"})) {
+            if (!callError({message: "服务繁忙，请稍后"})) {
                 return false;
             }
         }
@@ -282,7 +295,6 @@ function signInvoke(signUrl, callSuccess) {
     });
 }
 
-
 var getOrderType = function (orderType) {
     switch (orderType) {
         case "HouseRental":
@@ -299,8 +311,10 @@ var getOrderType = function (orderType) {
             return "物业费";
         case "HotWaterFee":
             return "热水费";
-        case "ElectricityFee":
+        case "ColdWaterFee":
             return "冷水费";
+        case "ElectricityFee":
+            return "电费";
         case "ParkFee":
             return "停车费";
         case "LaundryFee":
@@ -309,6 +323,16 @@ var getOrderType = function (orderType) {
             return "保洁费";
         case "BroadBandFee":
             return "宽带费";
+        case  "GasFee":
+            return "燃气费";
+        case  "TelevisionFee":
+            return "电视费";
+        case "ServiceFee":
+            return "服务费";
+        case "OtherFee":
+            return "其他费用";
+        case "Reservation":
+            return "预定金";
     }
 };
 

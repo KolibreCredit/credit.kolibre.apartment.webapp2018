@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>申请信息</title>
+    <title>合同信息</title>
     <meta name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <link href="packages/mui@3.4.0/examples/hello-mui/css/mui.picker.min.css" rel="stylesheet"/>
-    <link href="packages/swiper@3.3.1/dist/css/swiper.min.css" rel="stylesheet"/>
+    <link href="packages/swiper@4.0.5/dist/css/swiper.min.css" rel="stylesheet"/>
+    <link href="packages/wheel-menu@1.0.0/wheelmenu.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=16.12.376" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.327" rel="stylesheet"/>
     <style type="text/css">
         input[type=text] {
             padding: 5px;
@@ -56,9 +57,9 @@
         }
 
         .slide-container {
-            background: #ffffff;
             width: 100%;
         }
+
         .slide-container .picture {
             position: relative;
         }
@@ -66,19 +67,34 @@
         .slide-container .photo {
             width: 100%;
             height: 140px;
-            border-radius:6px;
+            border-radius: 6px;
         }
+
         .slide-container .contract {
             width: 100%;
-            height: 200px;
-            border-radius:6px;
+            height: 385px;
+            border-radius: 6px;
         }
+
+        @media screen and (max-height: 736px) {
+            .slide-container .contract {
+                height: 470px;
+            }
+        }
+
+        @media screen and (max-height: 667px) {
+            .slide-container .contract {
+                height: 420px;
+            }
+        }
+
         .slide-container .title {
             color: #333333;
             font-size: 16px;
             height: 50px;
             line-height: 50px;
         }
+
         .slide-container .camera {
             position: absolute;
             width: 40px;
@@ -86,138 +102,178 @@
             right: 8px;
             bottom: 8px;
         }
+
+        .step0 {
+
+        }
+
+        .step1 {
+            display: none;
+        }
+
+        .wheel-button, .wheel-button:visited {
+
+        }
+
+        .wheel-button.nw {
+            position: absolute;
+            bottom: 5px;
+            right: 25px;
+            width: 55px;
+            height: 55px;
+            z-index: 2;
+        }
+
+        .wheel li a, .wheel li a:visited {
+
+        }
     </style>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 </head>
-<body style="background-color:#f7f7f7">
+<body>
 <div class="mui-content" style="background-color:#f7f7f7">
-    <div style="background: url('images/20180103/apply5.jpg');background-size:cover;padding:20px;text-align:center">
-        <img src="images/20180103/user1.png" style="width:67px;height:40px;z-index:2;position:relative"/>
-        <div style="background:#FEF3EB;border-radius:6px;height:118px;position:relative;margin-top:-12px">
-            <div style="font-size:16px;color:#7f7f7f;padding:20px">
-                <div style="text-align:left">姓名<span style="margin-left:37px" id="lbRealName"></span></div>
-                <div style="padding: 5px 0;text-align:left">手机号<span style="margin-left:20px" id="lbCellphone"></span></div>
-                <div style="text-align:left">证件号<span style="margin-left:20px" id="lbCredentialNo"></span></div>
-            </div>
+    <div class="step0">
+        <div style="background-color: rgba(254, 148, 54,0.1);height:40px;line-height:40px;font-size:12px;color:#fd8b14;padding:0 20px"
+             onclick="showNext()">
+            请先核验其他合同信息，签署后默认全部确认<img src="images/20180103/right.png"
+                                     style="width:18px;height:18px;float:right;margin-top:12px"/>
         </div>
-    </div>
-    <div style="color:#646464;line-height:45px;padding-left:40px;position:relative">
-        <img src="images/20180103/tip.png" style="width:16px;height:16px;position:absolute;left:20px;top:14px"/><span
-            style="color:#fb9329;font-size:14px">以下信息若填写有误，请及时修改</span>
-    </div>
-    <div style="background-color:#ffffff">
-        <ul class="mui-table-view mui-table-view-chevron">
-            <li class="mui-table-view-cell mui-media" style="box-shadow:0 2px 0 0 rgba(0,0,0,0.05)">
-                <a>
-                    <div class="mui-media-body">
-                        <span>联系人姓名</span> <input type="text" id="txtRealName" placeholder="请输入姓名" maxlength="20"
-                                                  style="width:160px;text-align:right;float:right">
-                    </div>
-                </a>
-            </li>
-            <li class="mui-table-view-cell mui-media" style="box-shadow:0 2px 0 0 rgba(0,0,0,0.05)">
-                <a>
-                    <div class="mui-media-body">
-                        <span>联系人手机号</span><input type="text" id="txtCellphone" placeholder="请输入手机号" maxlength="11"
-                                                  style="width:160px;text-align:right;float:right">
-                    </div>
-                </a>
-            </li>
-            <li class="mui-table-view-cell mui-media">
-                <a class="mui-navigate-right" href="#divRelation">
-                    <div class="mui-media-body">
-                        <span>与联系人关系</span><input type="text" id="txtRelation" placeholder="请选择与联系人关系" maxlength="10"
-                                                  style="width:160px;text-align:right;float:right">
-                    </div>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div style="height:10px">
-    </div>
-    <div style="background:#ffffff">
-        <div style="line-height:60px;padding-left:20px;font-size:20px;color:#646464">
-            证件照片
-        </div>
-        <div style="margin:0 20px">
-            <div class="swiper-container" id="swipercontainer1">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="slide-container">
-                            <div class="picture">
-                                <img id="imgCredentialFacePhoto" class="photo"/>
-                                <img src="images/20180103/choose.png" class="camera" onclick="chooseImage(0)"/>
-                            </div>
-                            <div class="title">
-                                <span id="lbCredentialFacePhoto"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="slide-container">
-                            <div class="picture">
-                                <img id="imgCredentialBackPhoto" class="photo"/>
-                                <img src="images/20180103/choose.png" class="camera" onclick="chooseImage(1)"/>
-                            </div>
-                            <div class="title">
-                                <span id="lbCredentialBackPhoto"></span>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="slide-container">
-                            <div class="picture">
-                                <img id="imgSelfiePhoto" class="photo"/>
-                                <img src="images/20180103/choose.png" class="camera" onclick="chooseImage(2)"/>
-                            </div>
-                            <div class="title">
-                                手持证件照
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div style="height:10px">
-    </div>
-    <div style="background:#ffffff">
-        <div style="line-height:60px;padding-left:20px;font-size:20px;color:#646464">
-            合同信息
-        </div>
-        <div style="margin:0 20px">
+        <div style="position:relative;margin-top:30px">
             <div class="swiper-container" id="swipercontainer2">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide" id="divAddSlide" style="border:2px dotted #fd8b14;border-radius:6px;height:200px">
-                        <div class="slide-container">
-                            <div style="height:70px"></div>
-                            <img src="images/20180103/add.png" style="width:36px;height:36px"/>
-                            <div style="text-align:center;font-size:14px;color:#646464">
-                                追加合同
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
+            <a href="#wheel1" class="wheel-button nw">
+                <img src="images/20180103/editor.png" style="width: 55px;height:55px"/>
+            </a>
+            <ul id="wheel1" data-angle="[180,360]" class="wheel">
+                <li class="item">
+                    <a>
+                        <img id="imgChoose" src="images/20180103/choose1.png" style="width: 55px;height:55px"/>
+                    </a>
+                </li>
+                <li class="item">
+                    <a>
+                        <img id="imgAdd" src="images/20180103/add1.png" style="width: 55px;height:55px"/>
+                    </a>
+                </li>
+            </ul>
         </div>
         <div style="text-align:center;font-size:16px;color:#333333;line-height:50px">
             共<span id="lbPage" style="padding:0 10px;color:#ff9e00">0</span> 页
         </div>
+        <div style="position: fixed;bottom:0;right:0;left:0;z-index:2">
+            <div style="position: relative;font-size:12px;width:50%;height:60px;background-color:white;float:left;">
+                <img src="images/check1.png" style="width:18px;height:18px;position: absolute;top:10px;left:20px"/>
+                <span style="position:absolute;top:8px;left:45px;color:#646464">同意</span>
+                <a style="color:#bcbcbc;text-decoration:none;position:absolute;top:28px;left:40px" href="#divAgreement">《蜂鸟屋服务协议》</a>
+            </div>
+            <div style="width:50%;float:right">
+                <button class="btnActive" onclick="confirmcCntract1()" style="border-radius:inherit;height:60px">确认并提交
+                </button>
+            </div>
+        </div>
+        <div style="height:60px"></div>
     </div>
-    <div style="margin-top:20px;padding-left:30px;line-height:24px;cursor:pointer;position: relative;font-size:12px">
-        <img src="images/check1.png" style="width:18px;position: absolute;top:4px;left:20px"/>
-        <span style="padding-left:15px;padding-right:5px">同意</span><a style="color:#ff9e00;text-decoration:underline"
-                                                                      href="#divAgreement">《蜂鸟屋服务协议》</a>
+    <div class="step1">
+        <div style="background: url('images/20180103/apply5.jpg');background-size:cover;padding:20px;text-align:center">
+            <img src="images/20180103/user1.png" style="width:67px;height:40px;z-index:2;position:relative"/>
+            <div style="background:#FEF3EB;border-radius:6px;height:118px;position:relative;margin-top:-12px">
+                <div style="font-size:16px;color:#7f7f7f;padding:20px">
+                    <div style="text-align:left">姓名<span style="margin-left:37px" id="lbRealName"></span></div>
+                    <div style="padding: 5px 0;text-align:left">手机号<span style="margin-left:20px"
+                                                                         id="lbCellphone"></span>
+                    </div>
+                    <div style="text-align:left">证件号<span style="margin-left:20px" id="lbCredentialNo"></span></div>
+                </div>
+            </div>
+        </div>
+        <div style="color:#646464;line-height:45px;padding-left:40px;position:relative">
+            <img src="images/20180103/tip.png"
+                 style="width:16px;height:16px;position:absolute;left:20px;top:14px"/><span
+                style="color:#fb9329;font-size:14px">以下信息若填写有误，请及时修改</span>
+        </div>
+        <div style="background-color:#ffffff">
+            <ul class="mui-table-view mui-table-view-chevron">
+                <li class="mui-table-view-cell mui-media" style="box-shadow:0 2px 0 0 rgba(0,0,0,0.05)">
+                    <a>
+                        <div class="mui-media-body">
+                            <span>联系人姓名</span> <input type="text" id="txtRealName" placeholder="请输入姓名" maxlength="20"
+                                                      style="width:160px;text-align:right;float:right">
+                        </div>
+                    </a>
+                </li>
+                <li class="mui-table-view-cell mui-media" style="box-shadow:0 2px 0 0 rgba(0,0,0,0.05)">
+                    <a>
+                        <div class="mui-media-body">
+                            <span>联系人手机号</span><input type="text" id="txtCellphone" placeholder="请输入手机号" maxlength="11"
+                                                      style="width:160px;text-align:right;float:right">
+                        </div>
+                    </a>
+                </li>
+                <li class="mui-table-view-cell mui-media">
+                    <a class="mui-navigate-right" href="#divRelation">
+                        <div class="mui-media-body">
+                            <span>与联系人关系</span><input type="text" id="txtRelation" placeholder="请选择与联系人关系"
+                                                      maxlength="10"
+                                                      style="width:160px;text-align:right;float:right">
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div style="height:10px">
+        </div>
+        <div style="background:#ffffff">
+            <div style="line-height:60px;padding-left:20px;font-size:20px;color:#646464">
+                证件照片
+            </div>
+            <div style="margin:0 20px">
+                <div class="swiper-container" id="swipercontainer1">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="slide-container">
+                                <div class="picture">
+                                    <img id="imgCredentialFacePhoto" class="photo"/>
+                                    <img src="images/20180103/choose.png" class="camera" onclick="chooseImage(0)"/>
+                                </div>
+                                <div class="title">
+                                    <span id="lbCredentialFacePhoto"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="slide-container">
+                                <div class="picture">
+                                    <img id="imgCredentialBackPhoto" class="photo"/>
+                                    <img src="images/20180103/choose.png" class="camera" onclick="chooseImage(1)"/>
+                                </div>
+                                <div class="title">
+                                    <span id="lbCredentialBackPhoto"></span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="slide-container">
+                                <div class="picture">
+                                    <img id="imgSelfiePhoto" class="photo"/>
+                                    <img src="images/20180103/choose.png" class="camera" onclick="chooseImage(2)"/>
+                                </div>
+                                <div class="title">
+                                    手持证件照
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="z-index:2;padding:30px 20px">
+            <button class="btnActive" onclick="confirmcCntract0()">确认并提交</button>
+        </div>
     </div>
-    <div style="height:50px"></div>
-    <div style="position: fixed;bottom:0;right:0;left:0;z-index:2">
-        <button class="btnActive" onclick="confirmcCntract()" style="border-radius:inherit">确认并提交</button>
-    </div>
-    <div style="display:none">
-        <img id="imgChoose1" src="images/20180103/choose.png" style="width:36px;height:36px"/>
-        <img id="imgChoose2" src="images/20180103/choose.png" style="width:36px;height:36px"/>
-    </div>
+    <img id="imgChoose1" src="images/20180103/choose.png" style="width:36px;height:36px;display:none"/>
     <div id="divRelation" class="mui-popover mui-popover-action mui-popover-bottom mui-scroll-wrapper"
          style="height:215px;bottom:0;top:auto">
         <div class="mui-scroll">
@@ -246,8 +302,7 @@
             </ul>
         </div>
     </div>
-    <div id="divAgreement" class="mui-popover mui-popover-action mui-popover-bottom"
-         style="background-color: rgba(0, 0,0, 0.1); padding:20px; position: fixed; top: 0; bottom: 0; left: 0; right: 0;">
+    <div id="divAgreement" class="mui-popover mui-popover-action mui-popover-bottom"  style="background-color: rgba(0, 0,0, 0.1); padding:20px; position: fixed; top: 0; bottom: 0; left: 0; right: 0;">
         <div style="text-align:center;height:48px;line-height:48px;background:#fd8b14;border-radius:8px 8px 0 0;font-size:16px;color:#ffffff;padding-left:30px">
             蜂鸟屋服务协议<span style="float:right;width:30px">X</span>
         </div>
@@ -760,11 +815,10 @@
 </body>
 </html>
 <script type="text/html" id="tplContractPicture">
-    <div class="swiper-slide">
+    <div class="swiper-slide" style="width:90%;padding:0 2%">
         <div class="slide-container">
             <div class="picture">
                 <img src="{0}" class="contract"/>
-                <img src="images/20180103/choose.png" class="camera" onclick="chooseImage2({1})"/>
             </div>
         </div>
     </div>
@@ -772,10 +826,11 @@
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/mui@3.4.0/examples/hello-mui/js/mui.picker.min.js"></script>
-<script src="packages/swiper@3.3.1/dist/js/swiper.jquery.min.js"></script>
-<script src="script/constants.js?ver=16.12.376"></script>
-<script src="script/service.js?ver=16.12.376"></script>
-<script src="script/apply5.js?ver=16.12.37611"></script>
+<script src="packages/swiper@4.0.5/dist/js/swiper.min.js"></script>
+<script src="packages/wheel-menu@1.0.0/jquery.wheelmenu.js"></script>
+<script src="script/constants.js?ver=18.12.327"></script>
+<script src="script/service.js?ver=18.12.327"></script>
+<script src="script/apply5.js?ver=18.12.327"></script>
 <script type="text/javascript">
     mui('#divRelation').scroll({scrollX: false, scrollY: true});
     mui('body').on('tap', '.mui-popover-action li>a', function () {
@@ -790,9 +845,13 @@
         $("#txtRelation").val(a.innerHTML);
         mui('#divRelation').popover('toggle');
     });
-
     mui('#divAgreementDetail').scroll({scrollX: false, scrollY: true});
     mui('body').on('tap', '#divAgreement', function () {
         mui('#divAgreement').popover('toggle');
+    });
+    $(".wheel-button").wheelmenu({
+        trigger: "click",
+        animation: "fly",
+        animationSpeed: "fast"
     });
 </script>

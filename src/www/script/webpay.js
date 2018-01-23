@@ -111,7 +111,7 @@ var queryTransaction = function () {
             isTransaction = true;
             if (res.succeeded) {
                 if (res.data.transactionState === "Succeed") {
-                    window.location.href = "bill.html?r=" + new Date();
+                    window.location.href = "bill.html";
                 }
             }
         });
