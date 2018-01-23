@@ -121,7 +121,6 @@ function formatPhone(obj) {
 String.prototype.trimPhone = function () {
     var result = [];
     for (var i = 0; i < this.length; i++) {
-        // console.log(this.charAt(i));
         if (this.charAt(i) != " ") {
             result.push(this.charAt(i));
         }
@@ -196,6 +195,10 @@ function bill() {
     window.location.href = constants.URLS.BILL;
 }
 
+function toApplys(nextStep) {
+    window.location.href = constants.CONFIGS.APPLYS[nextStep];
+}
+
 function postInvoke(url, data, callSuccess, callError) {
     $.ajax({
         type: 'POST',
@@ -209,7 +212,7 @@ function postInvoke(url, data, callSuccess, callError) {
         success: function (res) {
             if (res.code == 130078401) {
                 var rurl = encodeURIComponent(window.location.href);
-                window.location.href = COMMONPATH.PAGE.LOGIN.replace('##rurl##', rurl);
+                window.location.href = constants.CONFIGS.LOGIN.replace('##rurl##', rurl);
             }
             else if (res.code == 130078500) {
                 callSuccess({
@@ -241,7 +244,7 @@ function getInvoke(url, callSuccess, callError) {
         success: function (res) {
             if (res.code == 130078401) {
                 var rurl = encodeURIComponent(window.location.href);
-                window.location.href = COMMONPATH.PAGE.LOGIN.replace('##rurl##', rurl);
+                window.location.href = constants.CONFIGS.LOGIN.replace('##rurl##', rurl);
             }
             else if (res.code == 130078500) {
                 callSuccess({

@@ -138,11 +138,8 @@ var constants = {
         accountName: "联系人不能为{0}"
     },
     CONFIGS: {
-        APPID: "wxa74d300625108685"
-    }
-};
-var COMMONPATH = {
-    PAGE: {
+        APPID: "wxa74d300625108685",
+        APPLYS: ["", "apply1.html", "apply2.html", "apply3.html", "apply4.html", "apply5.html"],
         LOGIN: 'login.html?url=##rurl##'
     }
 };

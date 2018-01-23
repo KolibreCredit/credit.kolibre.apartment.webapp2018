@@ -10,19 +10,7 @@ function apply() {
     postInvoke(constants.URLS.CREATECONFIRMINFO, data, function (res) {
         if (res.succeeded) {
             setCookie(constants.COOKIES.CONTRACTCONFIRMINFOID, res.data.contractConfirmInfoId);
-            if (!res.data.verifyResult) {
-                window.location.href = "apply1.html";
-            } else if (res.data.contractPictures == null) {
-                window.location.href = "apply2.html";
-            }
-            else if (res.data.selfiePhoto == null) {
-                window.location.href = "apply3.html";
-            }
-            else if (res.data.contactInfo == null) {
-                window.location.href = "apply4.html";
-            } else {
-                window.location.href = "apply5.html";
-            }
+            toApplys(res.data.nextStep);
         } else {
             $(".msg-post").hide();
         }

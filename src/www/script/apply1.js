@@ -4,6 +4,7 @@
 var waitCount = 60;
 var waitTimer = null;
 var isSendCaptcha = true;
+
 //
 function sendWaitTimer() {
     if (waitCount > 0) {
@@ -86,17 +87,17 @@ function apply() {
         if (res.succeeded) {
             var data = {
                 authCode: res.data.authCode,
-                cellphoneAscription: cellphoneBelong
+                cellphoneAscription: cellphoneBelong,
+                contractConfirmInfoId: getCookie(constants.COOKIES.CONTRACTCONFIRMINFOID)
             };
             postInvoke(constants.URLS.TENANTVALIDATECODEVERIFY, data, function (res1) {
                 if (res1.succeeded) {
                     $(".msg-icon").removeClass("fail").addClass("success");
                     $(".msg-tip").html("认证成功");
                     $(".msg-content").show();
-                    getContractConfirmInfo();
-                    /*  setTimeout(function () {
-                          window.location.href = "apply2.html";
-                      }, 2000);*/
+                    setTimeout(function () {
+                        toApplys(res1.data.nextStep);
+                    }, 2000);
                 } else {
                     $(".msg-icon").addClass("fail");
                     $(".msg-tip").html("认证失败");
@@ -113,28 +114,5 @@ function apply() {
         }
     }, function (err) {
         mui.toast(err.message);
-    });
-}
-
-function getContractConfirmInfo() {
-    contractConfirmInfoId = getCookie(constants.COOKIES.CONTRACTCONFIRMINFOID);
-    getInvoke(constants.URLS.GETCONTRACTCONFIRMINFO.format(contractConfirmInfoId), function (res) {
-        if (res.succeeded) {
-            if (res.data.contractPictures == null) {
-                window.location.href = "apply2.html";
-            }
-            else if (res.data.selfiePhoto == null) {
-                window.location.href = "apply3.html";
-            }
-            else if (res.data.contactInfo == null) {
-                window.location.href = "apply4.html";
-            } else {
-                window.location.href = "apply5.html";
-            }
-        } else {
-            window.location.href = "apply2.html";
-        }
-    }, function () {
-        window.location.href = "apply2.html";
     });
 }

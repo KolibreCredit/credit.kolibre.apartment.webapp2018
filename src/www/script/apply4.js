@@ -54,7 +54,7 @@ function apply() {
             mui.toast(constants.msgInfo.contactInfo);
             setTimeout(function () {
                 window.location.href = "apply5.html";
-            }, 1000);
+            },2000);
         } else {
             ispostData = true;
             $(".msg-post").hide();
