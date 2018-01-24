@@ -8,7 +8,7 @@
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <link href="packages/mui@3.4.0/examples/hello-mui/css/mui.picker.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.331" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.332" rel="stylesheet"/>
     <style type="text/css">
         input[type=text] {
             padding: 5px;
@@ -138,8 +138,7 @@
     <div class="btnSubmit" onclick="confirmTenantInfo()">
         确认并提交
     </div>
-    <div id="divCredentialType" class="mui-popover mui-popover-action mui-popover-bottom mui-scroll-wrapper"
-         style="height:102px;bottom:0;top:auto">
+    <div id="divCredentialType" class="mui-popover mui-popover-action mui-popover-bottom mui-scroll-wrapper"  style="height:102px;bottom:0;top:auto">
         <div class="mui-scroll">
             <ul class="mui-table-view">
                 <li class="mui-table-view-cell">
@@ -260,19 +259,13 @@
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/mui@3.4.0/examples/hello-mui/js/mui.picker.min.js"></script>
-<script src="script/constants.js?ver=18.12.331"></script>
-<script src="script/service.js?ver=18.12.331"></script>
-<script src="script/confirmTenant.js?ver=18.12.331"></script>
+<script src="script/constants.js?ver=18.12.332"></script>
+<script src="script/service.js?ver=18.12.332"></script>
+<script src="script/confirmTenant.js?ver=18.12.332"></script>
 <script type="text/javascript">
     mui('#divDecoration').scroll({scrollX: false, scrollY: true});
-    mui('body').on('tap', '.mui-popover-action li>a', function () {
-        var a = this, parent;
-        //根据点击按钮，反推当前是哪个actionsheet
-        for (parent = a.parentNode; parent != document.body; parent = parent.parentNode) {
-            if (parent.classList.contains('mui-popover-action')) {
-                break;
-            }
-        }
+    mui('body').on('tap', '#divCredentialType a', function () {
+         var a = this;
         $("#txtCredentialType").val(a.innerHTML);
         if (a.innerHTML == "身份证") {
             $("#lbTitle1").html("身份证正面");
@@ -281,9 +274,9 @@
             $("#lbTitle1").html("护照个人信息页");
             $("#lbTitle2").html("护照签证信息页");
         }
-        mui('#' + parent.id).popover('toggle');
+        mui('#divCredentialType').popover('toggle');
     });
-    mui('body').on('tap', '.mui-popover-action', function () {
+    mui('body').on('tap', '#divAgreement', function () {
         mui('#divAgreement').popover('toggle');
     });
     mui('#divAgreementDetail').scroll({scrollX: false, scrollY: true});

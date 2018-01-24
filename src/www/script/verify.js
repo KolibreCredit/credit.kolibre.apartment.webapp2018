@@ -11,12 +11,14 @@ var kinds = ["IDCardFace", "IDCardBack", "Selfie"];
 var credientalFacePhotoUrl = "";
 var credientalBackPhotoUrl = "";
 var selfiePhotoUrl = "";
+
 //
 function chooseType(tabIndex) {
     credentialTabIndex = tabIndex;
     $(".selectv").hide();
     $(".selecttype").removeClass("active").eq(tabIndex).addClass("active").find(".selectv").show();
 }
+
 //
 function twoFactorVerify() {
     if (credentialTabIndex == -1) {
@@ -48,14 +50,18 @@ function twoFactorVerify() {
         postInvoke(constants.URLS.TWOFACTORVERIFY, data, function (res) {
             $(".msg-post").hide();
             if (res.succeeded) {
-                $(".chooseTip").html("有效二代身份证");
-                $("#lbTitle1").html("身份证<span style=\"color:#f58a00\">正面</span>");
-                $("#lbTitle2").html("身份证<span style=\"color:#f58a00\">背面</span>");
-                $("#imgCredientalFacePhotoUrl").attr("src", "images/20180103/sfz1.png");
-                $("#imgCredientalBackPhotoUrl").attr("src", "images/20180103/sfz2.png");
-                $("#imgSelfiePhotoUrl").attr("src", "images/20180103/sfz3.png");
-                $(".step0").hide();
-                $(".step1").show();
+                if (res.data.succeeded) {
+                    $(".chooseTip").html("有效二代身份证");
+                    $("#lbTitle1").html("身份证<span style=\"color:#f58a00\">正面</span>");
+                    $("#lbTitle2").html("身份证<span style=\"color:#f58a00\">背面</span>");
+                    $("#imgCredientalFacePhotoUrl").attr("src", "images/20180103/sfz1.png");
+                    $("#imgCredientalBackPhotoUrl").attr("src", "images/20180103/sfz2.png");
+                    $("#imgSelfiePhotoUrl").attr("src", "images/20180103/sfz3.png");
+                    $(".step0").hide();
+                    $(".step1").show();
+                } else {
+                    mui.toast(res.data.message);
+                }
             } else {
                 mui.toast(res.message);
             }

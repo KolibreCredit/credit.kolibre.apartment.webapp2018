@@ -19,9 +19,9 @@ var constants = {
         CONFIRMTENANTINFO: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/ConfirmTenantInfo",
         UPDATETENANTPHOTO: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/UpdateTenantPhoto",
         //
-        SIGNATURE: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/FileController/Signature?url={0}",
-        UPLOADIMAGESWEIXIN: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/FileController/UploadImagesWeiXin",
-        UPLOADIMAGESQR: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/FileController/UploadImagesQR",
+        SIGNATURE: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/File/Signature?url={0}",
+        UPLOADIMAGESWEIXIN: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/File/UploadImagesWeiXin",
+        UPLOADIMAGESQR: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/File/UploadImagesQR",
         //
         GETUNCONFIRMEDCONTRACTCOUNT: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/GetUnConfirmedContractCount",
         GETCURRENTCONTRACTS: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/GetCurrentContracts",
