@@ -89,6 +89,7 @@ module.exports = function (grunt) {
                     'www/lease.html',
                     'www/list.html',
                     'www/login.html',
+                    'www/mozu.html',
                     'www/photo.html',
                     'www/precreate.html',
                     'www/register.html',

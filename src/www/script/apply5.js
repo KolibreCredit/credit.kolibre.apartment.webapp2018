@@ -157,14 +157,7 @@ function V2UploadImages(serverId) {
     });
 }
 
-
-function showChooseImages() {
-    $("#imgAdd").show();
-    $("#imgChoose").show();
-}
-
 var mySwiper = null;
-
 function V2UploadImages2(serverId) {
     var data = {
         serverId: serverId,

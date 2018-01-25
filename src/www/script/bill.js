@@ -25,7 +25,7 @@ function findAllLeaseOrder(index) {
     }
     $('#nodataSpan').html(nodataSpantext);
     getInvoke(constants.URLS.QUERYALLORDERS.format(orderState), function (res) {
-        if (res.data.length == 0) {
+        if (res.data == null) {
             $('.billList').html("");
             $('.nodataDiv').show();
         }
