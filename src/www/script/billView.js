@@ -37,18 +37,22 @@ $(document).ready(function () {
                 tipTitle2 = item.actualPaymentTime.substring(0, 16);
             }
             $("#imgOrderState").attr("src", tipUrl);
-            $(".fang").show();
+            document.getElementById("imgOrderState").onload = function () {
+                $(".fang").show();
+            };
             var htmlLeaseInfo = tplLeaseInfo.format(
                 tipTitle,
                 (item.totalAmount / 100).toFixed(2),
                 getOrderType(item.orderType),
                 (item.orderAmount / 100).toFixed(2),
-                (item.serviceCharge / 100).toFixed(2),
                 (item.depositAmount / 100).toFixed(2),
+                (item.penaltyAmount / 100).toFixed(2),
+                (item.serviceCharge / 100).toFixed(2),
                 (item.propertyManagementAmount / 100).toFixed(2),
                 item.paymentTime.substring(0, 10),
                 tipTitle1,
-                tipTitle2, item.orderState.toLowerCase());
+                tipTitle2,
+                item.orderState.toLowerCase());
             $("#divLeaseInfo").html(htmlLeaseInfo);
         }
     }, function (err) {

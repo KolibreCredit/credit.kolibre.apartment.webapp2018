@@ -1,3 +1,4 @@
+
 var currentTab = 0;
 
 function selectTabToggle(index) {
@@ -25,7 +26,7 @@ function findAllLeaseOrder(index) {
     }
     $('#nodataSpan').html(nodataSpantext);
     getInvoke(constants.URLS.QUERYALLORDERS.format(orderState), function (res) {
-        if (res.data == null) {
+        if (res.data == null || res.data.length == 0) {
             $('.billList').html("");
             $('.nodataDiv').show();
         }
