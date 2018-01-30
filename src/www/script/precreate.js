@@ -1,7 +1,6 @@
 /**
  * Created by long.jiang on 2017/6/21.
  */
-
 var isTransaction = true;
 var transactionId = "";
 var amount = "";

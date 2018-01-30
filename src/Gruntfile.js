@@ -92,6 +92,7 @@ module.exports = function (grunt) {
                     'www/mozu.html',
                     'www/photo.html',
                     'www/precreate.html',
+                    'www/qingcheng.html',
                     'www/qnh.html',
                     'www/register.html',
                     'www/resetPassword.html',
