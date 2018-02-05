@@ -27,7 +27,7 @@ button {
 button:enabled:active {
     background: rgba(253, 139, 20, 0.15);
     box-shadow: 0 2px 4px 0 rgba(78, 40, 0, 0.20);
-    color: #ff8c14;
+    color: #FFFFFF;
 }
 .swiper-container {
     width: 100%;

@@ -1,7 +1,6 @@
 /**
  * Created by long.jiang on 2016/12/14.
  */
-
 var contractId = "";
 
 $(document).ready(function () {
@@ -26,9 +25,9 @@ $(document).ready(function () {
 function apply() {
     var data = {
         contractId: contractId,
-        checkoutTime: $("#lbLeaseDate").html(),
-        checkoutReason: $("#lbReason").html(),
-        notes: $("#txtMemo").val()
+        checkOutTime: $("#lbLeaseDate").html(),
+        checkOutReason: $("#lbReason").html(),
+        note: $("#txtMemo").val()
     };
     postInvoke(constants.URLS.CREATECHECKOUTAPPLY, data, function (res) {
         if (res.succeeded) {

@@ -19,7 +19,11 @@ $(document).ready(function () {
             $("#lbCredentialNo").html(replaceStr(tenantInfo.credentialNo, 3));
             $("#imgCredentialFacePhotoUrl").attr("src", tenantInfo.credentialFacePhotoUrl);
             $("#imgCredentialBackPhotoUrl").attr("src", tenantInfo.credentialBackPhotoUrl);
-            $("#imgSelfiePhotoUrl").attr("src", tenantInfo.selfiePhotoUrl);
+            if (tenantInfo.selfiePhotoUrl != null) {
+                $("#imgSelfiePhotoUrl").attr("src", tenantInfo.selfiePhotoUrl);
+            } else {
+                $("#imgSelfiePhotoUrl").attr("src", (tenantInfo.credentialType == "IDCard" ? "images/sfz3-2.png" : "images/hz3-2.png"));
+            }
         }
     });
     //

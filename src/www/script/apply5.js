@@ -7,6 +7,7 @@ var waitCount = 0;
 var contractConfirmInfoId = "";
 var contractConfirmInfo = null;
 var imgIndex = -1;
+
 var showMsg = function (icon, tip) {
     $(".msg-post").hide();
     $(".msg-icon").addClass(icon);
@@ -93,6 +94,11 @@ function confirmcCntract0() {
         mui.toast(constants.msgInfo.linkRelationship);
         return false;
     }
+    contractConfirmInfo.contactInfo = {
+        realName: realName,
+        cellphone: cellphone,
+        relationship: relationship
+    };
     $(".step0").show();
     $(".step1").hide();
 }
@@ -104,11 +110,6 @@ function confirmcCntract1() {
     }
     ispostData = false;
     $(".msg-post").show();
-    contractConfirmInfo.contactInfo = {
-        realName: realName,
-        cellphone: cellphone,
-        relationship: relationship
-    };
     postInvoke(constants.URLS.CONFIRMCONTRACT, contractConfirmInfo, function (res) {
         if (res.succeeded) {
             waitCount = 1;
@@ -158,6 +159,7 @@ function V2UploadImages(serverId) {
 }
 
 var mySwiper = null;
+
 function V2UploadImages2(serverId) {
     var data = {
         serverId: serverId,
@@ -230,10 +232,13 @@ $(document).ready(function () {
             $("#imgCredentialBackPhoto").attr("src", contractConfirmInfo.credentialBackPhoto);
             $("#lbCredentialBackPhoto").text((contractConfirmInfo.credentialType == "IDCard" ? "身份证背面" : "护照签证信息页"));
             //
-            $("#imgSelfiePhoto").attr("src", contractConfirmInfo.selfiePhoto);
+            if (contractConfirmInfo.selfiePhoto != null) {
+                $("#imgSelfiePhoto").attr("src", contractConfirmInfo.selfiePhoto);
+            } else {
+                $("#imgSelfiePhoto").attr("src", (contractConfirmInfo.credentialType == "IDCard" ? "images/sfz3-2.png" : "images/hz3-2.png"));
+            }
         }
     });
-
     //
     var signUrl = constants.URLS.SIGNATURE.format(encodeURIComponent(window.location.href.split("?")[0]));
     signInvoke(signUrl, function (res) {

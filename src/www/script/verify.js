@@ -90,10 +90,10 @@ function confirmTenantInfo() {
         mui.toast((credentialTabIndex == 0 ? constants.msgInfo.img20err : constants.msgInfo.img21err));
         return false;
     }
-    if (selfiePhotoUrl == '') {
+   /* if (selfiePhotoUrl == '') {
         mui.toast(constants.msgInfo.img3err);
         return false;
-    }
+    }*/
     var data = {
         realName: realName,
         credentialType: (credentialTabIndex == 0 ? "IDCard" : "Passport"),

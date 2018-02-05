@@ -83,6 +83,7 @@ module.exports = function (grunt) {
                     'www/bill.html',
                     'www/billView.html',
                     'www/confirmTenant.html',
+                    'www/confirmTenant2.html',
                     'www/credit.html',
                     'www/default.html',
                     'www/index.html',
@@ -99,7 +100,8 @@ module.exports = function (grunt) {
                     'www/user.html',
                     'www/verify.html',
                     'www/view.html',
-                    'www/webpay.html'
+                    'www/webpay.html',
+                    'www/yuanlai.html'
                 ],
                 overwrite: true,
                 replacements: [

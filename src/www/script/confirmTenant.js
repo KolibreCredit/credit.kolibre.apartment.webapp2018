@@ -29,7 +29,11 @@ $(document).ready(function () {
             $("#imgCredentialBackPhotoUrl").attr("src", credentialBackPhotoUrl);
             //
             selfiePhotoUrl = tenantInfo.selfiePhotoUrl;
-            $("#imgSelfiePhotoUrl").attr("src", selfiePhotoUrl);
+            if (selfiePhotoUrl != null) {
+                $("#imgSelfiePhotoUrl").attr("src", selfiePhotoUrl);
+            } else {
+                $("#imgSelfiePhotoUrl").attr("src", (tenantInfo.credentialType == "IDCard" ? "images/sfz3-2.png" : "images/hz3-2.png"));
+            }
         }
     });
     //
@@ -69,6 +73,7 @@ function chooseImage(index) {
 }
 
 var kinds = ["IDCardFace", "IDCardBack", "Selfie"];
+
 function V2UploadImages(serverId) {
     var data = {
         serverId: serverId,
@@ -119,10 +124,10 @@ function confirmTenantInfo() {
         mui.toast((credentialTabIndex == 0 ? constants.msgInfo.img20err : constants.msgInfo.img21err));
         return false;
     }
-    if (selfiePhotoUrl == '') {
+/*    if (selfiePhotoUrl == '') {
         mui.toast(constants.msgInfo.img3err);
         return false;
-    }
+    }*/
     var data = {
         realName: realName,
         credentialType: (credentialTabIndex == 0 ? "IDCard" : "Passport"),
@@ -137,12 +142,8 @@ function confirmTenantInfo() {
             $(".msg-post").hide();
             mui.toast(constants.msgInfo.verify.format(credentialTabIndex == 0 ? "身份证" : "护照"));
             setTimeout(function () {
-                if (url != "") {
-                    window.location.href = decodeURIComponent(url);
-                } else {
-                    window.location.href = "index.html";
-                }
-            }, 1000);
+                window.location.href = "confirmTenant2.html?url={0}".format(url);
+            },1000);
         } else {
             $(".msg-post").hide();
             mui.toast(res.message);
