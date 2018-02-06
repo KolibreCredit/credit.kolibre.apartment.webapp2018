@@ -90,10 +90,10 @@ function confirmTenantInfo() {
         mui.toast((credentialTabIndex == 0 ? constants.msgInfo.img20err : constants.msgInfo.img21err));
         return false;
     }
-   /* if (selfiePhotoUrl == '') {
-        mui.toast(constants.msgInfo.img3err);
-        return false;
-    }*/
+    /* if (selfiePhotoUrl == '') {
+         mui.toast(constants.msgInfo.img3err);
+         return false;
+     }*/
     var data = {
         realName: realName,
         credentialType: (credentialTabIndex == 0 ? "IDCard" : "Passport"),
@@ -108,7 +108,10 @@ function confirmTenantInfo() {
             $(".msg-post").hide();
             mui.toast(constants.msgInfo.verify.format(credentialTabIndex == 0 ? "身份证" : "护照"));
             setTimeout(function () {
-                if (url != "") {
+                if (!res.data.confirmed){
+                    window.location.href = "confirmTenant.html?url=list.html";
+                }
+                else if (url != "") {
                     window.location.href = decodeURIComponent(url);
                 } else {
                     window.location.href = "user.html";
