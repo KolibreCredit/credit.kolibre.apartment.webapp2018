@@ -82,6 +82,7 @@ function getCurrentcontracts() {
             var titleColor = "";
             var icon = "";
             var quash = "block";
+            var confirmCount = 0;
             for (var i = 0; i < res.data.length; i++) {
                 icon = "";
                 titleColor = "";
@@ -111,6 +112,7 @@ function getCurrentcontracts() {
                 } else {
                     icon = "<img src='images/icon_queren.png' class='icon'/>";
                     btnControls = btnConfirm.format(item.contractId);
+                    confirmCount = confirmCount + 1;
                 }
                 leasesHtml += tplLeases.format(
                     item.createTime.substring(0, 10),
@@ -124,8 +126,15 @@ function getCurrentcontracts() {
                     title,
                     item.contractId, quash);
             }
-            $("#divLeases").html(leasesHtml);
+            if (confirmCount > 0) {
+                $("#lbConfirmCount").html(confirmCount);
+                $("#divTip").show()
+                $("#divLeases").html(leasesHtml).addClass("leasesList");
+            } else {
+                $("#divLeases").html(leasesHtml).removeClass("leasesList");
+            }
         } else {
+            $("#divTip").hide();
             $("#divLeases").html("");
             $("#divNoData").show();
         }

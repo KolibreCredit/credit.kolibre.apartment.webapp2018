@@ -8,7 +8,7 @@
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <link href="packages/mui@3.4.0/examples/hello-mui/css/mui.picker.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.348" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.350" rel="stylesheet"/>
     <style type="text/css">
         input[type=text] {
             padding: 5px;
@@ -58,14 +58,34 @@
             height: 0;
         }
 
-        .btnSubmit {
-            height: 50px;
-            line-height: 50px;
-            background: #fb9329;
+        .msg-content {
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .msg-body {
+            background-color: #FFFFFF;
+            width: 100%;
+        }
+
+        .divFooter {
+            height: 66px;
+            background: #FFFFFF;
             text-align: center;
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            padding: 10px 40px;
+        }
+
+        .btnActive {
+            background: #ff8c14;
+            border-radius: 44px;
+            height: 44px;
+            color: #ffffff;
             font-size: 18px;
-            color: #FFFFFF;
-            margin-top: 50px;
+            width: 100%;
+            border: none;
         }
     </style>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
@@ -131,14 +151,16 @@
         <div style="height:10px"></div>
     </div>
     <div style="margin-top:30px;line-height:20px;padding:0 20px">
-        <img src="images/check1.png"  style="width:18px;height:18px;vertical-align:bottom"/>
+        <img src="images/check1.png" style="width:18px;height:18px;vertical-align:bottom"/>
         <span style="padding: 0 5px">同意</span>
         <a style="color:#ff9e00;text-decoration:underline" href="#divAgreement">《用户注册协议》</a>
     </div>
-    <div class="btnSubmit" onclick="confirmTenantInfo()">
-        确认并提交
+    <div style="height:80px"></div>
+    <div class="divFooter">
+        <button class="btnActive" onclick="confirmTenantInfo()">确认并提交</button>
     </div>
-    <div id="divCredentialType" class="mui-popover mui-popover-action mui-popover-bottom mui-scroll-wrapper"  style="height:102px;bottom:0;top:auto">
+    <div id="divCredentialType" class="mui-popover mui-popover-action mui-popover-bottom mui-scroll-wrapper"
+         style="height:102px;bottom:0;top:auto">
         <div class="mui-scroll">
             <ul class="mui-table-view">
                 <li class="mui-table-view-cell">
@@ -151,11 +173,13 @@
         </div>
     </div>
     <img id="imgChoose1" src="images/20180103/choose.png" style="display:none"/>
-    <div id="divAgreement" class="mui-popover mui-popover-action mui-popover-bottom"  style="background-color: rgba(0, 0,0, 0.1); padding:20px; position: fixed;top: 0; bottom: 0; left: 0; right: 0;">
+    <div id="divAgreement" class="mui-popover mui-popover-action mui-popover-bottom"
+         style="background-color: rgba(0, 0,0, 0.1); padding:20px; position: fixed;top: 0; bottom: 0; left: 0; right: 0;">
         <div style="text-align:center;height:48px;line-height:48px;background:#fd8b14;border-radius:8px 8px 0 0;font-size:16px;color:#ffffff;padding-left:30px">
             用户注册协议<span style="float:right;width:30px">X</span>
         </div>
-        <div id="divAgreementDetail" class="mui-scroll-wrapper"  style="border-bottom: 20px solid #fff; border-top: 10px solid #fff;margin:0;background:#ffffff;border-radius:0 0 8px 8px;position: absolute;width: auto;bottom: 20px;right: 20px;left: 20px;top: 68px;">
+        <div id="divAgreementDetail" class="mui-scroll-wrapper"
+             style="border-bottom: 20px solid #fff; border-top: 10px solid #fff;margin:0;background:#ffffff;border-radius:0 0 8px 8px;position: absolute;width: auto;bottom: 20px;right: 20px;left: 20px;top: 68px;">
             <div class="mui-scroll"
                  style="padding: 0 20px; margin-bottom: 20px;font-size:16px; color:#646464; text-indent: 20px; ">
                 <p>
@@ -253,19 +277,65 @@
         </div>
         <div style="height:10px"></div>
     </div>
+    <div class="msg-post" style="z-index:8">
+        <table style='width:100%;height:100%'>
+            <tr>
+                <td style='vertical-align:middle'>
+                    <div>
+                        <img src="images/loading.gif" style="width:auto;height:40px">
+                    </div>
+                    <div style="font-size:16px">
+                        提交中，请等待...
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="msg-content" style="z-index:9">
+        <table style='width:100%;height:100%'>
+            <tr>
+                <td style='vertical-align:middle'>
+                    <div style="padding:0 35px">
+                        <div class='msg-body' id="divMsgBody">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/html" id="tplMsg">
+        <div style="text-align:center;padding-top:20px;padding-bottom:10px">
+            <img src="{0}" style="width:50px;height:50px"/>
+        </div>
+        <div style="text-align:center;line-height:30px;font-size:18px;color:#646464;">
+            {1}
+        </div>
+        <div style="text-align:center;line-height:25px;font-size:14px;color:#646464">
+            {2}
+        </div>
+        <div style="text-align:center;line-height:25px;font-size:14px;color:#646464;overflow: hidden">
+            {3}
+        </div>
+        <div style="padding:25px 50px">
+            <div style="border:1px solid #fd8b14;border-radius:100px;width:100%;height:38px;line-height: 38px;font-size:18px;color:#fd8b14"
+                 onclick="hideContent({4})">
+                我知道了
+            </div>
+        </div>
+    </script>
 </div>
 </body>
 </html>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/mui@3.4.0/examples/hello-mui/js/mui.picker.min.js"></script>
-<script src="script/constants.js?ver=18.12.348"></script>
-<script src="script/service.js?ver=18.12.348"></script>
-<script src="script/confirmTenant.js?ver=18.12.348"></script>
+<script src="script/constants.js?ver=18.12.350"></script>
+<script src="script/service.js?ver=18.12.350"></script>
+<script src="script/confirmTenant.js?ver=18.12.350"></script>
 <script type="text/javascript">
     mui('#divDecoration').scroll({scrollX: false, scrollY: true});
     mui('body').on('tap', '#divCredentialType a', function () {
-         var a = this;
+        var a = this;
         $("#txtCredentialType").val(a.innerHTML);
         if (a.innerHTML == "身份证") {
             $("#lbTitle1").html("身份证正面");

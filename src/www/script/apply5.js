@@ -188,6 +188,7 @@ var contractPictures = function (contractPictures, total) {
         mySwiper.updateSlides();
     }
 };
+
 //
 var tplContractPicture = "";
 var itemContractPictures = "";
@@ -202,6 +203,7 @@ function V2UploadImages3(serverId) {
             contractConfirmInfo.contractPictures.push(res.data.url);
             itemContractPictures = tplContractPicture.format(res.data.url, contractConfirmInfo.contractPictures.length - 1);
             contractPictures(itemContractPictures, contractConfirmInfo.contractPictures.length);
+            mySwiper.slideTo((contractConfirmInfo.contractPictures.length - 1), 1000, false);
         }
     });
 }

@@ -124,10 +124,10 @@ function confirmTenantInfo() {
         mui.toast((credentialTabIndex == 0 ? constants.msgInfo.img20err : constants.msgInfo.img21err));
         return false;
     }
-/*    if (selfiePhotoUrl == '') {
-        mui.toast(constants.msgInfo.img3err);
-        return false;
-    }*/
+    /*    if (selfiePhotoUrl == '') {
+            mui.toast(constants.msgInfo.img3err);
+            return false;
+        }*/
     var data = {
         realName: realName,
         credentialType: (credentialTabIndex == 0 ? "IDCard" : "Passport"),
@@ -138,18 +138,29 @@ function confirmTenantInfo() {
     };
     $(".msg-post").show();
     postInvoke(constants.URLS.CONFIRMTENANTINFO, data, function (res) {
-        if (res.succeeded) {
-            $(".msg-post").hide();
-            mui.toast(constants.msgInfo.verify.format(credentialTabIndex == 0 ? "身份证" : "护照"));
-            setTimeout(function () {
-                window.location.href = "confirmTenant2.html?url={0}".format(url);
-            },1000);
-        } else {
-            $(".msg-post").hide();
-            mui.toast(res.message);
-        }
+        showContent(res.succeeded);
     }, function (err) {
-        $(".msg-post").hide();
-        mui.toast(err.message);
+        console.log(err.message);
+        showContent(false);
     });
+}
+
+function showContent(succeeded) {
+    var tplMsg = $("#tplMsg").html();
+    if (succeeded) {
+        $("#divMsgBody").html(tplMsg.format("images/success1.png", "成功提交个人信息", "需先确认租约，才能完成其他操作", "", succeeded));
+    } else {
+        $("#divMsgBody").html(tplMsg.format("images/fail1.png", "个人信息提交失败", "请及时修改，如果疑问联系客服", "400-921-5508", succeeded));
+    }
+    $(".msg-post").hide();
+    setTimeout(function () {
+        $(".msg-content").show();
+    }, 100);
+}
+
+function hideContent(succeeded) {
+    $(".msg-content").hide();
+    if (succeeded) {
+        window.location.href = "list.html";
+    }
 }
