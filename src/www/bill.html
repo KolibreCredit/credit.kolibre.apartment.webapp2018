@@ -7,7 +7,7 @@
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.350" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.353" rel="stylesheet"/>
     <style type="text/css">
         input[type=text], input[type=password] {
             padding: 5px;
@@ -43,21 +43,20 @@
         .billList {
             padding: 0;
             margin: 0;
-            background: rgba(0, 0, 0, 0);
             margin-top: 50px;
         }
 
-        .billList .item {
-            margin-top: 10px;
-            margin-bottom: 10px;
-            background: #ffffff;
-            list-style: none;
-            padding: 0;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            position: relative;
+        .recentDaysTip {
+            margin-top: 75px;
         }
 
-        .billList .topDiv {
+        .contentDiv {
+            margin-top: 10px;
+            background: #ffffff;
+            /* box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);*/
+        }
+
+        .topDiv {
             padding: 12px 20px;
             border-bottom: 1px solid #e9e9e9;
             font-size: 14px;
@@ -69,9 +68,14 @@
 
         .state {
             float: right;
+            color: #999999;
         }
 
         .state.created {
+            color: #ff8c14;
+        }
+
+        .state.paid {
             color: #ff8c14;
         }
 
@@ -79,42 +83,44 @@
             color: #f55452;
         }
 
-        .billList .bottomDiv {
-            padding: 12px 20px;
+        .state.canceled {
+            color: #999999;
         }
 
-        .billList .bottomDiv img {
-            width: 16px;
-            height: 16px;
-            vertical-align: middle;
-        }
-
-        .billList .bottomDiv .billType {
+        .billType {
             font-size: 16px;
             color: #646464;
-        }
-
-        .billList .bottomDiv .billType span {
-            margin-left: 10px;
-            vertical-align: middle;
-        }
-
-        .billList .bottomDiv .billRelateDate {
-            font-size: 14px;
-            color: #adadad;
-            display: none;
-        }
-
-        .billPayContent {
-            overflow: hidden;
-            margin-bottom: 0;
+            height: 34px;
+            line-height: 34px;
+            padding-left: 20px;
             position: relative;
         }
 
-        .billList .bottomDiv .billMoney {
-            font-size: 20px;
-            color: #666666;
-            line-height: 30px;
+        .billType img {
+            width: 30px;
+            height: 34px;
+        }
+
+        .billType span {
+            position: absolute;
+            left: 25px;
+        }
+
+        .billType label {
+            position: absolute;
+            right: 20px;
+        }
+
+        .billPayContent {
+            line-height: 32px;
+            padding-left: 20px;
+            padding-right: 20px;
+            overflow: hidden;
+        }
+
+        .billPayContent .amount {
+            font-size: 18px;
+            color: #646464;
         }
 
         .billbtnPay {
@@ -122,12 +128,12 @@
             font-size: 14px;
             color: #ffffff;
             outline: none;
-            cursor: pointer;
             background: #ff8c14;
             border: 1px solid #ff8c14;
             border-radius: 90px;
             padding: 0 10px;
-            line-height: 26px;
+            height: 30px;
+            line-height: 28px;
         }
 
         .billbtnNotPay {
@@ -135,36 +141,26 @@
             font-size: 14px;
             color: #ffffff;
             outline: none;
-            cursor: pointer;
-            background-color: #cccccc;
+            background: #cccccc;
             border: 1px solid #cccccc;
-            border-radius: 89px;
-            padding: 5px 15px;
+            border-radius: 90px;
+            padding: 0 10px;
+            height: 30px;
+            line-height: 28px;
         }
 
-        .free {
-            margin-bottom: 0;
+        .bottomDiv {
+            height: 20px;
+            line-height: 18px;
+            padding-left: 20px;
+            font-size: 12px;
+            color: #666666;
         }
 
-        .tip {
-            position: absolute;
-            border-radius: 80px;
-            font-size: 10px;
-            text-align: center;
-            padding: 0 5px;
-            margin-left: 5px;
-            top: 4px;
-            display: inline-block;
-        }
-
-        .tip.normal {
-            border: 1px solid #cccccc;
-            color: #999999;
-        }
-
-        .tip.active {
-            border: 1px solid #ff8c14;
-            color: #ff8c14;
+        .bottomDiv label {
+            padding: 5px 0;
+            font-size: 12px;
+            color: #666666;
         }
 
         .msg-body {
@@ -177,23 +173,37 @@
             text-align: center;
             display: inline-block;
         }
+
         .ic_grey_arrow {
             width: 18px;
             height: 18px;
             float: right;
             margin-top: -2px;
         }
+
+        .recentDays {
+            display: none;
+        }
     </style>
 </head>
 <body style="background:#f8f8f8">
 <div class="mui-content" style="background:none">
-    <div style="position: fixed; width: 100%; left: 0; top: 0; height: 44px; background:#ffffff;box-shadow:0 2px 5px 0 rgba(0,0,0,0.10);z-index:1">
+    <div style="position: fixed; width: 100%; left: 0; top: 0; background:#ffffff;z-index:1">
         <table class="selectTable">
             <tr>
                 <td class="active" onclick="selectTabToggle(0)"><span>未支付</span></td>
                 <td onclick="selectTabToggle(1)"><span>已完成</span></td>
             </tr>
         </table>
+        <div class="recentDays"
+             style="background:#F0F0F0;height: 30px;line-height:30px;font-size: 14px;color:#646464;padding-left:20px">
+            <img src="images/check1.png" style="height: 18px;width:18px;vertical-align:middle"/> 近15日内无待支付账单
+        </div>
+        <div class="recentDays"
+             style="background:#fff1db;height: 30px;line-height:30px;font-size: 14px;color:#ff8c14;padding-left:20px">
+            <img src="images/tip.png" style="height: 18px;width:18px;vertical-align:middle"/> 近15日有<span
+                id="lbRecentOrderAmount"></span>笔待支付账单
+        </div>
     </div>
     <div class="billList">
     </div>
@@ -205,24 +215,18 @@
            href="house.html">赶快添加租约信息</a>
     </div>
     <script type="text/html" id="tplBill">
-        <div class="{9}">
-            <div class="topDiv" onclick="view('{3}')">
-                {0}
-                <img class="ic_grey_arrow" src="images/ic_grey_arrow.png"/>
-                {1}
+        <div class="contentDiv">
+            <div class="topDiv" onclick="view('{0}')">
+                {1}<img class="ic_grey_arrow" src="images/ic_grey_arrow.png"/>{2}
             </div>
-            <div class="bottomDiv" style="position:relative">
-                <p class="billType">
-                    {2}
-                </p>
-                <p class="billRelateDate">账单编号：{3}</p>
-                <p class="billPayContent">
-                    <span class="billMoney">{4}</span>
-                    {5}
-                    {6}
-                </p>
-                {7}
-                {8}
+            <div class="billType">
+                <img src="{3}"/>{4}<span style="left:60px">{5}</span>{6}
+            </div>
+            <div class="billPayContent">
+                <span class="amount">{7}</span>{8}
+            </div>
+            <div class="bottomDiv">
+                {9}
             </div>
         </div>
     </script>
@@ -267,6 +271,6 @@
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/moment@2.17.1/min/moment.min.js"></script>
-<script src="script/constants.js?ver=18.12.350"></script>
-<script src="script/service.js?ver=18.12.350"></script>
-<script src="script/bill.js?ver=18.12.350"></script>
+<script src="script/constants.js?ver=18.12.353"></script>
+<script src="script/service.js?ver=18.12.353"></script>
+<script src="script/bill.js?ver=18.12.353"></script>

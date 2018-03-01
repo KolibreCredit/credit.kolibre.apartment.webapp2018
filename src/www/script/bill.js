@@ -1,4 +1,3 @@
-
 var currentTab = 0;
 
 function selectTabToggle(index) {
@@ -26,25 +25,24 @@ function findAllLeaseOrder(index) {
     }
     $('#nodataSpan').html(nodataSpantext);
     getInvoke(constants.URLS.QUERYALLORDERS.format(orderState), function (res) {
-        if (res.data == null || res.data.length == 0) {
+        if (res.data.orderResponse == null || res.data.orderResponse.length == 0) {
             $('.billList').html("");
             $('.nodataDiv').show();
         }
         else {
-            var billLists = res.data;
+            var billLists = res.data.orderResponse;
             var tplBill = $('#tplBill').html();
             var billHtmls = "";
             //
-            var lbState = "";
             var lbTime = "";
-            var lbOrderType = "";
-            //
-            var btnBillPay = "";
-            var lbNotPay = "";
+            var lbState = "";
+            var imgTip = "";
+            var lbTip = "";
             var totalAmount = "";
+            //
             var notPaidAmount = "";
+            var btnBillPay = "";
             var free = "";
-            var imgRental = "";
             //
             var item = null;
             for (var i = 0; i < billLists.length; i++) {
@@ -58,48 +56,57 @@ function findAllLeaseOrder(index) {
                 if (item.serviceCharge > 0 && item.penaltyAmount > 0) {
                     free = "含{0}元手续费、{1}元违约金".format((item.serviceCharge / 100).toFixed(2), (item.penaltyAmount / 100).toFixed(2));
                 }
-                //
                 if (item.orderState == 'Created') {
-                    lbState = '<span class="state {0}">未支付</span>'.format((item.isCurrent ? "created" : ""));
                     lbTime = '账单到期日：' + moment(item.paymentTime).format('YYYY-MM-DD');
+                    lbState = '<span class="state {0}">未支付</span>'.format(item.isCurrent ? "created" : "");
+                    imgTip = "{0}".format(item.isCurrent ? "images/billtip0.png" : "images/billtip1.png");
+                    lbTip = "<span style='color:{0}'>{1}</span>".format((item.isCurrent ? "#ff8c14" : "#999999"), moment(item.paymentTime).format('MM'));
                 }
                 else if (item.orderState == 'Overdue') {
-                    lbState = '<span class="state overdue">已逾期</span>';
                     lbTime = '账单到期日：' + moment(item.paymentTime).format('YYYY-MM-DD');
+                    lbState = '<span class="state overdue">已逾期</span>';
+                    imgTip = "images/billtip0.png";
+                    lbTip = "<span style='color:#ff8c14'>{0}</span>".format(moment(item.paymentTime).format('MM'));
                 }
                 else if (item.orderState == 'Canceled') {
-                    lbState = '<span class="state">已取消</span>';
                     lbTime = '退租日期：' + moment(item.checkoutTime).format('YYYY-MM-DD');
-                    imgRental = '<img src="images/leasetip1.png" style="width:65px;height:67px;position:absolute;bottom:0;right:0">'
+                    lbState = '<span class="state canceled">已取消</span>';
+                    imgTip = "images/billtip1.png";
+                    lbTip = "<span style='color:#999999'>{0}</span>".format(moment(item.paymentTime).format('MM'));
                 }
                 else {
-                    lbState = '<span class="state">已完成</span>';
-                    lbTime = '实际支付时间：' + moment(item.actualPaymentTime).format('YYYY-MM-DD HH:mm');
+                    lbTime = '支付时间：' + moment(item.actualPaymentTime).format('YYYY-MM-DD HH:mm');
+                    lbState = '<span class="state paid">已完成</span>';
+                    imgTip = "images/billtip0.png";
+                    lbTip = "<span style='color:#ff8c14'>{0}</span>".format(moment(item.paymentTime).format('MM'));
                 }
                 if (item.orderState == "Paid" || item.orderState == "Canceled") {
-                    totalAmount = "¥" + (item.totalAmount / 100).toFixed(2);
-                    lbNotPay = "";
+                    totalAmount = "<label>{0}</label>".format("¥" + (item.totalAmount / 100).toFixed(2));
                     notPaidAmount = "";
                     btnBillPay = "";
                 } else {
                     if (item.paidAmount == 0) {
                         totalAmount = "";
                     } else {
-                        totalAmount = "¥" + (item.totalAmount / 100).toFixed(2);
+                        totalAmount = "<span style='left:120px'>{0}</span>".format("¥" + (item.totalAmount / 100).toFixed(2));
                     }
                     notPaidAmount = "¥" + ((item.totalAmount - item.paidAmount) / 100).toFixed(2);
-                    lbNotPay = "<span class='tip {0}'>待支付</span>".format((item.isCurrent ? 'active' : 'normal'));
                     btnBillPay = (item.isCurrent ? '<span class="billbtnPay btnActive" onclick="createTransaction(\'' + item.orderId + '\')">立即支付</span>' : '<span class="billbtnNotPay">立即支付</span>');
                 }
-                lbOrderType = '<img src="{0}" /><span>{1}&nbsp;&nbsp;{2}</span>'.format((item.isCurrent ? 'images/ic_bill_deposit.png' : 'images/ic_bill_normal.png'), getOrderType(item.orderType), totalAmount);
                 if (free != "") {
-                    free = "<p class='free'>{0}</p>".format(free);
+                    free = "<label>{0}</label>".format(free);
                 }
-                billHtmls += tplBill.format(lbTime, lbState, lbOrderType, item.orderId, notPaidAmount, lbNotPay, btnBillPay, free, imgRental, 'item');
+                billHtmls += tplBill.format(item.orderId, lbTime, lbState, imgTip, lbTip, getOrderType(item.orderType), totalAmount, notPaidAmount, btnBillPay, free);
                 free = "";
-                imgRental = "";
             }
-            $('.billList').html(billHtmls);
+            if (orderState == "NotPaid") {
+                $("#lbRecentOrderAmount").text(res.data.recentOrderAmount);
+                $(".recentDays").eq((res.data.recentOrderAmount == 0 ? 0 : 1)).show();
+                $('.billList').html(billHtmls).addClass("recentDaysTip");
+            } else {
+                $(".recentDays").hide();
+                $('.billList').html(billHtmls).removeClass("recentDaysTip");
+            }
         }
     });
 }
@@ -115,6 +122,10 @@ function createTransaction(orderId) {
 
 function view(orderId) {
     window.location.href = "billView.html?orderId={0}".format(orderId);
+}
+
+function closeApply() {
+    $(".msg-alert").hide();
 }
 
 $(document).ready(function () {

@@ -87,6 +87,7 @@ module.exports = function (grunt) {
                     'www/credit.html',
                     'www/default.html',
                     'www/index.html',
+                    'www/kangdou.html',
                     'www/lease.html',
                     'www/list.html',
                     'www/login.html',
