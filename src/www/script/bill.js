@@ -26,7 +26,7 @@ function findAllLeaseOrder(index) {
     $('#nodataSpan').html(nodataSpantext);
     getInvoke(constants.URLS.QUERYALLORDERS.format(orderState), function (res) {
         if (res.data.orderResponse == null || res.data.orderResponse.length == 0) {
-            $('.billList').html("");
+            $('.billList').html("").removeClass("recentDaysTip");
             $('.nodataDiv').show();
         }
         else {

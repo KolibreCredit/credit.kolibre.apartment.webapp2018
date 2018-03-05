@@ -4,7 +4,6 @@
 var waitCount = 60;
 var waitTimer = null;
 var isSendCaptcha = true;
-
 //
 function sendWaitTimer() {
     if (waitCount > 0) {
