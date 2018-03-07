@@ -118,6 +118,20 @@ function formatPhone(obj) {
     obj.value = result.join("");
 }
 
+function phoneFormat(cellphone) {
+    var value = validPhone(cellphone);
+    value = value.replace(/\s*/g, "");
+    var result = [];
+    for (var i = 0; i < value.length; i++) {
+        if (i == 3 || i == 7) {
+            result.push(" " + value.charAt(i));
+        } else {
+            result.push(value.charAt(i));
+        }
+    }
+    return result.join("");
+}
+
 String.prototype.trimPhone = function () {
     var result = [];
     for (var i = 0; i < this.length; i++) {

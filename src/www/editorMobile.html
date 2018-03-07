@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改手机号</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.355" rel="stylesheet"/>
+    <style type="text/css">
+        input[type=text] {
+            border: 0;
+            margin-bottom: 0;
+            float: right;
+            width: 75%;
+            height: 58px;
+            text-align: right;
+        }
+        .sendCaptcha{
+            color:#ff9e00;
+            float:right;
+            line-height:18px;
+            border-left:1px #ff9e00 solid;
+            padding-left:10px;
+            margin-top:20px;
+        }
+    </style>
+</head>
+<body style="background:#f8f8f8">
+<div class="mui-content" style="background:#f8f8f8">
+    <div style="height:50px;line-height:50px;font-size:16px;color:#b2b2b2;text-align:center">
+        当前手机号为：<span id="lbCellphone"></span>
+    </div>
+    <div style="padding-left:20px;padding-right:20px;background:#FFFFFF">
+        <div style="border-bottom:1px solid #d8d8d8;height: 60px;line-height:58px;font-size:16px;color:#646464">
+            新手机号<input type="text" id="txtPhone" placeholder="请输入新手机号码" maxlength="13" onkeyup="formatPhone(this);"/>
+        </div>
+        <div style="position:relative;font-size:16px;color:#646464;height: 60px;line-height:58px">
+            验证码<span id="btnSendCaptcha" class="sendCaptcha" onclick="sendCaptcha()">获取验证码</span> <input type="text" id="txtCaptcha" placeholder="请输入验证码" style="width:135px" maxlength="6"/>
+        </div>
+    </div>
+    <div style="clear:both"></div>
+    <div style="text-align:center;margin-top:70px;padding:0 20px">
+        <button class="btnActive" onclick="changeCellphone()"  style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:100%">确认并提交</button>
+    </div>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="script/constants.js?ver=18.12.355"></script>
+<script src="script/service.js?ver=18.12.355"></script>
+<script src="script/editorMobile.js?ver=18.12.355"></script>

@@ -44,7 +44,8 @@ var constants = {
         GETTRANSACTION: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Transaction/GetTransaction?transactionId={0}",
         GETWECHATOPENID: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Payment/GetWeChatOpenId",
         ORDERPAYMENT: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Payment/OrderPayment",
-        GETTENANTCREDITINFO: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/GetTenantCreditInfo"
+        GETTENANTCREDITINFO: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/GetTenantCreditInfo",
+        CHANGECELLPHONE:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/ChangeCellphone"
     },
     COOKIES: {
         XKCSID: 'X-KC-SID',
@@ -135,7 +136,9 @@ var constants = {
         contactInfo: "联系人提交成功",
         rentalTypeerr: "付款方式不能为空",
         accountCellphone: "联系人手机号不能为{0}",
-        accountName: "联系人不能为{0}"
+        accountName: "联系人不能为{0}",
+        changeCellphone:"手机号修改成功",
+        changeCellphoneerr:"手机号修改失败"
     },
     CONFIGS: {
         APPID: "wxa74d300625108685",

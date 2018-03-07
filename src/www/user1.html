@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>我的账户</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.355" rel="stylesheet"/>
+    <style type="text/css">
+        .mui-content {
+            background: none;
+            text-align: center;
+        }
+
+        ul.userManageList {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+        }
+
+        ul.userManageList li {
+            list-style: none;
+            height: 60px;
+            width: 100%;
+            padding-left: 20px;
+        }
+
+        ul.userManageList li a {
+            display: block;
+            position: relative;
+            font-size: 16px;
+            color: #646464;
+            height: 60px;
+            width: 100%;
+            line-height: 60px;
+            text-align: left;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        ul.userManageList li a:after {
+            position: absolute;
+            right: 20px;
+            top: 24px;
+            width: 18px;
+            height: 18px;
+            content: "";
+            background: url(images/ic_grey_arrow.png) no-repeat center;
+            background-size: 100% 100%;
+        }
+
+        .loginOut {
+            margin-top: 70px;
+            padding: 0 20px;
+        }
+    </style>
+</head>
+<body style="background: #f8f8f8">
+<div class="mui-content">
+    <div style="height:10px"></div>
+    <div style="background-color:#ffffff">
+        <ul class="userManageList">
+            <li id="needPhoto" style="display:none">
+                <a href="photo.html" style="border-bottom:none">个人信息</a>
+            </li>
+            <li id="needVerify" style="display:none">
+                <a href="verify.html" style="border-bottom:none">个人信息</a>
+            </li>
+            <li style="height:10px;background:#f8f8f8">
+            </li>
+            <li>
+                <a href="resetPassword.html">密码管理</a>
+            </li>
+            <li>
+                <a href="editorMobile.html" style=" border-bottom: none">修改手机号</a>
+            </li>
+        </ul>
+    </div>
+    <div class="loginOut">
+        <button class="btnActive"  style="background:#fd8b14;border-radius:100px;height:48px;color:#ffffff;font-size:18px;width:100%;border:none" onclick="loginOut()">退出登录</button>
+    </div>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="script/constants.js?ver=18.12.355"></script>
+<script src="script/service.js?ver=18.12.355"></script>
+<script src="script/user1.js?ver=18.12.355"></script>
