@@ -44,7 +44,7 @@ $(document).ready(function () {
                 }
                 $("#divLog").html(htmllog);
             } else {
-                $("#divLog").html($("#tplLog2").html());
+                $("#divLog").html($("#tplLog2").html());                                                                  
             }
         }
     });

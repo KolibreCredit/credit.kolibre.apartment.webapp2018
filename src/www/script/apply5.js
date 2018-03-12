@@ -65,7 +65,7 @@ function showNext() {
 var realName = "";
 var cellphone = "";
 var relationship = "";
-
+//
 function confirmcCntract0() {
     realName = $("#txtRealName").val();
     if (!realName) {
@@ -94,11 +94,11 @@ function confirmcCntract0() {
         mui.toast(constants.msgInfo.linkRelationship);
         return false;
     }
-    contractConfirmInfo.contactInfo = {
+    contractConfirmInfo.contactInfo = [{
         realName: realName,
         cellphone: cellphone,
         relationship: relationship
-    };
+    }];
     $(".step0").show();
     $(".step1").hide();
 }
@@ -224,9 +224,9 @@ $(document).ready(function () {
             $("#lbCellphone").text(contractConfirmInfo.cellphone);
             $("#lbCredentialNo").text(contractConfirmInfo.credentialNo);
             //
-            $("#txtRealName").val(contractConfirmInfo.contactInfo.realName);
-            $("#txtCellphone").val(contractConfirmInfo.contactInfo.cellphone);
-            $("#txtRelation").val(contractConfirmInfo.contactInfo.relationship);
+            $("#txtRealName").val(contractConfirmInfo.contactInfo[0].realName);
+            $("#txtCellphone").val(contractConfirmInfo.contactInfo[0].cellphone);
+            $("#txtRelation").val(contractConfirmInfo.contactInfo[0].relationship);
             //
             $("#imgCredentialFacePhoto").attr("src", contractConfirmInfo.credentialFacePhoto);
             $("#lbCredentialFacePhoto").text((contractConfirmInfo.credentialType == "IDCard" ? "身份证正面" : "护照个人信息页"));

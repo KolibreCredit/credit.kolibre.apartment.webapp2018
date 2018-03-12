@@ -43,11 +43,11 @@ function apply() {
     var contractConfirmInfoId = getCookie(constants.COOKIES.CONTRACTCONFIRMINFOID);
     var data = {
         contractConfirmInfoId: contractConfirmInfoId,
-        contactInfo: {
+        contactInfo: [{
             realName: realName,
             cellphone: cellphone,
             relationship: relationship
-        }
+        }]
     };
     postInvoke(constants.URLS.UPDATECONTACTINFO, data, function (res) {
         if (res.succeeded) {
@@ -66,8 +66,7 @@ function apply() {
         mui.toast(err.message);
     });
 }
-
-
+//
 $(document).ready(function () {
     getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
         if (res.succeeded) {
