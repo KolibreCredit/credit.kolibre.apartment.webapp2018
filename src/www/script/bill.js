@@ -1,5 +1,5 @@
-var currentTab = 0;
 
+var currentTab = 0;
 function selectTabToggle(index) {
     if (currentTab != index) {
         currentTab = index;
@@ -131,4 +131,3 @@ function closeApply() {
 $(document).ready(function () {
     findAllLeaseOrder(0);
 });
-
