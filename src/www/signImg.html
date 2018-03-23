@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>电子合同</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <style type="text/css">
+        img {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<img id="imgSignUrl" style="display:none"/>
+</body>
+</html>
+<script type="text/javascript">
+    function getURLQuery(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return decodeURI(r[2]);
+        } else {
+            return "";
+        }
+    }
+
+    var imgUrl = getURLQuery("imgUrl");
+    document.getElementById("imgSignUrl").src = imgUrl;
+    document.getElementById("imgSignUrl").onload = function () {
+        this.style.display = "block";
+    };
+</script>

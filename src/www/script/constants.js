@@ -31,6 +31,7 @@ var constants = {
         UPLOADPICTURES: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/UploadPictures",
         UPDATECONTACTINFO: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/UpdateContactInfo",
         GETCONTRACTCONFIRMINFO: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/GetContractConfirmInfo?contractConfirmInfoId={0}",
+        RENDERHTMLTEMPLATE:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/RenderHtmlTemplate",
         CONFIRMCONTRACT: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/ConfirmContract",
         GETCONFIRMCONTRACTRESULT: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/GetConfirmContractResult?confirmContractProcessId={0}",
         CREATECHECKOUTAPPLY: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/CreateCheckoutApply",

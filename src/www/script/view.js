@@ -3,6 +3,7 @@
  */
 var contractId = "";
 var confirmed = "";
+
 //
 function apply() {
     $(".msg-post").show();
@@ -10,7 +11,15 @@ function apply() {
     postInvoke(constants.URLS.CREATECONFIRMINFO, data, function (res) {
         if (res.succeeded) {
             setCookie(constants.COOKIES.CONTRACTCONFIRMINFOID, res.data.contractConfirmInfoId);
-            toApplys(res.data.nextStep);
+            if (res.data.nextStep == 5) {
+                if (res.data.contractMedium == 'Paper') {
+                    window.location.href = "apply5.html";
+                } else {
+                    window.location.href = "apply51.html";
+                }
+            } else {
+                toApplys(res.data.nextStep);
+            }
         } else {
             $(".msg-post").hide();
         }
@@ -20,12 +29,22 @@ function apply() {
     });
 }
 
+function signUrl(imgUrl) {
+    window.location.href = "signImg.html?imgUrl="+imgUrl;
+}
+
 $(document).ready(function () {
     contractId = getURLQuery("contractId");
     confirmed = getURLQuery("confirmed");
     getInvoke(constants.URLS.GETCONTRACTDETAILS.format(contractId), function (res) {
         if (res.succeeded && res.data != null) {
             var item = res.data;
+            var templateName = "";
+            var imageStorageLocation = "";
+            if (item.contractMedium == "Digital" && item.digitalContractInfos.length > 0) {
+                templateName = item.digitalContractInfos[0].templateName;
+                imageStorageLocation = item.digitalContractInfos[0].imageStorageLocation;
+            }
             var tplLeaseInfo = $("#tplLeaseInfo").html();
             var htmlLeaseInfo = tplLeaseInfo.format(
                 item.roomDetails.apartmentName,
@@ -36,7 +55,9 @@ $(document).ready(function () {
                 item.term,
                 item.rentStartTime.substring(0, 10),
                 item.rentEndTime.substring(0, 10),
-                getPayPeriod(item.payPeriod));
+                getPayPeriod(item.payPeriod),
+                imageStorageLocation,
+                templateName);
             $("#divLeaseInfo").html(htmlLeaseInfo);
             if (confirmed != "0") {
                 if (item.confirmed) {
@@ -46,6 +67,9 @@ $(document).ready(function () {
                 }
             } else {
                 $(".btnNext").show();
+            }
+            if (item.contractMedium == "Digital" && item.digitalContractInfos.length > 0) {
+                $(".digital").show();
             }
         }
     }, function (err) {

@@ -8,7 +8,6 @@
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <link href="packages/mui@3.4.0/examples/hello-mui/css/mui.picker.min.css" rel="stylesheet"/>
     <link href="packages/swiper@4.0.5/dist/css/swiper.min.css" rel="stylesheet"/>
-    <link href="packages/wheel-menu@1.0.0/wheelmenu.css" rel="stylesheet"/>
     <!--App自定义的css-->
     <link href="css/app.css?ver=18.12.368" rel="stylesheet"/>
     <style type="text/css">
@@ -130,35 +129,13 @@
     </style>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 </head>
-<body>
+<body style="background-color:#f7f7f7">
 <div class="mui-content" style="background-color:#f7f7f7">
     <div class="step0">
-        <div style="background-color: rgba(254, 148, 54,0.1);height:40px;line-height:40px;font-size:12px;color:#fd8b14;padding:0 20px"  onclick="showNext()">
+        <div style="background-color:#FAEEE2;height:40px;line-height:40px;font-size:12px;color:#fd8b14;padding:0 20px;position: fixed;left:0;right:0;top:0;z-index:2"  onclick="showNext()">
             请先核验其他合同信息，签署后默认全部确认<img src="images/20180103/right.png"  style="width:18px;height:18px;float:right;margin-top:12px"/>
         </div>
-        <div style="position:relative;margin-top:30px">
-            <div class="swiper-container" id="swipercontainer2">
-                <div class="swiper-wrapper">
-                </div>
-            </div>
-            <a href="#wheel1" class="wheel-button nw">
-                <img src="images/20180103/editor.png" style="width: 55px;height:55px"/>
-            </a>
-            <ul id="wheel1" data-angle="[180,360]" class="wheel">
-                <li class="item">
-                    <a>
-                        <img id="imgChoose" src="images/20180103/choose1.png" style="width: 55px;height:55px"/>
-                    </a>
-                </li>
-                <li class="item">
-                    <a>
-                        <img id="imgAdd" src="images/20180103/add1.png" style="width: 55px;height:55px"/>
-                    </a>
-                </li>
-            </ul>
-        </div>
-        <div style="text-align:center;font-size:16px;color:#333333;line-height:50px">
-            共<span id="lbPage" style="padding:0 10px;color:#ff9e00">0</span> 页
+        <div style="margin-bottom:10px;margin-top:50px;overflow-y:auto;padding:0 10px" id="divRenderHtmlTemplate">
         </div>
         <div style="position: fixed;bottom:0;right:0;left:0;z-index:2;background-color:white">
             <div style="position: relative;font-size:12px;width:50%;height:60px;float:left;">
@@ -264,9 +241,8 @@
             <button class="btnActive" onclick="confirmcCntract0()">确认并提交</button>
         </div>
     </div>
-    <img id="imgChoose1" src="images/20180103/choose.png" style="width:36px;height:36px;display:none"/>
-    <div id="divRelation" class="mui-popover mui-popover-action mui-popover-bottom mui-scroll-wrapper"
-         style="height:215px;bottom:0;top:auto">
+    <img id="imgChoose" src="images/20180103/choose.png" style="width:36px;height:36px;display:none"/>
+    <div id="divRelation" class="mui-popover mui-popover-action mui-popover-bottom mui-scroll-wrapper"  style="height:215px;bottom:0;top:auto">
         <div class="mui-scroll">
             <ul class="mui-table-view">
                 <li class="mui-table-view-cell">
@@ -805,23 +781,13 @@
 </div>
 </body>
 </html>
-<script type="text/html" id="tplContractPicture">
-    <div class="swiper-slide" style="width:90%;padding:0 2%">
-        <div class="slide-container">
-            <div class="picture">
-                <img src="{0}" class="contract"/>
-            </div>
-        </div>
-    </div>
-</script>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/mui@3.4.0/examples/hello-mui/js/mui.picker.min.js"></script>
 <script src="packages/swiper@4.0.5/dist/js/swiper.min.js"></script>
-<script src="packages/wheel-menu@1.0.0/jquery.wheelmenu.js"></script>
 <script src="script/constants.js?ver=18.12.368"></script>
 <script src="script/service.js?ver=18.12.368"></script>
-<script src="script/apply5.js?ver=18.12.368"></script>
+<script src="script/apply51.js?ver=18.12.368"></script>
 <script type="text/javascript">
     mui('#divRelation').scroll({scrollX: false, scrollY: true});
     mui('body').on('tap', '.mui-popover-action li>a', function () {
@@ -839,10 +805,5 @@
     mui('#divAgreementDetail').scroll({scrollX: false, scrollY: true});
     mui('body').on('tap', '#divAgreement', function () {
         mui('#divAgreement').popover('toggle');
-    });
-    $(".wheel-button").wheelmenu({
-        trigger: "click",
-        animation: "fly",
-        animationSpeed: "fast"
     });
 </script>

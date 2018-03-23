@@ -53,8 +53,12 @@ function apply() {
         if (res.succeeded) {
             mui.toast(constants.msgInfo.contactInfo);
             setTimeout(function () {
-                window.location.href = "apply5.html";
-            },2000);
+                if (res.data.contractMedium == 'Paper') {
+                    window.location.href = "apply5.html";
+                } else {
+                    window.location.href = "apply51.html";
+                }
+            }, 2000);
         } else {
             ispostData = true;
             $(".msg-post").hide();
@@ -66,6 +70,7 @@ function apply() {
         mui.toast(err.message);
     });
 }
+
 //
 $(document).ready(function () {
     getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
