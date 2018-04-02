@@ -1,5 +1,5 @@
-
 var currentTab = 0;
+
 function selectTabToggle(index) {
     if (currentTab != index) {
         currentTab = index;
@@ -26,7 +26,7 @@ function findAllLeaseOrder(index) {
     $('#nodataSpan').html(nodataSpantext);
     getInvoke(constants.URLS.QUERYALLORDERS.format(orderState), function (res) {
         if (res.data.orderResponse == null || res.data.orderResponse.length == 0) {
-            $('.billList').html("").removeClass("recentDaysTip");
+            $('.billList').html("").removeClass("active");
             $('.nodataDiv').show();
         }
         else {
@@ -38,8 +38,9 @@ function findAllLeaseOrder(index) {
             var lbState = "";
             var imgTip = "";
             var lbTip = "";
+            var lbTip2 = "";
+            var payState2 = "";
             var totalAmount = "";
-            //
             var notPaidAmount = "";
             var btnBillPay = "";
             var free = "";
@@ -57,55 +58,59 @@ function findAllLeaseOrder(index) {
                     free = "含{0}元手续费、{1}元违约金".format((item.serviceCharge / 100).toFixed(2), (item.penaltyAmount / 100).toFixed(2));
                 }
                 if (item.orderState == 'Created') {
+                    totalAmount = '¥' + (item.totalAmount / 100).toFixed(2);
+                    notPaidAmount = ((item.totalAmount - item.paidAmount) / 100).toFixed(2);
                     lbTime = '账单到期日：' + moment(item.paymentTime).format('YYYY-MM-DD');
                     lbState = '<span class="state {0}">未支付</span>'.format(item.isCurrent ? "created" : "");
                     imgTip = "{0}".format(item.isCurrent ? "images/billtip0.png" : "images/billtip1.png");
-                    lbTip = "<span style='color:{0}'>{1}</span>".format((item.isCurrent ? "#ff8c14" : "#999999"), moment(item.paymentTime).format('MM'));
+                    lbTip = "<span style='color:{0}'>{1}月</span>".format((item.isCurrent ? "#ff8c14" : "#999999"), moment(item.paymentTime).format('MM'));
+                    lbTip2 = "待支付";
+                    payState2 = (item.isCurrent ? "active" : "normal");
+                    btnBillPay = (item.isCurrent ? '<span class="billbtnPay btnActive" onclick="createTransaction(\'' + item.orderId + '\')">立即支付</span>' : '<span class="billbtnNotPay">立即支付</span>');
                 }
                 else if (item.orderState == 'Overdue') {
+                    totalAmount = '¥' + (item.totalAmount / 100).toFixed(2);
+                    notPaidAmount = ((item.totalAmount - item.paidAmount) / 100).toFixed(2);
                     lbTime = '账单到期日：' + moment(item.paymentTime).format('YYYY-MM-DD');
                     lbState = '<span class="state overdue">已逾期</span>';
                     imgTip = "images/billtip0.png";
-                    lbTip = "<span style='color:#ff8c14'>{0}</span>".format(moment(item.paymentTime).format('MM'));
+                    lbTip = "<span style='color:#ff8c14'>{0}月</span>".format(moment(item.paymentTime).format('MM'));
+                    lbTip2 = "待支付";
+                    payState2 = "active";
+                    btnBillPay = '<span class="billbtnPay btnActive" onclick="createTransaction(\'' + item.orderId + '\')">立即支付</span>';
                 }
                 else if (item.orderState == 'Canceled') {
+                    totalAmount = "";
+                    notPaidAmount = (item.totalAmount / 100).toFixed(2);
                     lbTime = '退租日期：' + moment(item.checkoutTime).format('YYYY-MM-DD');
                     lbState = '<span class="state canceled">已取消</span>';
                     imgTip = "images/billtip1.png";
-                    lbTip = "<span style='color:#999999'>{0}</span>".format(moment(item.paymentTime).format('MM'));
+                    lbTip = "<span style='color:#999999'>{0}月</span>".format(moment(item.paymentTime).format('MM'));
+                    lbTip2 = "";
+                    payState2 = "finish";
+                    btnBillPay = "";
                 }
                 else {
+                    totalAmount = "";
+                    notPaidAmount = (item.totalAmount / 100).toFixed(2);
                     lbTime = '支付时间：' + moment(item.actualPaymentTime).format('YYYY-MM-DD HH:mm');
-                    lbState = '<span class="state paid">已完成</span>';
-                    imgTip = "images/billtip0.png";
-                    lbTip = "<span style='color:#ff8c14'>{0}</span>".format(moment(item.paymentTime).format('MM'));
-                }
-                if (item.orderState == "Paid" || item.orderState == "Canceled") {
-                    totalAmount = "<label>{0}</label>".format("¥" + (item.totalAmount / 100).toFixed(2));
-                    notPaidAmount = "";
+                    lbState = '<span class="state paid">已支付</span>';
+                    imgTip = "images/billtip1.png";
+                    lbTip = "<span style='color:#999999'>{0}月</span>".format(moment(item.paymentTime).format('MM'));
+                    lbTip2 = "";
+                    payState2 = "finish";
                     btnBillPay = "";
-                } else {
-                    if (item.paidAmount == 0) {
-                        totalAmount = "";
-                    } else {
-                        totalAmount = "<span style='left:120px'>{0}</span>".format("¥" + (item.totalAmount / 100).toFixed(2));
-                    }
-                    notPaidAmount = "¥" + ((item.totalAmount - item.paidAmount) / 100).toFixed(2);
-                    btnBillPay = (item.isCurrent ? '<span class="billbtnPay btnActive" onclick="createTransaction(\'' + item.orderId + '\')">立即支付</span>' : '<span class="billbtnNotPay">立即支付</span>');
                 }
-                if (free != "") {
-                    free = "<label>{0}</label>".format(free);
-                }
-                billHtmls += tplBill.format(item.orderId, lbTime, lbState, imgTip, lbTip, getOrderType(item.orderType), totalAmount, notPaidAmount, btnBillPay, free);
+                billHtmls += tplBill.format(item.orderId, lbTime, lbState, imgTip, lbTip, item.roomNumber, getOrderType(item.orderType), item.apartmentName, totalAmount, notPaidAmount, payState2, lbTip2, free, btnBillPay);
                 free = "";
             }
             if (orderState == "NotPaid") {
                 $("#lbRecentOrderAmount").text(res.data.recentOrderAmount);
                 $(".recentDays").eq((res.data.recentOrderAmount == 0 ? 0 : 1)).show();
-                $('.billList').html(billHtmls).addClass("recentDaysTip");
+                $('.billList').html(billHtmls).addClass("active");
             } else {
                 $(".recentDays").hide();
-                $('.billList').html(billHtmls).removeClass("recentDaysTip");
+                $('.billList').html(billHtmls).removeClass("active");
             }
         }
     });

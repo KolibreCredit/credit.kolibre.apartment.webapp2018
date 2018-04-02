@@ -17,12 +17,16 @@ $(document).ready(function () {
                 tipTitle = "待支付";
                 tipTitle1 = "实付日";
                 tipTitle2 = "待支付";
+                $(".btnPay").show();
+                $(".divPay").show();
             }
             else if (item.orderState == "Overdue") {
                 tipUrl = "images/20180103/Overdue.png";
                 tipTitle = "已逾期";
                 tipTitle1 = "实付日";
                 tipTitle2 = "已逾期";
+                $(".btnPay").show();
+                $(".divPay").show();
             }
             else if (item.orderState == "Canceled") {
                 tipUrl = "images/20180103/Canceled.png";
@@ -52,10 +56,21 @@ $(document).ready(function () {
                 item.paymentTime.substring(0, 10),
                 tipTitle1,
                 tipTitle2,
-                item.orderState.toLowerCase());
+                item.orderState.toLowerCase(),
+                item.apartmentName,
+                item.roomNumber);
             $("#divLeaseInfo").html(htmlLeaseInfo);
         }
     }, function (err) {
         mui.toast(err.message);
     });
 });
+
+function createTransaction() {
+    if (isWeixin()) {
+        var redirect_uri = encodeURIComponent(constants.URLS.WEBPAYURL.format(orderId));
+        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + constants.CONFIGS.APPID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base#wechat_redirect";
+    } else {
+        window.location.href = constants.URLS.WEBPAYURL.format(orderId);
+    }
+}
