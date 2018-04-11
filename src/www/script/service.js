@@ -206,7 +206,7 @@ function isWeixin() {
 }
 
 function bill() {
-    window.location.href = constants.URLS.BILL;
+    window.location.replace(constants.URLS.BILL);
 }
 
 function toApplys(nextStep) {

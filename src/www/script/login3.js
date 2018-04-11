@@ -86,6 +86,10 @@ function retlogin() {
     }, 1000);
 }
 
+function loginByCaptcha() {
+    window.location.href = "login.html?url={0}".format(url);
+}
+
 $(document).ready(function () {
     url = getURLQuery("url");
 });

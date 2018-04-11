@@ -28,7 +28,11 @@ function getConfirmContractResult(confirmContractProcessId) {
         if (res.succeeded) {
             if (res.data.confirmContractResult == "Success") {
                 ispostData = false;
-                showMsg("success", "合同确认成功");
+                if (res.data.canStage) {
+                    window.location.href = "contractResults.html?contractId={0}".format(res.data.contractId);
+                } else {
+                    showMsg("success", "合同确认成功");
+                }
             }
             else if (res.data.confirmContractResult == "Processing") {
                 if (waitCount < 20) {
@@ -65,6 +69,7 @@ function showNext() {
 var realName = "";
 var cellphone = "";
 var relationship = "";
+
 //
 function confirmcCntract0() {
     realName = $("#txtRealName").val();

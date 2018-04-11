@@ -3,7 +3,6 @@
  */
 var contractId = "";
 var confirmed = "";
-
 //
 function apply() {
     $(".msg-post").show();

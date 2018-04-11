@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>提交结果</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <link href="packages/mui@3.4.0/examples/hello-mui/css/mui.picker.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.388" rel="stylesheet"/>
+    <style type="text/css">
+        .btnActive {
+            background: #fb9329;
+            border-radius: 40px;
+            height: 40px;
+            color: #ffffff;
+            font-size: 16px;
+            width: 50%;
+            border: none;
+        }
+
+        .contract {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .success {
+            display: none;
+        }
+
+        .fail {
+            display: none;
+        }
+    </style>
+</head>
+<body style="background-color:#FFFFFF">
+<div class="mui-content" style="background-color:#FFFFFF">
+    <div class="success" style="text-align:center;margin-top:40px">
+        <img src="images/success3.png" style="width: 160px;height: 160px"/>
+    </div>
+    <div class="fail" style="text-align:center;margin-top:40px">
+        <img src="images/fail3.png" style="width: 160px;height: 160px"/>
+    </div>
+    <div class="success" style="text-align:center;font-size:20px;color:#646464;margin-top:30px">
+        成功生成分期账单！
+    </div>
+    <div class="fail" style="text-align:center;font-size:20px;color:#646464;margin-top:30px">
+        分期账单生成失败
+    </div>
+    <div class="fail" style="text-align:center;font-size:12px;color:#fb9329;margin-top:10px">
+        该申请未通过蜂鸟屋风控审核
+    </div>
+    <div class="fail" style="text-align:center;font-size:14px;color:#999999;margin-top:10px">
+        如有疑问请联系客服 400-921-5508
+    </div>
+    <div style="text-align: center;margin-top:40px;font-size:16px;color:#646464;line-height:20px">
+        正在跳转到账单页
+    </div>
+    <div style="text-align: center;margin-top:10px;color:#999999;font-size:18px;line-height:20px">
+        <span style="color:#ff8c14" id="lbWaitCount">5秒</span>倒计时
+    </div>
+    <div class="contract">
+        <button class="btnActive" onclick="bill()">立即跳转</button>
+    </div>
+    <div style="font-size:16px;color:#ff8c14;text-align:center;margin-top:30px">
+        <a href="index.html" style="color:#ff8c14;text-decoration:underline">返回小屋首页</a>
+    </div>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="script/constants.js?ver=18.12.388"></script>
+<script src="script/service.js?ver=18.12.388"></script>
+<script src="script/instalmentResults.js?ver=18.12.388"></script>

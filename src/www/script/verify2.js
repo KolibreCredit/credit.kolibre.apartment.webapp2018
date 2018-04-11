@@ -1,8 +1,8 @@
 /**
  * Created by long.jiang on 2016/12/13.
  */
-var url = "";
-//
+var authCode = "";
+var cellphone = "";
 var credentialTabIndex = -1;
 var realName = "";
 var credentialNo = "";
@@ -11,6 +11,33 @@ var kinds = ["IDCardFace", "IDCardBack", "Selfie"];
 var credentialFacePhotoUrl = "";
 var credentialBackPhotoUrl = "";
 var selfiePhotoUrl = "";
+var waitTimer = null;
+var waitCount = 5;
+
+//
+function goLogin() {
+    window.location.href = "login.html";
+}
+
+function goWaitTimer() {
+    if (waitCount > 0) {
+        waitCount = waitCount - 1;
+        $('#lbWaitCount').text(waitCount + '秒');
+    } else {
+        clearInterval(waitTimer);
+        goLogin();
+    }
+}
+
+function startWaitTimer() {
+    setTimeout(function () {
+        $(".step1").hide();
+        $(".step2").show();
+        setInterval(function () {
+            goWaitTimer();
+        }, 1000);
+    }, 500);
+}
 
 //
 function chooseType(tabIndex) {
@@ -42,33 +69,12 @@ function twoFactorVerify() {
         }
     }
     if (credentialTabIndex == 0) {
-        var data = {
-            realName: realName,
-            idCardNo: credentialNo
-        };
-        $(".msg-post").show();
-        postInvoke(constants.URLS.TWOFACTORVERIFY, data, function (res) {
-            $(".msg-post").hide();
-            if (res.succeeded) {
-                if (res.data.succeeded) {
-                    $(".chooseTip").html("有效二代身份证");
-                    $("#lbTitle1").html("身份证<span style=\"color:#f58a00\">正面</span>");
-                    $("#lbTitle2").html("身份证<span style=\"color:#f58a00\">背面</span>");
-                    $("#imgCredientalFacePhotoUrl").attr("src", "images/20180103/sfz1.png");
-                    $("#imgCredientalBackPhotoUrl").attr("src", "images/20180103/sfz2.png");
-                    $("#imgSelfiePhotoUrl").attr("src", "images/20180103/sfz3.png");
-                    $(".step0").hide();
-                    $(".step1").show();
-                } else {
-                    mui.toast(res.data.message);
-                }
-            } else {
-                mui.toast(res.message);
-            }
-        }, function (err) {
-            $(".msg-post").hide();
-            mui.toast(err.message);
-        });
+        $(".chooseTip").html("有效二代身份证");
+        $("#lbTitle1").html("身份证<span style=\"color:#f58a00\">正面</span>");
+        $("#lbTitle2").html("身份证<span style=\"color:#f58a00\">背面</span>");
+        $("#imgCredientalFacePhotoUrl").attr("src", "images/20180103/sfz1.png");
+        $("#imgCredientalBackPhotoUrl").attr("src", "images/20180103/sfz2.png");
+        $("#imgSelfiePhotoUrl").attr("src", "images/20180103/sfz3.png");
     } else {
         $(".chooseTip").html("有效护照");
         $("#lbTitle1").html("护照<span style=\"color:#f58a00\">个人信息页</span>");
@@ -76,9 +82,9 @@ function twoFactorVerify() {
         $("#imgCredientalFacePhotoUrl").attr("src", "images/20180103/hz1.png");
         $("#imgCredientalBackPhotoUrl").attr("src", "images/20180103/hz2.png");
         $("#imgSelfiePhotoUrl").attr("src", "images/20180103/hz3.png");
-        $(".step0").hide();
-        $(".step1").show();
     }
+    $(".step0").hide();
+    $(".step1").show();
 }
 
 function confirmTenantInfo() {
@@ -86,44 +92,40 @@ function confirmTenantInfo() {
         mui.toast((credentialTabIndex == 0 ? constants.msgInfo.img10err : constants.msgInfo.img11err));
         return false;
     }
-    if (credentialBackPhotoUrl  == '') {
+    if (credentialBackPhotoUrl == '') {
         mui.toast((credentialTabIndex == 0 ? constants.msgInfo.img20err : constants.msgInfo.img21err));
         return false;
     }
-    /* if (selfiePhotoUrl == '') {
-         mui.toast(constants.msgInfo.img3err);
-         return false;
-     }*/
+    if (selfiePhotoUrl == '') {
+        mui.toast(constants.msgInfo.img3err);
+        return false;
+    }
     var data = {
+        authCode: authCode,
+        cellphone: cellphone,
         realName: realName,
         credentialType: (credentialTabIndex == 0 ? "IDCard" : "Passport"),
         credentialNo: credentialNo,
-        credentialFacePhotoUrl : credentialFacePhotoUrl ,
-        credentialBackPhotoUrl : credentialBackPhotoUrl ,
+        credentialFacePhotoUrl: credentialFacePhotoUrl,
+        credentialBackPhotoUrl: credentialBackPhotoUrl,
         selfiePhotoUrl: selfiePhotoUrl
     };
     $(".msg-post").show();
-    postInvoke(constants.URLS.UPLOADTENANTINFO, data, function (res) {
+    postInvoke(constants.URLS.CHANGECELLPHONEWITHINFO, data, function (res) {
+        $(".msg-post").hide();
         if (res.succeeded) {
-            $(".msg-post").hide();
-            mui.toast(constants.msgInfo.verify.format(credentialTabIndex == 0 ? "身份证" : "护照"));
-            setTimeout(function () {
-                if (!res.data.confirmed){
-                    window.location.href = "confirmTenant.html?url=list.html";
-                }
-                else if (url != "") {
-                    window.location.href = decodeURIComponent(url);
-                } else {
-                    window.location.href = "user.html";
-                }
-            }, 1000);
+            $("#imgResult").attr("src", "images/success2.png");
+            $("#divTip").html("手机号更换成功");
         } else {
-            $(".msg-post").hide();
-            mui.toast(res.message);
+            $("#imgResult").attr("src", "images/fail2.png");
+            $("#divTip").html(res.message);
         }
+        startWaitTimer();
     }, function (err) {
         $(".msg-post").hide();
-        mui.toast(err.message);
+        $("#imgResult").attr("src", "images/fail2.png");
+        $("#divTip").html(err.message);
+        startWaitTimer();
     });
 }
 
@@ -151,7 +153,8 @@ function V2UploadImages(serverId, imgIndex) {
 }
 
 $(document).ready(function () {
-    url = decodeURIComponent(getURLQuery("url"));
+    authCode = getURLQuery("authCode");
+    cellphone = getURLQuery("cellphone");
     var signUrl = constants.URLS.SIGNATURE.format(encodeURIComponent(window.location.href.split("#")[0]));
     signInvoke(signUrl, function (res) {
         wx.config({

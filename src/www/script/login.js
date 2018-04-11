@@ -2,7 +2,6 @@
  * Created by long.jiang on 2016/12/12.
  */
 var url = "";
-
 function loginByCaptcha() {
     var cellphone = $("#txtPhone").val().trimPhone();
     if (cellphone == '') {

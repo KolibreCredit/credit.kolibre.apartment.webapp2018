@@ -46,7 +46,11 @@ var constants = {
         GETWECHATOPENID: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Payment/GetWeChatOpenId",
         ORDERPAYMENT: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Payment/OrderPayment",
         GETTENANTCREDITINFO: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/GetTenantCreditInfo",
-        CHANGECELLPHONE:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/ChangeCellphone"
+        CHANGECELLPHONE:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/ChangeCellphone",
+        GETTENANTBYCELLPHONE:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/GetTenantByCellphone?cellphone={0}",
+        CHANGECELLPHONEWITHINFO:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/ChangeCellphoneWithInfo",
+        SENDSMSAUTHCODE:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/StageOrder/SendSmsAuthCode",
+        VERIFYSMSAUTHCODE:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/StageOrder/VerifySmsAuthCode"
     },
     COOKIES: {
         XKCSID: 'X-KC-SID',

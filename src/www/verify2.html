@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>用户信息</title>
+    <title>个人信息</title>
     <meta name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -14,9 +14,12 @@
     <link href="css/app.css?ver=18.12.390" rel="stylesheet"/>
     <style type="text/css">
         input[type=text] {
-            padding: 5px;
             border: 0;
             margin-bottom: 0;
+            float: right;
+            width: 70%;
+            text-align: right;
+            height: 58px;
         }
 
         .selecttype {
@@ -47,7 +50,15 @@
             right: -8px;
         }
 
+        .step0 {
+            display: block;
+        }
+
         .step1 {
+            display: none;
+        }
+
+        .step2 {
             display: none;
         }
 
@@ -69,6 +80,7 @@
             height: 172px;
             width: 100%;
         }
+
         .choose {
             position: absolute;
             width: 40px;
@@ -76,10 +88,31 @@
             right: 10px;
             bottom: 10px;
         }
+
         .title {
             height: 50px;
             line-height: 50px;
             text-align: center;
+        }
+
+        .btnActive {
+            background: #fb9329;
+            border-radius: 40px;
+            height: 40px;
+            color: #ffffff;
+            font-size: 16px;
+            width: 100%;
+            border: none;
+        }
+
+        .contract {
+            margin-top: 50px;
+        }
+
+        @media screen and (max-height: 568px) {
+            .contract {
+                margin-top: 30px;
+            }
         }
     </style>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
@@ -110,15 +143,16 @@
         </div>
     </div>
     <div class="step0" style="clear:both"></div>
-    <div class="step0" style="padding-left:20px;padding-right:20px;background-color:#ffffff;margin-top:20px">
-        <div style="border-bottom:1px solid #d8d8d8;height:60px;line-height:60px">
-            <input id="txtRealName" type="text" placeholder="请输入真实姓名" maxlength="10">
+    <div class="step0"
+         style="padding-left:20px;padding-right:20px;background-color:#ffffff;margin-top:20px;font-size:16px;color:#646464">
+        <div style="border-bottom:1px solid #d8d8d8;height:60px;line-height:58px">
+            真实姓名<input id="txtRealName" type="text" placeholder="请输入真实姓名" maxlength="10"/>
         </div>
-        <div style="height:60px;line-height:60px">
-            <input id="txtCredentialNo" type="text" placeholder="请输入证件号码" maxlength="18">
+        <div style="height:60px;line-height:58px">
+            证件号码<input id="txtCredentialNo" type="text" placeholder="请输入证件号码" maxlength="18"/>
         </div>
     </div>
-    <div class="step0" style="text-align:center;margin-top:30px;background-color:#f0f0f0;padding: 0 20px">
+    <div class="step0" style="text-align:center;margin-top:40px;background-color:#f0f0f0;padding: 0 20px">
         <button class="btnActive"
                 style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:100%"
                 onclick="twoFactorVerify()">下一步
@@ -154,8 +188,24 @@
                 <span style="color:#f58a00">手持</span>证件照
             </div>
         </div>
-        <div style="text-align:center;margin-top:30px;padding:0 20px">
+        <div style="text-align:center;margin-top:40px;padding:0 20px">
             <button class="btnActive" onclick="confirmTenantInfo()">提交</button>
+        </div>
+    </div>
+    <div class="step2" style="position: absolute;left:0;top:0;right:0;bottom:0;background-color:#FFFFFF">
+        <div style="margin-top: 143px;text-align:center">
+            <img id="imgResult" style="width: 40px;height: 40px"/>
+        </div>
+        <div id="divTip" style="text-align:center;font-size:18px;color:#646464;margin-top: 20px;padding:0 20px">
+        </div>
+        <div style="text-align: center;font-size:16px;color:#646464;line-height:25px;margin-top:15px">
+            正在为您跳转到登录页
+        </div>
+        <div style="text-align: center;color:#999999;font-size:18px;line-height:25px">
+            <span style="color:#ff8c14" id="lbWaitCount">5秒</span> 倒计时
+        </div>
+        <div class="contract" style="padding:0 80px">
+            <button class="btnActive" onclick="goLogin()">立即登录</button>
         </div>
     </div>
     <div style="height:30px"></div>
@@ -180,4 +230,4 @@
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="script/constants.js?ver=18.12.390"></script>
 <script src="script/service.js?ver=18.12.390"></script>
-<script src="script/verify.js?ver=18.12.390"></script>
+<script src="script/verify2.js?ver=18.12.390"></script>

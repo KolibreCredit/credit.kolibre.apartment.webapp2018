@@ -10,7 +10,7 @@
     <link href="packages/swiper@4.0.5/dist/css/swiper.min.css" rel="stylesheet"/>
     <link href="packages/wheel-menu@1.0.0/wheelmenu.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.381" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.390" rel="stylesheet"/>
     <style type="text/css">
         input[type=text] {
             padding: 5px;
@@ -167,7 +167,7 @@
                 <a style="color:#bcbcbc;text-decoration:none;position:absolute;top:28px;left:40px" href="#divAgreement">《蜂鸟屋服务协议》</a>
             </div>
             <div style="width:50%;float:right;padding:0 20px">
-                <button class="btnActive" onclick="confirmcCntract1()" style="height:40px;margin-top:10px">确认并提交</button>
+                <button class="btnActive" onclick="confirmcCntract1()" style="height:40px;margin-top:10px">确认签约</button>
             </div>
         </div>
         <div style="height:60px"></div>
@@ -776,18 +776,6 @@
         </div>
         <div style="height:10px"></div>
     </div>
-    <div class="msg-content" style="z-index:9">
-        <table style='width:100%;height:100%'>
-            <tr>
-                <td style='vertical-align:middle'>
-                    <div class='msg-body'>
-                        <div class='msg-icon'></div>
-                        <div class='msg-tip'></div>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
     <div class="msg-post" style="z-index:8">
         <table style='width:100%;height:100%'>
             <tr>
@@ -797,6 +785,18 @@
                     </div>
                     <div style="font-size:16px">
                         提交中，请等待...
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="msg-content" style="z-index:9">
+        <table style='width:100%;height:100%'>
+            <tr>
+                <td style='vertical-align:middle'>
+                    <div class='msg-body'>
+                        <div class='msg-icon'></div>
+                        <div class='msg-tip'></div>
                     </div>
                 </td>
             </tr>
@@ -819,9 +819,9 @@
 <script src="packages/mui@3.4.0/examples/hello-mui/js/mui.picker.min.js"></script>
 <script src="packages/swiper@4.0.5/dist/js/swiper.min.js"></script>
 <script src="packages/wheel-menu@1.0.0/jquery.wheelmenu.js"></script>
-<script src="script/constants.js?ver=18.12.381"></script>
-<script src="script/service.js?ver=18.12.381"></script>
-<script src="script/apply5.js?ver=18.12.381"></script>
+<script src="script/constants.js?ver=18.12.390"></script>
+<script src="script/service.js?ver=18.12.390"></script>
+<script src="script/apply5.js?ver=18.12.390"></script>
 <script type="text/javascript">
     mui('#divRelation').scroll({scrollX: false, scrollY: true});
     mui('body').on('tap', '.mui-popover-action li>a', function () {

@@ -11,7 +11,7 @@
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.381" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.390" rel="stylesheet"/>
     <style type="text/css">
         input[type=text], input[type=password] {
             padding: 5px;
@@ -36,16 +36,20 @@
         <div class="mui-input-row mui-password" style="border-bottom:1px solid #d8d8d8;margin-top:30px">
             <input type="password" id="txtPassword" class="mui-input-password" maxlength="18" placeholder="请输入登录密码"/>
         </div>
-        <div style="text-align:center;margin-top:50px">
+        <div style="margin-top:15px;font-size:12px;color:#646464;text-align:right">
+               <a href="resetPassword.html" style="color:#FF8C14;text-decoration:none">忘记密码?</a>
+        </div>
+        <div style="text-align:center;margin-top:20px">
             <button class="btnActive"
                     style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:100%;border:none"
                     onclick="loginByPassword()">登录
             </button>
         </div>
         <div style="margin-top:30px;font-size:16px;color:#646464;text-align:center">
-            <!-- <span>还没有账号？</span>
-             <a style="color:#ff9e00;text-decoration:underline" href="register.html">立即注册</a>-->
-            <a href="resetPassword.html" style="color:#646464;text-decoration:none">忘记密码?</a>
+            <span onclick="loginByCaptcha()" style="text-decoration:none">快速登录</span>
+        </div>
+        <div style="position: absolute;bottom: 30px;left:0;right:0;font-size: 14px;text-align:center">
+            <a href="editorMobile2.html" style="color:#646464;text-decoration:none">更换手机号</a>
         </div>
     </div>
     <div class="msg-post">
@@ -67,6 +71,6 @@
 </html>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
-<script src="script/constants.js?ver=18.12.381"></script>
-<script src="script/service.js?ver=18.12.381"></script>
-<script src="script/login3.js?ver=18.12.381"></script>
+<script src="script/constants.js?ver=18.12.390"></script>
+<script src="script/service.js?ver=18.12.390"></script>
+<script src="script/login3.js?ver=18.12.390"></script>
