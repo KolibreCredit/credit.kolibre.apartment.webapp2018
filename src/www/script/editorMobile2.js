@@ -85,7 +85,6 @@ function changeCellphone() {
             return false;
         }
         isChangeCellphone = false;
-
         getInvoke(constants.URLS.GETTENANTBYCELLPHONE.format(cellphone), function (res) {
             if (res.succeeded) {
                 var verify = {
@@ -105,6 +104,7 @@ function changeCellphone() {
                     mui.toast(err.message);
                 });
             } else {
+                isChangeCellphone = true;
                 mui.toast(res.message);
             }
         }, function (err) {

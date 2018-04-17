@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的账单</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.400" rel="stylesheet"/>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+</head>
+<body>
+code:
+<p id="lbcode"></p>
+appId:
+<p id="lbappId"></p>
+leaseOrderId:
+<p id="lbleaseOrderId"></p>
+openId:
+<p id="lbOpenId"></p>
+
+<div onclick="weixin()">测试</div>
+
+<div id="divMsg"></div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="script/constants.js?ver=18.12.400"></script>
+<script src="script/service.js?ver=18.12.400"></script>
+<script type="text/javascript">
+    var code = "";
+    var appId = "";
+    var leaseOrderId = "";
+    var openId = "";
+    $(document).ready(function () {
+        code = getURLQuery("code");
+        leaseOrderId = getURLQuery("leaseOrderId");
+        appId = getURLQuery("appId");
+        $("#lbcode").html(code);
+        $("#lbleaseOrderId").html(leaseOrderId);
+        $("#lbappId").html(appId);
+        var data = {
+            code: code,
+            appId: appId
+        };
+        postInvoke("http://server-apartment.dev.kolibre.credit/api/PaymentDemo/GetOpenId", data, function (res) {
+            if (res.succeeded) {
+                openId = res.data.openId;
+                $("#lbOpenId").html(openId);
+            }
+        });
+    });
+
+
+    function weixin() {
+        if (typeof WeixinJSBridge == "undefined") {
+            if (document.addEventListener) {
+                document.addEventListener('WeixinJSBridgeReady', weixinpay(), false);
+            }
+            else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', weixinpay());
+                document.attachEvent('onWeixinJSBridgeReady', weixinpay());
+            }
+        }
+        else {
+            weixinpay();
+        }
+    }
+
+    function weixinpay() {
+        var pay = {
+            leaseOrderId: leaseOrderId,
+            openId: openId,
+            amount: 1
+        };
+        postInvoke("http://server-apartment.dev.kolibre.credit/api/PaymentDemo/PayOrder", pay, function (res) {
+            if (res.succeeded) {
+                WeixinJSBridge.invoke('getBrandWCPayRequest', {
+                    "appId": res.data.appId,
+                    "timeStamp": res.data.timeStamp,
+                    "nonceStr": res.data.nonceStr,
+                    "package": res.data.package,
+                    "signType": res.data.signType,
+                    "paySign": res.data.paySign
+                }, function (res1) {
+                    $("#divMsg").html(JSON.stringify(res1));
+                });
+            } else {
+                mui.toast(res.message);
+            }
+        });
+    }
+</script>
+
+
+
+

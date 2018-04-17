@@ -18,7 +18,6 @@ function loginByCaptcha() {
 function loginByPassword() {
     window.location.href = "login3.html?url={0}".format(url);
 }
-
 $(document).ready(function () {
     url = getURLQuery("url");
 });

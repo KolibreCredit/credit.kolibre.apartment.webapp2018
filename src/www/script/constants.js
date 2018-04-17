@@ -50,7 +50,8 @@ var constants = {
         GETTENANTBYCELLPHONE:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/GetTenantByCellphone?cellphone={0}",
         CHANGECELLPHONEWITHINFO:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/ChangeCellphoneWithInfo",
         SENDSMSAUTHCODE:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/StageOrder/SendSmsAuthCode",
-        VERIFYSMSAUTHCODE:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/StageOrder/VerifySmsAuthCode"
+        VERIFYSMSAUTHCODE:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/StageOrder/VerifySmsAuthCode",
+        GETLOANAPPLYRESULT:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/StageOrder/GetLoanApplyResult"
     },
     COOKIES: {
         XKCSID: 'X-KC-SID',

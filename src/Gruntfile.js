@@ -95,7 +95,7 @@ module.exports = function (grunt) {
                     'www/ezu.html',
                     'www/index.html',
                     'www/instalment.html',
-                    'www/instalmentResult.html',
+                    'www/instalmentResults.html',
                     'www/kangdou.html',
                     'www/lease.html',
                     'www/list.html',

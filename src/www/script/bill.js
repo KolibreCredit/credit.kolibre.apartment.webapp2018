@@ -101,7 +101,7 @@ function findAllLeaseOrder(index) {
                     payState2 = "finish";
                     btnBillPay = "";
                 }
-                billHtmls += tplBill.format(item.orderId, lbTime, lbState, imgTip, lbTip, item.roomNumber, getOrderType(item.orderType), item.apartmentName, totalAmount, notPaidAmount, payState2, lbTip2, free, btnBillPay);
+                billHtmls += tplBill.format(item.orderId, lbTime, lbState, imgTip, lbTip, item.roomNumber, (item.orderType == "CustomDeposit" ? item.orderTypeName : getOrderType(item.orderType)), item.apartmentName, totalAmount, notPaidAmount, payState2, lbTip2, free, btnBillPay);
                 free = "";
             }
             if (orderState == "NotPaid") {

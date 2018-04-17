@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的账单</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.400" rel="stylesheet"/>
+</head>
+<body>
+<div id="divOrder">
+</div>
+<script type="text/html" id="tpl">
+    <p> leaseOrderId:{0}</p>
+    <p> appId:{1}</p>
+    <p>payToAccount:{2}</p>
+    <div>
+        <button onclick="createTransaction('{0}','{1}')">测试</button>
+    </div>
+</script>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="script/constants.js?ver=18.12.400"></script>
+<script src="script/service.js?ver=18.12.400"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        getInvoke("http://server-apartment.dev.kolibre.credit/api/PaymentDemo/GetOrders", function (res) {
+            var tpl = $('#tpl').html();
+            var tplHtmls = "";
+            var orderLists = res;
+            var item = null;
+            for (var i = 0; i < orderLists.length; i++) {
+                item = orderLists[i];
+                tplHtmls += tpl.format(item.leaseOrderId, item.appId, item.payToAccount);
+            }
+            $("#divOrder").html(tplHtmls);
+        });
+    });
+    function createTransaction(leaseOrderId, appId) {
+        var redirect_uri = encodeURIComponent("http://m.fengniaowu.com/testPay2.html?leaseOrderId={0}&appId={1}".format(leaseOrderId,appId));
+        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + appId + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base#wechat_redirect";
+    }
+</script>
+
+
+
+
+

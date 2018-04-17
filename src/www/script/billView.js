@@ -47,7 +47,7 @@ $(document).ready(function () {
             var htmlLeaseInfo = tplLeaseInfo.format(
                 tipTitle,
                 (item.totalAmount / 100).toFixed(2),
-                getOrderType(item.orderType),
+                (item.orderType == "CustomDeposit" ? item.orderTypeName : getOrderType(item.orderType)),
                 (item.orderAmount / 100).toFixed(2),
                 (item.depositAmount / 100).toFixed(2),
                 (item.penaltyAmount / 100).toFixed(2),
