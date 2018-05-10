@@ -155,3 +155,5 @@ function hideAgreement() {
 $(document).ready(function () {
     contractId = getURLQuery("contractId");
 });
+
+

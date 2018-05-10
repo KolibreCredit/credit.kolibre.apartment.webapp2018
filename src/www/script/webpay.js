@@ -7,6 +7,7 @@ var amount = "";
 var paymentTime = "";
 //
 var transactionId = "";
+var orderModel = "";
 var isTransaction = true;
 //
 var validateAmount = function () {
@@ -27,7 +28,7 @@ var createTransaction = function (transactionMethod, callSuccess) {
     if (validateAmount()) {
         var data = {
             orderId: orderId,
-            orderModel: "Normal",
+            orderModel: orderModel,
             amount: amount,
             transactionCategory: "In",
             transactionMethod: transactionMethod,
@@ -124,6 +125,7 @@ var queryOrderbyOrderId = function () {
         if (res.succeeded) {
             paymentTime = res.data.paymentTime;
             totalAmount = res.data.totalAmount;
+            orderModel = res.data.orderModel;
             $("#lbTotalAmount").html((res.data.totalAmount * 0.01).toFixed(2));
             $("#lbNotPaidAmount").html((res.data.repayAmount * 0.01).toFixed(2));
             $("#txtNotPaidAmount").val((res.data.repayAmount * 0.01).toFixed(2));

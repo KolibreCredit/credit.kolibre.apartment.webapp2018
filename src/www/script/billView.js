@@ -17,16 +17,12 @@ $(document).ready(function () {
                 tipTitle = "待支付";
                 tipTitle1 = "实付日";
                 tipTitle2 = "待支付";
-                $(".btnPay").show();
-                $(".divPay").show();
             }
             else if (item.orderState == "Overdue") {
                 tipUrl = "images/20180103/Overdue.png";
                 tipTitle = "已逾期";
                 tipTitle1 = "实付日";
                 tipTitle2 = "已逾期";
-                $(".btnPay").show();
-                $(".divPay").show();
             }
             else if (item.orderState == "Canceled") {
                 tipUrl = "images/20180103/Canceled.png";
@@ -39,6 +35,10 @@ $(document).ready(function () {
                 tipTitle = "已完成";
                 tipTitle1 = "实付时间";
                 tipTitle2 = item.actualPaymentTime.substring(0, 16);
+            }
+            if(item.isCurrent) {
+                $(".btnPay").show();
+                $(".divPay").show();
             }
             $("#imgOrderState").attr("src", tipUrl);
             document.getElementById("imgOrderState").onload = function () {
