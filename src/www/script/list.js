@@ -23,7 +23,6 @@ function showApply(contractId) {
     $(".msg-post").show();
 }
 
-
 function staged(contractId) {
     window.location.href = "instalment.html?contractId={0}".format(contractId);
 }
@@ -115,10 +114,10 @@ function getCurrentcontracts() {
                     if (item.canStage) {
                         btnControls = btnStaged.format(item.contractId) + btnControls;
                     }
-                    if (item.yueFu) {
+                    /* if (item.yueFu) {
                         title = "";
                         titleColor = "staged";
-                    }
+                    }*/
                     if (item.isStaged) {
                         title = "已分期";
                         titleColor = "staged";
@@ -128,7 +127,6 @@ function getCurrentcontracts() {
                     btnControls = btnConfirm.format(item.contractId);
                     confirmCount = confirmCount + 1;
                 }
-
                 leasesHtml += tplLeases.format(
                     item.createTime.substring(0, 10),
                     item.apartmentName,

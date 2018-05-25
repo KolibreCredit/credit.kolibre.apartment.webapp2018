@@ -7,17 +7,17 @@
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.408" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.409" rel="stylesheet"/>
     <style type="text/css">
         label {
-            font-size: 16px;
+            font-size: 14px;
             color: #999999;
         }
 
         span {
             display: block;
             float: right;
-            font-size: 16px;
+            font-size: 14px;
             color: #333333;
         }
 
@@ -34,6 +34,10 @@
             color: #f5bd30;
         }
 
+        .approachingoverdue {
+            color: #f5bd30;
+        }
+
         .overdue {
             color: #f55452;
         }
@@ -46,52 +50,67 @@
             color: #333333;
         }
 
+        .footer {
+            height: 60px;
+            display: none;
+        }
+
         .divPay {
+            position: fixed;
+            text-align: center;
+            width: 100%;
+            display: none;
+            bottom: 0;
+        }
+
+        .btnStage {
+            background: #ffffff;
             height: 50px;
+            line-height: 50px;
+            float: left;
+            font-size: 18px;
+            color: #fb9329;
+            width: 50%;
             display: none;
         }
         .btnPay {
             height: 50px;
             line-height: 50px;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            display: none;
-            padding: 0 20px;
             background-color: #fb9329;
-            text-align: center;
             font-size: 18px;
             color: #FFFFFF;
+            float: right;
+            width: 100%;
         }
     </style>
 </head>
-<body style="background-color:#ffffff">
-<div class="mui-content">
-    <div style="height:50px;background-color:#E5E5E5"></div>
-    <div id="divLeaseInfo" style="padding-left:20px;padding-right:20px">
+<body>
+<div class="mui-content" style="background-color:#f4f4f4">
+    <div style="height:50px"></div>
+    <div id="divLeaseInfo" style="padding-left:20px;padding-right:20px;background-color:#FFFFFF">
     </div>
-    <div style="padding-left:20px;padding-right:20px">
+    <div style="padding-left:20px;padding-right:20px;background-color:#FFFFFF">
         <img src="images/20180103/line2.png" style="width:100%"/>
     </div>
-    <div style="font-size:14px;color:#999999;text-align:center;margin-top: 10px">
+    <div style="font-size:14px;color:#999999;text-align:center;padding-top:10px;background-color:#FFFFFF">
         <div style="line-height:25px">若您对账单信息有任何疑问，可致客服电话</div>
         <div style="line-height:25px">400-921-5508</div>
-    </div>
-    <div class="divPay">
-    </div>
-    <div class="btnPay" onclick="createTransaction()">
-        立即支付
+        <div style="height:10px"></div>
     </div>
     <div class="fang">
         <img id="imgOrderState" style="width: 64px;height:64px"/>
     </div>
+    <div class="footer">
+    </div>
+    <div class="divPay">
+        <div onclick="createStage()" class="btnStage">申请分期</div>
+        <div onclick="createTransaction()" class="btnPay">立即支付</div>
+    </div>
 </div>
 <div>
-
 </div>
 <script type="text/html" id="tplLeaseInfo">
-    <div style="text-align:center;margin-top:40px;font-size:18px;color:#646464">
+    <div style="text-align:center;padding-top:40px;font-size:18px;color:#646464">
         {0}
     </div>
     <div style="text-align:center;margin-top:20px;position:relative">
@@ -102,7 +121,7 @@
             </div>
         </div>
     </div>
-    <div style="line-height:36px;">
+    <div style="line-height:36px;margin-top:10px">
         <label>公寓名称</label><span>{12}</span>
     </div>
     <div style="line-height:36px">
@@ -119,7 +138,7 @@
     <div style="text-align:center;font-size:30px;color:#646464;margin-top:30px">
         <span style="font-size:20px;float:none;display:inline;color:#646464">¥</span>{1}
     </div>
-    <div style="line-height:36px;">
+    <div style="line-height:36px;margin-top:10px">
         <label>{2}</label><span>¥{3}</span>
     </div>
     <div style="line-height:36px;display:none">
@@ -140,11 +159,14 @@
     <div style="line-height:36px">
         <label>{9}</label><span class="{11}">{10}</span>
     </div>
+    <div style="line-height:36px">
+        <label>账单周期</label><span>{14}～{15}</span>
+    </div>
 </script>
 </body>
 </html>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
-<script src="script/constants.js?ver=18.12.408"></script>
-<script src="script/service.js?ver=18.12.408"></script>
-<script src="script/billView.js?ver=18.12.408"></script>
+<script src="script/constants.js?ver=18.12.409"></script>
+<script src="script/service.js?ver=18.12.409"></script>
+<script src="script/billView.js?ver=18.12.409"></script>

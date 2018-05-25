@@ -18,6 +18,12 @@ $(document).ready(function () {
                 tipTitle1 = "实付日";
                 tipTitle2 = "待支付";
             }
+            else if (item.orderState == "ApproachingOverdue") {
+                tipUrl = "images/20180103/kuai.png";
+                tipTitle = "快到期";
+                tipTitle1 = "实付日";
+                tipTitle2 = "待支付";
+            }
             else if (item.orderState == "Overdue") {
                 tipUrl = "images/20180103/Overdue.png";
                 tipTitle = "已逾期";
@@ -36,9 +42,13 @@ $(document).ready(function () {
                 tipTitle1 = "实付时间";
                 tipTitle2 = item.actualPaymentTime.substring(0, 16);
             }
-            if(item.isCurrent) {
-                $(".btnPay").show();
+            if (item.isCurrent) {
+                $(".footer").show();
                 $(".divPay").show();
+                if (item.canStage) {
+                    $(".btnStage").show();
+                    $(".btnPay").css({"width": "50%"});
+                }
             }
             $("#imgOrderState").attr("src", tipUrl);
             document.getElementById("imgOrderState").onload = function () {
@@ -58,7 +68,9 @@ $(document).ready(function () {
                 tipTitle2,
                 item.orderState.toLowerCase(),
                 item.apartmentName,
-                item.roomNumber);
+                item.roomNumber,
+                item.orderStartTime.substring(0,10),
+                item.orderEndTime.substring(0,10));
             $("#divLeaseInfo").html(htmlLeaseInfo);
         }
     }, function (err) {
@@ -73,4 +85,8 @@ function createTransaction() {
     } else {
         window.location.href = constants.URLS.WEBPAYURL.format(orderId);
     }
+}
+
+function createStage() {
+    window.location.href = "instalment.html?orderId={0}".format(orderId);
 }

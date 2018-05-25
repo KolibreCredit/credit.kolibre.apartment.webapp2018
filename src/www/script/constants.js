@@ -79,6 +79,7 @@ var constants = {
         senderr: '发送失败',
         captcha: '验证码不能为空',
         captchaerr: '验证码格式错误',
+        ordernoerr:"验证码获取失败",
         password: '密码不能为空',
         passworderr: '密码格式错误',
         passwordsame: '密码不一致,重新输入',

@@ -6,6 +6,7 @@ var waitCount = 60;
 var isVerify = true;
 var isSendCaptcha = true;
 var contractId = "";
+var orderId = "";
 var orderNo = "";
 var waitCount2 = 60;
 //
@@ -20,7 +21,6 @@ function sendWaitTimer() {
         isSendCaptcha = true;
     }
 }
-
 //
 function sendCaptcha() {
     if (isSendCaptcha) {
@@ -35,9 +35,18 @@ function sendCaptcha() {
         }
         isSendCaptcha = false;
         var data = {
-            contractId: contractId,
             cellphone: cellphone
         };
+        if (orderId != "") {
+            data = $.extend({}, data, {
+                orderId: orderId
+            });
+        }
+        if (contractId != "") {
+            data = $.extend({}, data, {
+                contractId: contractId
+            });
+        }
         waitTimer = setInterval(function () {
             sendWaitTimer();
         }, 1000);
@@ -59,10 +68,6 @@ function sendCaptcha() {
 //
 function verifySmsAuthCode() {
     if (isVerify) {
-        if (orderNo == "") {
-            mui.toast(constants.msgInfo.senderr);
-            return false;
-        }
         var cellphone = $("#txtPhone").val().trimPhone();
         if (cellphone == '') {
             mui.toast(constants.msgInfo.phone);
@@ -81,13 +86,26 @@ function verifySmsAuthCode() {
             mui.toast(constants.msgInfo.captchaerr);
             return false;
         }
+        if (orderNo == "") {
+            mui.toast(constants.msgInfo.ordernoerr);
+            return false;
+        }
         $(".msg-post").show();
         isVerify = false;
         var verify = {
-            contractId: contractId,
             orderNo: orderNo,
             code: captcha
         };
+        if (orderId != "") {
+            verify = $.extend({}, verify, {
+                orderId: orderId
+            });
+        }
+        if (contractId != "") {
+            verify = $.extend({}, verify, {
+                contractId: contractId
+            });
+        }
         postInvoke(constants.URLS.VERIFYSMSAUTHCODE, verify, function (res) {
             if (res.succeeded) {
                 var loanApply = {
@@ -107,6 +125,13 @@ function verifySmsAuthCode() {
     }
 }
 
+function goInstalmentResults() {
+    $(".msg-alert").hide();
+    setTimeout(function () {
+        window.location.replace("instalmentResults.html?succeeded=1");
+    }, 200);
+}
+
 function getLoanApplyResult(loanApply) {
     postInvoke(constants.URLS.GETLOANAPPLYRESULT, loanApply, function (res) {
         if (res.succeeded) {
@@ -114,8 +139,10 @@ function getLoanApplyResult(loanApply) {
                 waitCount2 = 60;
                 isVerify = true;
                 $(".msg-post").hide();
-                window.location.replace("instalmentResults.html?succeeded=1");
-            } else {
+                setTimeout(function () {
+                    $(".msg-alert").show();
+                }, 200);
+            } else if (res.data.state == "Continue") {
                 if (waitCount2 > 0) {
                     waitCount2 = waitCount2 - 1;
                     setTimeout(function () {
@@ -124,6 +151,8 @@ function getLoanApplyResult(loanApply) {
                 } else {
                     errInstalmentResults(res.data.message);
                 }
+            } else {
+                errInstalmentResults(res.data.message);
             }
         } else {
             errInstalmentResults(res.message);
@@ -146,14 +175,13 @@ function errInstalmentResults(message) {
 function showAgreement() {
     $("#divAgreementList").show();
 }
-
 function hideAgreement() {
     $("#divAgreementList").hide();
 }
-
 //
 $(document).ready(function () {
     contractId = getURLQuery("contractId");
+    orderId = getURLQuery("orderId");
 });
 
 
