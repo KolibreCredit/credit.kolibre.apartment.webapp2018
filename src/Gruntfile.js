@@ -81,6 +81,7 @@ module.exports = function (grunt) {
                     'www/apply4.html',
                     'www/apply5.html',
                     'www/apply51.html',
+                    'www/beijingyuju.html',
                     'www/bill.html',
                     'www/billView.html',
                     'www/boke.html',
@@ -102,6 +103,8 @@ module.exports = function (grunt) {
                     'www/login.html',
                     'www/login2.html',
                     'www/login3.html',
+                    'www/mikongjian.html',
+                    'www/modou.html',
                     'www/mozu.html',
                     'www/nex.html',
                     'www/photo.html',
@@ -116,7 +119,9 @@ module.exports = function (grunt) {
                     'www/verify2.html',
                     'www/view.html',
                     'www/webpay.html',
-                    'www/yuanlai.html'
+                    'www/yifangtiandi.html',
+                    'www/yuanlai.html',
+                    'www/yuju.html'
                 ],
                 overwrite: true,
                 replacements: [
