@@ -1,5 +1,4 @@
 var currentTab = 0;
-
 function selectTabToggle(index) {
     if (currentTab != index) {
         currentTab = index;
@@ -165,15 +164,15 @@ function createTransaction(orderId) {
 }
 
 function createStage(orderId) {
-    window.location.href = "instalment.html?orderId={0}".format(orderId);
+   window.location.href = "recognitionface.html?orderId={0}".format(orderId);
 }
 
 function view(orderId) {
-    window.location.href = "billView.html?orderId={0}".format(orderId);
+   window.location.href = "billView.html?orderId={0}".format(orderId);
 }
 
 function closeApply() {
-    $(".msg-alert").hide();
+  $(".msg-alert").hide();
 }
 
 $(document).ready(function () {

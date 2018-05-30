@@ -24,7 +24,7 @@ function showApply(contractId) {
 }
 
 function staged(contractId) {
-    window.location.href = "instalment.html?contractId={0}".format(contractId);
+    window.location.href = "recognitionface.html?contractId={0}".format(contractId);
 }
 
 function hideApply() {

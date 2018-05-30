@@ -88,5 +88,5 @@ function createTransaction() {
 }
 
 function createStage() {
-    window.location.href = "instalment.html?orderId={0}".format(orderId);
+    window.location.href = "recognitionface.html?orderId={0}".format(orderId);
 }

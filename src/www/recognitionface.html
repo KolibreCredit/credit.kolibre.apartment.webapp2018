@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>人脸识别</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.412" rel="stylesheet"/>
+    <style type="text/css">
+        .slide-container {
+            width: 100%;
+            height: 200px;
+            text-align: center;
+            position: relative;
+        }
+
+        .slide-container .lt {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 0;
+            left: 0;
+        }
+
+        .slide-container .lb {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            bottom: 0;
+            left: 0;
+        }
+
+        .slide-container .rt {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 0;
+            right: 0;
+        }
+
+        .slide-container .rb {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            bottom: 0;
+            right: 0;
+        }
+
+        .slide-container .photo {
+            width: 100%;
+            height: 200px;
+        }
+        .camera {
+            width: 100%;
+            position: absolute;
+            text-align: center;
+            top: 75px;
+        }
+
+        .camera img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .btnActive {
+            background: #ff8c14;
+            height: 44px;
+            color: #ffffff;
+            font-size: 18px;
+            width: 100%;
+            border: none
+        }
+    </style>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+</head>
+<body style="background-color:#f4f4f4">
+<div class="mui-content" style="background-color:#f4f4f4">
+    <div style="padding:30px 20px;font-size: 16px;color: #646464;background-color:#FFFFFF">
+        请拍摄您的人脸照片
+    </div>
+    <div style="background-color:#FFFFFF;padding:0 50px">
+        <div class="slide-container">
+            <img id="imgSelfiePhotoUrl" class="photo" src="images/20180530/demo.png"/>
+            <div class="camera">
+                <img id="chooseImage" src="images/20180530/camera.png"/>
+            </div>
+            <img src="images/20180530/lt.png" class="lt"/>
+            <img src="images/20180530/lb.png" class="lb"/>
+            <img src="images/20180530/rt.png" class="rt"/>
+            <img src="images/20180530/rb.png" class="rb"/>
+        </div>
+        <div style="height:30px">
+        </div>
+    </div>
+    <div style="margin-top:10px;background-color:#FFFFFF;padding:20px;font-size:16px;color:#646464;">
+        <div style="line-height:30px">
+            注意事项
+        </div>
+        <div style="line-height:30px">
+            1.请正对手机，确保光线充足；
+        </div>
+        <div style="line-height:30px">
+            2.请保证人脸部分清晰无遮挡，<span style="color:#ff8c14">最好不要戴眼镜。</span>
+        </div>
+    </div>
+    <div style="text-align:center;background-color:#FFFFFF;margin-top:-20px">
+        <img src="images/20180530/demo1.png" style="width: 100%;height:156px"/>
+    </div>
+    <div style="position:fixed;bottom:0;right:0;left:0">
+        <button class="btnActive" onclick="faceRecognition()">提交</button>
+    </div>
+    <div class="msg-post" style="z-index:2">
+        <table style='width:100%;height:100%'>
+            <tr>
+                <td style='vertical-align:middle'>
+                    <div>
+                        <img src="images/loading.gif" style="width:auto;height:40px">
+                    </div>
+                    <div style="font-size:16px">
+                        提交中，请等待...
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="msg-alert">
+        <table style='width:100%;height:100%'>
+            <tr>
+                <td style='vertical-align:middle'>
+                    <div style="background:#ffffff;box-shadow:0 15px 25px 0 rgba(0,0,0,0.20);border-radius:6px;width:100%">
+                        <div style="height:30px"></div>
+                        <div style="text-align:center">
+                            <img src="images/20180530/icon.png" style="width:50px;height:50px"/>
+                        </div>
+                        <div style="margin-top: 20px;font-size:18px;color:#646464;font-weight:bold">
+                            人脸识别失败
+                        </div>
+                        <div style="margin-top: 20px;font-size:14px;color:#646464;padding:0 25px;line-height:28px">
+                            正面清晰无遮挡的照片,识别会更加准确哦～
+                        </div>
+                        <div style="text-align:center;padding:30px 40px">
+                            <button onclick="hideAlert()"
+                                    style="border:1px solid #fb9329; border-radius:44px;height:44px;color:#fd8b14;font-size:18px;width:100%">重新识别
+                            </button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="height:64px"></div>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="script/constants.js?ver=18.12.412"></script>
+<script src="script/service.js?ver=18.12.412"></script>
+<script src="script/recognitionface.js?ver=18.12.412"></script>

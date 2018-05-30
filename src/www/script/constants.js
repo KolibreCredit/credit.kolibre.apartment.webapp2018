@@ -51,7 +51,8 @@ var constants = {
         CHANGECELLPHONEWITHINFO:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/ChangeCellphoneWithInfo",
         SENDSMSAUTHCODE:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/StageOrder/SendSmsAuthCode",
         VERIFYSMSAUTHCODE:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/StageOrder/VerifySmsAuthCode",
-        GETLOANAPPLYRESULT:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/StageOrder/GetLoanApplyResult"
+        GETLOANAPPLYRESULT:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/StageOrder/GetLoanApplyResult",
+        FACERECOGNITION:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/StageOrder/FaceRecognition"
     },
     COOKIES: {
         XKCSID: 'X-KC-SID',
@@ -135,6 +136,8 @@ var constants = {
         imgContracterr: "租房合同第{0}页不能为空",
         imgContracterr2: "租房合同不能为空",
         imgIDCarderr: "本人手持身份证照片为空",
+        imgFaceRecognition:"人脸识别照片为空",
+        faceRecognition:"人脸识别成功",
         imgContract: "租房合同上传成功",
         imgIDCard: "身份证自拍照上传成功",
         linkRealName: "联系人姓名为空",

@@ -121,7 +121,8 @@ module.exports = function (grunt) {
                     'www/webpay.html',
                     'www/yifangtiandi.html',
                     'www/yuanlai.html',
-                    'www/yuju.html'
+                    'www/yuju.html',
+                    'www/zhongyu.html'
                 ],
                 overwrite: true,
                 replacements: [
