@@ -14,7 +14,7 @@ function sendWaitTimer() {
 }
 
 function staged() {
-    window.location.replace("instalment.html?contractId={0}".format(contractId));
+    window.location.replace("recognitionface.html?contractId={0}".format(contractId));
 }
 
 $(document).ready(function () {
