@@ -121,6 +121,7 @@ module.exports = function (grunt) {
                     'www/verify2.html',
                     'www/view.html',
                     'www/webpay.html',
+                    'www/weilaiyu.html',
                     'www/xishe.html',
                     'www/yifangtiandi.html',
                     'www/yuanlai.html',

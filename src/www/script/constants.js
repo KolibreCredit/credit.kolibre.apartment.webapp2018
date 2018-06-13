@@ -52,7 +52,8 @@ var constants = {
         SENDSMSAUTHCODE:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/StageOrder/SendSmsAuthCode",
         VERIFYSMSAUTHCODE:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/StageOrder/VerifySmsAuthCode",
         GETLOANAPPLYRESULT:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/StageOrder/GetLoanApplyResult",
-        FACERECOGNITION:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/StageOrder/FaceRecognition"
+        FACERECOGNITION:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/StageOrder/FaceRecognition",
+        RENDERPRECONFIGUREHTMLTEMPLATE:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/RenderPreConfigureHtmlTemplate"
     },
     COOKIES: {
         XKCSID: 'X-KC-SID',

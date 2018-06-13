@@ -1,10 +1,21 @@
 /**
  * Created by long.jiang on 2017/1/9.
  */
+var contractConfirmInfoId = "";
 var accountCellphone = "";
 var accountName = "";
 //
 var ispostData = true;
+var needRender = false;
+var contractMedium = "";
+
+function confirmInfoContent() {
+    if (contractMedium == 'Paper') {
+        window.location.href = "apply5.html";
+    } else {
+        window.location.href = "apply51.html";
+    }
+}
 
 function apply() {
     if (!ispostData) {
@@ -40,7 +51,6 @@ function apply() {
     }
     ispostData = false;
     $(".msg-post").show();
-    var contractConfirmInfoId = getCookie(constants.COOKIES.CONTRACTCONFIRMINFOID);
     var data = {
         contractConfirmInfoId: contractConfirmInfoId,
         contactInfo: [{
@@ -51,14 +61,21 @@ function apply() {
     };
     postInvoke(constants.URLS.UPDATECONTACTINFO, data, function (res) {
         if (res.succeeded) {
-            mui.toast(constants.msgInfo.contactInfo);
-            setTimeout(function () {
-                if (res.data.contractMedium == 'Paper') {
-                    window.location.href = "apply5.html";
-                } else {
-                    window.location.href = "apply51.html";
-                }
-            }, 2000);
+            ispostData = true;
+            $(".msg-post").hide();
+            contractMedium = res.data.contractMedium;
+            if (needRender) {
+                $(".msg_htmltemplate").show();
+            } else {
+                mui.toast(constants.msgInfo.contactInfo);
+                setTimeout(function () {
+                    if (contractMedium == 'Paper') {
+                        window.location.href = "apply5.html";
+                    } else {
+                      window.location.href = "apply51.html";
+                    }
+                }, 2000);
+            }
         } else {
             ispostData = true;
             $(".msg-post").hide();
@@ -70,9 +87,20 @@ function apply() {
         mui.toast(err.message);
     });
 }
-
 //
 $(document).ready(function () {
+    contractConfirmInfoId = getCookie(constants.COOKIES.CONTRACTCONFIRMINFOID);
+    var data = {contractConfirmInfoId: contractConfirmInfoId};
+    postInvoke(constants.URLS.RENDERPRECONFIGUREHTMLTEMPLATE, data, function (res) {
+        if (res.succeeded) {
+            if (res.data.needRender) {
+                needRender = true;
+                $("#divContentHtmltemplate").html(res.data.content);
+            }
+        }
+    }, function (err) {
+        console.log(err.message);
+    });
     getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
         if (res.succeeded) {
             accountCellphone = res.data.cellphone;
