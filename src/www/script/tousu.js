@@ -87,7 +87,7 @@ function createComplaintSuggestion() {
         contractId: contractId,
         tenantName: tenantName,
         tenantCellphone: tenantCellphone,
-        complaintSuggestionContent : description,
+        complaintSuggestionContent: description,
         pictures: pictureUrls
     }
     ispostData = false;
@@ -125,7 +125,7 @@ $(document).ready(function () {
     //
     loadPictureUrls();
     //
-    var signUrl = constants.URLS.SIGNATURE.format(encodeURIComponent(window.location.href.split("?")[0]));
+    var signUrl = constants.URLS.SIGNATURE.format(encodeURIComponent(window.location.href));
     signInvoke(signUrl, function (res) {
         wx.config({
             debug: false,

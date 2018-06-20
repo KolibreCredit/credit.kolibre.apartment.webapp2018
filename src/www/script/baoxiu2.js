@@ -134,7 +134,7 @@ $(document).ready(function () {
     repairType = getURLQuery("repairType");
     loadPictureUrls();
     //
-    var signUrl = constants.URLS.SIGNATURE.format(encodeURIComponent(window.location.href.split("?")[0]));
+    var signUrl = constants.URLS.SIGNATURE.format(encodeURIComponent(window.location.href));
     signInvoke(signUrl, function (res) {
         wx.config({
             debug: false,
