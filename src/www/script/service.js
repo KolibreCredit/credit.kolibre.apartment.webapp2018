@@ -475,3 +475,7 @@ function getRepairType(repairType) {
             return "其他";
     }
 }
+
+function fuwu() {
+    window.location.href = "fuwu.html";
+}
