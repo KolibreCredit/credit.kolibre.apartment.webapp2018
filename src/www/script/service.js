@@ -375,3 +375,103 @@ var getPayPeriod = function (payPeriod) {
     }
     return rentalType;
 };
+
+var getCleaningState = function (cleaningState) {
+    var cleaning = "";
+    if (cleaningState == "Created") {
+        cleaning = "待处理";
+    }
+    else if (cleaningState == "Processed") {
+        cleaning = "处理中";
+    }
+    else if (cleaningState == "Suspended") {
+        cleaning = "挂起中";
+    } else {
+        cleaning = "已完成";
+    }
+    return cleaning;
+}
+
+function getCleaningTypes(cleaningType) {
+    switch (cleaningType) {
+        case  "RichangBaojie":
+            return "日常保洁";
+        case  "ShenduBaojie":
+            return "深度保洁";
+        case  "CaBoli":
+            return "擦玻璃";
+        case  "XiaoshaChuchong":
+            return "消杀除虫";
+        default:
+            return "其他"
+    }
+}
+
+function getRepairType(repairType) {
+    switch (repairType) {
+        case  "Qiangmian":
+            return "墙面";
+        case  "Diban":
+            return "地板";
+        case  "Chuanghu":
+            return "窗户";
+        case  "Tianhuaban":
+            return "天花板";
+        case  "Xiyiji":
+            return "洗衣机";
+        case  "Kongtiao":
+            return "空调";
+        case  "Bingxiang":
+            return "冰箱";
+        case  "Dianshiji":
+            return "电视机";
+        case  "Weibolu":
+            return "微波炉";
+        case  "Ranqilu":
+            return "燃气炉";
+        case  "Chuang":
+            return "床";
+        case  "Yigui":
+            return "衣柜";
+        case  "Canzhuo":
+            return "餐桌";
+        case  "Luyouqi":
+            return "路由器";
+        case  "Youyanji":
+            return "油烟机";
+        case  "PutongMensuo":
+            return "普通门锁";
+        case  "FangdaoMensuo":
+            return "防盗门锁";
+        case  "DianziMensuo":
+            return "电子门锁";
+        case  "Deng":
+            return "灯";
+        case  "Chazuo":
+            return "插座";
+        case  "Xianlu":
+            return "线路";
+        case  "Weiyudeng":
+            return "卫浴灯";
+        case  "Dianzha":
+            return "电闸";
+        case  "Dianbiao":
+            return "电表";
+        case  "Shuilongtou":
+            return "水龙头";
+        case  "Matong":
+            return "马桶";
+        case  "Caichi":
+            return "菜池";
+        case  "Linyu":
+            return "淋浴";
+        case  "Dilou":
+            return "地漏";
+        case  "Famen":
+            return "阀门";
+        case  "Shutong":
+            return "疏通";
+        default:
+            return "其他";
+    }
+}

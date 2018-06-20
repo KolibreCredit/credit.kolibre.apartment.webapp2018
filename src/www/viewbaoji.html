@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>保洁信息</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.421" rel="stylesheet"/>
+    <style type="text/css">
+        label {
+            font-size: 14px;
+            color: #999999;
+        }
+
+        span {
+            display: block;
+            float: right;
+            font-size: 14px;
+            color: #333333;
+        }
+
+        #wrapper {
+            z-index: 1;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 90px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        #scroller {
+            float: left;
+            z-index: 1;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            height: auto;
+            -webkit-transform: translateZ(0);
+            -moz-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            -o-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-text-size-adjust: none;
+            -moz-text-size-adjust: none;
+            -ms-text-size-adjust: none;
+            -o-text-size-adjust: none;
+            text-size-adjust: none;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        #scroller ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+
+        #scroller li {
+            display: block;
+            float: left;
+            width: 140px;
+            height: 100%;
+            position: relative;
+            padding-top: 10px;
+        }
+        .step1 {
+            display: none;
+        }
+        .btnNext {
+            height: 50px;
+            line-height: 50px;
+            background: #fb9329;
+            text-align: center;
+            font-size: 18px;
+            color: #FFFFFF;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="mui-content">
+    <div id="divLeaseInfo">
+    </div>
+    <div class="step1">
+        <div style="height:60px">
+        </div>
+        <div class="btnNext" onclick="cancelCleaning()">
+            取消申请
+        </div>
+    </div>
+    <div class="msg-post">
+        <table style='width:100%;height:100%'>
+            <tr>
+                <td style='vertical-align:middle'>
+                    <div>
+                        <img src="images/loading.gif" style="width:auto;height:40px">
+                    </div>
+                    <div style="font-size:16px">
+                        正在提交...
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script type="text/html" id="tplView">
+    <div style="padding-left:20px;padding-right:20px">
+        <div style="text-align:center;padding-top:20px">
+            <img src="images/fuwu/baoji/{0}.png" style="width: 50px;height:50px"/>
+        </div>
+        <div style="text-align:center;font-size:18px;color:#646464;margin-top:10px">
+            {1}
+        </div>
+        <div style="text-align:center;margin-top:20px;position:relative">
+            <img src="images/fuwu/line2.png" style="width:100%;height:2px"/>
+            <div style="position:absolute;top:4px;left:0;right:0;text-align:center">
+                <div style="font-size:14px;color:#646464;background:rgba(204,204,204,0.25);border-radius:100px;width:110px;height:26px;line-height:26px;display:inline-block">
+                    保洁信息
+                </div>
+            </div>
+        </div>
+        <div style="line-height:30px;margin-top:15px">
+            <label>房源地址</label><span>{2}-{3}栋</span>
+        </div>
+        <div style="line-height:30px">
+            <label>房间号</label><span>{4}室</span>
+        </div>
+        <div style="line-height:30px">
+            <label>申请时间</label><span>{5}</span>
+        </div>
+        <div style="line-height:30px">
+            <label>上门时间</label><span>{6}-{7}</span>
+        </div>
+        <div style="line-height:30px">
+            <label>保洁项目</label><span>{8}</span>
+        </div>
+        <div style="line-height:36px;padding-bottom: 5px">
+            <label>更新时间</label><span>{9}</span>
+        </div>
+
+    </div>
+    <div style="height:10px;background-color:#f4f4f4"></div>
+    <div style="line-height:20px;padding-left:20px;padding-top:5px">
+        <label>备注信息</label>
+    </div>
+    <div style="line-height:30px;padding:0 20px">
+        {10}
+    </div>
+    <div style="line-height:30px;padding-left:20px">
+        <label>图片</label>
+    </div>
+    <div id="wrapper">
+        <div id="scroller">
+            <ul>
+                {11}
+            </ul>
+        </div>
+    </div>
+</script>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="packages/iscroll@5.2.0/build/iscroll.js"></script>
+<script src="packages/iscroll@5.2.0/demos/demoUtils.js"></script>
+<script src="script/constants.js?ver=18.12.421"></script>
+<script src="script/service.js?ver=18.12.421"></script>
+<script src="script/viewbaoji.js?ver=18.12.421"></script>

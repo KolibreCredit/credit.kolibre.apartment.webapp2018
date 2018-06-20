@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的租约</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.421" rel="stylesheet"/>
+    <style type="text/css">
+        .step0 {
+            display: none;
+        }
+        .view-cell {
+            border-bottom: 1px solid #d8d8d8;
+            padding: 20px 0;
+            position: relative;
+        }
+        .view-cell:last-child{
+            border-bottom: none;
+        }
+        .ic_grey_arrow {
+            position: absolute;
+            right: 23px;
+            top: 40px;
+            width: 24px;
+            height: 24px;
+        }
+    </style>
+</head>
+<body>
+<div class="mui-content" style="background:none">
+    <div class="step0" style="padding-left:20px;position:fixed;top:0;right:0;left:0;z-index:1;background-color:#FFFFFF">
+        <div style="border-bottom:1px solid #d8d8d8;font-size:16px;color:#646464;height: 50px;line-height:50px">
+            请选择租约
+        </div>
+    </div>
+    <div class="step0" style="padding-left:20px;margin-top:50px">
+        <div id="divLeases">
+        </div>
+    </div>
+    <div class="step0" onclick="selectContract()" style="position: fixed;bottom:0;z-index:1;right:0;left:0;background-color:#ff8c14;height:48px;line-height: 48px;text-align: center;color:#ffffff;font-size:18px">
+        下一步
+    </div>
+    <div class="step0" style="height:48px">
+    </div>
+    <div class="msg-post" style="z-index:2">
+        <table style='width:100%;height:100%'>
+            <tr>
+                <td style='vertical-align:middle'>
+                    <div>
+                        <img src="images/loading.gif" style="width:auto;height:40px">
+                    </div>
+                    <div style="font-size:16px">
+                        正在查询，请等待...
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="divNoData" style="display:none">
+        <div style="margin-top:40%;text-align:center;cursor:pointer;">
+            <img src="images/nodata1.png" style="width: 100px;height:100px">
+        </div>
+        <div style="margin-top: 30px;font-size: 16px;color:#999999;text-align:center">
+            亲，您还没有租约哦
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/html" id="tplLeases">
+    <div class="view-cell" style="" onclick="selectItem({2})">
+        <div style="font-size:18px;color:#646464">{0}</div>
+        <div style="font-size:16px;color:#777777;margin-top:10px">
+            <img src="images/iconroom.png" style="height:16px;width:16px;vertical-align:middle;margin-right:2px"/>{1}室
+        </div>
+        <img class="ic_grey_arrow" src="images/fuwu/check.png"/>
+    </div>
+</script>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="script/constants.js?ver=18.12.421"></script>
+<script src="script/service.js?ver=18.12.421"></script>
+<script src="script/list2.js?ver=18.12.421"></script>

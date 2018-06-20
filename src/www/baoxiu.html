@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>申请报修</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.421" rel="stylesheet"/>
+    <style type="text/css">
+        .baoxiu {
+            margin-top: 10px;
+        }
+
+        .baoxiu .item {
+            width: 31%;
+            float: left;
+            text-align: center;
+            border: 1px solid #eeeeee;
+            border-radius: 100px;
+            height: 28px;
+            line-height: 28px;
+            margin-right: 2%;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #646464;
+        }
+
+        .baoxiu .active {
+            border: none;
+            background: #fb952b;
+            color: #ffffff;
+        }
+
+        .baoxiuList {
+            display: none;
+            padding: 0 20px;
+        }
+        .baoxiuList .item {
+            width: 23%;
+            text-align: center;
+            float: left;
+            margin-right: 2%;
+            margin-top: 15px;
+        }
+
+        .baoxiuList .item .logo {
+            border: 1px solid #eeeeee;
+            width: 44px;
+            height: 44px;
+            border-radius: 100%;
+            display: inline-block;
+        }
+        .logo img {
+            width: 40px;
+            height: 40px;
+        }
+        .baoxiuList .item .desc {
+            font-size: 14px;
+            color: #b5b3b3;
+            text-align: center;
+            margin-top: 5px;
+        }
+
+        .baoxiuList .active .logo {
+            background: #fb952b;
+        }
+
+        .baoxiuList .active .desc {
+            color: #fb952b;
+        }
+
+        .view-cell {
+            border-bottom: 1px solid #d8d8d8;
+            padding: 20px 0;
+            position: relative;
+        }
+
+        .view-cell:last-child {
+            border-bottom: none;
+        }
+
+        .ic_grey_arrow {
+            position: absolute;
+            right: 23px;
+            top: 40px;
+            width: 24px;
+            height: 24px;
+        }
+    </style>
+</head>
+<body style="background-color:#f4f4f4">
+<div class="mui-content">
+    <div style="padding:0 20px">
+        <div style="font-size:16px;color:#646464;height: 50px;line-height:50px">
+            请选择报修类型
+        </div>
+        <div class="baoxiu">
+            <div class="item" onclick="tabItem(0)">主体</div>
+            <div class="item" onclick="tabItem(1)">家具家电</div>
+            <div class="item" onclick="tabItem(2)">门锁</div>
+            <div class="item" onclick="tabItem(3)">电路灯具</div>
+            <div class="item" onclick="tabItem(4)">水路管件</div>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+    <div style="height:10px;background-color:#f4f4f4"></div>
+    <div class="baoxiuList">
+        <div style="width:100%;padding-bottom:20px">
+            <div class="item" onclick="selectItem(0)">
+                <div class="logo">
+                    <img src="images/fuwu/icon0/0.png"/>
+                    <img src="images/fuwu/icon0/0s.png"/>
+                </div>
+                <div class="desc">
+                    墙面
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(1)">
+                <div class="logo">
+                    <img src="images/fuwu/icon0/1.png"/>
+                    <img src="images/fuwu/icon0/1s.png"/>
+                </div>
+                <div class="desc">
+                    地板
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(2)">
+                <div class="logo">
+                    <img src="images/fuwu/icon0/2.png"/>
+                    <img src="images/fuwu/icon0/2s.png"/>
+                </div>
+                <div class="desc">
+                    门窗
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(3)">
+                <div class="logo">
+                    <img src="images/fuwu/icon0/3.png"/>
+                    <img src="images/fuwu/icon0/3s.png"/>
+                </div>
+                <div class="desc">
+                    天花板
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+    <div class="baoxiuList">
+        <div style="width:100%;padding-bottom:20px">
+            <div class="item" onclick="selectItem(0)">
+                <div class="logo">
+                    <img src="images/fuwu/icon1/0.png"/>
+                    <img src="images/fuwu/icon1/0s.png"/>
+                </div>
+                <div class="desc">
+                    洗衣机
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(1)">
+                <div class="logo">
+                    <img src="images/fuwu/icon1/1.png"/>
+                    <img src="images/fuwu/icon1/1s.png"/>
+                </div>
+                <div class="desc">
+                    空调
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(2)">
+                <div class="logo">
+                    <img src="images/fuwu/icon1/2.png"/>
+                    <img src="images/fuwu/icon1/2s.png"/>
+                </div>
+                <div class="desc">
+                    冰箱
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(3)">
+                <div class="logo">
+                    <img src="images/fuwu/icon1/3.png"/>
+                    <img src="images/fuwu/icon1/3s.png"/>
+                </div>
+                <div class="desc">
+                    电视机
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(4)">
+                <div class="logo">
+                    <img src="images/fuwu/icon1/4.png"/>
+                    <img src="images/fuwu/icon1/4s.png"/>
+                </div>
+                <div class="desc">
+                    微波炉
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(5)">
+                <div class="logo">
+                    <img src="images/fuwu/icon1/5.png"/>
+                    <img src="images/fuwu/icon1/5s.png"/>
+                </div>
+                <div class="desc">
+                    燃气灶
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(6)">
+                <div class="logo">
+                    <img src="images/fuwu/icon1/6.png"/>
+                    <img src="images/fuwu/icon1/6s.png"/>
+                </div>
+                <div class="desc">
+                    床
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(7)">
+                <div class="logo">
+                    <img src="images/fuwu/icon1/7.png"/>
+                    <img src="images/fuwu/icon1/7s.png"/>
+                </div>
+                <div class="desc">
+                    衣柜
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(8)">
+                <div class="logo">
+                    <img src="images/fuwu/icon1/8.png"/>
+                    <img src="images/fuwu/icon1/8s.png"/>
+                </div>
+                <div class="desc">
+                    餐桌
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(9)">
+                <div class="logo">
+                    <img src="images/fuwu/icon1/9.png"/>
+                    <img src="images/fuwu/icon1/9s.png"/>
+                </div>
+                <div class="desc">
+                    路由器
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(10)">
+                <div class="logo">
+                    <img src="images/fuwu/icon1/10.png"/>
+                    <img src="images/fuwu/icon1/10s.png"/>
+                </div>
+                <div class="desc">
+                    油烟机
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+    <div class="baoxiuList">
+        <div style="width:100%;padding-bottom:20px">
+            <div class="item" onclick="selectItem(0)">
+                <div class="logo">
+                    <img src="images/fuwu/icon2/0.png"/>
+                    <img src="images/fuwu/icon2/0s.png"/>
+                </div>
+                <div class="desc">
+                    普通门锁
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(1)">
+                <div class="logo">
+                    <img src="images/fuwu/icon2/1.png"/>
+                    <img src="images/fuwu/icon2/1s.png"/>
+                </div>
+                <div class="desc">
+                    电子门锁
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(2)">
+                <div class="logo">
+                    <img src="images/fuwu/icon2/2.png"/>
+                    <img src="images/fuwu/icon2/2s.png"/>
+                </div>
+                <div class="desc">
+                    防盗门锁
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+    <div class="baoxiuList">
+        <div style="width:100%;padding-bottom:20px">
+            <div class="item" onclick="selectItem(0)">
+                <div class="logo">
+                    <img src="images/fuwu/icon3/0.png"/>
+                    <img src="images/fuwu/icon3/0s.png"/>
+                </div>
+                <div class="desc">
+                    灯
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(1)">
+                <div class="logo">
+                    <img src="images/fuwu/icon3/1.png"/>
+                    <img src="images/fuwu/icon3/1s.png"/>
+                </div>
+                <div class="desc">
+                    插座
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(2)">
+                <div class="logo">
+                    <img src="images/fuwu/icon3/2.png"/>
+                    <img src="images/fuwu/icon3/2s.png"/>
+                </div>
+                <div class="desc">
+                    线路
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(3)">
+                <div class="logo">
+                    <img src="images/fuwu/icon3/3.png"/>
+                    <img src="images/fuwu/icon3/3s.png"/>
+                </div>
+                <div class="desc">
+                    卫浴灯
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(4)">
+                <div class="logo">
+                    <img src="images/fuwu/icon3/4.png"/>
+                    <img src="images/fuwu/icon3/4s.png"/>
+                </div>
+                <div class="desc">
+                    电闸
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(5)">
+                <div class="logo">
+                    <img src="images/fuwu/icon3/5.png"/>
+                    <img src="images/fuwu/icon3/5s.png"/>
+                </div>
+                <div class="desc">
+                    电表
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+    <div class="baoxiuList">
+        <div style="width:100%;padding-bottom:20px">
+            <div class="item" onclick="selectItem(0)">
+                <div class="logo">
+                    <img src="images/fuwu/icon4/0.png"/>
+                    <img src="images/fuwu/icon4/0s.png"/>
+                </div>
+                <div class="desc">
+                    水龙头
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(1)">
+                <div class="logo">
+                    <img src="images/fuwu/icon4/1.png"/>
+                    <img src="images/fuwu/icon4/1s.png"/>
+                </div>
+                <div class="desc">
+                    马桶
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(2)">
+                <div class="logo">
+                    <img src="images/fuwu/icon4/2.png"/>
+                    <img src="images/fuwu/icon4/2s.png"/>
+                </div>
+                <div class="desc">
+                    菜池
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(3)">
+                <div class="logo">
+                    <img src="images/fuwu/icon4/3.png"/>
+                    <img src="images/fuwu/icon4/3s.png"/>
+                </div>
+                <div class="desc">
+                    淋浴
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(4)">
+                <div class="logo">
+                    <img src="images/fuwu/icon4/2.png"/>
+                    <img src="images/fuwu/icon4/2s.png"/>
+                </div>
+                <div class="desc">
+                    地漏
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(5)">
+                <div class="logo">
+                    <img src="images/fuwu/icon4/5.png"/>
+                    <img src="images/fuwu/icon4/5s.png"/>
+                </div>
+                <div class="desc">
+                    阀门
+                </div>
+            </div>
+            <div class="item" onclick="selectItem(6)">
+                <div class="logo">
+                    <img src="images/fuwu/icon4/6.png"/>
+                    <img src="images/fuwu/icon4/6s.png"/>
+                </div>
+                <div class="desc">
+                    疏通
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+    </div>
+    <div onclick="selectRepairType()"  style="position: fixed;bottom:0;z-index:1;right:0;left:0;background-color:#ff8c14;height:48px;line-height: 48px;text-align: center;color:#ffffff;font-size:18px">
+        下一步
+    </div>
+    <div style="height:48px;background-color:#f4f4f4">
+    </div>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="script/constants.js?ver=18.12.421"></script>
+<script src="script/service.js?ver=18.12.421"></script>
+<script src="script/baoxiu.js?ver=18.12.421"></script>

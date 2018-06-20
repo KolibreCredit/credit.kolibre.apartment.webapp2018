@@ -10,6 +10,7 @@ var needRender = false;
 var contractMedium = "";
 
 function confirmInfoContent() {
+    needRender = false;
     if (contractMedium == 'Paper') {
         window.location.href = "apply5.html";
     } else {
@@ -72,7 +73,7 @@ function apply() {
                     if (contractMedium == 'Paper') {
                         window.location.href = "apply5.html";
                     } else {
-                      window.location.href = "apply51.html";
+                        window.location.href = "apply51.html";
                     }
                 }, 2000);
             }
@@ -87,6 +88,7 @@ function apply() {
         mui.toast(err.message);
     });
 }
+
 //
 $(document).ready(function () {
     contractConfirmInfoId = getCookie(constants.COOKIES.CONTRACTCONFIRMINFOID);
