@@ -7,7 +7,7 @@
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.423" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.432" rel="stylesheet"/>
     <style type="text/css">
         table {
             width: 100%;
@@ -37,6 +37,7 @@
             padding: 0;
             margin: 0;
         }
+
         .billItem {
             margin-top: 10px;
             background: #ffffff;
@@ -51,55 +52,68 @@
             line-height: 40px;
             position: relative;
         }
+
         .content0 div {
             border-bottom: 1px solid #e9e9e9;
         }
+
         .content0 span {
             position: absolute;
             right: 20px;
         }
 
-        .billItem  .content1 {
+        .billItem .content1 {
             padding: 0 20px;
             position: relative;
         }
+
         .content1 .i-room {
             width: 16px;
             height: 16px;
-            margin-right: 10px;
+            display: inline-block;
+            vertical-align: middle;
         }
         .content1 .iType {
             width: 16px;
             height: 16px;
-            margin-right: 10px;
-            margin-left: 30px;
+            margin-left: 20px;
+            display: inline-block;
+            vertical-align: middle;
         }
-        .content1  .ic_grey_arrow {
+        .content1 .ic_grey_arrow {
             width: 18px;
             height: 18px;
             position: absolute;
             right: 20px;
             top: 45px;
         }
+
         .Created {
-            color:#ff8c14;
+            color: #ff8c14;
         }
+
         .Processed {
-            color:#ffbe00;
+            color: #ffbe00;
         }
+
         .Suspended {
-            color:#ee5c59;
+            color: #ee5c59;
         }
+
         .Succeed {
-          color:#999999;
+            color: #999999;
         }
+
         .tousuContent {
             width: 160px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             display: inline-block;
+            position: absolute;
+            bottom: 6px;
             line-height: 16px;
+            padding-left: 10px;
         }
         @media only screen and (max-width: 320px) {
             .tousuContent {
@@ -119,7 +133,8 @@
         <span style="position:absolute;left:20px;top:30px;font-size:18px;color:#ffffff">
             在线服务
         </span>
-        <div onclick="list2(2)" style="position:absolute;top:30px;right:20px;display:inline-block;background:rgba(255,255,255,0.9);border-radius:100px;width:100px;height:24px;line-height: 24px;font-size:12px;color:#646464;text-align:center">
+        <div onclick="list2(2)"
+             style="position:absolute;top:30px;right:20px;display:inline-block;background:rgba(255,255,255,0.9);border-radius:100px;width:100px;height:24px;line-height: 24px;font-size:12px;color:#646464;text-align:center">
             <img src="images/fuwu/tousu.png" style="height:12px;width:12px;margin-right:5px"/>投诉建议
         </div>
         <div style="position:absolute;top:80px;left:20px;right:20px;background:#FFFFFF;box-shadow:0 2px 20px 0 rgba(0,0,0,0.10);border-radius:6px;height:136px;z-index:1">
@@ -170,7 +185,7 @@
                 <div style="font-size:18px;color:#646464;line-height: 40px;height:40px">
                     {3}
                 </div>
-                <div style="font-size:16px;color:#777777;line-height:32px">
+                <div style="font-size:16px;color:#777777;line-height:32px;height:32px">
                     <img class="i-room" src="images/fuwu/iroom.png"/>
                     <span>{4}</span>室
                     <img class="iType" src="images/fuwu/ibaoji.png"/>
@@ -180,7 +195,7 @@
             </div>
             <div class="content2" style="margin-top:5px">
                 <div style="border-radius:0 15px 15px 0;background: rgba(0,0,0,0.04);display:inline-block;padding-left:20px;padding-right:10px;line-height:30px;font-size: 14px;color:#333333">
-                    上门时间：<span style="margin-left:5px">{6}</span><span style="margin-left:5px;">{7}</span>
+                    上门时段：<span style="margin-left:5px">{6}</span>～<span>{7}</span>
                 </div>
             </div>
         </div>
@@ -196,7 +211,7 @@
                 <div style="font-size:18px;color:#646464;line-height: 40px;height:40px">
                     {3}
                 </div>
-                <div style="font-size:16px;color:#777777;line-height:32px">
+                <div style="font-size:16px;color:#777777;height:32px;line-height:32px">
                     <img class="i-room" src="images/fuwu/iroom.png"/>
                     <span>{4}</span>室
                     <img class="iType" src="images/fuwu/ibaoxiu.png"/>
@@ -206,7 +221,7 @@
             </div>
             <div class="content2" style="margin-top:5px">
                 <div style="border-radius:0 15px 15px 0;background: rgba(0,0,0,0.04);display:inline-block;padding-left:20px;padding-right:10px;line-height:30px;font-size: 14px;color:#333333">
-                    上门时间：<span style="margin-left:5px">{6}</span><span style="margin-left:5px;">{7}</span>
+                    上门时段：<span style="margin-left:5px">{6}</span>～<span>{7}</span>
                 </div>
             </div>
         </div>
@@ -222,7 +237,7 @@
                 <div style="font-size:18px;color:#646464;line-height: 40px;height:40px">
                     {3}
                 </div>
-                <div style="font-size:16px;color:#777777;line-height:32px">
+                <div style="font-size:16px;color:#777777;height:32px;line-height:32px">
                     <img class="i-room" src="images/fuwu/iroom.png"/>
                     <span>{4}</span>室
                     <img class="iType" src="images/fuwu/itousu.png"/>
@@ -238,6 +253,6 @@
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/moment@2.17.1/min/moment.min.js"></script>
-<script src="script/constants.js?ver=18.12.423"></script>
-<script src="script/service.js?ver=18.12.423"></script>
-<script src="script/fuwu.js?ver=18.12.423"></script>
+<script src="script/constants.js?ver=18.12.432"></script>
+<script src="script/service.js?ver=18.12.432"></script>
+<script src="script/fuwu.js?ver=18.12.432"></script>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>公寓专属模板</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <link href="packages/mui@3.4.0/examples/hello-mui/css/mui.picker.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.432" rel="stylesheet"/>
+    <style type="text/css">
+        input[type=text] {
+            padding: 5px;
+            border: 0;
+            margin-bottom: 0;
+        }
+
+        .mui-media-body {
+            width: 110%;
+        }
+
+        .mui-media-body span {
+            display: inline-block;
+            margin-top: 8px;
+            color: #646464
+        }
+
+        .mui-table-view:before {
+            height: 0;
+        }
+
+        .mui-table-view:after {
+            height: 0;
+        }
+
+        .mui-table-view-chevron .mui-table-view-cell {
+            padding-right: 45px;
+        }
+
+        .mui-navigate-right:after {
+            right: 30px;
+        }
+
+        .mui-table-view-cell {
+            text-align: left;
+        }
+
+        .mui-h1, h1 {
+            font-size: 20px;
+        }
+    </style>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+</head>
+<body style="background-color:#f7f7f7">
+<div class="mui-content" style="background-color:#f7f7f7">
+    <div style="background-color:#ffffff">
+        <ul class="mui-table-view mui-table-view-chevron">
+            <li class="mui-table-view-cell mui-media">
+                <a class="mui-navigate-right" href="#divRelation">
+                    <div class="mui-media-body">
+                        <span>选择公寓</span><input type="text" id="txtRelation" placeholder="请选择公寓"
+                                                style="width:160px;text-align:right;float:right;margin-right:40px"/>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <img id="imgBigLogo"/>
+    <img id="imgSmallLogo"/>
+    <img id="imgBigBackground"/>
+    <img id="imgSmallBackground"/>
+    <div style="margin-top:30px">
+        <button class="btnActive"
+                style="background:#ff8c14;height:44px;color:#ffffff;font-size:18px;width:100%;border:none"
+                onclick="apply()">提交
+        </button>
+    </div>
+    <div style="height:30px"></div>
+    <div id="divRelation" class="mui-popover mui-popover-action mui-popover-bottom mui-scroll-wrapper"
+         style="height:215px;bottom:0;top:auto">
+        <div class="mui-scroll">
+            <ul class="mui-table-view">
+            </ul>
+        </div>
+    </div>
+    <div class="msg-post">
+        <table style='width:100%;height:100%'>
+            <tr>
+                <td style='vertical-align:middle'>
+                    <div>
+                        <img src="images/loading.gif" style="width:auto;height:40px">
+                    </div>
+                    <div style="font-size:16px">
+                        提交中，请等待...
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="chooseImage" style="display:none"></div>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="packages/mui@3.4.0/examples/hello-mui/js/mui.picker.min.js"></script>
+<script src="script/constants.js?ver=18.12.432"></script>
+<script src="script/service.js?ver=18.12.432"></script>
+<script src="script/config.js?ver=18.12.432"></script>
+<script type="text/javascript">
+    mui('#divRelation').scroll({scrollX: false, scrollY: true});
+    mui('body').on('tap', '.mui-popover-action li>a', function () {
+        var a = this, parent;
+        //根据点击按钮，反推当前是哪个actionsheet
+        for (parent = a.parentNode; parent != document.body; parent = parent.parentNode) {
+            if (parent.classList.contains('mui-popover-action')) {
+                break;
+            }
+        }
+        //关闭actionsheet
+        tenancyId = a.getAttribute("data-key");
+        $("#txtRelation").val(a.innerHTML);
+        mui('#divRelation').popover('toggle');
+    });
+</script>

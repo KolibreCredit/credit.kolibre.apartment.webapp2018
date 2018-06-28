@@ -65,7 +65,9 @@ var constants = {
         CREATECOMPLAINTSUGGESTION: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/CreateComplaintSuggestion",
         GETTENANTCOMPLAINTSUGGESTIONS: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/GetTenantComplaintSuggestions",
         GETTENANTCOMPLAINTSUGGESTION:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/GetTenantComplaintSuggestion?id={0}",
-        CANCELCOMPLAINTSUGGESTION:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/CancelComplaintSuggestion"
+        CANCELCOMPLAINTSUGGESTION:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/CancelComplaintSuggestion",
+        GETALLTENANCIES:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/ShortLink/GetAllTenancies",
+        CREATESHORTLINK:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/ShortLink/CreateShortLink"
     },
     COOKIES: {
         XKCSID: 'X-KC-SID',
@@ -169,7 +171,8 @@ var constants = {
         description2: "描述不能为空",
         pictureUrls: "请上传图片资料",
         cleaningType: "请选择保洁类型",
-        cancelCleaning:"取消成功"
+        cancelCleaning:"取消成功",
+        shortLink:"短链创建成功"
     },
     CONFIGS: {
         APPID: "wxa74d300625108685",

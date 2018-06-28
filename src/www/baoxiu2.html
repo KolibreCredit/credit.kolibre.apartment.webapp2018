@@ -7,7 +7,7 @@
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.423" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.432" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="packages/mui@3.4.0/examples/hello-mui/css/mui.picker.min.css"/>
     <style type="text/css">
         input[type=text] {
@@ -19,6 +19,7 @@
 
         textarea {
             margin-bottom: 0px;
+            border: 1px solid #e2e2e2;
         }
 
         .mui-media-body {
@@ -106,7 +107,7 @@
 </head>
 <body style="background-color:#f4f4f4">
 <div class="mui-content">
-    <div style="padding-left:20px">
+    <div style="padding-left:5px">
         <ul class="mui-table-view mui-table-view-chevron">
             <li class="mui-table-view-cell mui-media">
                 <div class="mui-media-body">
@@ -122,11 +123,17 @@
             </li>
             <li class="mui-table-view-cell mui-media">
                 <a id="pickerRepair" class="mui-navigate-right"
-                   data-options='{"type":"hour","customData":{"h":[{"text":"09-11","value":"09:00-11:00"},{"text":"12-14","value":"12:00-14:00"},{"text":"15-18","value":"15:00-18:00"}]},"labels":["年", "月", "日", "时段", "分"]}'>
+                   data-options='{"type":"hour","customData":{"h":[ {"text":"08-10","value":"08:00-10:00"}
+                                                                    ,{"text":"10-12","value":"10:00-12:00"}
+                                                                    ,{"text":"12-14","value":"12:00-14:00"}
+                                                                    ,{"text":"14-16","value":"14:00-16:00"}
+                                                                    ,{"text":"14-16","value":"14:00-16:00"}
+                                                                    ,{"text":"16-18","value":"16:00-18:00"}
+                                                                    ,{"text":"18-20","value":"18:00-20:00"}
+                                                                    ,{"text":"20-22","value":"20:00-22:00"}
+                                                                    ,{"text":"22-24","value":"22:00-23:59"}]},"labels":["年", "月", "日", "时段", "分"]}'>
                     <div class="mui-media-body">
-                        <span>上门时间</span><input type="text" id="txtRepairDate" placeholder="请选择上门时间"
-                                                readonly="readonly"
-                                                style="text-align:right;margin-right:5px"/>
+                        <span>上门时段</span><input type="text" id="txtRepairDate" placeholder="请选择上门时段"  readonly="readonly"  style="text-align:right;margin-right:5px"/>
                     </div>
                 </a>
             </li>
@@ -137,7 +144,7 @@
         <div class="repairLable" style="height: 50px;line-height:50px">
             备注信息
         </div>
-        <div class="mui-input-row" style="background:#f9f9f9">
+        <div class="mui-input-row">
             <textarea id="txtDescription" rows="3" placeholder="请大致描述您的问题，方便我们更好地为您服务"></textarea>
         </div>
         <div class="repairLable" style="height: 50px;line-height:50px">
@@ -193,7 +200,8 @@
                             请提前安排好自己的时间
                         </div>
                         <div style="padding:0 40px;margin-top:20px">
-                            <div onclick="hideSucce()" style="border:1px solid #fb9329;border-radius:100px;width:100%;height:42px;line-height:42px;font-size:18px;color:#fd8b14;">
+                            <div onclick="hideSucce()"
+                                 style="border:1px solid #fb9329;border-radius:100px;width:100%;height:42px;line-height:42px;font-size:18px;color:#fd8b14;">
                                 我知道了
                             </div>
                         </div>
@@ -218,7 +226,8 @@
                         <div id="lbError" style="text-align:center;margin-top:20px;font-size:14px;color:#999999">
                         </div>
                         <div style="padding:0 40px;margin-top:20px">
-                            <div onclick="hideError()" style="border:1px solid #fb9329;border-radius:100px;width:100%;height:42px;line-height:42px;font-size:18px;color:#fd8b14;">
+                            <div onclick="hideError()"
+                                 style="border:1px solid #fb9329;border-radius:100px;width:100%;height:42px;line-height:42px;font-size:18px;color:#fd8b14;">
                                 我知道了
                             </div>
                         </div>
@@ -252,9 +261,9 @@
 <script src="packages/mui@3.4.0/examples/hello-mui/js/mui.picker.min.js"></script>
 <script src="packages/iscroll@5.2.0/build/iscroll.js"></script>
 <script src="packages/iscroll@5.2.0/demos/demoUtils.js"></script>
-<script src="script/constants.js?ver=18.12.423"></script>
-<script src="script/service.js?ver=18.12.423"></script>
-<script src="script/baoxiu2.js?ver=18.12.423"></script>
+<script src="script/constants.js?ver=18.12.432"></script>
+<script src="script/service.js?ver=18.12.432"></script>
+<script src="script/baoxiu2.js?ver=18.12.432"></script>
 <script type="text/javascript">
     (function ($) {
         $.init();
