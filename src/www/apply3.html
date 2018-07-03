@@ -13,26 +13,36 @@
             background: #ffffff;
             border: 2px dotted #fd8b14;
             border-radius: 6px;
-            width: 310px;
-            height: 192px;
+            width: 100%;
+            height: auto;
             text-align: center;
             position: relative;
             display: inline-block;
         }
+
         .slide-container .photo {
-            width: 305px;
-            height: 187px;
+            width: 100%;
+            height: 180px;
             border-radius: 6px;
+            vertical-align: bottom;
         }
         .camera {
             width: 100%;
             position: absolute;
             text-align: center;
-            top: 20px;
+            top: 65px;
         }
         .camera img {
-            width: 150px;
-            height: 150px;
+            width: 50px;
+            height: 50px;
+        }
+        .choose {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            right: 10px;
+            bottom: 10px;
+            display: none;
         }
         .btnActive {
             background: #ff8c14;
@@ -58,12 +68,13 @@
         <div style="height:20px">
         </div>
     </div>
-    <div style="text-align: center">
+    <div style="text-align: center;padding:0 20px">
         <div class="slide-container">
-            <img id="imgSelfiePhotoUrl" class="photo" src="images/demo4.png"/>
+            <img id="imgSelfiePhotoUrl" class="photo" src="images/photo/sfz3.png"/>
             <div class="camera">
-                <img id="chooseImage" src="images/camera.png"/>
+                <img id="chooseImage1" src="images/photo/camera.png"/>
             </div>
+            <img class="choose" id="chooseImage2" src="images/photo/choose.png"/>
         </div>
     </div>
     <div style="padding-left:20px;padding-right:20px;margin-top:30px">

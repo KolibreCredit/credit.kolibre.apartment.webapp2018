@@ -11,6 +11,7 @@ var kinds = ["IDCardFace", "IDCardBack", "Selfie"];
 var credentialFacePhotoUrl = "";
 var credentialBackPhotoUrl = "";
 var selfiePhotoUrl = "";
+var imgIndex = -1;
 
 //
 function chooseType(tabIndex) {
@@ -54,9 +55,9 @@ function twoFactorVerify() {
                     $(".chooseTip").html("有效二代身份证");
                     $("#lbTitle1").html("身份证<span style=\"color:#f58a00\">正面</span>");
                     $("#lbTitle2").html("身份证<span style=\"color:#f58a00\">背面</span>");
-                    $("#imgCredientalFacePhotoUrl").attr("src", "images/20180103/sfz1.png");
-                    $("#imgCredientalBackPhotoUrl").attr("src", "images/20180103/sfz2.png");
-                    $("#imgSelfiePhotoUrl").attr("src", "images/20180103/sfz3.png");
+                    $("#imgCredientalFacePhotoUrl").attr("src", "images/photo/sfz1.png");
+                    $("#imgCredientalBackPhotoUrl").attr("src", "images/photo/sfz2.png");
+                    $("#imgSelfiePhotoUrl").attr("src", "images/photo/sfz3.png");
                     $(".step0").hide();
                     $(".step1").show();
                 } else {
@@ -73,9 +74,9 @@ function twoFactorVerify() {
         $(".chooseTip").html("有效护照");
         $("#lbTitle1").html("护照<span style=\"color:#f58a00\">个人信息页</span>");
         $("#lbTitle2").html("护照<span style=\"color:#f58a00\">签证信息页</span>");
-        $("#imgCredientalFacePhotoUrl").attr("src", "images/20180103/hz1.png");
-        $("#imgCredientalBackPhotoUrl").attr("src", "images/20180103/hz2.png");
-        $("#imgSelfiePhotoUrl").attr("src", "images/20180103/hz3.png");
+        $("#imgCredientalFacePhotoUrl").attr("src", "images/photo/hz1.png");
+        $("#imgCredientalBackPhotoUrl").attr("src", "images/photo/hz2.png");
+        $("#imgSelfiePhotoUrl").attr("src", "images/photo/hz3.png");
         $(".step0").hide();
         $(".step1").show();
     }
@@ -86,7 +87,7 @@ function confirmTenantInfo() {
         mui.toast((credentialTabIndex == 0 ? constants.msgInfo.img10err : constants.msgInfo.img11err));
         return false;
     }
-    if (credentialBackPhotoUrl  == '') {
+    if (credentialBackPhotoUrl == '') {
         mui.toast((credentialTabIndex == 0 ? constants.msgInfo.img20err : constants.msgInfo.img21err));
         return false;
     }
@@ -98,8 +99,8 @@ function confirmTenantInfo() {
         realName: realName,
         credentialType: (credentialTabIndex == 0 ? "IDCard" : "Passport"),
         credentialNo: credentialNo,
-        credentialFacePhotoUrl : credentialFacePhotoUrl ,
-        credentialBackPhotoUrl : credentialBackPhotoUrl ,
+        credentialFacePhotoUrl: credentialFacePhotoUrl,
+        credentialBackPhotoUrl: credentialBackPhotoUrl,
         selfiePhotoUrl: selfiePhotoUrl
     };
     $(".msg-post").show();
@@ -108,7 +109,7 @@ function confirmTenantInfo() {
             $(".msg-post").hide();
             mui.toast(constants.msgInfo.verify.format(credentialTabIndex == 0 ? "身份证" : "护照"));
             setTimeout(function () {
-                if (!res.data.confirmed){
+                if (!res.data.confirmed) {
                     window.location.href = "confirmTenant.html?url=list.html";
                 }
                 else if (url != "") {
@@ -127,7 +128,7 @@ function confirmTenantInfo() {
     });
 }
 
-function V2UploadImages(serverId, imgIndex) {
+function V2UploadImages(serverId) {
     var data = {
         serverId: serverId,
         kind: kinds[imgIndex],
@@ -146,8 +147,16 @@ function V2UploadImages(serverId, imgIndex) {
                 selfiePhotoUrl = res.data.url;
                 $('#imgSelfiePhotoUrl').attr('src', selfiePhotoUrl);
             }
+            $(".item").eq(res.data.index).css({"border": "2px solid #fcfcfc"});
+            $(".item").eq(res.data.index).find(".camera").hide();
+            $(".item").eq(res.data.index).find(".choose").show();
         }
     });
+}
+
+function chooseImage(index) {
+    imgIndex = index;
+    document.getElementById("chooseImg").click();
 }
 
 $(document).ready(function () {
@@ -162,7 +171,7 @@ $(document).ready(function () {
             signature: res.data.signature,
             jsApiList: ['checkJsApi', 'chooseImage', 'uploadImage']
         });
-        document.querySelector('#chooseImg1').onclick = function () {
+        document.querySelector('#chooseImg').onclick = function () {
             wx.chooseImage({
                 count: 1,
                 sizeType: ['original', 'compressed'],
@@ -172,45 +181,15 @@ $(document).ready(function () {
                         localId: res.localIds[0],
                         isShowProgressTips: 1,
                         success: function (res1) {
-                            V2UploadImages(res1.serverId, 0);
-                        }
-                    });
-                }
-            });
-        };
-        //
-        document.querySelector('#chooseImg2').onclick = function () {
-            wx.chooseImage({
-                count: 1,
-                sizeType: ['original', 'compressed'],
-                sourceType: ['album', 'camera'],
-                success: function (res) {
-                    wx.uploadImage({
-                        localId: res.localIds[0],
-                        isShowProgressTips: 1,
-                        success: function (res1) {
-                            V2UploadImages(res1.serverId, 1);
-                        }
-                    });
-                }
-            });
-        };
-        //
-        document.querySelector('#chooseImg3').onclick = function () {
-            wx.chooseImage({
-                count: 1,
-                sizeType: ['original', 'compressed'],
-                sourceType: ['album', 'camera'],
-                success: function (res) {
-                    wx.uploadImage({
-                        localId: res.localIds[0],
-                        isShowProgressTips: 1,
-                        success: function (res1) {
-                            V2UploadImages(res1.serverId, 2);
+                            V2UploadImages(res1.serverId);
                         }
                     });
                 }
             });
         };
     });
+    //demo
+   /*  $(".item").eq(0).css({"border": "2px solid #fcfcfc"});
+    $(".item").eq(0).find(".camera").hide();
+    $(".item").eq(0).find(".choose").show();*/
 });

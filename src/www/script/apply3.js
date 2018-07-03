@@ -13,6 +13,11 @@ function V2UploadImages(serverId) {
         if (res.succeeded) {
             imgUrl1 = res.data.url;
             $("#imgSelfiePhotoUrl").attr("src", imgUrl1);
+            $("#imgSelfiePhotoUrl").load(function (){
+                $(".camera").hide();
+                $(".slide-container").css({"border": "2px solid #fcfcfc"});
+                $(".choose").show();
+            });
         }
     });
 }
@@ -43,7 +48,7 @@ function apply() {
             getContractConfirmInfo();
             setTimeout(function () {
                 toApplys(res.data.nextStep);
-            },2000);
+            }, 2000);
         } else {
             mui.toast(res.message);
         }
@@ -58,11 +63,11 @@ $(document).ready(function () {
     getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
         if (res.succeeded) {
             if (res.data.credentialType == "IDCard") {
-                $("#imgSelfiePhotoUrl").attr("src", "images/demo4.png");
+                $("#imgSelfiePhotoUrl").attr("src", "images/photo/sfz3.png");
                 $("#lbTitle").html("本人手持身份证照片");
 
             } else {
-                $("#imgSelfiePhotoUrl").attr("src", "images/hz4.png");
+                $("#imgSelfiePhotoUrl").attr("src", "images/photo/hz3.png");
                 $("#lbTitle").html("本人手持护照照片");
             }
         }
@@ -78,7 +83,23 @@ $(document).ready(function () {
             signature: res.data.signature,
             jsApiList: ['checkJsApi', 'chooseImage', 'uploadImage']
         });
-        document.querySelector('#chooseImage').onclick = function () {
+        document.querySelector('#chooseImage1').onclick = function () {
+            wx.chooseImage({
+                count: 1,
+                sizeType: ['original'],
+                sourceType: ['album', 'camera'],
+                success: function (res) {
+                    wx.uploadImage({
+                        localId: res.localIds[0],
+                        isShowProgressTips: 1,
+                        success: function (res1) {
+                            V2UploadImages(res1.serverId);
+                        }
+                    });
+                }
+            });
+        };
+        document.querySelector('#chooseImage2').onclick = function () {
             wx.chooseImage({
                 count: 1,
                 sizeType: ['original'],

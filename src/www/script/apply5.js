@@ -159,6 +159,9 @@ function V2UploadImages(serverId) {
                 contractConfirmInfo.selfiePhoto = res.data.url;
                 $("#imgSelfiePhoto").attr("src", contractConfirmInfo.selfiePhoto);
             }
+            $(".picture").eq(res.data.index).css({"border": "2px solid #fcfcfc"});
+            $(".camera").eq(res.data.index).hide();
+            $(".choose").eq(res.data.index).show();
         }
     });
 }
@@ -233,16 +236,34 @@ $(document).ready(function () {
             $("#txtCellphone").val(contractConfirmInfo.contactInfo[0].cellphone);
             $("#txtRelation").val(contractConfirmInfo.contactInfo[0].relationship);
             //
-            $("#imgCredentialFacePhoto").attr("src", contractConfirmInfo.credentialFacePhoto);
+            if (contractConfirmInfo.credentialFacePhoto != null) {
+                $("#imgCredentialFacePhoto").attr("src", contractConfirmInfo.credentialFacePhoto);
+            } else {
+                $(".picture").eq(0).css({"border": "2px dotted #fd8b14"});
+                $(".camera").eq(0).show();
+                $(".choose").eq(0).hide();
+                $("#imgCredentialFacePhoto").attr("src", (contractConfirmInfo.credentialType == "IDCard" ? "images/photo/sfz1.png" : "images/photo/hz1.png"));
+            }
             $("#lbCredentialFacePhoto").text((contractConfirmInfo.credentialType == "IDCard" ? "身份证正面" : "护照个人信息页"));
             //
-            $("#imgCredentialBackPhoto").attr("src", contractConfirmInfo.credentialBackPhoto);
+            if (contractConfirmInfo.credentialBackPhoto != null) {
+                $("#imgCredentialBackPhoto").attr("src", contractConfirmInfo.credentialBackPhoto);
+            }
+            else {
+                $(".picture").eq(1).css({"border": "2px dotted #fd8b14"});
+                $(".camera").eq(1).show();
+                $(".choose").eq(1).hide();
+                $("#imgCredentialBackPhoto").attr("src", (contractConfirmInfo.credentialType == "IDCard" ? "images/photo/sfz2.png" : "images/photo/hz2.png"));
+            }
             $("#lbCredentialBackPhoto").text((contractConfirmInfo.credentialType == "IDCard" ? "身份证背面" : "护照签证信息页"));
             //
             if (contractConfirmInfo.selfiePhoto != null) {
                 $("#imgSelfiePhoto").attr("src", contractConfirmInfo.selfiePhoto);
             } else {
-                $("#imgSelfiePhoto").attr("src", (contractConfirmInfo.credentialType == "IDCard" ? "images/sfz3-2.png" : "images/hz3-2.png"));
+                $(".picture").eq(2).css({"border": "2px dotted #fd8b14"});
+                $(".camera").eq(2).show();
+                $(".choose").eq(2).hide();
+                $("#imgSelfiePhoto").attr("src", (contractConfirmInfo.credentialType == "IDCard" ? "images/photo/sfz3.png" : "images/photo/hz3.png"));
             }
         }
     });

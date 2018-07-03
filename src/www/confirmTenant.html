@@ -36,16 +36,10 @@
         }
 
         .item .original {
-            height: 175px;
+            height: 180px;
             position: relative;
-        }
-
-        .choose {
-            position: absolute;
-            right: 15px;
-            bottom: 15px;
-            width: 40px;
-            height: 40px;
+            border: 2px solid #fcfcfc;
+            border-radius: 6px;
         }
 
         .photo {
@@ -54,12 +48,33 @@
             border-radius: 6px;
         }
 
+        .camera {
+            width: 100%;
+            position: absolute;
+            text-align: center;
+            top: 65px;
+            display: none;
+        }
+
+        .camera img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .choose {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            width: 40px;
+            height: 40px;
+        }
+
         .mui-table-view:before {
             height: 0;
         }
 
         .msg-content {
-            background-color: rgba(0,0,0,0.5);
+            background-color: rgba(0, 0, 0, 0.5);
         }
 
         .msg-body {
@@ -122,26 +137,33 @@
         <div class="item">
             <div class="original">
                 <img id="imgCredentialFacePhotoUrl" class="photo"/>
+                <div class="camera">
+                    <img src="images/photo/camera.png" onclick="chooseImage(0)"/>
+                </div>
                 <img class="choose" src="images/20180103/choose.png" onclick="chooseImage(0)"/>
             </div>
             <div style="text-align:center;margin-top:15px">
                 <label id="lbTitle1">身份证正面</label>
             </div>
         </div>
-        <img src="images/20180103/line2.png" style="width:100%;height:100%"/>
         <div class="item">
             <div class="original">
                 <img id="imgCredentialBackPhotoUrl" class="photo"/>
+                <div class="camera">
+                    <img src="images/photo/camera.png" onclick="chooseImage(1)"/>
+                </div>
                 <img class="choose" src="images/20180103/choose.png" onclick="chooseImage(1)"/>
             </div>
             <div style="text-align:center;margin-top:15px">
                 <label id="lbTitle2">身份证背面</label>
             </div>
         </div>
-        <img src="images/20180103/line2.png" style="width:100%;height:100%"/>
         <div class="item">
             <div class="original">
                 <img id="imgSelfiePhotoUrl" class="photo"/>
+                <div class="camera">
+                    <img src="images/photo/camera.png" onclick="chooseImage(2)"/>
+                </div>
                 <img class="choose" src="images/20180103/choose.png" onclick="chooseImage(2)"/>
             </div>
             <div style="text-align:center;margin-top:15px">

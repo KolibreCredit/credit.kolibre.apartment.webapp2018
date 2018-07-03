@@ -22,17 +22,35 @@ $(document).ready(function () {
             }
             $("#txtRealName").val(tenantInfo.realName);
             $("#txtCredentialNo").val(tenantInfo.credentialNo);
-            credentialFacePhotoUrl = tenantInfo.credentialFacePhotoUrl;
-            $("#imgCredentialFacePhotoUrl").attr("src", credentialFacePhotoUrl);
             //
+            credentialFacePhotoUrl = tenantInfo.credentialFacePhotoUrl;
+            if (credentialFacePhotoUrl != null && credentialFacePhotoUrl != "") {
+                $("#imgCredentialFacePhotoUrl").attr("src", credentialFacePhotoUrl);
+            } else {
+                $(".original").eq(0).css({"border": "2px dotted #fd8b14"});
+                $(".camera").eq(0).show();
+                $(".choose").eq(0).hide();
+                $("#imgCredentialFacePhotoUrl").attr("src", (tenantInfo.credentialType == "IDCard" ? "images/photo/sfz1.png" : "images/photo/hz1.png"));
+            }
+            ///
             credentialBackPhotoUrl = tenantInfo.credentialBackPhotoUrl;
-            $("#imgCredentialBackPhotoUrl").attr("src", credentialBackPhotoUrl);
+            if (credentialBackPhotoUrl != null && credentialBackPhotoUrl != "") {
+                $("#imgCredentialBackPhotoUrl").attr("src", credentialBackPhotoUrl);
+            } else {
+                $(".original").eq(1).css({"border": "2px dotted #fd8b14"});
+                $(".camera").eq(1).show();
+                $(".choose").eq(1).hide();
+                $("#imgCredentialBackPhotoUrl").attr("src", (tenantInfo.credentialType == "IDCard" ? "images/photo/sfz2.png" : "images/photo/hz2.png"));
+            }
             //
             selfiePhotoUrl = tenantInfo.selfiePhotoUrl;
-            if (selfiePhotoUrl != null) {
+            if (selfiePhotoUrl != null && selfiePhotoUrl != "") {
                 $("#imgSelfiePhotoUrl").attr("src", selfiePhotoUrl);
             } else {
-                $("#imgSelfiePhotoUrl").attr("src", (tenantInfo.credentialType == "IDCard" ? "images/sfz3-2.png" : "images/hz3-2.png"));
+                $(".original").eq(2).css({"border": "2px dotted #fd8b14"});
+                $(".camera").eq(2).show();
+                $(".choose").eq(2).hide();
+                $("#imgSelfiePhotoUrl").attr("src", (tenantInfo.credentialType == "IDCard" ? "images/photo/sfz3.png" : "images/photo/hz3.png"));
             }
         }
     });
@@ -94,6 +112,9 @@ function V2UploadImages(serverId) {
                 selfiePhotoUrl = res.data.url;
                 $("#imgSelfiePhotoUrl").attr("src", selfiePhotoUrl);
             }
+            $(".original").eq(res.data.index).css({"border": "2px solid #fcfcfc"});
+            $(".camera").eq(res.data.index).hide();
+            $(".choose").eq(res.data.index).show();
         }
     });
 }
