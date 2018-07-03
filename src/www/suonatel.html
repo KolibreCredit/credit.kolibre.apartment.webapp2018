@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>索纳特酒店公寓</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.405" rel="stylesheet"/>
+    <style type="text/css">
+        .mui-content {
+            padding: 0 20px;
+            background: none;
+            text-align: center;
+        }
+        .logoImg {
+            width: 100%;
+            height: auto;
+            z-index: 10;
+        }
+        .contactUs {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 20px;
+            font-size: 14px;
+            color: #666666;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body style="background: #ffbc76 url(images/20180103/bg1.jpg); background-position: 0 0;  background-size:cover">
+<div class="mui-content">
+    <div style="text-align:center;margin-top:80px;padding:0 15px">
+        <img class="logoImg" src="images/logo/suonatel.png"/>
+    </div>
+    <div style="margin-top:50px;text-align:center">
+        <img src="images/20180103/slogan.png" style="width: 237px;height:30px"/>
+    </div>
+</div>
+<img src="images/20180123/tel.png" style="width:24px;height:24px;position: absolute;top:20px;right:20px"  onclick="showTel()"/>
+<div style="position:absolute;bottom:0;width:100%">
+    <div style="position: absolute;top:-80px;width:100%">
+        <div style="text-align:center">
+            <img src="images/20180103/bill.png" style="width:170px;height:170px" onclick="bill()"/>
+        </div>
+        <div style="font-size: 14px;color:#666666;text-align:center">
+            <div style=" width:50px;height:56px;margin-left:40px;text-align:center;float:left;position:relative"  onclick="list()">
+                <span id="lbUnConfirmedContractCount" style="background:#ff0100;width:7px;height:7px;border-radius:100%;display:inline-block;margin-left:5px;position:absolute;right:0;top:5px;display:none"></span>
+                <img src="images/20180103/lease.png" style="width:40px;height:40px"/>租约
+            </div>
+            <div style="display:inline-block" onclick="fuwu()">
+                <img src="images/fuwu/fuwu1.png" style="width:40px;height:40px"/>
+                <div>服务</div>
+            </div>
+            <div style=" width:50px;height:56px;margin-right:40px;text-align:center;float:right" onclick="uesr()">
+                <img src="images/20180103/user.png" style="width:40px;height:40px"/>账户
+            </div>
+        </div>
+    </div>
+    <img src="images/20180103/bg2.png" style="width:100%;height:200px;vertical-align:bottom"/>
+</div>
+<div class="contactUs">客服电话：400-921-5508</div>
+<div class="msg-alert">
+    <table style='width:100%;height:100%'>
+        <tr>
+            <td style='vertical-align:middle;text-align:center'>
+                <div style="text-align:center;z-index:2;position:relative">
+                    <img src="images/20180123/tel1.png" style="height:150px;width:150px"/>
+                </div>
+                <div class="msg-body" style="width:100%;background-color:#ffffff;margin-top:-95px">
+                    <div style="margin-top:56px;font-size:18px;color:#646464;line-height:25px;position: relative;z-index:3">
+                        如有任何疑问，请联系客服电话
+                    </div>
+                    <div style="font-size:18px;color:#ff8400;line-height:30px">
+                        021-50805508
+                    </div>
+                    <div style="margin-top:30px;padding:0 35px">
+                        <button style="border:1px solid #ff8c14;border-radius:44px;height:44px;color:#ff8c14;font-size:18px;width:100%" onclick="hideTel()">我知道了</button>
+                    </div>
+                    <div style="height:30px"></div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="script/constants.js?ver=18.12.405"></script>
+<script src="script/service.js?ver=18.12.405"></script>
+<script src="script/suonatel.js?ver=18.12.405"></script>

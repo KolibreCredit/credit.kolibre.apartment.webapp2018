@@ -1,9 +1,10 @@
 /**
  * Created by long.jiang on 2017/1/10.
  */
-var tenancyId = "", templateType = "", title = "", bigLogo = "", smallLogo = "", bigBackground = "",
+var tenancyId = "", title = "", templateType = "", bigLogo = "", smallLogo = "", bigBackground = "",
     smallBackground = "";
 var tabIndex = -1;
+var mySwiper = null;
 var ispostData = true;
 
 function V2UploadImages(serverId) {
@@ -16,22 +17,39 @@ function V2UploadImages(serverId) {
         if (res.succeeded) {
             if (res.data.index == 0) {
                 bigLogo = res.data.url;
-                $("#imgBigLogo").attr("src", bigLogo);
+                $("#imgBigLogo").attr("src", bigLogo).show();
             }
             else if (res.data.index == 1) {
                 smallLogo = res.data.url;
-                $("#imgSmallLogo").attr("src", smallLogo);
+                $("#imgSmallLogo").attr("src", smallLogo).show();
             }
             else if (res.data.index == 2) {
                 bigBackground = res.data.url;
-                $("#imgBigBackground").attr("src", bigBackground);
+                $("#imgBigBackground").attr("src", bigBackground).show();
             }
             else {
                 smallBackground = res.data.url;
-                $("#imgSmallBackground").attr("src", smallBackground);
+                $("#imgSmallBackground").attr("src", smallBackground).show();
             }
         }
     });
+}
+
+function step1() {
+    if (tenancyId == "") {
+        mui.toast("请选择公寓");
+        return false;
+    }
+    templateType = mySwiper.activeIndex;
+    $("body").css("background-color", "#f7f7f7");
+    $(".mui-content").css("background-color", "#f7f7f7");
+    $(".step0").hide();
+    $(".step1").show();
+}
+
+function wxChooseImage(index) {
+    tabIndex = index;
+    document.getElementById("chooseImage").click();
 }
 
 //
@@ -40,8 +58,20 @@ function apply() {
         mui.toast(constants.msgInfo.postData);
         return false;
     }
-    if (imgUrl1 == '') {
-        mui.toast(constants.msgInfo.imgIDCarderr);
+    if (bigBackground == '') {
+        mui.toast("上传背景图1");
+        return false;
+    }
+    if (smallBackground == '') {
+        mui.toast("上传背景图2");
+        return false;
+    }
+    if (bigLogo == '') {
+        mui.toast("上传logo图");
+        return false;
+    }
+    if (smallLogo == '') {
+        mui.toast("上传slogan图");
         return false;
     }
     ispostData = false;
@@ -85,6 +115,20 @@ $(document).ready(function () {
             $("#divRelation").find("ul").html(allTenancies.join(""));
         }
     });
+    //
+    mySwiper = new Swiper('#swiper-container', {
+        effect: 'coverflow',
+        slidesPerView: 1.4,
+        centeredSlides: true,
+        coverflowEffect: {
+            rotate: 50,
+            stretch: 10,
+            depth: 60,
+            modifier: 2,
+            slideShadows: true
+        }
+    });
+    mySwiper.slideTo(1, 500, false);
     //
     var signUrl = constants.URLS.SIGNATURE.format(encodeURIComponent(window.location.href));
     signInvoke(signUrl, function (res) {
