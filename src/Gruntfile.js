@@ -75,6 +75,7 @@ module.exports = function (grunt) {
             ver: {
                 src: [
                     'www/answer.html',
+                    'www/anzhi.html',
                     'www/apply1.html',
                     'www/apply2.html',
                     'www/apply3.html',
@@ -123,6 +124,7 @@ module.exports = function (grunt) {
                     'www/recognitionface.html',
                     'www/register.html',
                     'www/resetPassword.html',
+                    'www/suonatel.html',
                     'www/tousu.html',
                     'www/user.html',
                     'www/user1.html',
