@@ -16,20 +16,20 @@ function V2UploadImages(serverId) {
     postInvoke(constants.URLS.UPLOADIMAGESWEIXIN, data, function (res) {
         if (res.succeeded) {
             if (res.data.index == 0) {
-                bigLogo = res.data.url;
-                $("#imgBigLogo").attr("src", bigLogo).show();
-            }
-            else if (res.data.index == 1) {
-                smallLogo = res.data.url;
-                $("#imgSmallLogo").attr("src", smallLogo).show();
-            }
-            else if (res.data.index == 2) {
                 bigBackground = res.data.url;
                 $("#imgBigBackground").attr("src", bigBackground).show();
             }
-            else {
+            else if (res.data.index == 1) {
                 smallBackground = res.data.url;
                 $("#imgSmallBackground").attr("src", smallBackground).show();
+            }
+            else if (res.data.index == 2) {
+                bigLogo = res.data.url;
+                $("#imgBigLogo").attr("src", bigLogo).show();
+            }
+            else {
+                smallLogo = res.data.url;
+                $("#imgSmallLogo").attr("src", smallLogo).show();
             }
         }
     });
