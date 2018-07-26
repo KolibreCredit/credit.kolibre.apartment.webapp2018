@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>账单支付</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.436" rel="stylesheet"/>
+    <meta name="format-detection" content="telephone=no"/>
+</head>
+<body>
+<div style="background-color: white">
+    <div style="margin-top:100px;text-align:center">
+        <img src="images/logo3.png" style="width: 80px;height:80px"/>
+    </div>
+    <div style="font-size:16px;color:#646464;text-align:center">
+        正在跳转到账单支付页
+    </div>
+    <div style="margin-top:30px;font-size:18px;text-align:center;color:#999999">
+        <span style="color:#ff8c14" id="lbWaitCount">5S</span>倒计时
+    </div>
+    <div style="text-align:center;margin-top:40px;padding:0 50px">
+        <button class="btnActive" onclick="weixinPay()"
+                style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:100%">立即跳转
+        </button>
+    </div>
+</div>
+</body>
+</html>
+<script src="script/constants.js?ver=18.12.436"></script>
+<script src="script/service.js?ver=18.12.436"></script>
+<script type="text/javascript">
+    var waitTimer = null;
+    var waitCount = 5;
+
+    function startWaitTimer() {
+        if (waitCount > 0) {
+            document.getElementById("lbWaitCount").innerText = waitCount + 'S';
+            waitCount = waitCount - 1;
+        } else {
+            waitCount = 5;
+            clearInterval(waitTimer);
+            weixinPay();
+        }
+    }
+    function weixinPay() {
+        var orderId = getURLQuery("orderId");
+        var redirect_uri = encodeURIComponent(constants.URLS.WEBPAYURL.format(orderId));
+        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + constants.CONFIGS.APPID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base#wechat_redirect";
+    }
+    waitTimer = setInterval(function () {
+        startWaitTimer();
+    }, 1000);
+</script>
