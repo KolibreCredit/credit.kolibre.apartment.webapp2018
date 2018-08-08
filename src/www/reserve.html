@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的预约</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.449" rel="stylesheet"/>
+    <style type="text/css">
+        .list {
+            padding: 0;
+            margin: 0;
+        }
+
+        .billItem {
+            margin-top: 10px;
+            background: #ffffff;
+            padding-bottom: 10px;
+        }
+
+        .billItem .content0 {
+            padding-left: 20px;
+            font-size: 14px;
+            color: #adadad;
+            height: 40px;
+            line-height: 40px;
+            position: relative;
+        }
+
+        .content0 div {
+            border-bottom: 1px solid #e9e9e9;
+        }
+
+        .content0 span {
+            position: absolute;
+            right: 20px;
+        }
+
+        .content01 {
+            position: relative;
+        }
+
+        .content01 .ic_grey_arrow {
+            width: 18px;
+            height: 18px;
+            position: absolute;
+            right: 20px;
+            top: 40px;
+        }
+
+        .billItem .content1 {
+            padding: 0 20px;
+            position: relative;
+        }
+
+        .content1 .i-room {
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .content1 .iType {
+            width: 16px;
+            height: 16px;
+            margin-left: 20px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .Created {
+            color: #ffbe00;
+        }
+
+        .Contacted {
+            color: #fb9328;
+        }
+
+        .Viewed {
+            color: #7ed321;
+        }
+
+        .Canceled {
+            color: #999999;
+        }
+
+        .nodataDiv {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            visibility: hidden;
+        }
+
+        .btnReservation {
+            border: 1px solid #ff8c14;
+            border-radius: 89px;
+            width: 86px;
+            height: 28px;
+            line-height: 28px;
+            display: inline-block;
+            text-align: center;
+            float: right;
+            margin-right: 20px;
+            font-size: 14px;
+            color: #ff8c14;
+        }
+
+        .Created .btnReservation {
+            display: block;
+        }
+
+        .Contacted .btnReservation {
+            display: block;
+        }
+
+        .Viewed .btnReservation {
+            display: none;
+        }
+
+        .Canceled .btnReservation {
+            display: none;
+        }
+    </style>
+</head>
+<body style="background:#f4f4f4">
+<div class="mui-content" style="background:none">
+    <div id="divlist" class="list">
+    </div>
+    <div class="nodataDiv"
+         style="padding:0 20px;display:flex;align-items:center;justify-content:center;flex-direction:column">
+        <img style="width:100px;height:100px" src="images/reserve2.png"/>
+        <div style="font-size: 16px; color: #999999;margin-top:20px">
+            暂无记录
+        </div>
+    </div>
+    <div class="msg-alert">
+        <table style='width:100%;height:100%'>
+            <tr>
+                <td style='vertical-align:middle;text-align:center'>
+                    <div class="msg-body" style="height:auto;width:100%;background-color:#ffffff">
+                        <div style="text-align:center;margin-top:30px">
+                            <img src="images/leasemsg3.png" style="height:40px;width:40px"/>
+                        </div>
+                        <div style="margin-top:30px;font-size:16px;color:#646464;line-height:25px">
+                            确定要放弃看房？
+                        </div>
+                        <div style="margin-top:40px;text-align: center;">
+                            <button style="border:1px solid #ff8c14;border-radius:100px;height:40px;color:#ff8c14;font-size:16px;width:110px"
+                                    onclick="hideReservation()">取消
+                            </button>
+                            <button style="background-color:#ff8c14;border-radius:100px;height:40px;color:#ffffff;font-size:16px;width:110px;border:none;margin-left:20px"
+                                    onclick="cancelRoomSourceReservation()" class="btnActive">确定
+                            </button>
+                        </div>
+                        <div style="height:30px;clear:both">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/html" id="tpl0">
+        <div class="billItem">
+            <div class="content0">
+                申请时间：{0}<span class="{2}">{1}</span>
+            </div>
+            <div class="content01" style="background:#fafafa;display:flex;padding:15px 20px" onclick="viewRoom('{9}')">
+                <div style="width:80px;height:50px">
+                    <img src="{3}" style="width:80px;height:50px;">
+                </div>
+                <div style="padding-left:10px">
+                    <p style="font-size:18px;color:#646464;">{4}</p>
+                    <p style="font-size:16px;color:#fb9328;">{5}</p>
+                </div>
+                <img class="ic_grey_arrow" src="images/ic_grey_arrow.png"/>
+            </div>
+            <div class="content1">
+                <div style="font-size:16px;color:#777777;line-height:32px;height:32px">
+                    <img class="i-room" src="images/reserve0.png"/>
+                    <span>{6}</span>
+                    <img class="iType" src="images/reserve1.png"/>
+                    <span>{7}</span>
+                </div>
+            </div>
+            <div class="content2 {2}" style="margin-top:5px">
+                <div style="border-radius:0 15px 15px 0;background: rgba(0,0,0,0.04);display:inline-block;padding-left:20px;padding-right:10px;line-height:30px;font-size: 14px;color:#333333">
+                    看房时间：<span style="margin-left:5px">{8}</span>
+                </div>
+                <button class="btnReservation" onclick="showReservation('{10}')">放弃看房</button>
+            </div>
+        </div>
+    </script>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="packages/moment@2.17.1/min/moment.min.js"></script>
+<script src="script/constants.js?ver=18.12.449"></script>
+<script src="script/service.js?ver=18.12.449"></script>
+<script src="script/reserve.js?ver=18.12.449"></script>

@@ -1,6 +1,7 @@
 /**
  * Created by long.jiang on 2017/6/21.
  */
+var waitTimer = null;
 var isTransaction = true;
 var transactionId = "";
 var amount = "";
@@ -11,7 +12,13 @@ var queryTransaction = function () {
         getInvoke(constants.URLS.GETTRANSACTION.format(transactionId), function (res) {
             isTransaction = true;
             if (res.data.transactionState == "Succeed") {
-                window.location.href = "bill.html";
+                clearInterval(waitTimer);
+                var isWxMini = window.__wxjs_environment === 'miniprogram';
+                if (isWxMini) {
+                    wx.miniProgram.navigateTo({url: '/pages/bill/bill'});
+                } else {
+                    window.location.href = "bill.html";
+                }
             }
         });
     }
@@ -30,7 +37,7 @@ $(document).ready(function () {
         if (res.succeeded) {
             $(".spinner").hide();
             $("#imgPay").attr("src", res.data.qrCode).show();
-            setInterval(function () {
+            waitTimer = setInterval(function () {
                 queryTransaction();
             }, 2000);
         } else {

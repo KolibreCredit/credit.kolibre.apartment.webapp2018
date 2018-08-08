@@ -69,8 +69,8 @@ $(document).ready(function () {
                 item.orderState.toLowerCase(),
                 item.apartmentName,
                 item.roomNumber,
-                item.orderStartTime.substring(0,10),
-                item.orderEndTime.substring(0,10));
+                item.orderStartTime.substring(0, 10),
+                item.orderEndTime.substring(0, 10));
             $("#divLeaseInfo").html(htmlLeaseInfo);
         }
     }, function (err) {
@@ -79,11 +79,12 @@ $(document).ready(function () {
 });
 
 function createTransaction() {
-    if (isWeixin()) {
+    var isWxMini = window.__wxjs_environment === 'miniprogram';
+    if (isWxMini) {
+        wx.miniProgram.navigateTo({url: '/pages/bill/wxpay?orderId=' + orderId});
+    } else {
         var redirect_uri = encodeURIComponent(constants.URLS.WEBPAYURL.format(orderId));
         window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + constants.CONFIGS.APPID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base#wechat_redirect";
-    } else {
-        window.location.href = constants.URLS.WEBPAYURL.format(orderId);
     }
 }
 

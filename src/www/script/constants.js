@@ -4,7 +4,7 @@
 var constants = {
     URLS: {
         BILL: "bill.html",
-        WEBPAYURL: "http://test.fengniaowu.com/webpay.html?orderId={0}",
+        WEBPAYURL: "https://m.fengniaowu.com/webpay.html?orderId={0}",
         //
         SEND: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/ValidateCode/Send",
         VERIFY: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/ValidateCode/Verify",
@@ -67,7 +67,11 @@ var constants = {
         GETTENANTCOMPLAINTSUGGESTION:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/GetTenantComplaintSuggestion?id={0}",
         CANCELCOMPLAINTSUGGESTION:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/CancelComplaintSuggestion",
         GETALLTENANCIES:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/ShortLink/GetAllTenancies",
-        CREATESHORTLINK:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/ShortLink/CreateShortLink"
+        CREATESHORTLINK:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/ShortLink/CreateShortLink",
+        CREATERESERVATION: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/CreateReservation",
+        GETROOMSOURCERESERVATIONS:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/GetRoomSourceReservations",
+        GETROOMSOURCE: "http://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/GetRoomSource?roomId={0}",
+        CANCELROOMSOURCERESERVATION:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/CancelRoomSourceReservation"
     },
     COOKIES: {
         XKCSID: 'X-KC-SID',
@@ -172,7 +176,12 @@ var constants = {
         pictureUrls: "请上传图片资料",
         cleaningType: "请选择保洁类型",
         cancelCleaning:"取消成功",
-        shortLink:"短链创建成功"
+        shortLink:"短链创建成功",
+        cancelRoomSourceReservation:"放弃看房成功",
+        contactPhone:"手机号码不能为空",
+        contactPhoneerr: "手机号码格式错误",
+        appointmentName: "真实姓名不能为空",
+        appointment: "预约信息提交成功"
     },
     CONFIGS: {
         APPID: "wxa74d300625108685",

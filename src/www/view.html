@@ -7,7 +7,7 @@
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.436" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.450" rel="stylesheet"/>
     <style type="text/css">
         label {
             font-size: 16px;
@@ -45,6 +45,12 @@
             top: 20px;
             left: 0;
             right: 0;
+        }
+        .accessCardDepositAmount {
+            display: none;
+        }
+        .customDeposits {
+            display: none;
         }
     </style>
 </head>
@@ -108,7 +114,12 @@
         <label>物业费</label><span>¥{3}/月</span>
     </div>
     <div style="line-height:36px">
-        <label>押金</label><span>¥{4}</span>
+        <label>房租押金</label><span>¥{4}</span>
+    </div>
+    <div style="line-height:36px" class="accessCardDepositAmount">
+       <label>门禁卡押金</label><span>¥{11}</span>
+    </div>
+    <div class="customDeposits">
     </div>
     <div style="line-height:36px">
         <label>合同租期</label><span>{5}月</span>
@@ -126,10 +137,15 @@
         <label>电子合同</label><span onclick="signUrl('{9}')" style="float:right;color:#333333;text-decoration:underline">{10}</span>
     </div>
 </script>
+<script type="text/html" id="tplCustomDeposit">
+    <div style="line-height:36px">
+        <label>{0}</label><span>¥{1}</span>
+    </div>
+</script>
 </body>
 </html>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
-<script src="script/constants.js?ver=18.12.436"></script>
-<script src="script/service.js?ver=18.12.436"></script>
-<script src="script/view.js?ver=18.12.436"></script>
+<script src="script/constants.js?ver=18.12.450"></script>
+<script src="script/service.js?ver=18.12.450"></script>
+<script src="script/view.js?ver=18.12.450"></script>

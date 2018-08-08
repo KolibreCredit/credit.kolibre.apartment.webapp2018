@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>公寓详情</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=16.12.287" rel="stylesheet"/>
+    <style type="text/css">
+        .mui-slider-indicator {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 65px;
+            width: 50px;
+            height: 24px;
+            text-align: center;
+            position: absolute;
+            right: 15px;
+            bottom: 40px;
+        }
+
+        .mui-slider-indicator .mui-number {
+            font-size: 12px;
+            color: #ffffff;
+            width: 50px;
+            line-height: 20px;
+        }
+
+        .mui-slider-indicator .mui-number span {
+            color: #ffffff;
+        }
+
+        .intro {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #837f7f;
+            line-height: 20px
+        }
+
+        .intro2 {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #837f7f;
+        }
+
+        .configs .item {
+            width: 20%;
+            float: left;
+            text-align: center;
+            font-size: 12px;
+            color: #b5b3b3;
+            margin-top: 15px;
+        }
+
+        .item .logo {
+            display: inline-block;
+            background: #f5f5f5;
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+            text-align: center;
+        }
+
+        .configs .active {
+            color: #fb9328;
+        }
+
+        .active .logo {
+            display: inline-block;
+
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+            text-align: center;
+            background: rgba(251, 149, 43, 0.1);
+        }
+
+        .logo img {
+            width: 30px;
+            height: 30px;
+            margin-top: 5px;
+        }
+
+        .map {
+            margin-top: 20px;
+            height: 180px;
+            width: 100%;
+        }
+
+        .hezu {
+            width: 80px;
+            height: 30px;
+            position: absolute;
+            top: 180px;
+            left: 10px;
+            z-index: 1;
+            display: none;
+        }
+
+        .roomSourceFeature {
+            height: 22px;
+            line-height: 22px;
+        }
+
+        .roomSourceFeature span {
+            display: inline-block;
+            padding: 0 5px;
+            font-size: 12px;
+            color: #7d7d7d;
+            border: 1px solid #cccccc;
+            margin-right: 10px;
+            border-radius: 1px;
+        }
+
+        .allConfig {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            z-index: 999;
+            background-color: #ffffff;
+            display: none;
+        }
+
+        #wrapper {
+            z-index: 1;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        #scroller {
+            float: left;
+            z-index: 1;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            height: auto;
+            -webkit-transform: translateZ(0);
+            -moz-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            -o-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-text-size-adjust: none;
+            -moz-text-size-adjust: none;
+            -ms-text-size-adjust: none;
+            -o-text-size-adjust: none;
+            text-size-adjust: none;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        #scroller ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+
+        #scroller li {
+            display: block;
+            float: left;
+            width: 200px;
+            height: 100%;
+        }
+
+        li .apartmentPictures {
+            width: 200px;
+            height: 100px;
+        }
+
+        .apartmentPictures img {
+            width: 190px;
+            height: 100px;
+        }
+        .retailPrice span {
+            background: #FFF7EE;
+            border-radius: 6px;
+            padding: 0 8px;
+            margin-left: 10px;
+            font-size: 12px;
+            color: #fb9328;
+            height: 24px;
+            line-height: 24px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body style="background:#f5f5f5">
+<div class="mui-content" style="background:#f5f5f5">
+    <div class="mui-slider">
+        <div class="mui-slider-group">
+        </div>
+        <div class="mui-slider-indicator">
+            <div class="mui-number">
+                <span>0</span>/0
+            </div>
+        </div>
+    </div>
+    <img src="images/hezu.png" class="hezu"/>
+    <div id="divProject"
+         style="margin-top:-30px;margin-right:10px;margin-left:10px;background-color:#ffffff;z-index:1;position:relative;padding:0 15px;border-radius:2px;box-shadow:0 2px 2px 0 rgba(0,0,0,0.05)">
+    </div>
+    <div style="height:10px;background-color:#f4f4f4">
+    </div>
+    <div style="padding:20px;background-color:#ffffff">
+        <div style="font-size:16px;color:#353535">
+            户型简介
+        </div>
+        <div id="divIntro" class="intro2">
+        </div>
+        <div style="clear:both;height:20px"></div>
+        <div style="background:#f5f5f5;border-radius:1px;line-height:30px;font-size: 14px;color:#646464;padding:0 10px" id="divDecorationDescription">
+        </div>
+    </div>
+    <div style="height:10px"></div>
+    <div style="padding:20px;background-color:#ffffff">
+        <div style="font-size:16px;color:#353535">
+            房源配置
+        </div>
+        <div style="height:5px"></div>
+        <div id="divConfigs" class="configs">
+        </div>
+        <div style="clear:both"></div>
+    </div>
+    <div style="height:10px"></div>
+    <div style="padding:20px;background-color:#ffffff">
+        <div style="font-size:16px;color:#353535">
+            公寓详情
+        </div>
+    </div>
+    <div style="height:100px;position:relative;background-color:#ffffff">
+        <div id="wrapper">
+            <div id="scroller">
+                <ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div style="font-size:14px;color:#353535;background-color:#ffffff;padding: 0 20px">
+        <div style="padding-top:20px">
+            <img src="images/jieshao.png" style="width: 22px;height: 22px;margin-right:10px;vertical-align:bottom"/>公寓介绍
+        </div>
+        <div style="font-size:14px;color:#837f7f;line-height:20px;padding:10px 0" id="divApartmentIntroduction">
+        </div>
+        <div style="padding-top:10px" class="supportFacilities">
+            <img src="images/shangquan.png" style="width: 22px;height: 22px;margin-right:10px;vertical-align:bottom"/>配套信息
+        </div>
+        <div style="font-size:14px;color:#837f7f;line-height:20px;padding:10px 0" class="supportFacilities"
+             id="divSupportFacilities">
+        </div>
+        <div style="padding-top:10px" class="trafficMethod">
+            <img src="images/ditie.png" style="width: 22px;height: 22px;margin-right:10px;vertical-align:bottom"/>交通信息
+        </div>
+        <div style="font-size:14px;color:#837f7f;line-height:20px;padding:10px 0" class="trafficMethod"
+             id="divTrafficMethod">
+        </div>
+    </div>
+    <div style="height:10px" class="tips"></div>
+    <div style="background-color:#ffffff;padding: 0 20px" class="tips">
+        <div style="padding-top:20px;font-size:14px;color:#353535">
+            温馨提示
+        </div>
+        <div id="divTips" style="font-size:14px;color:#837f7f;line-height:20px;padding:10px 0">
+        </div>
+    </div>
+    <div class="allConfig">
+        <div style="height:15px"></div>
+        <div id="divAllConfig" class="configs">
+        </div>
+        <div style="text-align: center;position: absolute;bottom:40px;left:0;right:0">
+            <img src="images/close4.png" style="width: 30px;height:30px" onclick="hideAllConfig()"/>
+        </div>
+    </div>
+    <div style="height:70px;background-color:#f4f4f4;clear:both">
+    </div>
+    <div onclick="appointment()"
+         style="z-index:88;background-color:#fb9328;width:100%;height:50px; line-height: 50px;position: fixed;bottom:0;text-align:center;font-size: 18px;color:#ffffff">
+        预约看房
+    </div>
+</div>
+</body>
+</html>
+<script type="text/html" id="tpl1">
+    <div class="mui-slider-item">
+        <a href="#">
+            <img src="{0}" style="height:240px;width:100%">
+        </a>
+    </div>
+</script>
+<script type="text/html" id="tpl2">
+    <div style="height:10px"></div>
+    <div style="font-size: 20px;color:#646464">
+        {0}<span style="display: none">{1}</span>
+    </div>
+    <div style="font-size: 16px;color:#ef7b37;margin-top:10px" class="retailPrice">
+        {2}
+    </div>
+    <div style="font-size: 12px;color:#817d7d;margin-top:5px;position:relative" onclick="map('{3}')">
+        <img src="images/source1.png" style="width:22px;height:22px;vertical-align:middle"/>{3}
+        <div style="height:22px;display:inline-block;position:absolute;top:0">
+            <img src="images/map1.png" style="height:22px;width:22px"/>
+        </div>
+        <span style="color:#FF8C14;margin-left:25px">去这里</span>
+    </div>
+    <div style="font-size:12px;color:#817d7d;line-height:24px">
+        <img src="images/source2.png" style="width:22px;height:22px;vertical-align:middle;margin-right:2px"/>{4}
+    </div>
+    <div style="border-top:1px dotted #dcdcdc;margin-top:10px;height:10px">
+    </div>
+    <div class="roomSourceFeature">
+        {5}
+    </div>
+    <div style="height:20px">
+    </div>
+</script>
+<script type="text/html" id="tpl3">
+    <div class="item {2}">
+        <div class="logo">
+            <img src="{0}"/>
+        </div>
+        <div style="line-height:30px">{1}</div>
+    </div>
+</script>
+<script type="text/html" id="tpl31">
+    <div class="item {2}" onclick="allConfig('{0}')">
+        <div class="logo" style="line-height:40px;background:#fb9328;color:#ffffff">
+            15+
+        </div>
+        <div style="line-height:30px">{1}</div>
+    </div>
+</script>
+<script type="text/html" id="tpl4">
+    <div style="width:25%;text-align:center;float:left">
+        <img src="{0}" style="width:47px;height:47px">
+        <div style="font-size:14px;color:#858181;margin-top:10px">{1}</div>
+    </div>
+</script>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="packages/iscroll@5.2.0/build/iscroll.js"></script>
+<script src="packages/iscroll@5.2.0/demos/demoUtils.js"></script>
+<script src="script/constants.js?ver=16.12.287"></script>
+<script src="script/service.js?ver=16.12.287"></script>
+<script src="script/detail2.js?ver=16.12.287"></script>

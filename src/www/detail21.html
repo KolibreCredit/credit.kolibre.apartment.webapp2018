@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>预约看房</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <link href="packages/mui@3.4.0/examples/hello-mui/css/mui.picker.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=16.12.287" rel="stylesheet"/>
+    <style type="text/css">
+        input[type=text], input[type=password] {
+            padding: 5px;
+            border: 0;
+            margin-bottom: 0;
+            height: 30px;
+            width: 75%;
+            margin-left: 10px;
+        }
+
+        .mui-table-view:before, .mui-table-view-cell:after, .mui-table-view:after {
+            height: 0;
+        }
+
+        .projectName {
+            font-size: 20px;
+            color: #333333;
+            line-height: 35px;
+        }
+
+        .rent {
+            font-size: 16px;
+            color: #ef7b37;
+            line-height: 30px
+        }
+
+        span {
+            font-size: 16px;
+            color: #333333;
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        .star {
+            color: #ef7b37;
+            width: 10px;
+            height: 10px;
+            display: inline-block;
+        }
+
+        .line {
+            border-left: 2px solid #d8d8d8;
+            display: block;
+            float: right;
+            opacity: 0.8;
+            height: 15px;
+            margin-top: 8px;
+        }
+
+        .lbSmsCode {
+            color: #FB9328;
+            padding-left: 5px;
+            padding-right: 10px;
+            display: block;
+            font-size: 16px;
+            float: right;
+        }
+    </style>
+</head>
+<body style="background:#f4f4f4">
+<div class="mui-content">
+    <div style="border-top:1px solid #cccccc;opacity:0.6"></div>
+    <div style="height: 110px;padding:20px;display:flex">
+        <div style="width: 110px;height:70px">
+            <img id="imgUrl" style="width:110px;height:100%">
+        </div>
+        <div style="margin-left:15px;width:100%">
+            <div class="projectName"></div>
+            <div class="rent"></div>
+        </div>
+    </div>
+    <div style="height:10px;background-color:#f4f4f4"></div>
+    <div class="mui-table-view" style="background-color:#ffffff">
+        <div class="mui-table-view-cell mui-media" style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.05)">
+            <span class="star">*</span><span>手机号</span><input type="text" id="txtContactPhone" placeholder="请输入真实手机号"
+                                                              maxlength="11"/>
+        </div>
+        <div class="mui-table-view-cell mui-media" style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.05)">
+            <span class="star">*</span><span>验证码</span><input type="text" id="txtCaptcha" placeholder="请输入验证码"
+                                                              maxlength="6" style="width:42%"/>
+            <span class="lbSmsCode" onclick="sendCaptcha()">获取验证码</span><span class="line"></span>
+        </div>
+        <div class="mui-table-view-cell mui-media" style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.05)">
+            <span class="star">*</span><span>姓&nbsp;&nbsp;&nbsp;名</span><input type="text" id="txtPppointmentName"
+                                                                               placeholder="请输入真实姓名" maxlength="20"/>
+        </div>
+        <div id="dtAppointmentTime" class="mui-table-view-cell mui-media"
+             style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.05)">
+            <span class="star">*</span><span>看房时间</span>
+            <label id="lbAppointmentTime" style="padding-left:10px;line-height:30px"></label>
+            <img src="images/date.png" style="width: 24px;height:24px;position:absolute;right:20px;top:12px">
+        </div>
+        <div style="text-align:center;padding-top:40px;background:#f4f4f4">
+            <img src="images/fengniaowu20170801.png" style="width:90px">
+        </div>
+        <div style="height:50px;background:#f4f4f4">
+        </div>
+        <div onclick="appointment()" class="container-bottom"  style="background-color:#fb9328;width:100%;height:50px; line-height: 50px;position: fixed;bottom:0;text-align:center;font-size: 18px;color:#ffffff">提交申请</div>
+    </div>
+    <div class="msg-alert" style="display:none">
+        <table style='width:100%;height:100%'>
+            <tr>
+                <td style='vertical-align:middle;text-align:center'>
+                    <div style="display:none">
+                        <img src="images/loading.gif" style="width:62px;height:62px">
+                    </div>
+                    <div class="spinner">
+                        <div class="spinner-container container1">
+                            <div class="circle1"></div>
+                            <div class="circle2"></div>
+                            <div class="circle3"></div>
+                            <div class="circle4"></div>
+                        </div>
+                        <div class="spinner-container container2">
+                            <div class="circle1"></div>
+                            <div class="circle2"></div>
+                            <div class="circle3"></div>
+                            <div class="circle4"></div>
+                        </div>
+                        <div class="spinner-container container3">
+                            <div class="circle1"></div>
+                            <div class="circle2"></div>
+                            <div class="circle3"></div>
+                            <div class="circle4"></div>
+                        </div>
+                    </div>
+                    <div style="font-size:14px">
+                        正在提交...
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="packages/mui@3.4.0/examples/hello-mui/js/mui.picker.min.js"></script>
+<script src="script/constants.js?ver=16.12.287"></script>
+<script src="script/service.js?ver=16.12.287"></script>
+<script src="script/detail21.js?ver=16.12.287"></script>
+<script type="text/javascript">
+    var currentDate = new Date();
+    var dtOptions = {
+        beginDate: currentDate,
+        endYear: currentDate.getFullYear() + 4
+    };
+    $("#lbAppointmentTime").text(currentDate.format("yyyy-MM-dd hh:mm"));
+    (function ($dt) {
+        document.getElementById("dtAppointmentTime").addEventListener('tap', function () {
+            document.activeElement.blur();
+            var picker = new $dt.DtPicker(dtOptions);
+            picker.show(function (rs) {
+                $("#lbAppointmentTime").text(rs.text);
+                picker.dispose();
+            });
+        }, false);
+    })(mui);
+</script>

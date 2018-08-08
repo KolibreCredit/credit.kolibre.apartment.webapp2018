@@ -3,6 +3,7 @@
  */
 var contractId = "";
 var confirmed = "";
+
 //
 function apply() {
     $(".msg-post").show();
@@ -29,7 +30,7 @@ function apply() {
 }
 
 function signUrl(imgUrl) {
-    window.location.href = "signImg.html?imgUrl="+imgUrl;
+    window.location.href = "signImg.html?imgUrl=" + imgUrl;
 }
 
 $(document).ready(function () {
@@ -56,20 +57,36 @@ $(document).ready(function () {
                 item.rentEndTime.substring(0, 10),
                 getPayPeriod(item.payPeriod),
                 imageStorageLocation,
-                templateName);
+                templateName,
+                (item.accessCardDepositAmount / 100).toFixed(2));
             $("#divLeaseInfo").html(htmlLeaseInfo);
-            if (confirmed != "0") {
-                if (item.confirmed) {
-                    $(".btnNext").hide();
-                } else {
-                    $(".btnNext").html("确认租约").show()
+            setTimeout(function () {
+                if (item.customDeposits.length > 0) {
+                    var customDeposit = null;
+                    var htmlCustomDeposit = [];
+                    var tplCustomDeposit = $("#tplCustomDeposit").html();
+                    for (var i = 0; i < item.customDeposits.length; i++) {
+                        customDeposit = item.customDeposits[i];
+                        htmlCustomDeposit.push(tplCustomDeposit.format(customDeposit.name, (customDeposit.amount / 100).toFixed(2)));
+                    }
+                    $(".customDeposits").html(htmlCustomDeposit.join("")).show();
                 }
-            } else {
-                $(".btnNext").show();
-            }
-            if (item.contractMedium == "Digital" && item.digitalContractInfos.length > 0) {
-                $(".digital").show();
-            }
+                if (confirmed != "0") {
+                    if (item.confirmed) {
+                        $(".btnNext").hide();
+                    } else {
+                        $(".btnNext").html("确认租约").show()
+                    }
+                } else {
+                    $(".btnNext").show();
+                }
+                if (item.contractMedium == "Digital" && item.digitalContractInfos.length > 0) {
+                    $(".digital").show();
+                }
+                if (item.accessCardDepositAmount > 0) {
+                    $(".accessCardDepositAmount").show();
+                }
+            }, 0);
         }
     }, function (err) {
         mui.toast(err.message);

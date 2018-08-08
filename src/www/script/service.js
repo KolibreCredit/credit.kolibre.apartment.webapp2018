@@ -72,6 +72,7 @@ Date.prototype.add = function (part, value) {
 function StringBuffer() {
     this.__strings__ = [];
 };
+
 StringBuffer.prototype.Append = function (str) {
     this.__strings__.push(str);
     return this;
@@ -87,9 +88,11 @@ StringBuffer.prototype.AppendFormat = function (str) {
     this.__strings__.push(str);
     return this;
 }
+
 StringBuffer.prototype.ToString = function () {
     return this.__strings__.join('');
 };
+
 StringBuffer.prototype.clear = function () {
     this.__strings__ = [];
 }

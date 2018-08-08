@@ -50,7 +50,6 @@ function zhifubao() {
         window.location.href = "precreate.html?transactionId={0}&amount={1}&paymentTime={2}".format(transactionId, amount, paymentTime.substring(0, 10));
     });
 }
-
 //创建交易流水
 var weixinpay = function () {
     createTransaction("WeiXin", function (res) {
@@ -118,7 +117,6 @@ var queryTransaction = function () {
         });
     }
 };
-
 var queryOrderbyOrderId = function () {
     orderId = getURLQuery("orderId");
     getInvoke(constants.URLS.GETORDERBYORDERID.format(orderId), function (res) {

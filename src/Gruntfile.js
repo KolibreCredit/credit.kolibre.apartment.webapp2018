@@ -82,6 +82,7 @@ module.exports = function (grunt) {
                     'www/apply4.html',
                     'www/apply5.html',
                     'www/apply51.html',
+                    'www/appointment2.html',
                     'www/baoji.html',
                     'www/baoxiu.html',
                     'www/baoxiu2.html',
@@ -95,6 +96,8 @@ module.exports = function (grunt) {
                     'www/contractResults.html',
                     'www/credit.html',
                     'www/default.html',
+                    'www/detail2.html',
+                    'www/detail21.html',
                     'www/editorMobile.html',
                     'www/editorMobile2.html',
                     'www/ehomey.html',
@@ -123,6 +126,7 @@ module.exports = function (grunt) {
                     'www/qnh.html',
                     'www/recognitionface.html',
                     'www/register.html',
+                    'www/reserve.html',
                     'www/resetPassword.html',
                     'www/suonatel.html',
                     'www/tousu.html',
@@ -155,16 +159,12 @@ module.exports = function (grunt) {
                 overwrite: true,
                 replacements: [
                     {
-                        from: 'http://kc-fengniaowu-talos.kolibre.credit',
+                        from: 'https://kc-talos.fengniaowu.com:4431',
                         to: 'http://kc-fengniaowu-talos.dev.kolibre.credit'
                     },
                     {
                         from: 'wx4a172ee460dacedd',
                         to: 'wxa74d300625108685'
-                    },
-                    {
-                        from: 'http://m.fengniaowu.com/webpay.html',
-                        to: 'http://test.fengniaowu.com/webpay.html'
                     }
                 ]
             },
@@ -174,15 +174,11 @@ module.exports = function (grunt) {
                 replacements: [
                     {
                         from: 'http://kc-fengniaowu-talos.dev.kolibre.credit',
-                        to: 'http://kc-fengniaowu-talos.kolibre.credit'
+                        to: 'https://kc-talos.fengniaowu.com:4431'
                     },
                     {
                         from: 'wxa74d300625108685',
                         to: 'wx4a172ee460dacedd'
-                    },
-                    {
-                        from: 'http://test.fengniaowu.com/webpay.html',
-                        to: 'http://m.fengniaowu.com/webpay.html'
                     }
                 ]
             }
