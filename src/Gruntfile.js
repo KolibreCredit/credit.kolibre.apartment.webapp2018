@@ -116,6 +116,7 @@ module.exports = function (grunt) {
                     'www/login2.html',
                     'www/login3.html',
                     'www/luhui.html',
+                    'www/map.html',
                     'www/mikongjian.html',
                     'www/modou.html',
                     'www/mozu.html',

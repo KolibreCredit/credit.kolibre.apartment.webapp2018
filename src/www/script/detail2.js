@@ -150,6 +150,7 @@ var filterDecorationType = function (decorationType) {
 };
 
 var isAllConfig = true;
+
 function allConfig() {
     if (isAllConfig) {
         var html3 = "";
@@ -184,6 +185,10 @@ function appointment() {
 
 $(document).ready(function () {
     roomId = getURLQuery("roomId");
+    var reserve = getURLQuery("reserve") || "0"
+    if (reserve == "1") {
+        $(".reserve").hide();
+    }
     getInvoke(constants.URLS.GETROOMSOURCE.format(roomId), function (res) {
         if (res.succeeded) {
             item = res.data;

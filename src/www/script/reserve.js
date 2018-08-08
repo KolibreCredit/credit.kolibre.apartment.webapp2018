@@ -5,7 +5,7 @@ var dataHtmls = [];
 var item = null;
 
 function viewRoom(roomId) {
-    window.location.href = "detail2.html?roomId={0}".format(roomId);
+    window.location.href = "detail2.html?roomId={0}&reserve=1".format(roomId);
 }
 
 function showReservation(reservationId) {
