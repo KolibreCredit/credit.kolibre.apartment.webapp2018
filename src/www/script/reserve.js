@@ -71,7 +71,7 @@ function getRoomSourceReservations() {
                         , item.apartmentName
                         , (item.retailPrice == 0 ? "敬请期待..." : (item.retailPrice * 0.01).toFixed(2) + "元/月")
                         , item.tenantName
-                        , replaceStr(item.tenantCellphone, 4)
+                        , replaceStr(item.tenantCellphone, 3)
                         , item.reservationTime.substring(0, 16)
                         , item.roomId
                         , item.roomSourceReservationId));

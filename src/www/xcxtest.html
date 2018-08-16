@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小程序测试页</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.459" rel="stylesheet"/>
+    <style type="text/css">
+        .mui-content {
+            background: none;
+            text-align: center;
+        }
+
+        .mui-content div {
+            height: 50px;
+            line-height: 50px;
+            border-bottom: 1px solid #cccccc;
+        }
+    </style>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
+</head>
+<body>
+<div class="mui-content">
+    <div onclick="xcxIndex('2C29A4AFDE3C47648BF40535CA2B5290')">2C29A4AFDE3C47648BF40535CA2B5290</div>
+    <div onclick="xcxIndex('8E19F542EE184F02B825761FFA624E7B')">8E19F542EE184F02B825761FFA624E7B</div>
+    <div onclick="xcxIndex('3E0D49CE950A424FBF6D5F6A57231CF0')">3E0D49CE950A424FBF6D5F6A57231CF0</div>
+    <div onclick="xcxIndex('')">全部</div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    function xcxIndex(assetTenancyId) {
+        wx.miniProgram.navigateTo({url: '/pages/index/index?assetTenancyId=' + assetTenancyId});
+    }
+</script>

@@ -161,7 +161,7 @@ module.exports = function (grunt) {
                 replacements: [
                     {
                         from: 'https://kc-talos.fengniaowu.com:4431',
-                        to: 'http://kc-fengniaowu-talos.dev.kolibre.credit'
+                        to: 'https://kc-fengniaowu-talos.dev.kolibre.credit'
                     },
                     {
                         from: 'wx4a172ee460dacedd',
@@ -174,7 +174,7 @@ module.exports = function (grunt) {
                 overwrite: true,
                 replacements: [
                     {
-                        from: 'http://kc-fengniaowu-talos.dev.kolibre.credit',
+                        from: 'https://kc-fengniaowu-talos.dev.kolibre.credit',
                         to: 'https://kc-talos.fengniaowu.com:4431'
                     },
                     {

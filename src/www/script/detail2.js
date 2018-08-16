@@ -173,6 +173,17 @@ function hideAllConfig() {
 }
 
 function map(addr) {
+    /*var isWxMini = window.__wxjs_environment === 'miniprogram';
+    if (isWxMini) {
+        wx.miniProgram.navigateTo({
+            url: "/pages/index/map?cityName=" + item.cityName + "&addr=" + addr
+        });
+    } else {
+        if (addr.indexOf(item.cityName) == -1) {
+            addr = item.cityName + addr;
+        }
+        window.location.href = "map.html?addr=" + addr;
+    }*/
     if (addr.indexOf(item.cityName) == -1) {
         addr = item.cityName + addr;
     }
