@@ -7,7 +7,7 @@
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.460" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.463" rel="stylesheet"/>
     <style type="text/css">
         label {
             font-size: 16px;
@@ -46,10 +46,20 @@
             left: 0;
             right: 0;
         }
+
         .accessCardDepositAmount {
             display: none;
         }
+
         .customDeposits {
+            display: none;
+        }
+
+        .monthlyAmount {
+            display: none;
+        }
+
+        .stagesMonthRents {
             display: none;
         }
     </style>
@@ -107,8 +117,14 @@
             </div>
         </div>
     </div>
-    <div style="line-height:36px;margin-top:15px">
+    <div class="monthlyAmount" style="line-height:36px;margin-top:15px">
         <label>月租金</label><span>¥{2}/月</span>
+    </div>
+    <div class="stagesMonthRents" style="line-height:36px;margin-top:15px">
+        <label>月租金</label>
+    </div>
+    <div class="stagesMonthRents">
+        {2}
     </div>
     <div style="line-height:36px">
         <label>物业费</label><span>¥{3}/月</span>
@@ -117,7 +133,7 @@
         <label>房租押金</label><span>¥{4}</span>
     </div>
     <div style="line-height:36px" class="accessCardDepositAmount">
-       <label>门禁卡押金</label><span>¥{11}</span>
+        <label>门禁卡押金</label><span>¥{11}</span>
     </div>
     <div class="customDeposits">
     </div>
@@ -142,10 +158,17 @@
         <label>{0}</label><span>¥{1}</span>
     </div>
 </script>
+<script type="text/html" id="tplStagesMonthRents">
+    <div style="background:#fafafa;margin-bottom:5px;padding:15px">
+        <img src="images/stages.png" style="width:16px;height:16px"/>
+        <span style="float:none;display:inline">{0}</span>
+        <span style="font-size:14px">{1}</span>
+    </div>
+</script>
 </body>
 </html>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
-<script src="script/constants.js?ver=18.12.460"></script>
-<script src="script/service.js?ver=18.12.460"></script>
-<script src="script/view.js?ver=18.12.460"></script>
+<script src="script/constants.js?ver=18.12.463"></script>
+<script src="script/service.js?ver=18.12.463"></script>
+<script src="script/view.js?ver=18.12.463"></script>

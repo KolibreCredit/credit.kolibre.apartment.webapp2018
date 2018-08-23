@@ -54,7 +54,7 @@ function sendCaptcha() {
 function changePassword() {
     if (isResetPassword) {
         var cellphone = $("#txtPhone").val();
-        if (cellphone === '') {
+        if (cellphone == '') {
             mui.toast(constants.msgInfo.phone);
             return false;
         }
@@ -63,7 +63,7 @@ function changePassword() {
             return false;
         }
         var captcha = $("#txtCaptcha").val();
-        if (captcha === '') {
+        if (captcha == '') {
             mui.toast(constants.msgInfo.captcha);
             return false;
         }
@@ -72,7 +72,7 @@ function changePassword() {
             return false;
         }
         var password = $("#txtPassword").val();
-        if (password === '') {
+        if (password == '') {
             mui.toast(constants.msgInfo.password);
             return false;
         }

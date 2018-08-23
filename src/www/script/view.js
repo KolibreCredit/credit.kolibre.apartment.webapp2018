@@ -45,11 +45,22 @@ $(document).ready(function () {
                 templateName = item.digitalContractInfos[0].templateName;
                 imageStorageLocation = item.digitalContractInfos[0].imageStorageLocation;
             }
+            var isStagesMonthRents = false;
+            var arrStagesMonthRents = [];
+            if (item.stagesMonthRents != null && item.stagesMonthRents.length > 0) {
+                isStagesMonthRents = true;
+                var tplStagesMonthRents = $("#tplStagesMonthRents").html();
+                item.stagesMonthRents.forEach(function (model) {
+                    arrStagesMonthRents.push(tplStagesMonthRents.format((model.amount / 100).toFixed(2), model.stagesStartTime + "～" + model.stagesEndTime));
+                });
+            } else {
+                isStagesMonthRents = false;
+            }
             var tplLeaseInfo = $("#tplLeaseInfo").html();
             var htmlLeaseInfo = tplLeaseInfo.format(
                 item.roomDetails.apartmentName,
                 item.roomDetails.roomNumber,
-                (item.monthlyAmount / 100).toFixed(2),
+                (isStagesMonthRents ? arrStagesMonthRents.join("") : (item.monthlyAmount / 100).toFixed(2)),
                 (item.propertyManagementAmount / 100).toFixed(2),
                 (item.depositAmount / 100).toFixed(2),
                 item.term,
@@ -61,7 +72,7 @@ $(document).ready(function () {
                 (item.accessCardDepositAmount / 100).toFixed(2));
             $("#divLeaseInfo").html(htmlLeaseInfo);
             setTimeout(function () {
-                if (item.customDeposits.length > 0) {
+                if (item.customDeposits != null && item.customDeposits.length > 0) {
                     var customDeposit = null;
                     var htmlCustomDeposit = [];
                     var tplCustomDeposit = $("#tplCustomDeposit").html();
@@ -85,6 +96,11 @@ $(document).ready(function () {
                 }
                 if (item.accessCardDepositAmount > 0) {
                     $(".accessCardDepositAmount").show();
+                }
+                if (isStagesMonthRents) {
+                    $(".stagesMonthRents").show();
+                } else {
+                    $(".monthlyAmount").show();
                 }
             }, 0);
         }

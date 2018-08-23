@@ -4,7 +4,7 @@
 var constants = {
     URLS: {
         BILL: "bill.html",
-        WEBPAYURL: "https://m.fengniaowu.com/webpay.html?orderId={0}",
+        WEBPAYURL: "https://dev.fengniaowu.com/webpay.html?orderId={0}",
         //
         SEND: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/ValidateCode/Send",
         VERIFY: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/ValidateCode/Verify",

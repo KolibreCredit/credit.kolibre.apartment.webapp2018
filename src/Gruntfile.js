@@ -166,6 +166,10 @@ module.exports = function (grunt) {
                     {
                         from: 'wx4a172ee460dacedd',
                         to: 'wxa74d300625108685'
+                    },
+                    {
+                        from: 'https://m.fengniaowu.com/webpay.html?orderId={0}',
+                        to: 'https://dev.fengniaowu.com/webpay.html?orderId={0}'
                     }
                 ]
             },
@@ -180,6 +184,10 @@ module.exports = function (grunt) {
                     {
                         from: 'wxa74d300625108685',
                         to: 'wx4a172ee460dacedd'
+                    },
+                    {
+                        from: 'https://dev.fengniaowu.com/webpay.html?orderId={0}',
+                        to: 'https://m.fengniaowu.com/webpay.html?orderId={0}'
                     }
                 ]
             }
