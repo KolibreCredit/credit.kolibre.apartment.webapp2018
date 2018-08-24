@@ -2,20 +2,54 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>电子合同</title>
+    <title>合同照片</title>
     <meta name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.463" rel="stylesheet"/>
     <style type="text/css">
         img {
             width: 100%;
+            height: auto;
+            border: none;
+            vertical-align: bottom;
+            margin-bottom: 2px;
         }
     </style>
 </head>
 <body>
-<img id="imgSignUrl" style="display:none"/>
+<div class="mui-content" id="divImgUrls">
+</div>
 </body>
 </html>
 <script type="text/javascript">
+    String.prototype.format = function (args) {
+        if (arguments.length > 0) {
+            var result = this;
+            var reg = null;
+            if (arguments.length == 1 && typeof (args) == "object") {
+                for (var key in args) {
+                    reg = new RegExp("({" + key + "})", "g");
+                    result = result.replace(reg, args[key]);
+                }
+            }
+            else {
+                for (var i = 0; i < arguments.length; i++) {
+                    if (arguments[i] == undefined) {
+                        arguments[i] = "";
+                    }
+                    reg = new RegExp("({)" + i + "(})", "g");
+                    result = result.replace(reg, arguments[i]);
+                }
+            }
+            return result;
+        }
+        else {
+            return this;
+        }
+    };
+
     function getURLQuery(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);
@@ -25,10 +59,12 @@
             return "";
         }
     }
-
-    var imgUrl = getURLQuery("imgUrl");
-    document.getElementById("imgSignUrl").src = imgUrl;
-    document.getElementById("imgSignUrl").onload = function () {
-        this.style.display = "block";
-    };
+    var arrImgUrls = [];
+    var imgUrls = getURLQuery("imgUrl").split(",");
+    imgUrls.forEach(function (imgUrl) {
+        if (imgUrl != "") {
+            arrImgUrls.push('<img src = "{0}"/>'.format(imgUrl))
+        }
+    });
+    document.getElementById("divImgUrls").innerHTML = arrImgUrls.join("");
 </script>

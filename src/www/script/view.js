@@ -41,9 +41,16 @@ $(document).ready(function () {
             var item = res.data;
             var templateName = "";
             var imageStorageLocation = "";
-            if (item.contractMedium == "Digital" && item.digitalContractInfos.length > 0) {
-                templateName = item.digitalContractInfos[0].templateName;
-                imageStorageLocation = item.digitalContractInfos[0].imageStorageLocation;
+            if (item.contractMedium == "Digital") {
+                if (item.digitalContractInfos.length > 0) {
+                    templateName = item.digitalContractInfos[0].templateName;
+                    imageStorageLocation = item.digitalContractInfos[0].imageStorageLocation;
+                }
+            } else {
+                if (item.contractPictures != "") {
+                    templateName = "居住房屋租赁合同";
+                    imageStorageLocation = item.contractPictures;
+                }
             }
             var isStagesMonthRents = false;
             var arrStagesMonthRents = [];
@@ -63,13 +70,14 @@ $(document).ready(function () {
                 (isStagesMonthRents ? arrStagesMonthRents.join("") : (item.monthlyAmount / 100).toFixed(2)),
                 (item.propertyManagementAmount / 100).toFixed(2),
                 (item.depositAmount / 100).toFixed(2),
+                (item.accessCardDepositAmount / 100).toFixed(2),
                 item.term,
                 item.rentStartTime.substring(0, 10),
                 item.rentEndTime.substring(0, 10),
                 getPayPeriod(item.payPeriod),
+                (item.contractMedium == "Digital" ? "电子合同" : "纸质合同"),
                 imageStorageLocation,
-                templateName,
-                (item.accessCardDepositAmount / 100).toFixed(2));
+                templateName);
             $("#divLeaseInfo").html(htmlLeaseInfo);
             setTimeout(function () {
                 if (item.customDeposits != null && item.customDeposits.length > 0) {
@@ -91,8 +99,15 @@ $(document).ready(function () {
                 } else {
                     $(".btnNext").show();
                 }
-                if (item.contractMedium == "Digital" && item.digitalContractInfos.length > 0) {
-                    $(".digital").show();
+                if (item.contractMedium == "Digital") {
+                    if (item.digitalContractInfos.length > 0) {
+                        $(".digital").show();
+                    }
+                }
+                else {
+                    if (item.contractPictures) {
+                        $(".digital").show();
+                    }
                 }
                 if (item.accessCardDepositAmount > 0) {
                     $(".accessCardDepositAmount").show();
