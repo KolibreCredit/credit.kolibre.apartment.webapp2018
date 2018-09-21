@@ -129,6 +129,7 @@ module.exports = function (grunt) {
                     'www/register.html',
                     'www/reserve.html',
                     'www/resetPassword.html',
+                    'www/settlement.html',
                     'www/suonatel.html',
                     'www/tousu.html',
                     'www/user.html',

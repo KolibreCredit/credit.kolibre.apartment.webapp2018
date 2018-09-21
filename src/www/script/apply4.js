@@ -8,7 +8,7 @@ var accountName = "";
 var ispostData = true;
 var needRender = false;
 var contractMedium = "";
-
+//
 function confirmInfoContent() {
     needRender = false;
     if (contractMedium == 'Paper') {
@@ -89,24 +89,43 @@ function apply() {
     });
 }
 
+function showConfirmInfoContent() {
+    if (needRender) {
+        $(".msg_htmltemplate").show();
+    } else {
+        setTimeout(function () {
+            if (contractMedium == 'Paper') {
+                window.location.href = "apply5.html";
+            } else {
+                window.location.href = "apply51.html";
+            }
+        }, 2000);
+    }
+}
 //
 $(document).ready(function () {
+    $(".msg-post").show();
     contractConfirmInfoId = getCookie(constants.COOKIES.CONTRACTCONFIRMINFOID);
     var data = {contractConfirmInfoId: contractConfirmInfoId};
     postInvoke(constants.URLS.RENDERPRECONFIGUREHTMLTEMPLATE, data, function (res) {
+        $(".msg-post").hide();
         if (res.succeeded) {
+            contractMedium = res.data.contractMedium;
             if (res.data.needRender) {
                 needRender = true;
                 $("#divContentHtmltemplate").html(res.data.content);
             }
         }
+        showConfirmInfoContent();
     }, function (err) {
+        $(".msg-post").hide();
         console.log(err.message);
+        showConfirmInfoContent();
     });
-    getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
-        if (res.succeeded) {
-            accountCellphone = res.data.cellphone;
-            accountName = res.data.realName;
-        }
-    });
+    /*  getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
+          if (res.succeeded) {
+              accountCellphone = res.data.cellphone;
+              accountName = res.data.realName;
+          }
+      });*/
 });

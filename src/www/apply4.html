@@ -8,7 +8,7 @@
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <link href="packages/mui@3.4.0/examples/hello-mui/css/mui.picker.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.465" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.470" rel="stylesheet"/>
     <style type="text/css">
         input[type=text] {
             padding: 5px;
@@ -50,7 +50,7 @@
 </head>
 <body style="background-color:#f7f7f7">
 <div class="mui-content" style="background-color:#f7f7f7">
-    <div style="margin:0;padding:0">
+    <div style="margin:0;padding:0;display:none">
         <div style="margin-top:20px">
             <img src="images/apply4.png" style="width:100%">
         </div>
@@ -60,7 +60,7 @@
         <div style="height:20px">
         </div>
     </div>
-    <div style="background-color:#ffffff">
+    <div style="background-color:#ffffff;display:none">
         <ul class="mui-table-view mui-table-view-chevron">
             <li class="mui-table-view-cell mui-media">
                 <div class="mui-media-body">
@@ -84,7 +84,7 @@
             </li>
         </ul>
     </div>
-    <div style="padding-left:20px;padding-right:20px;margin-top:30px">
+    <div style="padding-left:20px;padding-right:20px;margin-top:30px;display:none">
         <button class="btnActive"
                 style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:100%;border:none"
                 onclick="apply()">提交
@@ -159,9 +159,9 @@
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/mui@3.4.0/examples/hello-mui/js/mui.picker.min.js"></script>
-<script src="script/constants.js?ver=18.12.465"></script>
-<script src="script/service.js?ver=18.12.465"></script>
-<script src="script/apply4.js?ver=18.12.465"></script>
+<script src="script/constants.js?ver=18.12.470"></script>
+<script src="script/service.js?ver=18.12.470"></script>
+<script src="script/apply4.js?ver=18.12.470"></script>
 <script type="text/javascript">
     mui('#divRelation').scroll({scrollX: false, scrollY: true});
     mui('body').on('tap', '.mui-popover-action li>a', function () {

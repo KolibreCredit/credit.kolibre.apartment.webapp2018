@@ -71,7 +71,8 @@ var constants = {
         CREATERESERVATION: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/CreateReservation",
         GETROOMSOURCERESERVATIONS:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/GetRoomSourceReservations",
         GETROOMSOURCE: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/GetRoomSource?roomId={0}",
-        CANCELROOMSOURCERESERVATION:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/CancelRoomSourceReservation"
+        CANCELROOMSOURCERESERVATION:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/CancelRoomSourceReservation",
+        GETSETTLEMENTORDERS:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/Order/GetSettlementOrders?settlement={0}"
     },
     COOKIES: {
         XKCSID: 'X-KC-SID',
