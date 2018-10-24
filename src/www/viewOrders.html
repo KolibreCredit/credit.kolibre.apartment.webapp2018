@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>租约详情</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.471" rel="stylesheet"/>
+    <style type="text/css">
+        label {
+            font-size: 16px;
+            color: #999999;
+        }
+
+        span {
+            display: block;
+            float: right;
+            font-size: 16px;
+            color: #333333;
+        }
+
+        .month {
+            width: 28px;
+            height: 28px;
+        }
+
+        .digital {
+            display: none;
+        }
+
+        .btnNext {
+            height: 50px;
+            line-height: 50px;
+            background: #fb9329;
+            text-align: center;
+            font-size: 18px;
+            color: #FFFFFF;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: none;
+        }
+
+        .accessCardDepositAmount {
+            display: none;
+        }
+
+        .customDeposits {
+            display: none;
+        }
+
+        .monthlyAmount {
+            display: none;
+        }
+
+        .stagesMonthRents {
+            display: none;
+        }
+
+        .created {
+            color: #ffbe00;
+        }
+
+        .approachingoverdue {
+            color: #ff8c14;
+        }
+
+        .paid {
+            color: #999999;
+        }
+
+        .overdue {
+            color: #f55452;
+        }
+
+        .canceled {
+            color: #999999;
+        }
+    </style>
+</head>
+<body>
+<div class="mui-content">
+    <div style="height:20px"></div>
+    <div style="padding-left:20px;padding-right:20px">
+        <div id="divOrderInfo">
+        </div>
+    </div>
+</div>
+<div>
+</div>
+<script type="text/html" id="tplOrderInfo">
+    <div style="background:#fafafa;height:80px;padding:10px">
+        <div style="font-size:16px;position:relative">
+            <img src="{0}" class="month"/>
+            <div style="position:absolute;left:40px;right:0;top:4px">
+                <label style="color:#646464">{1}</label><img src="images/line2.png"
+                                                             style="width:1px;height:14px;display:inline;margin:0 5px;vertical-align:middle"/><label
+                    style="color:#646464">¥{2}</label>
+                <span class="{3}" style="font-size:14px">{4}</span>
+            </div>
+        </div>
+        <div style="border:1px dotted #e9e9e9;height:1px"></div>
+        <div style="font-size:12px;position:relative">
+            <img src="images/zhouqi.png" style="width: 12px;height: 12px;position:absolute;top:10px"/>
+            <div style="left:20px;position:absolute;right:0;line-height:30px">
+                {5}～{6}<span style="color:#646464;font-size:12px">{7}到期</span>
+            </div>
+        </div>
+    </div>
+    <div style="height:10px"></div>
+</script>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="packages/moment@2.17.1/min/moment.min.js"></script>
+<script src="script/constants.js?ver=18.12.471"></script>
+<script src="script/service.js?ver=18.12.471"></script>
+<script src="script/viewOrders.js?ver=18.12.471"></script>

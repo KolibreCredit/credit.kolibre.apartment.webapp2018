@@ -45,6 +45,7 @@ function sendCaptcha() {
         });
     }
 }
+
 //
 var waitTimer2 = null;
 var waitCount2 = 60;
@@ -117,7 +118,11 @@ function loginByCaptcha() {
                             window.location.href = "verify.html?url={0}".format(url);
                         }
                         else if (!res1.data.tenantResponse.confirmed) {
-                            window.location.href = "confirmTenant.html?url={0}".format(url);
+                            if (res.data.tenantResponse.canUpdate) {
+                                window.location.href = "confirmTenant.html?url={0}".format(url);
+                            } else {
+                               window.location.href = "confirmTenant1.html?url={0}".format(url);
+                            }
                         } else {
                             retlogin();
                         }

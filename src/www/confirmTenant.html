@@ -8,7 +8,7 @@
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <link href="packages/mui@3.4.0/examples/hello-mui/css/mui.picker.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.470" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.471" rel="stylesheet"/>
     <style type="text/css">
         input[type=text] {
             padding: 5px;
@@ -60,15 +60,14 @@
             width: 50px;
             height: 50px;
         }
-
         .choose {
             position: absolute;
             right: 10px;
             bottom: 10px;
             width: 40px;
             height: 40px;
+            display: none;
         }
-
         .mui-table-view:before {
             height: 0;
         }
@@ -83,20 +82,18 @@
         }
 
         .divFooter {
-            height: 66px;
+            height: 50px;
             background: #FFFFFF;
             text-align: center;
             position: fixed;
             bottom: 0;
             right: 0;
             left: 0;
-            padding: 10px 40px;
         }
 
         .btnActive {
             background: #ff8c14;
-            border-radius: 44px;
-            height: 44px;
+            height: 50px;
             color: #ffffff;
             font-size: 18px;
             width: 100%;
@@ -178,18 +175,26 @@
         <a style="color:#ff9e00;text-decoration:underline" href="#divAgreement">《用户注册协议》</a>
     </div>
     <div style="height:80px"></div>
-    <div class="divFooter">
+    <div id="divFooter0" class="divFooter">
         <button class="btnActive" onclick="confirmTenantInfo()">确认并提交</button>
     </div>
-    <div id="divCredentialType" class="mui-popover mui-popover-action mui-popover-bottom mui-scroll-wrapper"
-         style="height:102px;bottom:0;top:auto">
+    <div id="divCredentialType" class="mui-popover mui-popover-action mui-popover-bottom mui-scroll-wrapper"  style="height:225px;bottom:0;top:auto">
         <div class="mui-scroll">
             <ul class="mui-table-view">
                 <li class="mui-table-view-cell">
-                    <a>身份证</a>
+                    <a data-key="0">身份证</a>
                 </li>
                 <li class="mui-table-view-cell">
-                    <a>护照</a>
+                    <a data-key="1">护照</a>
+                </li>
+                <li class="mui-table-view-cell">
+                    <a data-key="2">台胞证</a>
+                </li>
+                <li class="mui-table-view-cell">
+                    <a data-key="3">港澳台通行证</a>
+                </li>
+                <li class="mui-table-view-cell">
+                    <a data-key="4">其他证件</a>
                 </li>
             </ul>
         </div>
@@ -351,21 +356,26 @@
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/mui@3.4.0/examples/hello-mui/js/mui.picker.min.js"></script>
-<script src="script/constants.js?ver=18.12.470"></script>
-<script src="script/service.js?ver=18.12.470"></script>
-<script src="script/confirmTenant.js?ver=18.12.470"></script>
+<script src="script/constants.js?ver=18.12.471"></script>
+<script src="script/service.js?ver=18.12.471"></script>
+<script src="script/confirmTenant.js?ver=18.12.471"></script>
 <script type="text/javascript">
     mui('#divDecoration').scroll({scrollX: false, scrollY: true});
     mui('body').on('tap', '#divCredentialType a', function () {
         var a = this;
         $("#txtCredentialType").val(a.innerHTML);
         if (a.innerHTML == "身份证") {
-            $("#lbTitle1").html("身份证正面");
-            $("#lbTitle2").html("身份证背面");
-        } else {
-            $("#lbTitle1").html("护照个人信息页");
-            $("#lbTitle2").html("护照签证信息页");
+            $("#lbTitle1").html(a.innerHTML + "头像信息页");
+            $("#lbTitle2").html(a.innerHTML + "国徽面");
+        } else if (a.innerHTML == "护照") {
+            $("#lbTitle1").html(a.innerHTML + "头像信息页");
+            $("#lbTitle2").html(a.innerHTML + "居留许可页");
         }
+        else {
+            $("#lbTitle1").html(a.innerHTML + "正面");
+            $("#lbTitle2").html(a.innerHTML + "反面");
+        }
+        credentialTabIndex = parseInt(a.getAttribute("data-key"));
         mui('#divCredentialType').popover('toggle');
     });
     mui('body').on('tap', '#divAgreement', function () {

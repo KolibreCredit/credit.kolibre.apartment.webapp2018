@@ -7,7 +7,7 @@
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.470" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.471" rel="stylesheet"/>
     <style type="text/css">
         label {
             font-size: 14px;
@@ -82,6 +82,16 @@
             float: right;
             width: 100%;
         }
+        .msg-body {
+            background-color: white;
+            box-shadow: 0 15px 25px 0 rgba(0, 0, 0, 0.20);
+            border-radius: 6px;
+            color: white;
+            width: 100%;
+            height: auto;
+            text-align: center;
+            display: inline-block;
+        }
     </style>
     <script src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
 </head>
@@ -106,6 +116,35 @@
     <div class="divPay">
         <div onclick="createStage()" class="btnStage">申请分期</div>
         <div onclick="createTransaction()" class="btnPay">立即支付</div>
+    </div>
+    <div class="msg-alert" style="z-index:2">
+        <table style='width:100%;height:100%'>
+            <tr>
+                <td style='vertical-align:middle;text-align:center'>
+                    <div class="msg-body">
+                        <div style="margin-top:30px;text-align:center">
+                            <img src="images/tip5.png" style="height:40px;width:40px"/>
+                        </div>
+                        <div style="margin-top:20px;font-size:18px;color:#646464;line-height:25px;font-weight:bold">
+                            请先确认租约
+                        </div>
+                        <div style="margin-top:20px;font-size:14px;color:#646464;line-height:28px;padding-left:20px;padding-right:20px;text-align:center">
+                            该账单对应的租约处于待确认状态，不能进行账单支付操作，请先确认租约。
+                        </div>
+                        <div style="margin-top:40px">
+                            <button class="btnActive"
+                                    style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:90%;border:none"
+                                    onclick="confirmList()">去确认
+                            </button>
+                        </div>
+                        <div style="margin-top:20px;text-align:center">
+                            <span style="font-size:14px;color:#ff8c14;float:none" onclick="closeApply()">暂不确认</span>
+                        </div>
+                        <div style="height:20px"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
 <div>
@@ -168,6 +207,6 @@
 </html>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
-<script src="script/constants.js?ver=18.12.470"></script>
-<script src="script/service.js?ver=18.12.470"></script>
-<script src="script/billView.js?ver=18.12.470"></script>
+<script src="script/constants.js?ver=18.12.471"></script>
+<script src="script/service.js?ver=18.12.471"></script>
+<script src="script/billView.js?ver=18.12.471"></script>

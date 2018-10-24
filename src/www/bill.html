@@ -7,7 +7,7 @@
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.470" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.471" rel="stylesheet"/>
     <style type="text/css">
         input[type=text], input[type=password] {
             padding: 5px;
@@ -402,34 +402,30 @@
             </div>
         </div>
     </script>
-    <div class="msg-alert">
+    <div class="msg-alert" style="z-index:2">
         <table style='width:100%;height:100%'>
             <tr>
                 <td style='vertical-align:middle;text-align:center'>
                     <div class="msg-body">
-                        <div style="margin-top:36px;text-align:center">
-                            <img src="images/apply5.png" style="height:100px;width:150px">
-                            <img src="images/close.png" style="height:24px;width:24px;position:absolute;right:40px"
-                                 onclick="closeApply()">
+                        <div style="margin-top:30px;text-align:center">
+                            <img src="images/tip5.png" style="height:40px;width:40px"/>
                         </div>
-                        <div style="margin-top:10px;font-size:20px;color:#646464;line-height:30px;font-weight:bold">
-                            租客申请
+                        <div style="margin-top:20px;font-size:18px;color:#646464;line-height:25px;font-weight:bold">
+                            请先确认租约
                         </div>
-                        <div style="font-size:20px;color:#646464;line-height:30px;font-weight:bold">
-                            月付房租，免手续费
+                        <div style="margin-top:20px;font-size:14px;color:#646464;line-height:28px;padding-left:20px;padding-right:20px;text-align:center">
+                            该账单对应的租约处于待确认状态，不能进行账单支付操作，请先确认租约。
                         </div>
-                        <div style="margin-top:10px;font-size:16px;color:#646464;line-height:20px;padding-left:20px;padding-right:20px;text-align:center">
-                            另有精美礼品赠送哦~
-                        </div>
-                        <div style="margin-top:30px">
+                        <div style="margin-top:40px">
                             <button class="btnActive"
                                     style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:90%;border:none"
-                                    onclick="apply()">立即申请
+                                    onclick="confirmList()">去确认
                             </button>
                         </div>
-                        <div style="height:30px">
-                            <span id="lbleaseId" style="display:none"></span>
+                        <div style="margin-top:20px;text-align:center">
+                            <span style="font-size:14px;color:#ff8c14" onclick="closeApply()">暂不确认</span>
                         </div>
+                        <div style="height:20px"></div>
                     </div>
                 </td>
             </tr>
@@ -443,6 +439,6 @@
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/moment@2.17.1/min/moment.min.js"></script>
-<script src="script/constants.js?ver=18.12.470"></script>
-<script src="script/service.js?ver=18.12.470"></script>
-<script src="script/bill.js?ver=18.12.470"></script>
+<script src="script/constants.js?ver=18.12.471"></script>
+<script src="script/service.js?ver=18.12.471"></script>
+<script src="script/bill.js?ver=18.12.471"></script>

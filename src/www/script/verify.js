@@ -7,11 +7,13 @@ var credentialTabIndex = -1;
 var realName = "";
 var credentialNo = "";
 //
+var credentialTypes = ["IDCard", "Passport", "TaiwanPermit", "HongKongMacao", "Other"];
 var kinds = ["IDCardFace", "IDCardBack", "Selfie"];
 var credentialFacePhotoUrl = "";
 var credentialBackPhotoUrl = "";
 var selfiePhotoUrl = "";
 var imgIndex = -1;
+var authCode = "";
 
 //
 function chooseType(tabIndex) {
@@ -53,8 +55,8 @@ function twoFactorVerify() {
             if (res.succeeded) {
                 if (res.data.succeeded) {
                     $(".chooseTip").html("有效二代身份证");
-                    $("#lbTitle1").html("身份证<span style=\"color:#f58a00\">正面</span>");
-                    $("#lbTitle2").html("身份证<span style=\"color:#f58a00\">背面</span>");
+                    $("#lbTitle1").html("身份证<span style=\"color:#f58a00\">头像面</span>");
+                    $("#lbTitle2").html("身份证<span style=\"color:#f58a00\">国徽面</span>");
                     $("#imgCredientalFacePhotoUrl").attr("src", "images/photo/sfz1.png");
                     $("#imgCredientalBackPhotoUrl").attr("src", "images/photo/sfz2.png");
                     $("#imgSelfiePhotoUrl").attr("src", "images/photo/sfz3.png");
@@ -70,13 +72,34 @@ function twoFactorVerify() {
             $(".msg-post").hide();
             mui.toast(err.message);
         });
-    } else {
+    } else if (credentialTabIndex == 1) {
         $(".chooseTip").html("有效护照");
-        $("#lbTitle1").html("护照<span style=\"color:#f58a00\">个人信息页</span>");
-        $("#lbTitle2").html("护照<span style=\"color:#f58a00\">签证信息页</span>");
+        $("#lbTitle1").html("护照<span style=\"color:#f58a00\">头像信息页</span>");
+        $("#lbTitle2").html("护照<span style=\"color:#f58a00\">居留许可页</span>");
         $("#imgCredientalFacePhotoUrl").attr("src", "images/photo/hz1.png");
         $("#imgCredientalBackPhotoUrl").attr("src", "images/photo/hz2.png");
         $("#imgSelfiePhotoUrl").attr("src", "images/photo/hz3.png");
+        $(".step0").hide();
+        $(".step1").show();
+    } else {
+        if (credentialTabIndex == 2) {
+            $(".chooseTip").html("有效台胞证");
+            $("#lbTitle1").html("台胞证<span style=\"color:#f58a00\">正面</span>");
+            $("#lbTitle2").html("台胞证<span style=\"color:#f58a00\">反面</span>");
+        }
+        else if (credentialTabIndex == 3) {
+            $(".chooseTip").html("有效港澳台通行证");
+            $("#lbTitle1").html("澳台通行证<span style=\"color:#f58a00\">正面</span>");
+            $("#lbTitle2").html("澳台通行证<span style=\"color:#f58a00\">反面</span>");
+        }
+        else {
+            $(".chooseTip").html("有效其他证件");
+            $("#lbTitle1").html("其他证件<span style=\"color:#f58a00\">正面</span>");
+            $("#lbTitle2").html("其他证件<span style=\"color:#f58a00\">反面</span>");
+        }
+        $("#imgCredientalFacePhotoUrl").attr("src", "images/photo/other1.png");
+        $("#imgCredientalBackPhotoUrl").attr("src", "images/photo/other2.png");
+        $("#imgSelfiePhotoUrl").attr("src", "images/photo/other3.png");
         $(".step0").hide();
         $(".step1").show();
     }
@@ -96,36 +119,56 @@ function confirmTenantInfo() {
          return false;
      }*/
     var data = {
+        authCode: authCode,
         realName: realName,
-        credentialType: (credentialTabIndex == 0 ? "IDCard" : "Passport"),
+        credentialType: credentialTypes[credentialTabIndex],
         credentialNo: credentialNo,
         credentialFacePhotoUrl: credentialFacePhotoUrl,
         credentialBackPhotoUrl: credentialBackPhotoUrl,
         selfiePhotoUrl: selfiePhotoUrl
     };
     $(".msg-post").show();
-    postInvoke(constants.URLS.UPLOADTENANTINFO, data, function (res) {
-        if (res.succeeded) {
+    if (authCode != "") {
+        postInvoke(constants.URLS.MOBILEUPDATETENANTINFO, data, function (res) {
+            if (res.succeeded) {
+                clearToken();
+                $(".msg-post").hide();
+                mui.toast(constants.msgInfo.verify.format("证件"));
+                setTimeout(function () {
+                    window.location.href = "login.html";
+                }, 1000);
+            } else {
+                $(".msg-post").hide();
+                mui.toast(res.message);
+            }
+        }, function (err) {
             $(".msg-post").hide();
-            mui.toast(constants.msgInfo.verify.format(credentialTabIndex == 0 ? "身份证" : "护照"));
-            setTimeout(function () {
-                if (!res.data.confirmed) {
-                    window.location.href = "confirmTenant.html?url=list.html";
-                }
-                else if (url != "") {
-                    window.location.href = decodeURIComponent(url);
-                } else {
-                    window.location.href = "user.html";
-                }
-            }, 1000);
-        } else {
+            mui.toast(err.message);
+        });
+    } else {
+        postInvoke(constants.URLS.UPLOADTENANTINFO, data, function (res) {
+            if (res.succeeded) {
+                $(".msg-post").hide();
+                mui.toast(constants.msgInfo.verify.format("证件"));
+                setTimeout(function () {
+                    if (!res.data.confirmed) {
+                        window.location.href = "confirmTenant.html?url=list.html";
+                    }
+                    else if (url != "") {
+                        window.location.href = decodeURIComponent(url);
+                    } else {
+                        window.location.href = "user.html";
+                    }
+                }, 1000);
+            } else {
+                $(".msg-post").hide();
+                mui.toast(res.message);
+            }
+        }, function (err) {
             $(".msg-post").hide();
-            mui.toast(res.message);
-        }
-    }, function (err) {
-        $(".msg-post").hide();
-        mui.toast(err.message);
-    });
+            mui.toast(err.message);
+        });
+    }
 }
 
 function V2UploadImages(serverId) {
@@ -161,6 +204,7 @@ function chooseImage(index) {
 
 $(document).ready(function () {
     url = decodeURIComponent(getURLQuery("url"));
+    authCode = getURLQuery("authCode");
     var signUrl = constants.URLS.SIGNATURE.format(encodeURIComponent(window.location.href.split("#")[0]));
     signInvoke(signUrl, function (res) {
         wx.config({
@@ -189,7 +233,13 @@ $(document).ready(function () {
         };
     });
     //demo
-   /*  $(".item").eq(0).css({"border": "2px solid #fcfcfc"});
-    $(".item").eq(0).find(".camera").hide();
-    $(".item").eq(0).find(".choose").show();*/
+    /*  $(".item").eq(0).css({"border": "2px solid #fcfcfc"});
+     $(".item").eq(0).find(".camera").hide();
+     $(".item").eq(0).find(".choose").show();*/
+    var myScroll = new IScroll('#wrapper', {
+        preventDefault: false,
+        scrollX: true,
+        scrollY: false,
+        mouseWheel: false
+    });
 });

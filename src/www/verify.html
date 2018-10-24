@@ -10,8 +10,9 @@
     <meta name="format-detection" content="telephone=no">
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <link href="packages/mui@3.4.0/examples/hello-mui/css/mui.picker.min.css" rel="stylesheet"/>
+    <link href="packages/swiper@4.0.5/dist/css/swiper.min.css" rel="stylesheet">
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.470" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.471" rel="stylesheet"/>
     <style type="text/css">
         input[type=text] {
             padding: 5px;
@@ -22,15 +23,13 @@
         .selecttype {
             background-color: #ffffff;
             border-radius: 6px;
-            padding: 10px 20px;
             border: 2px dotted #cccccc;
-            position: relative
+            position: relative;
         }
 
-        .selecttype.active {
+        .selecttype .active {
             border: 1px solid #fd8b14;
         }
-
         .selecttype img {
             opacity: 0.4;
         }
@@ -38,17 +37,72 @@
         .active img {
             opacity: 1;
         }
-
         .selectv {
             width: 30px;
             height: 30px;
             position: absolute;
-            top: -8px;
-            right: -8px;
+            top: -5px;
+            right: -5px;
         }
+
+        #wrapper {
+            z-index: 1;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            height: 140px;
+        }
+
+        #scroller {
+            position: absolute;
+            z-index: 1;
+            width: 800px;
+            height: 100%;
+            -webkit-transform: translateZ(0);
+            -moz-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            -o-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-text-size-adjust: none;
+            -moz-text-size-adjust: none;
+            -ms-text-size-adjust: none;
+            -o-text-size-adjust: none;
+            text-size-adjust: none;
+        }
+
+        #scroller ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+
+        #scroller li {
+            display: block;
+            float: left;
+            width: 150px;
+            height: 100%;
+            background-color: #f0f0f0;
+            font-size: 14px;
+            padding-right: 10px;
+        }
+
+        #scroller li div {
+            background-color: #fafafa;
+            height: 100%;
+        }
+
         .step1 {
             display: none;
         }
+
         .btnActive {
             background: #ff8c14;
             border-radius: 44px;
@@ -57,27 +111,32 @@
             font-size: 18px;
             width: 100%;
         }
+
         .item {
             position: relative;
             border: 2px dotted #fd8b14;
             height: auto;
             border-radius: 6px;
         }
+
         .photo {
             height: 180px;
             width: 100%;
             vertical-align: bottom;
         }
+
         .camera {
             width: 100%;
             position: absolute;
             text-align: center;
             top: 65px;
         }
+
         .camera img {
             width: 50px;
             height: 50px;
         }
+
         .choose {
             position: absolute;
             width: 40px;
@@ -86,6 +145,7 @@
             bottom: 10px;
             display: none;
         }
+
         .title {
             height: 50px;
             line-height: 50px;
@@ -100,21 +160,41 @@
         <div style="height:60px;line-height:60px;text-align: center;font-size: 16px;color: #646464">
             请选择证件类型
         </div>
-        <div style="background-color:#f0f0f0">
-            <div style="width:49%;float:left;padding-left:15px">
-                <div class="selecttype" onclick="chooseType(0)">
-                    <img src="images/sfzv.png" style="width:100%">
-                    <div style="text-align:center;font-size: 14px;color:#646464">身份证</div>
-                    <div style="text-align:center;font-size:10px;color:#999999">&nbsp;</div>
-                    <img src="images/selectv.png" class="selectv" style="display:none">
-                </div>
-            </div>
-            <div style="width:49%;float:right; padding-right:15px">
-                <div class="selecttype" onclick="chooseType(1)">
-                    <img src="images/hzv.png" style="width:100%">
-                    <div style="text-align:center;font-size:14px;color:#646464">护照</div>
-                    <div style="text-align:center;font-size:10px;color:#999999">仅支持国外用户</div>
-                    <img src="images/selectv.png" class="selectv" style="display:none">
+        <div style="margin-left:20px;margin-right:20px">
+            <div id="wrapper">
+                <div id="scroller">
+                    <ul>
+                        <li>
+                            <div class="selecttype" onclick="chooseType(0)">
+                                <img src="images/sfzv.png" style="width:100%;height:100%">
+                                <img src="images/selectv.png" class="selectv" style="display:none">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="selecttype" onclick="chooseType(1)">
+                                <img src="images/hzv.png" style="width:100%;height:100%">
+                                <img src="images/selectv.png" class="selectv" style="display:none">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="selecttype" onclick="chooseType(2)">
+                                <img src="images/tbzv.png" style="width:100%;height:100%">
+                                <img src="images/selectv.png" class="selectv" style="display:none">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="selecttype" onclick="chooseType(3)">
+                                <img src="images/gotv.png" style="width:100%;height:100%">
+                                <img src="images/selectv.png" class="selectv" style="display:none">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="selecttype" onclick="chooseType(4)">
+                                <img src="images/otherv.png" style="width:100%;height:100%">
+                                <img src="images/selectv.png" class="selectv" style="display:none">
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -163,7 +243,7 @@
             <div class="item">
                 <img id="imgSelfiePhotoUrl" class="photo" src="images/photo/sfz3.png"/>
                 <div class="camera">
-                    <img  src="images/photo/camera.png" onclick="chooseImage(2)"/>
+                    <img src="images/photo/camera.png" onclick="chooseImage(2)"/>
                 </div>
                 <img class="choose" src="images/20180103/choose.png" onclick="chooseImage(2)"/>
             </div>
@@ -196,6 +276,8 @@
 </html>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
-<script src="script/constants.js?ver=18.12.470"></script>
-<script src="script/service.js?ver=18.12.470"></script>
-<script src="script/verify.js?ver=18.12.470"></script>
+<script src="packages/iscroll@5.2.0/build/iscroll.js"></script>
+<script src="packages/iscroll@5.2.0/demos/demoUtils.js"></script>
+<script src="script/constants.js?ver=18.12.471"></script>
+<script src="script/service.js?ver=18.12.471"></script>
+<script src="script/verify.js?ver=18.12.471"></script>

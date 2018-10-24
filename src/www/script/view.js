@@ -2,7 +2,6 @@
  * Created by long.jiang on 2016/12/14.
  */
 var contractId = "";
-var confirmed = "";
 
 //
 function apply() {
@@ -33,12 +32,74 @@ function signUrl(imgUrl) {
     window.location.href = "signImg.html?imgUrl=" + imgUrl;
 }
 
+function filterOrderState(orderState) {
+    var state = "";
+    if (orderState == "Created") {
+        state = "待支付";
+    }
+    else if (orderState == "ApproachingOverdue") {
+        state = "快到期";
+
+    }
+    else if (orderState == "Overdue") {
+        state = "已逾期";
+
+    }
+    else if (orderState == "Canceled") {
+        state = "已退租";
+    }
+    else {
+        state = "已完成";
+    }
+    return state;
+}
+
+function orders() {
+    window.location.href = "viewOrders.html?contractId={0}".format(contractId);
+}
+
+function showMsgAlert() {
+    $(".msg-alert").show();
+}
+function hideMsgAlert() {
+    $(".msg-alert").hide();
+}
+
 $(document).ready(function () {
     contractId = getURLQuery("contractId");
-    confirmed = getURLQuery("confirmed");
     getInvoke(constants.URLS.GETCONTRACTDETAILS.format(contractId), function (res) {
         if (res.succeeded && res.data != null) {
-            var item = res.data;
+            var item = res.data.contract;
+            var roomDetails = res.data.roomDetails;
+            var orders = res.data.orders;
+            //
+            $("#divApartmentName").html(roomDetails.apartmentName);
+            $("#divRoomNumber").html(roomDetails.roomNumber+"室");
+            //
+            if (orders.length > 3) {
+                $("#divAllOrderInfo").show();
+                $("#divOrderInfo").css({"padding-top": "10px"});
+            }
+            var htmlOrderInfos = [];
+            var tplOrderInfo = $("#tplOrderInfo").html();
+            var order = null;
+            var monthUrl = "";
+            for (var i = 0; i < orders.length; i++) {
+                if (i < 3) {
+                    order = orders[i];
+                    monthUrl = "images/months/{0}".format(moment(order.paymentTime).format('MM') + "s.png");
+                    htmlOrderInfos.push(tplOrderInfo.format(monthUrl, (order.orderType == "CustomDeposit" ? order.orderTypeName : getOrderType(order.orderType)),
+                        (order.amount / 100).toFixed(2),
+                        order.orderState.toLowerCase(),
+                        filterOrderState(order.orderState),
+                        order.orderStartTime.substring(0, 10),
+                        order.orderEndTime.substring(0, 10),
+                        order.paymentTime.substring(0, 10)
+                    ));
+                }
+            }
+            $("#divOrderInfo").html(htmlOrderInfos.join(""));
+            //
             var templateName = "";
             var imageStorageLocation = "";
             if (item.contractMedium == "Digital") {
@@ -65,9 +126,7 @@ $(document).ready(function () {
             }
             var tplLeaseInfo = $("#tplLeaseInfo").html();
             var htmlLeaseInfo = tplLeaseInfo.format(
-                item.roomDetails.apartmentName,
-                item.roomDetails.roomNumber,
-                (isStagesMonthRents ? arrStagesMonthRents.join("") : (item.monthlyAmount / 100).toFixed(2)),
+                "", "", (isStagesMonthRents ? arrStagesMonthRents.join("") : (item.monthlyAmount / 100).toFixed(2)),
                 (item.propertyManagementAmount / 100).toFixed(2),
                 (item.depositAmount / 100).toFixed(2),
                 (item.accessCardDepositAmount / 100).toFixed(2),
@@ -90,14 +149,10 @@ $(document).ready(function () {
                     }
                     $(".customDeposits").html(htmlCustomDeposit.join("")).show();
                 }
-                if (confirmed != "0") {
-                    if (item.confirmed) {
-                        $(".btnNext").hide();
-                    } else {
-                        $(".btnNext").html("确认租约").show()
-                    }
+                if (item.confirmed) {
+                    $(".btnNext").hide();
                 } else {
-                    $(".btnNext").show();
+                    $(".btnNext").show()
                 }
                 if (item.contractMedium == "Digital") {
                     if (item.digitalContractInfos.length > 0) {
@@ -117,7 +172,7 @@ $(document).ready(function () {
                 } else {
                     $(".monthlyAmount").show();
                 }
-            }, 0);
+            }, 10);
         }
     }, function (err) {
         mui.toast(err.message);

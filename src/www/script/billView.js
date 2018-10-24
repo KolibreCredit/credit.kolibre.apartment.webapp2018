@@ -2,11 +2,12 @@
  * Created by long.jiang on 2016/12/14.
  */
 var orderId = "";
+var item = null;
 $(document).ready(function () {
     orderId = getURLQuery("orderId");
     getInvoke(constants.URLS.GETORDERBYORDERID.format(orderId), function (res) {
         if (res.succeeded && res.data != null) {
-            var item = res.data;
+            item = res.data;
             var tplLeaseInfo = $("#tplLeaseInfo").html();
             var tipUrl = "";
             var tipTitle = "";
@@ -79,15 +80,27 @@ $(document).ready(function () {
 });
 
 function createTransaction() {
-    var isWxMini = window.__wxjs_environment === 'miniprogram';
-    if (isWxMini) {
-        wx.miniProgram.navigateTo({url: '/pages/bill/wxpay?orderId=' + orderId});
+    if (item.canPay) {
+        var isWxMini = window.__wxjs_environment === 'miniprogram';
+        if (isWxMini) {
+            wx.miniProgram.navigateTo({url: '/pages/bill/wxpay?orderId=' + orderId});
+        } else {
+            var redirect_uri = encodeURIComponent(constants.URLS.WEBPAYURL.format(orderId));
+            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + constants.CONFIGS.APPID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base#wechat_redirect";
+        }
     } else {
-        var redirect_uri = encodeURIComponent(constants.URLS.WEBPAYURL.format(orderId));
-        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + constants.CONFIGS.APPID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base#wechat_redirect";
+        $(".msg-alert").show();
     }
 }
 
 function createStage() {
     window.location.href = "recognitionface.html?orderId={0}".format(orderId);
+}
+
+function confirmList() {
+    window.location.href = "list.html";
+}
+
+function closeApply() {
+    $(".msg-alert").hide();
 }

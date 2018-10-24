@@ -1,4 +1,5 @@
 var currentTab = 0;
+var billLists = null;
 
 function selectTabToggle(index) {
     if (currentTab != index) {
@@ -31,7 +32,7 @@ function findAllLeaseOrder(index) {
             $('.nodataDiv').show();
         }
         else {
-            var billLists = res.data.orderResponse;
+            billLists = res.data.orderResponse;
             var tplBill = $('#tplBill').html();
             var billHtmls = "";
             //
@@ -156,12 +157,26 @@ function findAllLeaseOrder(index) {
     });
 }
 
+function filterCanPay(orderId) {
+    var canPay = false;
+    for (var i = 0; i < billLists.length; i++) {
+        if (billLists[i].orderId == orderId) {
+            canPay = billLists[i].canPay;
+            break;
+        }
+    }
+    return canPay;
+}
 function createTransaction(orderId) {
-    if (isWeixin()) {
-        var redirect_uri = encodeURIComponent(constants.URLS.WEBPAYURL.format(orderId));
-        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + constants.CONFIGS.APPID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base#wechat_redirect";
+    if (filterCanPay(orderId)) {
+        if (isWeixin()) {
+            var redirect_uri = encodeURIComponent(constants.URLS.WEBPAYURL.format(orderId));
+            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + constants.CONFIGS.APPID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base#wechat_redirect";
+        } else {
+            window.location.href = constants.URLS.WEBPAYURL.format(orderId);
+        }
     } else {
-        window.location.href = constants.URLS.WEBPAYURL.format(orderId);
+        $(".msg-alert").show();
     }
 }
 
@@ -171,6 +186,10 @@ function createStage(orderId) {
 
 function view(orderId) {
     window.location.href = "billView.html?orderId={0}".format(orderId);
+}
+
+function confirmList() {
+    window.location.href = "list.html";
 }
 
 function closeApply() {

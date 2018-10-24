@@ -2,6 +2,8 @@
  * Created by long.jiang on 2016/12/23.
  */
 var url = "";
+var credentialTabIndex = -1;
+var credentialTypes = ["IDCard", "Passport", "TaiwanPermit", "HongKongMacao", "Other"];
 var credentialFacePhotoUrl = "";
 var credentialBackPhotoUrl = "";
 var selfiePhotoUrl = "";
@@ -11,47 +13,85 @@ $(document).ready(function () {
     getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
         if (res.succeeded) {
             var tenantInfo = res.data;
-            if (tenantInfo.credentialType == "IDCard") {
-                $("#lbTitle1").html("身份证正面");
-                $("#lbTitle2").html("身份证背面");
-                $("#txtCredentialType").val("身份证");
-            } else {
-                $("#lbTitle1").html("护照个人信息页");
-                $("#lbTitle2").html("护照签证信息页");
-                $("#txtCredentialType").val("护照");
-            }
-            $("#txtRealName").val(tenantInfo.realName);
-            $("#txtCredentialNo").val(tenantInfo.credentialNo);
             //
             credentialFacePhotoUrl = tenantInfo.credentialFacePhotoUrl;
             if (credentialFacePhotoUrl != null && credentialFacePhotoUrl != "") {
                 $("#imgCredentialFacePhotoUrl").attr("src", credentialFacePhotoUrl);
+                $(".choose").eq(0).show();
             } else {
                 $(".original").eq(0).css({"border": "2px dotted #fd8b14"});
                 $(".camera").eq(0).show();
-                $(".choose").eq(0).hide();
-                $("#imgCredentialFacePhotoUrl").attr("src", (tenantInfo.credentialType == "IDCard" ? "images/photo/sfz1.png" : "images/photo/hz1.png"));
+                if (tenantInfo.credentialType == "IDCard") {
+                    $("#imgCredentialFacePhotoUrl").attr("src", "images/photo/sfz1.png");
+                } else if (tenantInfo.credentialType == "Passport") {
+                    $("#imgCredentialFacePhotoUrl").attr("src", "images/photo/hz1.png");
+                } else {
+                    $("#imgCredentialFacePhotoUrl").attr("src", "images/photo/other1.png");
+                }
             }
-            ///
+            //
             credentialBackPhotoUrl = tenantInfo.credentialBackPhotoUrl;
             if (credentialBackPhotoUrl != null && credentialBackPhotoUrl != "") {
                 $("#imgCredentialBackPhotoUrl").attr("src", credentialBackPhotoUrl);
+                $(".choose").eq(1).show();
             } else {
                 $(".original").eq(1).css({"border": "2px dotted #fd8b14"});
                 $(".camera").eq(1).show();
-                $(".choose").eq(1).hide();
-                $("#imgCredentialBackPhotoUrl").attr("src", (tenantInfo.credentialType == "IDCard" ? "images/photo/sfz2.png" : "images/photo/hz2.png"));
+                if (tenantInfo.credentialType == "IDCard") {
+                    $("#imgCredentialFacePhotoUrl").attr("src", "images/photo/sfz2.png");
+                } else if (tenantInfo.credentialType == "Passport") {
+                    $("#imgCredentialFacePhotoUrl").attr("src", "images/photo/hz2.png");
+                } else {
+                    $("#imgCredentialFacePhotoUrl").attr("src", "images/photo/other2.png");
+                }
             }
             //
             selfiePhotoUrl = tenantInfo.selfiePhotoUrl;
             if (selfiePhotoUrl != null && selfiePhotoUrl != "") {
                 $("#imgSelfiePhotoUrl").attr("src", selfiePhotoUrl);
+                $(".choose").eq(2).show();
             } else {
                 $(".original").eq(2).css({"border": "2px dotted #fd8b14"});
                 $(".camera").eq(2).show();
-                $(".choose").eq(2).hide();
-                $("#imgSelfiePhotoUrl").attr("src", (tenantInfo.credentialType == "IDCard" ? "images/photo/sfz3.png" : "images/photo/hz3.png"));
+                if (tenantInfo.credentialType == "IDCard") {
+                    $("#imgCredentialFacePhotoUrl").attr("src", "images/photo/sfz3.png");
+                } else if (tenantInfo.credentialType == "Passport") {
+                    $("#imgCredentialFacePhotoUrl").attr("src", "images/photo/hz3.png");
+                } else {
+                    $("#imgCredentialFacePhotoUrl").attr("src", "images/photo/other3.png");
+                }
             }
+            $("#txtRealName").val(tenantInfo.realName);
+            if (tenantInfo.credentialType == "IDCard") {
+                credentialTabIndex = 0;
+                $("#lbTitle1").html("身份证头像面");
+                $("#lbTitle2").html("身份证国徽面");
+                $("#txtCredentialType").val("身份证");
+            } else if (tenantInfo.credentialType == "Passport") {
+                credentialTabIndex = 1;
+                $("#lbTitle1").html("头像信息页");
+                $("#lbTitle2").html("居留许可页");
+                $("#txtCredentialType").val("护照");
+            }
+            else if (tenantInfo.credentialType == "TaiwanPermit") {
+                credentialTabIndex = 2;
+                $("#lbTitle1").html("台胞证正面");
+                $("#lbTitle2").html("台胞证反面");
+                $("#txtCredentialType").val("台胞证");
+            }
+            else if (tenantInfo.credentialType == "HongKongMacao") {
+                credentialTabIndex = 3;
+                $("#lbTitle1").html("澳台通行证正面");
+                $("#lbTitle2").html("澳台通行证反面");
+                $("#txtCredentialType").val("澳台通行证");
+            }
+            else {
+                credentialTabIndex = 4;
+                $("#lbTitle1").html("其他证件正面");
+                $("#lbTitle2").html("其他证件反面");
+                $("#txtCredentialType").val("其他证件");
+            }
+            $("#txtCredentialNo").val(tenantInfo.credentialNo);
         }
     });
     //
@@ -130,7 +170,6 @@ function confirmTenantInfo() {
         mui.toast(constants.msgInfo.credentialNo);
         return false;
     }
-    var credentialTabIndex = ($("#txtCredentialType").val() == "身份证" ? 0 : 1);
     if (credentialTabIndex == 0) {
         if (!constants.REGEX.CREDENTIALNO.test(credentialNo)) {
             mui.toast(constants.msgInfo.credentialNoerr);
@@ -151,7 +190,7 @@ function confirmTenantInfo() {
         }*/
     var data = {
         realName: realName,
-        credentialType: (credentialTabIndex == 0 ? "IDCard" : "Passport"),
+        credentialType: credentialTypes[credentialTabIndex],
         credentialNo: credentialNo,
         credientalFacePhotoUrl: credentialFacePhotoUrl,
         credientalBackPhotoUrl: credentialBackPhotoUrl,

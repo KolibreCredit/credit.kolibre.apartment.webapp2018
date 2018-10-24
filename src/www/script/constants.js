@@ -16,6 +16,7 @@ var constants = {
         GETCURRENTTENANT: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/GetCurrentTenant",
         TWOFACTORVERIFY: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/TwoFactorVerify",
         UPLOADTENANTINFO: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/UploadTenantInfo",
+        MOBILEUPDATETENANTINFO:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/mobile/UpdateTenantInfo",
         CONFIRMTENANTINFO: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/ConfirmTenantInfo",
         UPDATETENANTPHOTO: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Tenant/UpdateTenantPhoto",
         //

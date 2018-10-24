@@ -376,6 +376,9 @@ var getPayPeriod = function (payPeriod) {
     else if (payPeriod == 2) {
         rentalType = "两月一付";
     }
+    else if (payPeriod == 5) {
+        rentalType = "五月一付";
+    }
     return rentalType;
 };
 
