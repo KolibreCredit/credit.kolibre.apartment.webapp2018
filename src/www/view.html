@@ -7,7 +7,7 @@
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.471" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.474" rel="stylesheet"/>
     <style type="text/css">
         label {
             font-size: 16px;
@@ -154,27 +154,30 @@
         </table>
     </div>
     <div class="msg-alert" style="z-index:2;padding:0 50px">
-        <table style='width:100%;height:100%'>
-            <tr>
-                <td style='vertical-align:middle;text-align:center'>
-                    <div class="msg-body">
-                        <div style="margin-top:20px;text-align:center;font-size:18px;color:#000000">
-                            400-921-5508
-                        </div>
-                        <div style="margin-top:20px;border-top:1px solid #ced4dc">
-                            <div style="height:40px;line-height:40px;float:left;text-align:center;width:50%;border-right:1px solid #ced4dc">
-                                <a onclick="hideMsgAlert()">取消</a>
-                            </div>
-                            <div style="height:40px;line-height:40px;float:right;text-align:center;width:50%">
-                                <a href="tel:4009215508">呼叫</a>
-                            </div>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </table>
+
     </div>
 </div>
+<script type="text/html" id="tplMsgAlert">
+    <table style='width:100%;height:100%'>
+        <tr>
+            <td style='vertical-align:middle;text-align:center'>
+                <div class="msg-body">
+                    <div style="margin-top:20px;text-align:center;font-size:18px;color:#000000">
+                        {0}
+                    </div>
+                    <div style="margin-top:20px;border-top:1px solid #ced4dc">
+                        <div style="height:40px;line-height:40px;float:left;text-align:center;width:50%;border-right:1px solid #ced4dc">
+                            <a onclick="hideMsgAlert()">取消</a>
+                        </div>
+                        <div style="height:40px;line-height:40px;float:right;text-align:center;width:50%">
+                            <a href="tel:{0}">呼叫</a>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</script>
 <script type="text/html" id="tplOrderInfo">
     <div style="background:#fafafa;height:80px;padding:10px">
         <div style="font-size:16px;position:relative">
@@ -258,6 +261,6 @@
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/moment@2.17.1/min/moment.min.js"></script>
-<script src="script/constants.js?ver=18.12.471"></script>
-<script src="script/service.js?ver=18.12.471"></script>
-<script src="script/view.js?ver=18.12.471"></script>
+<script src="script/constants.js?ver=18.12.474"></script>
+<script src="script/service.js?ver=18.12.474"></script>
+<script src="script/view.js?ver=18.12.474"></script>

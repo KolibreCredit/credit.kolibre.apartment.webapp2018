@@ -5,7 +5,7 @@ var contractConfirmInfoId = "";
 var accountCellphone = "";
 var accountName = "";
 //
-var ispostData = true;
+var ispostData=true;
 var needRender = false;
 var contractMedium = "";
 //
@@ -119,13 +119,6 @@ $(document).ready(function () {
         showConfirmInfoContent();
     }, function (err) {
         $(".msg-post").hide();
-        console.log(err.message);
         showConfirmInfoContent();
     });
-    /*  getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
-          if (res.succeeded) {
-              accountCellphone = res.data.cellphone;
-              accountName = res.data.realName;
-          }
-      });*/
 });

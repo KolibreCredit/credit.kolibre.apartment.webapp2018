@@ -118,7 +118,7 @@ function loginByCaptcha() {
                             window.location.href = "verify.html?url={0}".format(url);
                         }
                         else if (!res1.data.tenantResponse.confirmed) {
-                            if (res.data.tenantResponse.canUpdate) {
+                            if (res1.data.tenantResponse.canUpdate) {
                                 window.location.href = "confirmTenant.html?url={0}".format(url);
                             } else {
                                window.location.href = "confirmTenant1.html?url={0}".format(url);

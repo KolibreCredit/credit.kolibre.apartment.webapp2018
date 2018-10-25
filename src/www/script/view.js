@@ -61,6 +61,7 @@ function orders() {
 function showMsgAlert() {
     $(".msg-alert").show();
 }
+
 function hideMsgAlert() {
     $(".msg-alert").hide();
 }
@@ -69,12 +70,12 @@ $(document).ready(function () {
     contractId = getURLQuery("contractId");
     getInvoke(constants.URLS.GETCONTRACTDETAILS.format(contractId), function (res) {
         if (res.succeeded && res.data != null) {
-            var item = res.data.contract;
+            var item = res.data;
             var roomDetails = res.data.roomDetails;
             var orders = res.data.orders;
             //
             $("#divApartmentName").html(roomDetails.apartmentName);
-            $("#divRoomNumber").html(roomDetails.roomNumber+"室");
+            $("#divRoomNumber").html(roomDetails.roomNumber + "室");
             //
             if (orders.length > 3) {
                 $("#divAllOrderInfo").show();
@@ -100,6 +101,7 @@ $(document).ready(function () {
             }
             $("#divOrderInfo").html(htmlOrderInfos.join(""));
             //
+            $(".msg-alert").html($("#tplMsgAlert").html().format(item.managerContact));
             var templateName = "";
             var imageStorageLocation = "";
             if (item.contractMedium == "Digital") {

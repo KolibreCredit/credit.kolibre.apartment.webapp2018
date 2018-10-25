@@ -81,9 +81,9 @@ $(document).ready(function () {
             }
             else if (tenantInfo.credentialType == "HongKongMacao") {
                 credentialTabIndex = 3;
-                $("#lbTitle1").html("澳台通行证正面");
-                $("#lbTitle2").html("澳台通行证反面");
-                $("#txtCredentialType").val("澳台通行证");
+                $("#lbTitle1").html("港澳通行证正面");
+                $("#lbTitle2").html("港澳通行证反面");
+                $("#txtCredentialType").val("港澳通行证");
             }
             else {
                 credentialTabIndex = 4;
