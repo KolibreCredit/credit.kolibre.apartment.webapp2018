@@ -11,7 +11,7 @@
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <link href="packages/mui@3.4.0/examples/hello-mui/css/mui.picker.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.474" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.481" rel="stylesheet"/>
     <style type="text/css">
         input[type=text] {
             border: 0;
@@ -24,7 +24,7 @@
 
         .selecttype {
             background-color: #ffffff;
-            border-radius: 6px;
+            border-radius: 8px;
             padding: 10px 20px;
             border: 2px dotted #cccccc;
             position: relative
@@ -33,7 +33,6 @@
         .selecttype.active {
             border: 1px solid #fd8b14;
         }
-
         .selecttype img {
             opacity: 0.4;
         }
@@ -46,8 +45,8 @@
             width: 30px;
             height: 30px;
             position: absolute;
-            top: -8px;
-            right: -8px;
+            top: -5px;
+            right: -5px;
         }
 
         .step0 {
@@ -109,6 +108,60 @@
             margin-top: 50px;
         }
 
+        #wrapper {
+            z-index: 1;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            height: 140px;
+        }
+
+        #scroller {
+            position: absolute;
+            z-index: 1;
+            width: 800px;
+            height: 100%;
+            -webkit-transform: translateZ(0);
+            -moz-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            -o-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-text-size-adjust: none;
+            -moz-text-size-adjust: none;
+            -ms-text-size-adjust: none;
+            -o-text-size-adjust: none;
+            text-size-adjust: none;
+        }
+
+        #scroller ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+
+        #scroller li {
+            display: block;
+            float: left;
+            width: 150px;
+            height: 100%;
+            background-color: #f0f0f0;
+            font-size: 14px;
+            padding-right: 10px;
+        }
+
+        #scroller li div {
+            background-color: #fafafa;
+            height: 100%;
+        }
+
         @media screen and (max-height: 568px) {
             .contract {
                 margin-top: 30px;
@@ -123,21 +176,41 @@
         <div style="height:60px;line-height:60px;text-align: center;font-size: 16px;color: #646464">
             请选择证件类型
         </div>
-        <div style="background-color:#f0f0f0">
-            <div style="width:49%;float:left;padding-left:15px">
-                <div class="selecttype" onclick="chooseType(0)">
-                    <img src="images/sfzv.png" style="width:100%">
-                    <div style="text-align:center;font-size: 14px;color:#646464">身份证</div>
-                    <div style="text-align:center;font-size:10px;color:#999999">&nbsp;</div>
-                    <img src="images/selectv.png" class="selectv" style="display:none">
-                </div>
-            </div>
-            <div style="width:49%;float:right; padding-right:15px">
-                <div class="selecttype" onclick="chooseType(1)">
-                    <img src="images/hzv.png" style="width:100%">
-                    <div style="text-align:center;font-size:14px;color:#646464">护照</div>
-                    <div style="text-align:center;font-size:10px;color:#999999">仅支持国外用户</div>
-                    <img src="images/selectv.png" class="selectv" style="display:none">
+        <div style="margin-left:20px;margin-right:20px">
+            <div id="wrapper">
+                <div id="scroller">
+                    <ul>
+                        <li>
+                            <div class="selecttype" onclick="chooseType(0)">
+                                <img src="images/sfzv.png" style="width:100%;height:100%"/>
+                                <img src="images/selectv.png" class="selectv" style="display:none">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="selecttype" onclick="chooseType(1)">
+                                <img src="images/hzv.png" style="width:100%">
+                                <img src="images/selectv.png" class="selectv" style="display:none">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="selecttype" onclick="chooseType(2)">
+                                <img src="images/tbzv.png" style="width:100%">
+                                <img src="images/selectv.png" class="selectv" style="display:none">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="selecttype" onclick="chooseType(3)">
+                                <img src="images/gatxzv.png" style="width:100%">
+                                <img src="images/selectv.png" class="selectv" style="display:none">
+                            </div>
+                        </li>
+                        <li>
+                            <div class="selecttype" onclick="chooseType(4)">
+                                <img src="images/otherv.png" style="width:100%">
+                                <img src="images/selectv.png" class="selectv" style="display:none">
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -228,6 +301,8 @@
 </html>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
-<script src="script/constants.js?ver=18.12.474"></script>
-<script src="script/service.js?ver=18.12.474"></script>
-<script src="script/verify2.js?ver=18.12.474"></script>
+<script src="packages/iscroll@5.2.0/build/iscroll.js"></script>
+<script src="packages/iscroll@5.2.0/demos/demoUtils.js"></script>
+<script src="script/constants.js?ver=18.12.481"></script>
+<script src="script/service.js?ver=18.12.481"></script>
+<script src="script/verify2.js?ver=18.12.481"></script>

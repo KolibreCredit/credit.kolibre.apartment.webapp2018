@@ -1,19 +1,38 @@
 /**
  * Created by long.jiang on 2016/12/23.
  */
-
 $(document).ready(function () {
     getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
         if (res.succeeded) {
             var tenantInfo = res.data;
             if (tenantInfo.credentialType == "IDCard") {
-                $("#lbTitle1").html("身份证正面");
-                $("#lbTitle2").html("身份证背面");
+                $("#lbTitle1").html("身份证头像面");
+                $("#lbTitle2").html("身份证国徽面");
                 $("#lbCredentialType").text("身份证");
-            } else {
-                $("#lbTitle1").html("护照个人信息页");
-                $("#lbTitle2").html("护照签证信息页");
+                $("#imgSelfiePhotoUrl").attr("src", "images/photo/sfz3.png");
+            } else if (tenantInfo.credentialType == "Passport") {
+                $("#lbTitle1").html("头像信息页");
+                $("#lbTitle2").html("居留许可页");
                 $("#lbCredentialType").text("护照");
+                $("#imgSelfiePhotoUrl").attr("src", "images/photo/hz3.png");
+            }
+            else if (tenantInfo.credentialType == "TaiwanPermit") {
+                $("#lbTitle1").html("台胞证正面");
+                $("#lbTitle2").html("台胞证反面");
+                $("#lbCredentialType").text("台胞证");
+                $("#imgSelfiePhotoUrl").attr("src", "images/photo/other3.png");
+            }
+            else if (tenantInfo.credentialType == "HongKongMacao") {
+                $("#lbTitle1").html("港澳通行证正面");
+                $("#lbTitle2").html("港澳通行证反面");
+                $("#lbCredentialType").text("港澳通行证");
+                $("#imgSelfiePhotoUrl").attr("src", "images/photo/other3.png");
+            }
+            else {
+                $("#lbTitle1").html("其他证件正面");
+                $("#lbTitle2").html("其他证件反面");
+                $("#lbCredentialType").text("其他证件");
+                $("#imgSelfiePhotoUrl").attr("src", "images/photo/other3.png");
             }
             $("#lbRealName").html(replaceStr(tenantInfo.realName, 1));
             $("#lbCredentialNo").html(replaceStr(tenantInfo.credentialNo, 3));
@@ -21,8 +40,6 @@ $(document).ready(function () {
             $("#imgCredentialBackPhotoUrl").attr("src", tenantInfo.credentialBackPhotoUrl);
             if (tenantInfo.selfiePhotoUrl != null) {
                 $("#imgSelfiePhotoUrl").attr("src", tenantInfo.selfiePhotoUrl);
-            } else {
-                $("#imgSelfiePhotoUrl").attr("src", (tenantInfo.credentialType == "IDCard" ? "images/sfz3-2.png" : "images/hz3-2.png"));
             }
         }
     });

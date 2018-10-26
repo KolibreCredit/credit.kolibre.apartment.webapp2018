@@ -152,6 +152,7 @@ $(document).ready(function () {
                     $(".customDeposits").html(htmlCustomDeposit.join("")).show();
                 }
                 if (item.confirmed) {
+                    $("#divFooter").css({"height": "20px"});
                     $(".btnNext").hide();
                 } else {
                     $(".btnNext").show()

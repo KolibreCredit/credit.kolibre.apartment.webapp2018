@@ -7,6 +7,7 @@ var credentialTabIndex = -1;
 var realName = "";
 var credentialNo = "";
 //
+var credentialTypes = ["IDCard", "Passport", "TaiwanPermit", "HongKongMacao", "Other"];
 var kinds = ["IDCardFace", "IDCardBack", "Selfie"];
 var credentialFacePhotoUrl = "";
 var credentialBackPhotoUrl = "";
@@ -69,31 +70,73 @@ function twoFactorVerify() {
         }
     }
     if (credentialTabIndex == 0) {
-        $(".chooseTip").html("有效二代身份证");
-        $("#lbTitle1").html("身份证<span style=\"color:#f58a00\">正面</span>");
-        $("#lbTitle2").html("身份证<span style=\"color:#f58a00\">背面</span>");
-        $("#imgCredientalFacePhotoUrl").attr("src", "images/20180103/sfz1.png");
-        $("#imgCredientalBackPhotoUrl").attr("src", "images/20180103/sfz2.png");
-        $("#imgSelfiePhotoUrl").attr("src", "images/20180103/sfz3.png");
-    } else {
+        var data = {
+            realName: realName,
+            idCardNo: credentialNo
+        };
+        $(".msg-post").show();
+        postInvoke(constants.URLS.TWOFACTORVERIFY, data, function (res) {
+            $(".msg-post").hide();
+            if (res.succeeded) {
+                if (res.data.succeeded) {
+                    $(".chooseTip").html("有效二代身份证");
+                    $("#lbTitle1").html("身份证<span style=\"color:#f58a00\">头像面</span>");
+                    $("#lbTitle2").html("身份证<span style=\"color:#f58a00\">国徽面</span>");
+                    $("#imgCredientalFacePhotoUrl").attr("src", "images/photo/sfz1.png");
+                    $("#imgCredientalBackPhotoUrl").attr("src", "images/photo/sfz2.png");
+                    $("#imgSelfiePhotoUrl").attr("src", "images/photo/sfz3.png");
+                    $(".step0").hide();
+                    $(".step1").show();
+                } else {
+                    mui.toast(res.data.message);
+                }
+            } else {
+                mui.toast(res.message);
+            }
+        }, function (err) {
+            $(".msg-post").hide();
+            mui.toast(err.message);
+        });
+    } else if (credentialTabIndex == 1) {
         $(".chooseTip").html("有效护照");
-        $("#lbTitle1").html("护照<span style=\"color:#f58a00\">个人信息页</span>");
-        $("#lbTitle2").html("护照<span style=\"color:#f58a00\">签证信息页</span>");
-        $("#imgCredientalFacePhotoUrl").attr("src", "images/20180103/hz1.png");
-        $("#imgCredientalBackPhotoUrl").attr("src", "images/20180103/hz2.png");
-        $("#imgSelfiePhotoUrl").attr("src", "images/20180103/hz3.png");
+        $("#lbTitle1").html("护照<span style=\"color:#f58a00\">头像信息页</span>");
+        $("#lbTitle2").html("护照<span style=\"color:#f58a00\">居留许可页</span>");
+        $("#imgCredientalFacePhotoUrl").attr("src", "images/photo/hz1.png");
+        $("#imgCredientalBackPhotoUrl").attr("src", "images/photo/hz2.png");
+        $("#imgSelfiePhotoUrl").attr("src", "images/photo/hz3.png");
+        $(".step0").hide();
+        $(".step1").show();
+    } else {
+        if (credentialTabIndex == 2) {
+            $(".chooseTip").html("有效台胞证");
+            $("#lbTitle1").html("台胞证<span style=\"color:#f58a00\">正面</span>");
+            $("#lbTitle2").html("台胞证<span style=\"color:#f58a00\">反面</span>");
+        }
+        else if (credentialTabIndex == 3) {
+            $(".chooseTip").html("有效港澳通行证");
+            $("#lbTitle1").html("港澳通行证<span style=\"color:#f58a00\">正面</span>");
+            $("#lbTitle2").html("港澳通行证<span style=\"color:#f58a00\">反面</span>");
+        }
+        else {
+            $(".chooseTip").html("有效其他证件");
+            $("#lbTitle1").html("其他证件<span style=\"color:#f58a00\">正面</span>");
+            $("#lbTitle2").html("其他证件<span style=\"color:#f58a00\">反面</span>");
+        }
+        $("#imgCredientalFacePhotoUrl").attr("src", "images/photo/other1.png");
+        $("#imgCredientalBackPhotoUrl").attr("src", "images/photo/other2.png");
+        $("#imgSelfiePhotoUrl").attr("src", "images/photo/other3.png");
+        $(".step0").hide();
+        $(".step1").show();
     }
-    $(".step0").hide();
-    $(".step1").show();
 }
 
 function confirmTenantInfo() {
     if (credentialFacePhotoUrl == '') {
-        mui.toast((credentialTabIndex == 0 ? constants.msgInfo.img10err : constants.msgInfo.img11err));
+        mui.toast(constants.msgInfo.img1err[credentialTabIndex]);
         return false;
     }
     if (credentialBackPhotoUrl == '') {
-        mui.toast((credentialTabIndex == 0 ? constants.msgInfo.img20err : constants.msgInfo.img21err));
+        mui.toast(constants.msgInfo.img2err[credentialTabIndex]);
         return false;
     }
     if (selfiePhotoUrl == '') {
@@ -104,7 +147,7 @@ function confirmTenantInfo() {
         authCode: authCode,
         cellphone: cellphone,
         realName: realName,
-        credentialType: (credentialTabIndex == 0 ? "IDCard" : "Passport"),
+        credentialType: credentialTypes[credentialTabIndex],
         credentialNo: credentialNo,
         credentialFacePhotoUrl: credentialFacePhotoUrl,
         credentialBackPhotoUrl: credentialBackPhotoUrl,
@@ -215,5 +258,12 @@ $(document).ready(function () {
                 }
             });
         };
+    });
+    //
+    var myScroll = new IScroll('#wrapper', {
+        preventDefault: false,
+        scrollX: true,
+        scrollY: false,
+        mouseWheel: false
     });
 });

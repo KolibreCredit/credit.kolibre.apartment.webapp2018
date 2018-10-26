@@ -32,11 +32,11 @@ $(document).ready(function () {
                 $("#imgCredentialBackPhotoUrl").attr("src", credentialBackPhotoUrl);
             } else {
                 if (tenantInfo.credentialType == "IDCard") {
-                    $("#imgCredentialFacePhotoUrl").attr("src", "images/photo/sfz2.png");
+                    $("#imgCredentialBackPhotoUrl").attr("src", "images/photo/sfz2.png");
                 } else if (tenantInfo.credentialType == "Passport") {
-                    $("#imgCredentialFacePhotoUrl").attr("src", "images/photo/hz2.png");
+                    $("#imgCredentialBackPhotoUrl").attr("src", "images/photo/hz2.png");
                 } else {
-                    $("#imgCredentialFacePhotoUrl").attr("src", "images/photo/other2.png");
+                    $("#imgCredentialBackPhotoUrl").attr("src", "images/photo/other2.png");
                 }
             }
             //
@@ -45,11 +45,11 @@ $(document).ready(function () {
                 $("#imgSelfiePhotoUrl").attr("src", selfiePhotoUrl);
             } else {
                 if (tenantInfo.credentialType == "IDCard") {
-                    $("#imgCredentialFacePhotoUrl").attr("src", "images/photo/sfz3.png");
+                    $("#imgSelfiePhotoUrl").attr("src", "images/photo/sfz3.png");
                 } else if (tenantInfo.credentialType == "Passport") {
-                    $("#imgCredentialFacePhotoUrl").attr("src", "images/photo/hz3.png");
+                    $("#imgSelfiePhotoUrl").attr("src", "images/photo/hz3.png");
                 } else {
-                    $("#imgCredentialFacePhotoUrl").attr("src", "images/photo/other3.png");
+                    $("#imgSelfiePhotoUrl").attr("src", "images/photo/other3.png");
                 }
             }
             //$("#txtRealName").val(tenantInfo.realName);
@@ -107,11 +107,11 @@ function confirmTenantInfo() {
         }
     }
     if (credentialFacePhotoUrl == '') {
-        mui.toast((credentialTabIndex == 0 ? constants.msgInfo.img10err : constants.msgInfo.img11err));
+        mui.toast(constants.msgInfo.img1err[credentialTabIndex]);
         return false;
     }
     if (credentialBackPhotoUrl == '') {
-        mui.toast((credentialTabIndex == 0 ? constants.msgInfo.img20err : constants.msgInfo.img21err));
+        mui.toast(constants.msgInfo.img2err[credentialTabIndex]);
         return false;
     }
     /*    if (selfiePhotoUrl == '') {

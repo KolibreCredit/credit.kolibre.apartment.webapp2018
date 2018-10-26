@@ -35,18 +35,16 @@ $(document).ready(function () {
             var order = null;
             var monthUrl = "";
             for (var i = 0; i < orders.length; i++) {
-                if (i < 3) {
-                    order = orders[i];
-                    monthUrl = "images/months/{0}".format(moment(order.paymentTime).format('MM') + "s.png");
-                    htmlOrderInfos.push(tplOrderInfo.format(monthUrl, (order.orderType == "CustomDeposit" ? order.orderTypeName : getOrderType(order.orderType)),
-                        (order.amount / 100).toFixed(2),
-                        order.orderState.toLowerCase(),
-                        filterOrderState(order.orderState),
-                        order.orderStartTime.substring(0, 10),
-                        order.orderEndTime.substring(0, 10),
-                        order.paymentTime.substring(0, 10)
-                    ));
-                }
+                order = orders[i];
+                monthUrl = "images/months/{0}".format(moment(order.paymentTime).format('MM') + "s.png");
+                htmlOrderInfos.push(tplOrderInfo.format(monthUrl, (order.orderType == "CustomDeposit" ? order.orderTypeName : getOrderType(order.orderType)),
+                    (order.amount / 100).toFixed(2),
+                    order.orderState.toLowerCase(),
+                    filterOrderState(order.orderState),
+                    order.orderStartTime.substring(0, 10),
+                    order.orderEndTime.substring(0, 10),
+                    order.paymentTime.substring(0, 10)
+                ));
             }
             $("#divOrderInfo").html(htmlOrderInfos.join(""));
         }

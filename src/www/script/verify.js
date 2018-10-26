@@ -88,9 +88,9 @@ function twoFactorVerify() {
             $("#lbTitle2").html("台胞证<span style=\"color:#f58a00\">反面</span>");
         }
         else if (credentialTabIndex == 3) {
-            $(".chooseTip").html("有效港澳台通行证");
-            $("#lbTitle1").html("澳台通行证<span style=\"color:#f58a00\">正面</span>");
-            $("#lbTitle2").html("澳台通行证<span style=\"color:#f58a00\">反面</span>");
+            $(".chooseTip").html("有效港澳通行证");
+            $("#lbTitle1").html("港澳通行证<span style=\"color:#f58a00\">正面</span>");
+            $("#lbTitle2").html("港澳通行证<span style=\"color:#f58a00\">反面</span>");
         }
         else {
             $(".chooseTip").html("有效其他证件");
@@ -107,11 +107,11 @@ function twoFactorVerify() {
 
 function confirmTenantInfo() {
     if (credentialFacePhotoUrl == '') {
-        mui.toast((credentialTabIndex == 0 ? constants.msgInfo.img10err : constants.msgInfo.img11err));
+        mui.toast(constants.msgInfo.img1err[credentialTabIndex]);
         return false;
     }
     if (credentialBackPhotoUrl == '') {
-        mui.toast((credentialTabIndex == 0 ? constants.msgInfo.img20err : constants.msgInfo.img21err));
+        mui.toast(constants.msgInfo.img2err[credentialTabIndex]);
         return false;
     }
     /* if (selfiePhotoUrl == '') {
