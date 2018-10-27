@@ -186,15 +186,37 @@ $(document).ready(function () {
             $("#txtCellphone").val(contractConfirmInfo.contactInfo[0].cellphone);
             $("#txtRelation").val(contractConfirmInfo.contactInfo[0].relationship);
             //
+            if (contractConfirmInfo.credentialType == "IDCard") {
+                $("#lbCredentialFacePhoto").text("身份证头像面");
+                $("#lbCredentialBackPhoto").text("身份证国徽面");
+            } else if (contractConfirmInfo.credentialType == "Passport") {
+                $("#lbCredentialFacePhoto").text("护照头像信息页");
+                $("#lbCredentialBackPhoto").text("护照居留许可页");
+            } else if (contractConfirmInfo.credentialType == "TaiwanPermit") {
+                $("#lbCredentialFacePhoto").text("台胞证正面");
+                $("#lbCredentialBackPhoto").text("台胞证反面");
+            } else if (contractConfirmInfo.credentialType == "HongKongMacao") {
+                $("#lbCredentialFacePhoto").text("港澳通行证正面");
+                $("#lbCredentialBackPhoto").text("港澳通行证反面");
+            } else {
+                $("#lbCredentialFacePhoto").text("其他证件正面");
+                $("#lbCredentialBackPhoto").text("其他证件反面");
+            }
+            //
             if (contractConfirmInfo.credentialFacePhoto != null) {
                 $("#imgCredentialFacePhoto").attr("src", contractConfirmInfo.credentialFacePhoto);
             } else {
                 $(".picture").eq(0).css({"border": "2px dotted #fd8b14"});
                 $(".camera").eq(0).show();
                 $(".choose").eq(0).hide();
-                $("#imgCredentialFacePhoto").attr("src", (contractConfirmInfo.credentialType == "IDCard" ? "images/photo/sfz1.png" : "images/photo/hz1.png"));
+                if (contractConfirmInfo.credentialType == "IDCard") {
+                    $("#imgCredentialFacePhoto").attr("src", "images/photo/sfz1.png");
+                } else if (contractConfirmInfo.credentialType == "Passport") {
+                    $("#imgCredentialFacePhoto").attr("src", "images/photo/hz1.png");
+                } else {
+                    $("#imgCredentialFacePhoto").attr("src", "images/photo/other1.png");
+                }
             }
-            $("#lbCredentialFacePhoto").text((contractConfirmInfo.credentialType == "IDCard" ? "身份证正面" : "护照个人信息页"));
             //
             if (contractConfirmInfo.credentialBackPhoto != null) {
                 $("#imgCredentialBackPhoto").attr("src", contractConfirmInfo.credentialBackPhoto);
@@ -203,9 +225,14 @@ $(document).ready(function () {
                 $(".picture").eq(1).css({"border": "2px dotted #fd8b14"});
                 $(".camera").eq(1).show();
                 $(".choose").eq(1).hide();
-                $("#imgCredentialBackPhoto").attr("src", (contractConfirmInfo.credentialType == "IDCard" ? "images/photo/sfz2.png" : "images/photo/hz2.png"));
+                if (contractConfirmInfo.credentialType == "IDCard") {
+                    $("#imgCredentialBackPhoto").attr("src", "images/photo/sfz2.png");
+                } else if (contractConfirmInfo.credentialType == "Passport") {
+                    $("#imgCredentialBackPhoto").attr("src", "images/photo/hz2.png");
+                } else {
+                    $("#imgCredentialBackPhoto").attr("src", "images/photo/other2.png");
+                }
             }
-            $("#lbCredentialBackPhoto").text((contractConfirmInfo.credentialType == "IDCard" ? "身份证背面" : "护照签证信息页"));
             //
             if (contractConfirmInfo.selfiePhoto != null) {
                 $("#imgSelfiePhoto").attr("src", contractConfirmInfo.selfiePhoto);
@@ -213,7 +240,13 @@ $(document).ready(function () {
                 $(".picture").eq(2).css({"border": "2px dotted #fd8b14"});
                 $(".camera").eq(2).show();
                 $(".choose").eq(2).hide();
-                $("#imgSelfiePhoto").attr("src", (contractConfirmInfo.credentialType == "IDCard" ? "images/photo/sfz3.png" : "images/photo/hz3.png"));
+                if (contractConfirmInfo.credentialType == "IDCard") {
+                    $("#imgSelfiePhoto").attr("src", "images/photo/sfz3.png");
+                } else if (contractConfirmInfo.credentialType == "Passport") {
+                    $("#imgSelfiePhoto").attr("src", "images/photo/hz3.png");
+                } else {
+                    $("#imgSelfiePhoto").attr("src", "images/photo/other3.png");
+                }
             }
         }
     });

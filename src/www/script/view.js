@@ -90,7 +90,7 @@ $(document).ready(function () {
                     order = orders[i];
                     monthUrl = "images/months/{0}".format(moment(order.paymentTime).format('MM') + "s.png");
                     htmlOrderInfos.push(tplOrderInfo.format(monthUrl, (order.orderType == "CustomDeposit" ? order.orderTypeName : getOrderType(order.orderType)),
-                        (order.amount / 100).toFixed(2),
+                        (order.totalAmount / 100).toFixed(2),
                         order.orderState.toLowerCase(),
                         filterOrderState(order.orderState),
                         order.orderStartTime.substring(0, 10),
