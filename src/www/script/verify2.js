@@ -68,35 +68,12 @@ function twoFactorVerify() {
             mui.toast(constants.msgInfo.credentialNoerr);
             return false;
         }
-    }
-    if (credentialTabIndex == 0) {
-        var data = {
-            realName: realName,
-            idCardNo: credentialNo
-        };
-        $(".msg-post").show();
-        postInvoke(constants.URLS.TWOFACTORVERIFY, data, function (res) {
-            $(".msg-post").hide();
-            if (res.succeeded) {
-                if (res.data.succeeded) {
-                    $(".chooseTip").html("有效二代身份证");
-                    $("#lbTitle1").html("身份证<span style=\"color:#f58a00\">头像面</span>");
-                    $("#lbTitle2").html("身份证<span style=\"color:#f58a00\">国徽面</span>");
-                    $("#imgCredientalFacePhotoUrl").attr("src", "images/photo/sfz1.png");
-                    $("#imgCredientalBackPhotoUrl").attr("src", "images/photo/sfz2.png");
-                    $("#imgSelfiePhotoUrl").attr("src", "images/photo/sfz3.png");
-                    $(".step0").hide();
-                    $(".step1").show();
-                } else {
-                    mui.toast(res.data.message);
-                }
-            } else {
-                mui.toast(res.message);
-            }
-        }, function (err) {
-            $(".msg-post").hide();
-            mui.toast(err.message);
-        });
+        $(".chooseTip").html("有效二代身份证");
+        $("#lbTitle1").html("身份证<span style=\"color:#f58a00\">头像面</span>");
+        $("#lbTitle2").html("身份证<span style=\"color:#f58a00\">国徽面</span>");
+        $("#imgCredientalFacePhotoUrl").attr("src", "images/photo/sfz1.png");
+        $("#imgCredientalBackPhotoUrl").attr("src", "images/photo/sfz2.png");
+        $("#imgSelfiePhotoUrl").attr("src", "images/photo/sfz3.png");
     } else if (credentialTabIndex == 1) {
         $(".chooseTip").html("有效护照");
         $("#lbTitle1").html("护照<span style=\"color:#f58a00\">头像信息页</span>");
@@ -104,8 +81,6 @@ function twoFactorVerify() {
         $("#imgCredientalFacePhotoUrl").attr("src", "images/photo/hz1.png");
         $("#imgCredientalBackPhotoUrl").attr("src", "images/photo/hz2.png");
         $("#imgSelfiePhotoUrl").attr("src", "images/photo/hz3.png");
-        $(".step0").hide();
-        $(".step1").show();
     } else {
         if (credentialTabIndex == 2) {
             $(".chooseTip").html("有效台胞证");
@@ -125,9 +100,9 @@ function twoFactorVerify() {
         $("#imgCredientalFacePhotoUrl").attr("src", "images/photo/other1.png");
         $("#imgCredientalBackPhotoUrl").attr("src", "images/photo/other2.png");
         $("#imgSelfiePhotoUrl").attr("src", "images/photo/other3.png");
-        $(".step0").hide();
-        $(".step1").show();
     }
+    $(".step0").hide();
+    $(".step1").show();
 }
 
 function confirmTenantInfo() {

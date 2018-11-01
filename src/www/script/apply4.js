@@ -5,13 +5,13 @@ var contractConfirmInfoId = "";
 var accountCellphone = "";
 var accountName = "";
 //
-var ispostData=true;
+var ispostData = true;
 var needRender = false;
-var contractMedium = "";
+var hasPaper = false;
 //
 function confirmInfoContent() {
     needRender = false;
-    if (contractMedium == 'Paper') {
+    if (hasPaper) {
         window.location.href = "apply5.html";
     } else {
         window.location.href = "apply51.html";
@@ -64,13 +64,13 @@ function apply() {
         if (res.succeeded) {
             ispostData = true;
             $(".msg-post").hide();
-            contractMedium = res.data.contractMedium;
+            hasPaper = res.data.hasPaper;
             if (needRender) {
                 $(".msg_htmltemplate").show();
             } else {
                 mui.toast(constants.msgInfo.contactInfo);
                 setTimeout(function () {
-                    if (contractMedium == 'Paper') {
+                    if (hasPaper) {
                         window.location.href = "apply5.html";
                     } else {
                         window.location.href = "apply51.html";
@@ -94,7 +94,7 @@ function showConfirmInfoContent() {
         $(".msg_htmltemplate").show();
     } else {
         setTimeout(function () {
-            if (contractMedium == 'Paper') {
+            if (hasPaper) {
                 window.location.href = "apply5.html";
             } else {
                 window.location.href = "apply51.html";
@@ -102,6 +102,7 @@ function showConfirmInfoContent() {
         }, 2000);
     }
 }
+
 //
 $(document).ready(function () {
     $(".msg-post").show();
@@ -110,7 +111,7 @@ $(document).ready(function () {
     postInvoke(constants.URLS.RENDERPRECONFIGUREHTMLTEMPLATE, data, function (res) {
         $(".msg-post").hide();
         if (res.succeeded) {
-            contractMedium = res.data.contractMedium;
+            hasPaper = res.data.hasPaper;
             if (res.data.needRender) {
                 needRender = true;
                 $("#divContentHtmltemplate").html(res.data.content);

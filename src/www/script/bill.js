@@ -93,10 +93,10 @@ function findAllLeaseOrder(index) {
                     lbTip2 = (item.orderModel == "Staging" ? stage.format("分") : "");
                     btnBillPay = '<span class="billbtnPay btnActive" onclick="createTransaction(\'' + item.orderId + '\')">立即支付</span>';
                 }
-                else if (item.orderState == 'Overdue') {
+                else if (item.orderState == 'Overdue' || item.orderState == 'BeDue') {
                     monthUrl = "images/months/{0}".format(moment(item.paymentTime).format('MM') + "s.png");
                     lbTime = '到期日：' + moment(item.paymentTime).format('YYYY-MM-DD');
-                    lbState = '已逾期';
+                    lbState = (item.orderState == 'Overdue' ? '已逾期' : '已到期');
                     lbStateClass = "Overdue";
                     if (item.paidAmount == 0) {
                         totalAmount = "";
@@ -167,6 +167,7 @@ function filterCanPay(orderId) {
     }
     return canPay;
 }
+
 function createTransaction(orderId) {
     if (filterCanPay(orderId)) {
         if (isWeixin()) {

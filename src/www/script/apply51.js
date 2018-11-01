@@ -131,6 +131,9 @@ function confirmcCntract1() {
     });
 }
 
+function agreement() {
+    window.location.href = "agreement.html?hasPaper=0";
+}
 //
 function chooseImage(index) {
     imgIndex = index;

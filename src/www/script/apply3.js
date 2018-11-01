@@ -3,7 +3,7 @@
  */
 var imgUrl1 = "";
 var ispostData = true;
-
+//
 function V2UploadImages(serverId) {
     var data = {
         serverId: serverId,
@@ -13,7 +13,7 @@ function V2UploadImages(serverId) {
         if (res.succeeded) {
             imgUrl1 = res.data.url;
             $("#imgSelfiePhotoUrl").attr("src", imgUrl1);
-            $("#imgSelfiePhotoUrl").load(function (){
+            $("#imgSelfiePhotoUrl").load(function () {
                 $(".camera").hide();
                 $(".slide-container").css({"border": "2px solid #fcfcfc"});
                 $(".choose").show();
@@ -45,7 +45,6 @@ function apply() {
         ispostData = true;
         if (res.succeeded) {
             mui.toast(constants.msgInfo.imgIDCard);
-            getContractConfirmInfo();
             setTimeout(function () {
                 toApplys(res.data.nextStep);
             }, 2000);
@@ -65,10 +64,22 @@ $(document).ready(function () {
             if (res.data.credentialType == "IDCard") {
                 $("#imgSelfiePhotoUrl").attr("src", "images/photo/sfz3.png");
                 $("#lbTitle").html("本人手持身份证照片");
-
-            } else {
+            }
+            else if (res.data.credentialType == "Passport") {
                 $("#imgSelfiePhotoUrl").attr("src", "images/photo/hz3.png");
                 $("#lbTitle").html("本人手持护照照片");
+            }
+            else if (res.data.credentialType == "TaiwanPermit") {
+                $("#imgSelfiePhotoUrl").attr("src", "images/photo/other3.png");
+                $("#lbTitle").html("本人手持台胞证照片");
+            }
+            else if (res.data.credentialType == "HongKongMacao") {
+                $("#imgSelfiePhotoUrl").attr("src", "images/photo/other3.png");
+                $("#lbTitle").html("本人手持港澳通行证照片");
+            }
+            else {
+                $("#imgSelfiePhotoUrl").attr("src", "images/photo/other3.png");
+                $("#lbTitle").html("本人手持其他证件照片");
             }
         }
     });

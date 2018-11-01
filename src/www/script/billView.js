@@ -25,11 +25,11 @@ $(document).ready(function () {
                 tipTitle1 = "实付日";
                 tipTitle2 = "待支付";
             }
-            else if (item.orderState == "Overdue") {
+            else if (item.orderState == "Overdue" || item.orderState == 'BeDue') {
                 tipUrl = "images/20180103/Overdue.png";
-                tipTitle = "已逾期";
+                tipTitle = (item.orderState == "Overdue" ? "已逾期" : "已到期");
                 tipTitle1 = "实付日";
-                tipTitle2 = "已逾期";
+                tipTitle2 = (item.orderState == "Overdue" ? "已逾期" : "已到期");
             }
             else if (item.orderState == "Canceled") {
                 tipUrl = "images/20180103/Canceled.png";
