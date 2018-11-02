@@ -2,7 +2,6 @@
  * Created by long.jiang on 2016/12/14.
  */
 var contractId = "";
-
 //
 function apply() {
     $(".msg-post").show();

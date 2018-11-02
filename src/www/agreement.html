@@ -8,7 +8,7 @@
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <link href="packages/mui@3.4.0/examples/hello-mui/css/mui.picker.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.485" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.486" rel="stylesheet"/>
     <style type="text/css">
         .agreement {
             display: none;
@@ -17,24 +17,26 @@
 </head>
 <body style="background-color:#f7f7f7">
 <div class="mui-content">
-    <div style="height:60px;line-height:60px;font-size:16px;color:#646464;padding:0 20px;position:relative">
-        <a style="color:#bcbcbc;text-decoration:none" href="#divAgreement" >蜂鸟屋服务协议</a>
-        <a style="position:absolute;right:20px" href="#divAgreement"><img src="images/ic_grey_arrow.png"
-                                                                          style="width: 18px;height:18px"/></a>
-    </div>
+    <a style="display:block;" href="#divAgreement">
+        <div style="height:60px;line-height:60px;font-size:16px;color:#646464;padding:0 20px;position:relative">
+            <span>蜂鸟屋服务协议</span>
+            <img src="images/ic_grey_arrow.png" style="width: 18px;height:18px;position:absolute;right:20px;top:20px"/>
+        </div>
+    </a>
     <div style="background-color:#f7f7f7;height:20px"></div>
-    <div class="agreement"
-         style="height:60px;line-height:60px;font-size:16px;color:#646464;padding:0 20px;position:relative">
-        <a style="color:#bcbcbc;text-decoration:none" href="#divAgreement1">居住房屋租赁合同</a>
-        <a style="position:absolute;right:20px" href="#divAgreement1"><img src="images/ic_grey_arrow.png"
-                                                                           style="width: 18px;height:18px"/></a>
-    </div>
+    <a class="agreement"  href="#divAgreement1">
+        <div style="height:60px;line-height:60px;font-size:16px;color:#646464;padding:0 20px;position:relative">
+            <span>居住房屋租赁合同</span>
+            <img src="images/ic_grey_arrow.png" style="width: 18px;height:18px;position:absolute;right:20px;top:20px"/>
+        </div>
+    </a>
     <div class="agreement" style="background-color:#f7f7f7;height:20px"></div>
-    <div style="height:60px;line-height:60px;font-size:16px;color:#646464;padding:0 20px;position:relative">
-        <a style="color:#bcbcbc;text-decoration:none" href="#divAgreement2">补充协议</a>
-        <a style="position:absolute;right:20px" href="#divAgreement2"><img src="images/ic_grey_arrow.png"
-                                                                           style="width: 18px;height:18px"/></a>
-    </div>
+    <a style="display:block" href="#divAgreement2">
+        <div style="height:60px;line-height:60px;font-size:16px;color:#646464;padding:0 20px;position:relative">
+            <span>补充协议</span>
+            <img src="images/ic_grey_arrow.png" style="width: 18px;height:18px;position:absolute;right:20px;top:20px"/>
+        </div>
+    </a>
     <div id="divAgreement" class="mui-popover mui-popover-action mui-popover-bottom"
          style="background-color: rgba(0, 0,0, 0.1);position: fixed; top: 0; bottom: 0; left: 0; right: 0;">
         <div style="text-align:center;height:48px;line-height:48px;background:#fd8b14;font-size:16px;color:#ffffff;padding-left:30px">
@@ -551,9 +553,9 @@
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/mui@3.4.0/examples/hello-mui/js/mui.picker.min.js"></script>
-<script src="script/constants.js?ver=18.12.485"></script>
-<script src="script/service.js?ver=18.12.485"></script>
-<script src="script/agreement.js?ver=18.12.485"></script>
+<script src="script/constants.js?ver=18.12.486"></script>
+<script src="script/service.js?ver=18.12.486"></script>
+<script src="script/agreement.js?ver=18.12.486"></script>
 <script type="text/javascript">
     mui('#divAgreementDetail').scroll({scrollX: false, scrollY: true});
     mui('body').on('tap', '#divAgreement', function () {
