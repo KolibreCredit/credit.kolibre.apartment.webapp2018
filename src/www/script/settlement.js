@@ -37,21 +37,25 @@ function getSettlementOrders(index) {
             var totalAmount = "";
             var notPaidAmount = "";
             var item = null;
+            var settlementTime = "";
             for (var i = 0; i < billLists.length; i++) {
+                settlementTime = "";
                 item = billLists[i];
                 if (orderState == 'NotSettle') {
                     monthUrl = "images/months/{0}".format(moment(item.paymentTime).format('MM') + "s.png");
                     lbTime = '到期日：' + moment(item.orderEndTime).format('YYYY-MM-DD');
                     totalAmount = '¥' + (item.totalAmount / 100).toFixed(2);
                     notPaidAmount = (item.notPaidAmount / 100).toFixed(2);
+                    settlementTime = "";
                 }
                 else {
                     monthUrl = "images/months/{0}".format(moment(item.paymentTime).format('MM') + ".png");
                     lbTime = '到期日：' + moment(item.orderEndTime).format('YYYY-MM-DD');
                     totalAmount = "";
                     notPaidAmount = (item.notPaidAmount / 100).toFixed(2);
+                    settlementTime = "退款时间: " + item.settlementTime.substring(0,16);
                 }
-                billHtmls += tplBill.format(monthUrl, lbTime, item.roomNumber, (item.orderType == "CustomDeposit" ? item.orderTypeName : getOrderType(item.orderType)), item.apartmentName, totalAmount, notPaidAmount, orderState.toLowerCase());
+                billHtmls += tplBill.format(monthUrl, lbTime, item.roomNumber, (item.orderType == "CustomDeposit" ? item.orderTypeName : getOrderType(item.orderType)), item.apartmentName, totalAmount, notPaidAmount,settlementTime,orderState.toLowerCase());
             }
             $(".billList").html(billHtmls);
         }

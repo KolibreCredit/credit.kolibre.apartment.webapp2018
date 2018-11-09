@@ -7,7 +7,7 @@
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.487" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.486" rel="stylesheet"/>
     <style type="text/css">
         label {
             font-size: 16px;
@@ -100,10 +100,131 @@
             text-align: center;
             display: inline-block;
         }
-        .goods {
+
+        .step2 {
             display: none;
         }
-        .checkout {
+
+        .step3 {
+            display: none;
+        }
+
+        #wrapper {
+            z-index: 1;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            height: 140px;
+        }
+
+        #scroller {
+            position: absolute;
+            z-index: 1;
+            /* width: 600px;*/
+            height: 100%;
+            -webkit-transform: translateZ(0);
+            -moz-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            -o-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-text-size-adjust: none;
+            -moz-text-size-adjust: none;
+            -ms-text-size-adjust: none;
+            -o-text-size-adjust: none;
+            text-size-adjust: none;
+        }
+
+        #scroller ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+
+        #scroller li {
+            display: block;
+            float: left;
+            width: 150px;
+            height: 100%;
+            background-color: #f0f0f0;
+            font-size: 14px;
+            padding-right: 10px;
+        }
+
+        #scroller li div {
+            background-color: #fafafa;
+            height: 100%;
+        }
+
+        /*
+        wrapper2
+        */
+        #wrapper2 {
+            z-index: 1;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            height: 140px;
+        }
+
+        #scroller2 {
+            position: absolute;
+            z-index: 1;
+            /* width: 600px;*/
+            height: 100%;
+            -webkit-transform: translateZ(0);
+            -moz-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            -o-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-text-size-adjust: none;
+            -moz-text-size-adjust: none;
+            -ms-text-size-adjust: none;
+            -o-text-size-adjust: none;
+            text-size-adjust: none;
+        }
+
+        #scroller2 ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+
+        #scroller2 li {
+            display: block;
+            float: left;
+            width: 150px;
+            height: 100%;
+            background-color: #f0f0f0;
+            font-size: 14px;
+            padding-right: 10px;
+        }
+
+        #scroller2 li div {
+            background-color: #fafafa;
+            height: 100%;
+        }
+
+        .fileUrl {
+            display: none;
+        }
+
+        .goods {
             display: none;
         }
     </style>
@@ -137,6 +258,48 @@
     <div style="height:10px;background-color:#f7f7f7"></div>
     <div id="divLeaseInfo" style="padding-left:20px;padding-right:20px">
     </div>
+    <div class="step2" style="height:10px;background-color:#f7f7f7"></div>
+    <div class="step2" style="position:relative;padding-left:20px;padding-right:20px;padding-top:15px">
+        <img src="images/20180103/line3.png" style="width:100%"/>
+        <div style="position:absolute;top:20px;left:0px;right:0px;text-align:center">
+            <div style="font-size:16px;color:#FF8C14;background:#FEE9D4;border-radius:100px;width:110px;height:26px;line-height:26px;display:inline-block">
+                物业交割单
+            </div>
+        </div>
+        <div class="fileUrl" style="padding-top:20px">
+            <div style="color: rgba(153,153,153,1);font-size:14px;line-height:40px">附件</div>
+            <div id="wrapper">
+                <div id="scroller">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="goods" onclick="goods()"
+             style="font-size:14px;color:#fb9329;line-height:40px;text-decoration:underline">
+            物业交割单
+        </div>
+        <div style="height:10px"></div>
+    </div>
+    <div class="step3" style="height:10px;background-color:#f7f7f7"></div>
+    <div class="step3" style="position:relative;padding-left:20px;padding-right:20px;padding-top:15px">
+        <img src="images/20180103/line3.png" style="width:100%"/>
+        <div style="position:absolute;top:20px;left:0px;right:0px;text-align:center">
+            <div style="font-size:16px;color:#FF8C14;background:#FEE9D4;border-radius:100px;width:110px;height:26px;line-height:26px;display:inline-block">
+                退租确认单
+            </div>
+        </div>
+        <div style="padding-top:20px">
+            <div style="color: rgba(153,153,153,1);font-size:14px;line-height:40px">附件</div>
+            <div id="wrapper2">
+                <div id="scroller2">
+                    <ul>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div style="height:10px"></div>
+    </div>
     <div style="height:70px;background-color:#f7f7f7"></div>
     <div class="btnNext" style="box-shadow:0 0 5px 0 rgba(0,0,0,0.10)">
         <div style="float:left;width:50%;text-align:center;font-size:16px;color:#fb9329;line-height:50px"
@@ -149,6 +312,11 @@
         <div style="width:100%;text-align:center;font-size:16px;color:#fb9329;line-height:50px"
              onclick="showMsgAlert()">
             <img src="images/tel.png" style="width:30px;height:30px;vertical-align:middle;margin-right:10px"/>联系管家
+        </div>
+    </div>
+    <div id="outerdiv" style="position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:2;width:100%;height:100%;display:none">
+        <div id="innerdiv" style="position:absolute;">
+            <img id="bigimg" style="border:1px solid #ffffff"/>
         </div>
     </div>
     <div class="msg-post">
@@ -251,16 +419,16 @@
             <label>付款方式</label><span>按{9}</span>
         </div>
         <div style="line-height:36px">
-            <label>{10}</label><span onclick="signUrl('{11}')" style="float:right;color:#FF8C14">查看></span>
+            <label>{10}</label><span onclick="signUrl('{11}')" style="float:right;color:#FF8C14">{12}></span>
         </div>
         <div class="contractNotes" style="background-color:#f4f4f4;height:auto;padding:5px;line-height:22px;font-size:14px;color:#333333">
             {13}
         </div>
-        <div style="line-height:36px" class="goods">
-            <label>物业交割单</label><span onclick="goods('{14}')" style="float:right;color:#FF8C14">查看></span>
+        <div style="line-height:36px">
+            <label>{10}</label><span onclick="signUrl('{11}')" style="float:right;color:#FF8C14">{12}></span>
         </div>
-        <div style="line-height:36px" class="checkout">
-            <label>退租确认单</label><span onclick="checkout('{14}')" style="float:right;color:#FF8C14">查看></span>
+        <div style="line-height:36px">
+            <label>{10}</label><span onclick="signUrl('{11}')" style="float:right;color:#FF8C14">{12}></span>
         </div>
         <div style="height:10px">
         </div>
@@ -277,12 +445,21 @@
             <span style="font-size:14px">{1}</span>
         </div>
     </script>
+    <script type="text/html" id="tplPropertyDeliveie">
+        <li>
+            <div style="width:150px;padding-right:10px">
+                <img src="{0}" style="width:100%;height:100%"/>
+            </div>
+        </li>
+    </script>
 </div>
 </body>
 </html>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/moment@2.17.1/min/moment.min.js"></script>
-<script src="script/constants.js?ver=18.12.487"></script>
-<script src="script/service.js?ver=18.12.487"></script>
-<script src="script/view.js?ver=18.12.487"></script>
+<script src="packages/iscroll@5.2.0/build/iscroll.js"></script>
+<script src="packages/iscroll@5.2.0/demos/demoUtils.js"></script>
+<script src="script/constants.js?ver=18.12.486"></script>
+<script src="script/service.js?ver=18.12.486"></script>
+<script src="script/view20181109.js?ver=18.12.486"></script>

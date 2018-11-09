@@ -2,6 +2,7 @@
  * Created by long.jiang on 2017/1/10.
  */
 var contractConfirmInfoId = "";
+var contractId = "";
 var hasPaper = false;
 //
 $(document).ready(function () {
@@ -10,7 +11,9 @@ $(document).ready(function () {
         $(".agreement").show();
     }
     contractConfirmInfoId = getCookie(constants.COOKIES.CONTRACTCONFIRMINFOID);
-    postInvoke(constants.URLS.RENDERAGREEMENTHTMLTEMPLATE, {contractConfirmInfoId: contractConfirmInfoId}, function (res) {
+    contractId = getURLQuery("contractId");
+    var query = (contractConfirmInfoId != "" ? {contractConfirmInfoId: contractConfirmInfoId} : {contractId: contractId});
+    postInvoke(constants.URLS.RENDERAGREEMENTHTMLTEMPLATE, query, function (res) {
         if (hasPaper) {
             $("#divAgreementDetail1").find(".mui-scroll").html(res.data[0].templateContent);
         }

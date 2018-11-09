@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>物业交割单</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.487" rel="stylesheet"/>
+    <style type="text/css">
+        .goods div {
+            padding: 0;
+            margin-top: 10px;
+        }
+        .goods img {
+            width: 100%;
+            height: auto;
+            border: none;
+            vertical-align: bottom;
+        }
+        table {
+            width: 100%;
+            border: 1px solid #B0BEC5;
+            font-size: 10px;
+            color: #515151;
+        }
+        td {
+            border: 1px solid #B0BEC5;
+            padding: 0 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="mui-content">
+    <div style="padding:0 20px">
+        <div style="margin-top:20px;color:#646464" id="divDeliveies">
+        </div>
+        <div style="border-top:1px dotted rgba(233,233,233,1);margin-top:10px"></div>
+        <div class="goods" id="divImgUrls" style="padding-bottom:10px">
+        </div>
+        <div style="border-top:1px dotted rgba(233,233,233,1)"></div>
+        <div style="margin-top:20px" id="divGoods">
+        </div>
+        <div style="height:30px"></div>
+    </div>
+    <script type="text/html" id="tplDeliveies">
+        <div style="font-size:16px;line-height:30px">{0}<span style="margin-left:5px">{1}房间</span></div>
+        <div style="font-size:14px;line-height:30px">租客姓名：{2}</div>
+        <div style="font-size:14px;line-height:30px">更新时间：{3}</div>
+    </script>
+    <script type="text/html" id="tplGood">
+        <div style="margin-top:20px;line-height:30px">
+            {0}
+        </div>
+        <div>
+            <table>
+                <tr style="background-color:#EDEFF2">
+                    <td>名称/型号</td>
+                    <td>数量</td>
+                    <td>状态</td>
+                </tr>
+                {1}
+            </table>
+        </div>
+    </script>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="script/constants.js?ver=18.12.487"></script>
+<script src="script/service.js?ver=18.12.487"></script>
+<script src="script/goods.js?ver=18.12.487"></script>
