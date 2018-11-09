@@ -3,9 +3,13 @@ $(document).ready(function () {
     contractId = getURLQuery("contractId");
     getInvoke(constants.URLS.GETCONTRACTDETAILS.format(contractId), function (res) {
         if (res.succeeded && res.data != null) {
+            var tenantName = "--";
+            if (res.data.hasOwnProperty("tenantName")) {
+                tenantName = res.data.tenantName;
+            }
             var roomDetails = res.data.roomDetails;
             var tplDeliveies = $("#tplDeliveies").html();
-            $("#divDeliveies").html(tplDeliveies.format(roomDetails.apartmentName, roomDetails.roomNumber,res.data.tenantName, res.data.propertyDeliveies.updateTime.substring(0, 16)));
+            $("#divDeliveies").html(tplDeliveies.format(roomDetails.apartmentName, roomDetails.roomNumber, tenantName, res.data.propertyDeliveies.updateTime.substring(0, 16)));
             //
             var arrImgUrls = [];
             var imgUrls = res.data.propertyDeliveies.fileUrl;

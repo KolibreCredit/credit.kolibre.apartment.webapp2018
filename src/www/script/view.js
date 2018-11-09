@@ -1,7 +1,6 @@
 /**
  * Created by long.jiang on 2016/12/14.
  */
-var isPictures = false;
 var contractId = "";
 
 //
@@ -30,11 +29,7 @@ function apply() {
 }
 
 function signUrl(imgUrl) {
-    if (isPictures) {
-        window.location.href = "signImg.html?imgUrl=" + imgUrl;
-    } else {
-        window.location.href = " agreement.html?hasPaper=0&contractId=" + imgUrl;
-    }
+    window.location.href = "signImg.html?imgUrl=" + imgUrl;
 }
 
 function filterOrderState(orderState) {
@@ -115,14 +110,16 @@ $(document).ready(function () {
             $(".msg-alert").html($("#tplMsgAlert").html().format(item.managerContact));
             var templateName = "";
             var imageStorageLocation = "";
-            if (item.contractPictures) {
-                templateName = "查看";
-                imageStorageLocation = item.contractPictures;
-                isPictures = true;
-            } else {
-                templateName = "查看";
-                imageStorageLocation = item.contractId;
-                isPictures = false;
+            if (item.confirmed) {
+                if (item.contractPictures) {
+                    templateName = "查看";
+                    imageStorageLocation = item.contractPictures;
+                } else {
+                    templateName = "查看";
+                    if (item.digitalContractInfos.length > 0) {
+                        imageStorageLocation = item.digitalContractInfos[0].imageStorageLocation;
+                    }
+                }
             }
             var isStagesMonthRents = false;
             var arrStagesMonthRents = [];
@@ -159,6 +156,9 @@ $(document).ready(function () {
                         htmlCustomDeposit.push(tplCustomDeposit.format(customDeposit.name, (customDeposit.amount / 100).toFixed(2)));
                     }
                     $(".customDeposits").html(htmlCustomDeposit.join("")).show();
+                }
+                if (item.confirmed && imageStorageLocation != "") {
+                    $(".contractPicture").show();
                 }
                 if (item.confirmed) {
                     $(".btnNext").eq(1).show();
