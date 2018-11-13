@@ -9,7 +9,7 @@
     <link href="packages/mui@3.4.0/examples/hello-mui/css/mui.picker.min.css" rel="stylesheet"/>
     <link href="packages/swiper@4.0.5/dist/css/swiper.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.491" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.492" rel="stylesheet"/>
     <style type="text/css">
         input[type=text] {
             padding: 5px;
@@ -155,17 +155,19 @@
         <div style="margin-bottom:10px;margin-top:50px;overflow-y:auto;padding:0 10px" id="divRenderHtmlTemplate">
         </div>
         <div style="position: fixed;bottom:0;right:0;left:0;z-index:2;background-color:white">
-            <div style="position: relative;font-size:12px;height:40px">
+            <div style="position: relative;font-size:12px;height:60px">
                 <img src="images/check1.png" style="width:18px;height:18px;position: absolute;top:10px;left:20px"/>
                 <span style="position:absolute;top:10px;left:45px;color:#646464">同意</span>
-                <span style="color:#bcbcbc;position:absolute;top:10px;left:70px" onclick="agreement()">蜂鸟屋服务协议 | 补充协议</span>
-              <!--  <a style="color:#bcbcbc;text-decoration:none;position:absolute;top:10px;left:70px" href="#divAgreement">《蜂鸟屋服务协议》</a>-->
+                <span style="color:#5c6e8a;position:absolute;top:10px;left:75px;right:10px" onclick="agreement()">
+                    蜂鸟屋服务协议 | 居住房屋租赁合同<label style="color:#646464;padding:0 2px">及</label>补充协议 | 应收账款转让通知及回执
+                </span>
+              <!-- <a style="color:#bcbcbc;text-decoration:none;position:absolute;top:10px;left:70px" href="#divAgreement">《蜂鸟屋服务协议》</a>-->
             </div>
             <div>
                 <button class="btnActive" onclick="confirmcCntract1()" style="height:50px;border-radius:inherit">确认签约</button>
             </div>
         </div>
-        <div style="height:180px"></div>
+        <div style="height:120px"></div>
     </div>
     <div class="step1">
         <div style="background: url('images/20180103/apply5.jpg');background-size:cover;padding:20px;text-align:center">
@@ -828,9 +830,9 @@
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/mui@3.4.0/examples/hello-mui/js/mui.picker.min.js"></script>
 <script src="packages/swiper@4.0.5/dist/js/swiper.min.js"></script>
-<script src="script/constants.js?ver=18.12.491"></script>
-<script src="script/service.js?ver=18.12.491"></script>
-<script src="script/apply51.js?ver=18.12.491"></script>
+<script src="script/constants.js?ver=18.12.492"></script>
+<script src="script/service.js?ver=18.12.492"></script>
+<script src="script/apply51.js?ver=18.12.492"></script>
 <script type="text/javascript">
     mui('#divRelation').scroll({scrollX: false, scrollY: true});
     mui('body').on('tap', '.mui-popover-action li>a', function () {

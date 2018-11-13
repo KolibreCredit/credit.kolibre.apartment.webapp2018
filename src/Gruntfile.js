@@ -75,6 +75,7 @@ module.exports = function (grunt) {
             ver: {
                 src: [
                     'www/agreement.html',
+                    'www/agreement2.html',
                     'www/answer.html',
                     'www/anzhi.html',
                     'www/apply1.html',

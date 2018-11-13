@@ -132,7 +132,7 @@ function confirmcCntract1() {
 }
 
 function agreement() {
-    window.location.href = "agreement.html?hasPaper=0";
+    window.location.href = "agreement.html";
 }
 //
 function chooseImage(index) {
