@@ -83,15 +83,15 @@ var enumLoginState = function (loginState) {
 function retlogin() {
     setTimeout(function () {
         if (url != '') {
-            window.location.href = decodeURIComponent(url);
+            window.location.replace(decodeURIComponent(url));
         } else {
-            window.location.href = "index.html";
+            window.location.replace("index.html");
         }
     }, 1000);
 }
 
 function loginByCaptcha() {
-    window.location.href = "login.html?url={0}".format(url);
+    window.location.replace("login.html?url={0}".format(url));
 }
 
 $(document).ready(function () {

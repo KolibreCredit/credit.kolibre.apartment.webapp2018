@@ -2,11 +2,19 @@
  * Created by long.jiang on 2017/3/16.
  */
 function uesr() {
-    window.location.href = "user.html";
+    getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
+        if (res.succeeded) {
+            window.location.href = "user.html";
+        }
+    });
 }
 
 function list() {
-    window.location.href = "list.html";
+    getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
+        if (res.succeeded) {
+            window.location.href = "list.html";
+        }
+    });
 }
 
 function showTel() {

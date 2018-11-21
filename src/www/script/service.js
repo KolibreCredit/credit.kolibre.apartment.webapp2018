@@ -208,10 +208,6 @@ function isWeixin() {
     return false;
 }
 
-function bill() {
-    window.location.replace(constants.URLS.BILL);
-}
-
 function toApplys(nextStep) {
     window.location.href = constants.CONFIGS.APPLYS[nextStep];
 }
@@ -482,6 +478,19 @@ function getRepairType(repairType) {
     }
 }
 
+function bill() {
+     getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
+        if (res.succeeded) {
+            window.location.href = constants.URLS.BILL;
+        }
+    });
+}
 function fuwu() {
-    window.location.href = "fuwu.html";
+
+
+    getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
+        if (res.succeeded) {
+            window.location.href = "fuwu.html";
+        }
+    });
 }

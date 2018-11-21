@@ -2,6 +2,7 @@
  * Created by long.jiang on 2016/12/12.
  */
 var url = "";
+
 function loginByCaptcha() {
     var cellphone = $("#txtPhone").val().trimPhone();
     if (cellphone == '') {
@@ -12,12 +13,13 @@ function loginByCaptcha() {
         mui.toast(constants.msgInfo.phoneerr);
         return false;
     }
-    window.location.href = "login2.html?cellphone={0}&url={1}".format(cellphone, url);
+    window.location.replace("login2.html?cellphone={0}&url={1}".format(cellphone, url));
 }
 
 function loginByPassword() {
-    window.location.href = "login3.html?url={0}".format(url);
+    window.location.replace("login3.html?url={0}".format(url));
 }
+
 $(document).ready(function () {
     url = getURLQuery("url");
 });
