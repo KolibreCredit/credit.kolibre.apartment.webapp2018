@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>配置公寓模板</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <link href="packages/swiper@3.3.1/dist/css/swiper.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.498" rel="stylesheet"/>
+    <style type="text/css">
+        input[type=text] {
+            padding: 5px;
+            border: 0;
+            margin-bottom: 0;
+        }
+
+        .mui-media-body {
+            width: 110%;
+        }
+
+        .mui-media-body span {
+            display: inline-block;
+            margin-top: 8px;
+            color: #646464
+        }
+
+        .mui-table-view:before {
+            height: 0;
+        }
+
+        .mui-table-view:after {
+            height: 0;
+        }
+
+        .mui-table-view-chevron .mui-table-view-cell {
+            padding-right: 45px;
+        }
+
+        .mui-navigate-right:after {
+            right: 30px;
+        }
+
+        .mui-table-view-cell {
+            text-align: left;
+        }
+
+        .mui-h1, h1 {
+            font-size: 20px;
+        }
+
+        .swiper-container {
+            padding: 0 20px;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: rgba(255, 255, 255, 0);
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .swiper-slide .select {
+            display: none;
+        }
+
+        .swiper-slide .logo {
+            width: 100%;
+        }
+
+        .swiper-slide-active .select {
+            width: 24px;
+            height: 24px;
+            display: block;
+            position: absolute;
+            top: 0px;
+            right: 0px;
+        }
+
+        .swiper-pagination {
+            text-align: center;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 10px
+        }
+
+        .swiper-pagination span {
+            margin: 0 5px;
+        }
+
+        .swiper-pagination-bullet {
+            opacity: 0.6;
+            background: #ffffff;
+        }
+
+        .swiper-pagination-bullet-active {
+            opacity: 1;
+            background: #FF8C14;
+        }
+
+        .step0 {
+            display: block;
+        }
+
+        .step1 {
+            background-color: #f7f7f7;
+            display: none;
+        }
+
+        .add {
+            width: 36px;
+            height: 36px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -18px;
+            margin-top: -18px;
+        }
+    </style>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
+</head>
+<body style="background-color:#FFFFFF">
+<div class="mui-content">
+    <div class="step0" style="text-align:center;padding:20px 0;font-size:16px;color:#646464">
+        选择模板
+    </div>
+    <div class="step0">
+        <div class="swiper-container" id="swiper-container" style="padding:0">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img class="logo" src="images/config/0.jpg"/>
+                    <img class="select" src="images/config/select.png"/>
+                </div>
+                <div class="swiper-slide">
+                    <img class="logo" src="images/config/1.jpg"/>
+                    <img class="select" src="images/config/select.png"/>
+                </div>
+                <div class="swiper-slide">
+                    <img class="logo" src="images/config/2.jpg"/>
+                    <img class="select" src="images/config/select.png"/>
+                </div>
+                <div class="swiper-slide">
+                    <img class="logo" src="images/config/3.jpg"/>
+                    <img class="select" src="images/config/select.png"/>
+                </div>
+                <div class="swiper-slide">
+                    <img class="logo" src="images/config/4.jpg"/>
+                    <img class="select" src="images/config/select.png"/>
+                </div>
+                <div class="swiper-slide">
+                    <img class="logo" src="images/config/5.jpg"/>
+                    <img class="select" src="images/config/select.png"/>
+                </div>
+                <div class="swiper-slide">
+                    <img class="logo" src="images/config/6.jpg"/>
+                    <img class="select" src="images/config/select.png"/>
+                </div>
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination" style="display:none"></div>
+        </div>
+    </div>
+    <div class="step0" style="position: fixed;bottom:0;right:0;left:0">
+        <button class="btnActive"
+                style="background:#ff8c14;height:44px;color:#ffffff;font-size:18px;width:100%;border:none"
+                onclick="step1()">下一步
+        </button>
+    </div>
+    <div class="step0" style="height:50px"></div>
+    <div class="step1">
+        <div style="padding: 0 20px">
+            <div style="text-align:center;font-size:16px;color:#333333;margin-top:30px">
+                上传背景图1
+            </div>
+            <div style="height: 10px">
+            </div>
+            <div style="position:relative;height:202px;width:100%;border:1px dotted #fd8b14;background-color:#FFFFFF">
+                <img id="imgBigBackground" style="width:100%;height:200px;display:none"/>
+                <img src="images/20180103/add.png" class="add" onclick="wxChooseImage(0)"/>
+            </div>
+            <div style="text-align:center;font-size:16px;color:#333333;margin-top:30px">
+                上传背景图2
+            </div>
+            <div style="height: 10px">
+            </div>
+            <div style="position:relative;height:202px;width:100%;border:1px dotted #fd8b14;background-color:#FFFFFF">
+                <img id="imgSmallBackground" style="width:100%;height:200px;display:none"/>
+                <img src="images/20180103/add.png" class="add" onclick="wxChooseImage(1)"/>
+            </div>
+            <div style="text-align:center;font-size:16px;color:#333333;margin-top:30px">
+                上传logo图
+            </div>
+            <div style="height: 10px">
+            </div>
+            <div style="position:relative;height:202px;width:100%;border:1px dotted #fd8b14;background-color:#FFFFFF">
+                <img id="imgBigLogo" style="width:100%;height:200px;display:none"/>
+                <img src="images/20180103/add.png" class="add" onclick="wxChooseImage(2)"/>
+            </div>
+            <div style="text-align:center;font-size:16px;color:#333333;margin-top:30px">
+                上传slogan图
+            </div>
+            <div style="height: 10px">
+            </div>
+            <div style="position:relative;height:202px;width:100%;border:1px dotted #fd8b14;background-color:#FFFFFF">
+                <img id="imgSmallLogo" style="width:100%;height:200px;display:none"/>
+                <img src="images/20180103/add.png" class="add" onclick="wxChooseImage(3)"/>
+            </div>
+
+            <div style="text-align:center;font-size:16px;color:#333333;margin-top:30px">
+                二维码logo
+            </div>
+            <div style="height: 10px">
+            </div>
+            <div style="position:relative;height:202px;width:100%;border:1px dotted #fd8b14;background-color:#FFFFFF">
+                <img id="imgQrCodeLogo" style="width:100%;height:200px;display:none"/>
+                <img src="images/20180103/add.png" class="add" onclick="wxChooseImage(4)"/>
+            </div>
+        </div>
+    </div>
+    <div class="step1" style="position: fixed;bottom:0;right:0;left:0">
+        <button class="btnActive"
+                style="background:#ff8c14;height:44px;color:#ffffff;font-size:18px;width:100%;border:none"
+                onclick="apply()">提交
+        </button>
+    </div>
+    <div class="step1" style="height:60px"></div>
+    <div id="chooseImage" style="display:none"></div>
+    <div class="msg-post">
+        <table style='width:100%;height:100%'>
+            <tr>
+                <td style='vertical-align:middle'>
+                    <div>
+                        <img src="images/loading.gif" style="width:auto;height:40px">
+                    </div>
+                    <div style="font-size:16px">
+                        提交中，请等待...
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="packages/swiper@3.3.1/dist/js/swiper.min.js"></script>
+<script src="script/constants.js?ver=18.12.498"></script>
+<script src="script/service.js?ver=18.12.498"></script>
+<script src="script/config1.js?ver=18.12.498"></script>

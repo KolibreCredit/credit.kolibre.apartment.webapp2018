@@ -69,6 +69,7 @@ var constants = {
         CANCELCOMPLAINTSUGGESTION: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/CancelComplaintSuggestion",
         GETALLTENANCIES: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/ShortLink/GetAllTenancies",
         CREATESHORTLINK: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/ShortLink/CreateShortLink",
+        GETSHORTLINKADDRESSBYTENANCYID:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/ShortLink/GetShortLinkAddressByTenancyId?tenancyId={0}",
         CREATERESERVATION: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/CreateReservation",
         GETROOMSOURCERESERVATIONS: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/GetRoomSourceReservations",
         GETROOMSOURCE: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/GetRoomSource?roomId={0}",

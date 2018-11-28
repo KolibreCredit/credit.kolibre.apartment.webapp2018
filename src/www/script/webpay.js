@@ -50,6 +50,7 @@ function zhifubao() {
         window.location.href = "precreate.html?transactionId={0}&amount={1}&paymentTime={2}".format(transactionId, amount, paymentTime.substring(0, 10));
     });
 }
+
 //创建交易流水
 var weixinpay = function () {
     createTransaction("WeiXin", function (res) {
