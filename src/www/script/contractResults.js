@@ -1,7 +1,6 @@
 var contractId = "";
 var waitTimer = null;
 var waitCount = 60;
-
 //
 function sendWaitTimer() {
     if (waitCount > 0) {

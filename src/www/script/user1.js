@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
     getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
         if (res.succeeded) {
@@ -12,5 +13,5 @@ $(document).ready(function () {
 
 function loginOut() {
     clearToken();
-    window.location.href = 'index.html';
+    window.location.href = getCookie(constants.COOKIES.INDEXURL) || "index.html";
 }

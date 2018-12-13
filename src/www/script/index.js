@@ -26,6 +26,7 @@ function hideTel() {
 }
 
 $(document).ready(function () {
+    setCookie(constants.COOKIES.INDEXURL, window.location.href);
     document.title = getURLQuery("title");
     var templateType = getURLQuery("templateType");
     var bigBackground = getURLQuery("bigBackground") || "images/20180103/bg1.jpg";

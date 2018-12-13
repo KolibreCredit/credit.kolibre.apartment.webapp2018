@@ -28,7 +28,7 @@ function getConfirmContractResult(confirmContractProcessId) {
         if (res.succeeded) {
             if (res.data.confirmContractResult == "Success") {
                 ispostData = false;
-                if (res.data.canStage) {
+                if (res.data.canStage || true) {
                     window.location.href = "contractResults.html?contractId={0}".format(res.data.contractId);
                 } else {
                     showMsg("success", "合同确认成功");
@@ -134,6 +134,7 @@ function confirmcCntract1() {
 function agreement() {
     window.location.href = "agreement.html";
 }
+
 //
 function chooseImage(index) {
     imgIndex = index;

@@ -9,6 +9,7 @@ var paymentTime = "";
 var transactionId = "";
 var orderModel = "";
 var isTransaction = true;
+var isPost = true;
 //
 var validateAmount = function () {
     amount = $("#txtNotPaidAmount").val().replace(",", "");
@@ -25,7 +26,7 @@ var validateAmount = function () {
 };
 
 var createTransaction = function (transactionMethod, callSuccess) {
-    if (validateAmount()) {
+    if (isPost && validateAmount()) {
         var data = {
             orderId: orderId,
             orderModel: orderModel,
@@ -34,12 +35,20 @@ var createTransaction = function (transactionMethod, callSuccess) {
             transactionMethod: transactionMethod,
             paymentSource: "Fengniaowu"
         };
+        isPost = false;
+        $("#lbTitle").html(" 正在提交...");
+        $(".msg-post").show();
         postInvoke(constants.URLS.CREATETRANSACTION, data, function (res) {
+            isPost = true;
+            $(".msg-post").hide();
             if (res.succeeded) {
                 callSuccess(res);
             } else {
                 mui.toast(res.message);
             }
+        }, function (err) {
+            isPost = true;
+            $(".msg-post").hide();
         });
     }
 };
@@ -119,8 +128,11 @@ var queryTransaction = function () {
     }
 };
 var queryOrderbyOrderId = function () {
+    $("#lbTitle").html(" 正在加载...");
+    $(".msg-post").show();
     orderId = getURLQuery("orderId");
-    getInvoke(constants.URLS.GETORDERBYORDERID.format(orderId), function (res) {
+    getInvoke(constants.URLS.GETORDERBYORDERIDV2.format(orderId), function (res) {
+        $(".msg-post").hide();
         if (res.succeeded) {
             paymentTime = res.data.paymentTime;
             totalAmount = res.data.totalAmount;
@@ -142,6 +154,8 @@ var queryOrderbyOrderId = function () {
             }
             $("#txtNotPaidAmount").focus();
         }
+    }, function (err) {
+        $(".msg-post").hide();
     });
 };
 

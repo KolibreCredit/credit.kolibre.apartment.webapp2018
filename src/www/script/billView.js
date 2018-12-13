@@ -8,7 +8,6 @@ $(document).ready(function () {
     getInvoke(constants.URLS.GETORDERBYORDERID.format(orderId), function (res) {
         if (res.succeeded && res.data != null) {
             item = res.data;
-            var tplLeaseInfo = $("#tplLeaseInfo").html();
             var tipUrl = "";
             var tipTitle = "";
             var tipTitle1 = "";
@@ -52,27 +51,73 @@ $(document).ready(function () {
                 }
             }
             $("#imgOrderState").attr("src", tipUrl);
-            document.getElementById("imgOrderState").onload = function () {
-                $(".fang").show();
-            };
-            var htmlLeaseInfo = tplLeaseInfo.format(
-                tipTitle,
-                (item.totalAmount / 100).toFixed(2),
-                (item.orderType == "CustomDeposit" ? item.orderTypeName : getOrderType(item.orderType)),
-                (item.orderAmount / 100).toFixed(2),
-                (item.depositAmount / 100).toFixed(2),
-                (item.penaltyAmount / 100).toFixed(2),
-                (item.serviceCharge / 100).toFixed(2),
-                (item.propertyManagementAmount / 100).toFixed(2),
-                item.paymentTime.substring(0, 10),
-                tipTitle1,
-                tipTitle2,
-                item.orderState.toLowerCase(),
-                item.apartmentName,
-                item.roomNumber,
-                item.orderStartTime.substring(0, 10),
-                item.orderEndTime.substring(0, 10));
-            $("#divLeaseInfo").html(htmlLeaseInfo);
+            /* document.getElementById("imgOrderState").onload = function () {
+                 $(".fang").show();
+             };*/
+            if (item.orderType == "HouseRental") {
+                var tplLeaseInfo = $("#tplLeaseInfo0").html();
+                var htmlLeaseInfo = tplLeaseInfo.format(
+                    item.apartmentName,
+                    item.roomNumber,
+                    (item.orderType == "CustomDeposit" ? item.orderTypeName : getOrderType(item.orderType)),
+                    (item.totalAmount / 100).toFixed(2),
+                    tipTitle,
+                    item.orderState.toLowerCase(),
+                    (item.repayAmount / 100).toFixed(2),
+                    (item.propertyManagementAmount / 100).toFixed(2),
+                    (item.penaltyAmount / 100).toFixed(2),
+                    (item.serviceCharge / 100).toFixed(2),
+                    item.paymentTime.substring(0, 10),
+                    tipTitle1,
+                    tipTitle2,
+                    item.orderStartTime.substring(0, 10),
+                    item.orderEndTime.substring(0, 10));
+                $("#divLeaseInfo").html(htmlLeaseInfo);
+            } else if (item.orderType == "HotWaterFee" || item.orderType == "ColdWaterFee" || item.orderType == "ElectricityFee") {
+                var tplLeaseInfo = $("#tplLeaseInfo1").html();
+                var htmlLeaseInfo = tplLeaseInfo.format(
+                    item.apartmentName,
+                    item.roomNumber,
+                    (item.orderType == "CustomDeposit" ? item.orderTypeName : getOrderType(item.orderType)),
+                    (item.totalAmount / 100).toFixed(2),
+                    tipTitle,
+                    item.orderState.toLowerCase(),
+                    (item.repayAmount / 100).toFixed(2),
+                    item.paymentTime.substring(0, 10),
+                    tipTitle1,
+                    tipTitle2,
+                    item.orderStartTime.substring(0, 10),
+                    item.orderEndTime.substring(0, 10));
+                $("#divLeaseInfo").html(htmlLeaseInfo);
+                setTimeout(function () {
+                    if (item.utilityExpensenInfo != null) {
+                        var tplLeaseInfoItems = $("#tplLeaseInfoItems").html();
+                        $(".leaseInfoItems").html(tplLeaseInfoItems.format(
+                            (item.utilityExpensenInfo.unitPrice / 100).toFixed(2),
+                            item.utilityExpensenInfo.currentTime.substring(0, 10),
+                            item.utilityExpensenInfo.lastTime.substring(0, 10),
+                            (item.utilityExpensenInfo.totalAmount / 100).toFixed(2),
+                            item.utilityExpensenInfo.currentRecord.toFixed(2),
+                            item.utilityExpensenInfo.lastRecord.toFixed(2))).show();
+                    }
+                }, 0);
+            } else {
+                var tplLeaseInfo = $("#tplLeaseInfo2").html();
+                var htmlLeaseInfo = tplLeaseInfo.format(
+                    item.apartmentName,
+                    item.roomNumber,
+                    (item.orderType == "CustomDeposit" ? item.orderTypeName : getOrderType(item.orderType)),
+                    (item.totalAmount / 100).toFixed(2),
+                    tipTitle,
+                    item.orderState.toLowerCase(),
+                    (item.repayAmount / 100).toFixed(2),
+                    item.paymentTime.substring(0, 10),
+                    tipTitle1,
+                    tipTitle2,
+                    item.orderStartTime.substring(0, 10),
+                    item.orderEndTime.substring(0, 10));
+                $("#divLeaseInfo").html(htmlLeaseInfo);
+            }
         }
     }, function (err) {
         mui.toast(err.message);
