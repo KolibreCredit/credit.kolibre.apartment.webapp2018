@@ -8,6 +8,7 @@ var contractConfirmInfoId = "";
 var contractConfirmInfo = null;
 var imgIndex = -1;
 
+//
 var showMsg = function (icon, tip) {
     $(".msg-post").hide();
     $(".msg-icon").addClass(icon);
@@ -18,11 +19,13 @@ var showMsg = function (icon, tip) {
     }, 2000);
 };
 
+//
 var showfail = function (message) {
     ispostData = false;
     showMsg("fail", "合同确认失败\<br/>联系客服:\<br/>400-921-5508<br/>{0}".format(message));
 };
 
+//
 function getConfirmContractResult(confirmContractProcessId) {
     getInvoke(constants.URLS.GETCONFIRMCONTRACTRESULT.format(confirmContractProcessId), function (res) {
         if (res.succeeded) {
@@ -56,6 +59,7 @@ function getConfirmContractResult(confirmContractProcessId) {
     });
 }
 
+//
 function showNext() {
     $(".step0").hide();
     $(".step1").show();
@@ -220,6 +224,10 @@ function V2UploadImages3(serverId) {
     });
 }
 
+function confirmNeedRender() {
+    $(".msg_htmltemplate").hide();
+}
+
 $(document).ready(function () {
     tplContractPicture = $("#tplContractPicture").html();
     contractConfirmInfoId = getCookie(constants.COOKIES.CONTRACTCONFIRMINFOID);
@@ -227,10 +235,12 @@ $(document).ready(function () {
         if (res.succeeded) {
             contractConfirmInfo = res.data;
             //contractPictures
-            for (var i = 0; i < contractConfirmInfo.contractPictures.length; i++) {
-                itemContractPictures += tplContractPicture.format(contractConfirmInfo.contractPictures[i], i);
+            if( contractConfirmInfo.contractPictures!=null) {
+                for (var i = 0; i < contractConfirmInfo.contractPictures.length; i++) {
+                    itemContractPictures += tplContractPicture.format(contractConfirmInfo.contractPictures[i], i);
+                }
+                contractPictures(itemContractPictures, contractConfirmInfo.contractPictures.length);
             }
-            contractPictures(itemContractPictures, contractConfirmInfo.contractPictures.length);
             //
             $("#lbRealName").text(contractConfirmInfo.realName);
             $("#lbCellphone").text(contractConfirmInfo.cellphone);
@@ -303,6 +313,16 @@ $(document).ready(function () {
                 } else {
                     $("#imgSelfiePhoto").attr("src", "images/photo/other3.png");
                 }
+            }
+        }
+    });
+    //
+    var data = {contractConfirmInfoId: contractConfirmInfoId};
+    postInvoke(constants.URLS.RENDERPRECONFIGUREHTMLTEMPLATE, data, function (res) {
+        if (res.succeeded) {
+            if (res.data.needRender) {
+                $("#divContentHtmltemplate").html(res.data.content);
+                $(".msg_htmltemplate").show();
             }
         }
     });

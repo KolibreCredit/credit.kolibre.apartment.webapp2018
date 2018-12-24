@@ -2,13 +2,13 @@
  * Created by long.jiang on 2016/12/14.
  */
 var contractId = "";
-
 //
 function apply() {
     $(".msg-post").show();
     var data = {contractId: contractId};
     postInvoke(constants.URLS.CREATECONFIRMINFO, data, function (res) {
         if (res.succeeded) {
+            $(".msg-post").hide();
             setCookie(constants.COOKIES.CONTRACTCONFIRMINFOID, res.data.contractConfirmInfoId);
             if (res.data.nextStep == 5) {
                 if (res.data.contractMedium == 'Paper') {

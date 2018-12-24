@@ -27,7 +27,7 @@ function hideTel() {
 
 $(document).ready(function () {
     setCookie(constants.COOKIES.INDEXURL, window.location.href);
-    document.title = getURLQuery("title");
+    document.title = getURLQuery("title") || "蜂鸟屋";
     var templateType = getURLQuery("templateType");
     var bigBackground = getURLQuery("bigBackground") || "images/20180103/bg1.jpg";
     var bigLogo = getURLQuery("bigLogo") || "images/20180103/logo.png";

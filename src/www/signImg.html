@@ -9,11 +9,10 @@
     <!--App自定义的css-->
     <link href="css/app.css?ver=18.12.463" rel="stylesheet"/>
     <style type="text/css">
-        .mui-content div {
+        #divImgUrls div {
             padding: 0 10px;
             margin-top: 10px;
         }
-
         img {
             width: 100%;
             height: auto;
@@ -23,7 +22,11 @@
     </style>
 </head>
 <body>
-<div class="mui-content" id="divImgUrls" style="padding-bottom:10px">
+<div class="mui-content"  >
+  <div style="background-color:rgba(255, 243, 231,1);height: 30px;line-height:30px;position:fixed;top:0;width:100%;color: rgba(253, 139, 20, 1);font-size: 12px;padding:0 10px">
+    <img src="images/tip.png" style="width:14px;height:14px;vertical-align:middle;margin-right:5px;margin-top:-2px"/>长按图片可保存电子合同哦～
+  </div>
+ <div id="divImgUrls" style="margin-top:40px;padding-bottom:10px"></div>
 </div>
 </body>
 </html>

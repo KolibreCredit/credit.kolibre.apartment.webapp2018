@@ -175,6 +175,10 @@ var contractRenderHtmlTemplate = function (contractId) {
     });
 };
 
+function confirmNeedRender() {
+    $(".msg_htmltemplate").hide();
+}
+
 $(document).ready(function () {
     contractConfirmInfoId = getCookie(constants.COOKIES.CONTRACTCONFIRMINFOID);
     getInvoke(constants.URLS.GETCONTRACTCONFIRMINFO.format(contractConfirmInfoId), function (res) {
@@ -250,6 +254,16 @@ $(document).ready(function () {
                 } else {
                     $("#imgSelfiePhoto").attr("src", "images/photo/other3.png");
                 }
+            }
+        }
+    });
+    //
+    var data = {contractConfirmInfoId: contractConfirmInfoId};
+    postInvoke(constants.URLS.RENDERPRECONFIGUREHTMLTEMPLATE, data, function (res) {
+        if (res.succeeded) {
+            if (res.data.needRender) {
+                $("#divContentHtmltemplate").html(res.data.content);
+                $(".msg_htmltemplate").show();
             }
         }
     });
