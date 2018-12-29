@@ -16,46 +16,39 @@
             text-align: center;
         }
 
-        .userInfoDiv {
-            position: absolute;
-            left: 0;
-            top: 0;
-            right: 0;
-            text-align: center;
-        }
-
         .bgImg {
             width: auto;
-            height: 242px;
-            background: url(images/20171212/user.png) center no-repeat;
+            height: 130px;
+            background: url(images/20181224/user.png) center no-repeat;
             background-size: cover;
+            position: relative;
+        }
+
+        .accountPicture {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            top: 30px;
+            left: 20px;
         }
 
         .userName {
             font-size: 20px;
             color: #ffffff;
-            margin-top: 50px;
         }
 
         .accountNo {
-            margin-top: 5px;
+            margin-left: 5px;
             border: 1px solid #FEC798;
-            border-radius: 57px;
+            border-radius: 60px;
             font-size: 14px;
             color: #ffffff;
-            padding: 2px 10px;
-        }
-
-        .userInfoDiv img {
-            margin-top: 5px;
-            width: 120px;
-            height: 120px;
+            padding: 1px 5px;
         }
 
         ul.userManageList {
             width: 100%;
             margin: 0;
-            margin-top: 25px;
             padding: 0;
             background: #ffffff;
         }
@@ -107,16 +100,19 @@
             background-size: 24px 24px;
             background-position: 0 18px;
         }
+
         ul.userManageList li a.item5 {
             background: url(images/user/fuwu.png) no-repeat;
             background-size: 24px 24px;
             background-position: 0 18px;
         }
+
         ul.userManageList li a.item6 {
             background: url(images/user/tuikuan.png) no-repeat;
             background-size: 24px 24px;
             background-position: 0 18px;
         }
+
         ul.userManageList li a:after {
             position: absolute;
             right: 20px;
@@ -127,32 +123,75 @@
             background: url(images/ic_grey_arrow.png) no-repeat center;
             background-size: 100% 100%;
         }
+
         #star img {
-            width: 14px;
-            height: 14px;
+            width: 18px;
+            height: 18px;
+        }
+
+        .category {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            background-color: #FFFFFF;
+        }
+
+        .category .item {
+            width: 25%;
+        }
+
+        .category .item > img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .category .item > div {
+            color: #646464;
+            font-size: 14px;
         }
     </style>
 </head>
-<body style="background: #f8f8f8">
+<body style="background-color:#f8f8f8">
 <div class="mui-content">
-    <div class="bgImg"></div>
-    <div class="userInfoDiv">
-        <div style="margin-top:40px;height:22px"><span class="userName" id="lbRealName"></span></div>
-        <div style="height:30px;margin-top:10px"><span class="accountNo" id="lbCellphone"></span></div>
-        <img src="images/20171212/ic_userImg.png"/>
+    <div class="bgImg">
+        <img src="images/20171212/ic_userImg.png" class="accountPicture"/>
+        <div style="position:absolute;top:30px;left:100px">
+            <div style="height:22px"><span class="userName" id="lbRealName"></span><span class="accountNo"
+                                                                                         id="lbCellphone"></span></div>
+            <div style="font-size:14px;color:#666666;text-align:left;white-space:nowrap;margin-top:15px">
+                <div id="star" style="display:inline-block"></div>
+            </div>
+        </div>
     </div>
-    <div style="font-size:14px;color:#666666;text-align:center;white-space:nowrap">
-        信用等级
-        <div id="star" style="display:inline-block;margin-left:10px"></div>
+    <div class="category">
+        <div class="item" onclick="list()">
+            <img src="images/20181224/zuyue.png"/>
+            <div>我的租约</div>
+        </div>
+        <div class="item" onclick="bill()">
+            <img src="images/20181224/zhangdan.png"/>
+            <div>我的账单</div>
+        </div>
+        <div class="item" onclick="waterElectricity()">
+            <img src="images/20181224/suidianbiao.png"/>
+            <div>智能水电表</div>
+        </div>
+        <div class="item" onclick="gateLock()">
+            <img src="images/20181224/mensuo.png"/>
+            <div>智能门锁</div>
+        </div>
+    </div>
+    <div style="height:10px;background:#f8f8f8">
     </div>
     <div style="background-color:#ffffff">
         <ul class="userManageList">
-            <li>
+            <li style="display:none">
                 <a class="item1" href="list.html">
-                    我的租约<span style="font-size:16px;color:#333333;position: absolute;right:50px">待处理<span  style="background:#ff0100;width:7px;height:7px;border-radius:100%;display:inline-block;margin-left:5px"></span></span>
+                    我的租约<span style="font-size:16px;color:#333333;position: absolute;right:50px">待处理<span
+                        style="background:#ff0100;width:7px;height:7px;border-radius:100%;display:inline-block;margin-left:5px"></span></span>
                 </a>
             </li>
-            <li>
+            <li style="display:none">
                 <a class="item2" onclick="bill()">我的账单</a>
             </li>
             <li>
@@ -170,6 +209,35 @@
                 <a class="item4" href="user1.html" style="border-bottom: none">个人设置</a>
             </li>
         </ul>
+    </div>
+    <div class="msg-alert" style="z-index:2">
+        <table style='width:100%;height:100%'>
+            <tr>
+                <td style='vertical-align:middle;text-align:center'>
+                    <div class="msg-body"
+                         style="width:100%;background-color: rgba(255, 255, 255, 1);box-shadow: 0px 15px 25px 0px rgba(0, 0, 0, 0.2)">
+                        <div style="margin-top:30px;text-align:center">
+                            <img src="images/tip5.png" style="height:40px;width:40px"/>
+                        </div>
+                        <div style="margin-top:20px;font-size:18px;color:#646464;line-height:25px;font-weight:bold">
+                            请先确认租约
+                        </div>
+                        <div id="lbAlert" style="margin-top:20px;font-size:14px;color:#646464;line-height:28px;padding-left:20px;padding-right:20px;text-align:center">
+                        </div>
+                        <div style="margin-top:40px">
+                            <button class="btnActive"
+                                    style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:90%;border:none"
+                                    onclick="list()">去确认
+                            </button>
+                        </div>
+                        <div style="margin-top:20px;text-align:center">
+                            <span style="font-size:14px;color:#ff8c14" onclick="closeAlert()">暂不确认</span>
+                        </div>
+                        <div style="height:20px"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
 </div>
 </body>

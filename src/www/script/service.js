@@ -486,8 +486,6 @@ function bill() {
     });
 }
 function fuwu() {
-
-
     getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
         if (res.succeeded) {
             window.location.href = "fuwu.html";

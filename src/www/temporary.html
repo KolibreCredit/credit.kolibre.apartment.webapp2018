@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>临时授权</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.506" rel="stylesheet"/>
+    <style type="text/css">
+        input[type=text] {
+            padding: 5px;
+            border: 0;
+            margin-bottom: 0;
+            width: 70%;
+        }
+        .btnActive {
+            background: #ff8c14;
+            border-radius: 44px;
+            height: 44px;
+            color: #ffffff;
+            font-size: 18px;
+            width: 100%;
+        }
+        .item {
+            position: relative;
+            border: 2px dotted #fd8b14;
+            height: auto;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body style="background-color:#f0f0f0">
+<div class="mui-content" style="background:none">
+    <div style="height:10px"></div>
+    <div style="padding-left:20px;background-color:#ffffff;font-size:16px; color: #646464">
+        <div style="border-bottom:1px solid #d8d8d8;height:60px;line-height:60px;white-space:nowrap">
+            用户姓名<input id="txtRealName" type="text" placeholder="请输入用户姓名" maxlength="10" style="text-align:right">
+        </div>
+        <div style="height:60px;line-height:60px;white-space:nowrap">
+            用户手机<input id="txtCellphone" type="text" placeholder="请输入用户手机" maxlength="11" style="text-align:right">
+        </div>
+    </div>
+    <div style="font-size:16px;color:#646464;padding:0 20px;margin-top:20px">
+        <img src="images/20181224/tip.png" style="width:16px;height:16px;vertical-align:middle;margin-top:-4px"/> 为了您的安全，请填写正确的用户手机号
+    </div>
+    <div style="font-size:16px;color:#646464;padding:0 20px;margin-top:10px">
+        您也可以<span style="color:#fd8b14;text-decoration:underline;margin-left:2px" onclick="temporary(1)">给自己临时授权</span>
+    </div>
+    <div style="text-align:center;margin-top:100px;background-color:#f0f0f0;padding: 0 20px">
+        <button class="btnActive"
+                style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:100%"
+                onclick="temporary(0)">确认授权
+        </button>
+    </div>
+    <div style="height:30px"></div>
+</div>
+<div id="divAlert" class="msg-alert" style="z-index:2">
+    <table style='width:100%;height:100%'>
+        <tr>
+            <td style='vertical-align:middle;text-align:center'>
+                <div class="msg-loading" style="display:none">
+                    <img src="images/loading.gif" style="width:auto;height:40px">
+                </div>
+                <div class="msg-res" style="display:none;width:100%;background-color: rgba(255, 255, 255, 1);box-shadow: 0px 15px 25px 0px rgba(0, 0, 0, 0.2)">
+                    <div style="height:30px"></div>
+                    <div style="text-align:center">
+                        <img class="icon" src="images/20181224/tip3.png" style="height:40px;width:40px"/>
+                    </div>
+                    <div class="message1" style="margin-top:20px;font-size:18px;color:#646464;line-height:25px;font-weight:bold">
+                    </div>
+                    <div class="message2" style="margin-top:10px;font-size:14px;color:#646464;line-height:25px">
+                    </div>
+                    <div style="margin-top:30px;padding:0 20px">
+                        <button class="btnActive"
+                                style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:90%;border:none"
+                                onclick="hideAlert()">确定
+                        </button>
+                    </div>
+                    <div style="height:30px"></div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="script/constants.js?ver=18.12.506"></script>
+<script src="script/service.js?ver=18.12.506"></script>
+<script src="script/temporary.js?ver=18.12.506"></script>

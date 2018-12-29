@@ -1,0 +1,65 @@
+var deviceId = "";
+var realName = "";
+var cellphone = "";
+var uesrInfo = null;
+
+function hideAlert() {
+    $("#divAlert").hide();
+}
+
+function temporary(index) {
+    if (index == 1) {
+        realName = uesrInfo.realName;
+        cellphone = uesrInfo.cellphone;
+    } else {
+        realName = $("#txtRealName").val();
+        if (realName == '') {
+            mui.toast(constants.msgInfo.realName);
+            return false;
+        }
+        cellphone = $("#txtCellphone").val();
+        if (cellphone == '') {
+            mui.toast("手机号为空!");
+            return false;
+        }
+        if (!constants.REGEX.CELLPHONE.test(cellphone)) {
+            mui.toast("手机号码格式错误");
+            return false;
+        }
+    }
+    $("#divAlert .msg-loading").show();
+    $("#divAlert .msg-res").hide();
+    $("#divAlert").show();
+    setTimeout(function () {
+        getInvoke(constants.URLS.GETLOCKTEMPORARYPASSWORD.format(deviceId, realName, cellphone), function (res) {
+            $("#divAlert .msg-loading").hide();
+            if (res.succeeded) {
+                $("#divAlert .icon").attr("src", "images/20181224/tip4.png");
+                $("#divAlert .message1").html("授权成功");
+                $("#divAlert .message2").html((index == 1 ? "临时开锁密码已发送至用户手机" : "临时开锁密码已发送至用户手机"));
+            } else {
+
+                $("#divAlert .icon").attr("src", "images/20181224/tip3.png");
+                $("#divAlert .message1").html("授权失败");
+                $("#divAlert .message2").html("请稍后再试～");
+            }
+            $("#divAlert .msg-res").show();
+        }, function (err) {
+            $("#divAlert .msg-loading").hide();
+            $("#divAlert .icon").attr("src", "images/20181224/tip3.png");
+            $("#divAlert .message1").html("授权失败");
+            $("#divAlert .message2").html("请稍后再试～");
+            $("#divAlert .msg-res").show();
+            mui.toast(err.message);
+        });
+    }, 1000);
+}
+
+$(document).ready(function () {
+    deviceId = getURLQuery("deviceId");
+    getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
+        if (res.succeeded) {
+            uesrInfo = res.data;
+        }
+    });
+});

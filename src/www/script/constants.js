@@ -42,7 +42,7 @@ var constants = {
         CREATEYUEFUORDERS: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Order/CreateYueFuOrders",
         //
         GETORDERBYORDERID: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Order/GetOrderByOrderId?orderId={0}",
-        GETORDERBYORDERIDV2:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/Order/v2/GetOrderByOrderId?orderId={0}",
+        GETORDERBYORDERIDV2: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Order/v2/GetOrderByOrderId?orderId={0}",
         CREATETRANSACTION: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Transaction/CreateTransaction",
         GETTRANSACTION: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Transaction/GetTransaction?transactionId={0}",
         GETWECHATOPENID: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Payment/GetWeChatOpenId",
@@ -76,13 +76,23 @@ var constants = {
         GETROOMSOURCE: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/GetRoomSource?roomId={0}",
         CANCELROOMSOURCERESERVATION: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/CancelRoomSourceReservation",
         GETSETTLEMENTORDERS: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Order/GetSettlementOrders?settlement={0}",
-        RENDERAGREEMENTHTMLTEMPLATE: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/RenderAgreementHtmlTemplate"
+        RENDERAGREEMENTHTMLTEMPLATE: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/RenderAgreementHtmlTemplate",
+        GETTENANTENERGYMETERS: "https://kc-talos-dev.fengniaowu.com/api/TenantDevice/GetTenantEnergyMeters",
+        GETENERGYMETERORDERS: "https://kc-talos-dev.fengniaowu.com/api/TenantDevice/GetEnergyMeterOrders?deviceId={0}&orderState=All",
+        TENANTENERGYMETERRECHAGE: "https://kc-talos-dev.fengniaowu.com/api/TenantDevice/TenantEnergyMeterRechage",
+        WHETHERCONFIRMCONTRACT:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/WhetherConfirmContract",
+        GETTENANTLOCKDEVICES:"https://kc-talos-dev.fengniaowu.com/api/TenantDevice/GetTenantLockDevices",
+        REMOTEOPENLOCK:"https://kc-talos-dev.fengniaowu.com/api/TenantDevice/RemoteOpenLock",
+        ADDLOCKPASSWORD:"https://kc-talos-dev.fengniaowu.com/api/TenantDevice/AddLockPassword",
+        GETLOCKTEMPORARYPASSWORD:"https://kc-talos-dev.fengniaowu.com/api/TenantDevice/GetLockTemporaryPassword?deviceId={0}&name={1}&cellphone={2}",
+        GETLOCKOPENRECORDS:"https://kc-talos-dev.fengniaowu.com/api/TenantDevice/GetLockOpenRecords?deviceId={0}&index={1}&count={2}"
     },
     COOKIES: {
         XKCSID: 'X-KC-SID',
         TAG: 'X-KC-TAG',
         CONTRACTCONFIRMINFOID: "X-KC-CONTRACTCONFIRMINFOID",
-        INDEXURL: "X-KC-INDEXURL"
+        INDEXURL: "X-KC-INDEXURL",
+        DEPOSIT: "X-KC-DEPOSIT"
     },
     REGEX: {
         CELLPHONE: /^(13|14|15|16|17|18|19|10)\d{9}$/,

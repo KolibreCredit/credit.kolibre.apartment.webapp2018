@@ -5,6 +5,7 @@ var waitTimer = null;
 var isTransaction = true;
 var transactionId = "";
 var amount = "";
+var isDeposit = false;
 //
 var queryTransaction = function () {
     if (transactionId != "" && isTransaction) {
@@ -17,7 +18,12 @@ var queryTransaction = function () {
                 if (isWxMini) {
                     wx.miniProgram.navigateTo({url: '/pages/bill/bill'});
                 } else {
-                    window.location.href = "bill.html";
+                    if (isDeposit) {
+                        setCookie(constants.COOKIES.DEPOSIT, "");
+                        window.location.href = "waterElectricity.html";
+                    } else {
+                        window.location.href = "bill.html";
+                    }
                 }
             }
         });
@@ -28,6 +34,7 @@ $(document).ready(function () {
     transactionId = getURLQuery("transactionId");
     amount = getURLQuery("amount");
     paymentTime = getURLQuery("paymentTime");
+    isDeposit = (getURLQuery("deposit") == "1" ? true : false);
     $("#lbTotalAmount").html((amount / 100).toFixed(2));
     $("#lbPaymentTime").html(paymentTime);
     var pay = {
