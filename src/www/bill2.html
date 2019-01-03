@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>我的账单</title>
+    <title>水电表账单</title>
     <meta name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.506" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.508" rel="stylesheet"/>
     <style type="text/css">
         input[type=text], input[type=password] {
             padding: 5px;
@@ -54,9 +54,11 @@
             background: #ffffff;
             position: relative;
         }
+
         .billItem:first-child {
             margin-top: 0px;
         }
+
         .billItem .top {
             padding: 0 20px;
             font-size: 14px;
@@ -313,6 +315,17 @@
             display: inline-block;
         }
 
+        .nodataDiv {
+            position: absolute;
+            display: none;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #f4f4f4;
+            z-index: 1;
+        }
+
         @media only screen and (max-width: 320px) {
             .billItem .billType {
                 font-size: 14px;
@@ -328,10 +341,10 @@
 <div class="mui-content" style="background:none">
     <div class="billList">
     </div>
-    <div class="nodataDiv" style="width: 100%; margin-top: 100px; text-align: center;display: none; padding: 0 20px">
-        <img style="text-align:center;width:100%" src="images/20181224/waterElectricity.png"/>
-        <span style="font-size: 16px; color: #999999;">
-            亲，您还没有使用智能水电表哦～
+    <div class="nodataDiv" style="flex-direction:column;align-items:center;justify-content:center">
+        <img style="text-align:center;width:100%" src="images/nodata2.png"/>
+        <span style="font-size: 16px;color: #999999;display:block;margin-top:10px">
+           您暂无水电表账单！
         </span>
     </div>
     <div class="msg-alert" style="z-index:2">
@@ -393,6 +406,6 @@
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/moment@2.17.1/min/moment.min.js"></script>
-<script src="script/constants.js?ver=18.12.506"></script>
-<script src="script/service.js?ver=18.12.506"></script>
-<script src="script/bill2.js?ver=18.12.506"></script>
+<script src="script/constants.js?ver=18.12.508"></script>
+<script src="script/service.js?ver=18.12.508"></script>
+<script src="script/bill2.js?ver=18.12.508"></script>

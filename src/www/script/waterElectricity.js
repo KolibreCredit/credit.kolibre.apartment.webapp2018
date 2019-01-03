@@ -55,11 +55,7 @@ function findAllTenantEnergyMeters() {
     $('.billList').html('');
     $('.nodataDiv').hide();
     getInvoke(constants.URLS.GETTENANTENERGYMETERS, function (res) {
-        if (res.data.length == 0) {
-            $('.billList').html("");
-            $('.nodataDiv').css({"display": "flex"});
-        }
-        else {
+        if (res.succeeded && res.data.length > 0) {
             billLists = res.data;
             var tplApartmentItem = $("#tplApartmentItem").html();
             var tplBillItem = $('#tplBillItem').html();
@@ -88,7 +84,7 @@ function findAllTenantEnergyMeters() {
                         title13 = (subItem.deviceType == "elemeter" ? "度" : "吨");
                         //
                         title21 = "可用余额";
-                        title22 = subItem.balance;
+                        title22 = (subItem.balance / 100).toFixed(2);
                         title23 = "元";
                         title24 = (subItem.balance < 0 ? "#FF8C14" : "#000000");
                         title25 = "none";
@@ -101,7 +97,7 @@ function findAllTenantEnergyMeters() {
                         if (subItem.hasUnpaidOrder) {
                             itemBtnPay = btnPay.format(subItem.orderId);
                             title21 = "账单金额";
-                            title22 = subItem.orderAmount;
+                            title22 = (subItem.orderAmount / 100).toFixed(2);
                             title23 = "元";
                             title24 = (subItem.orderAmount < 0 ? "#FF8C14" : "#000000");
                             title25 = "inline";
@@ -124,7 +120,11 @@ function findAllTenantEnergyMeters() {
                     itemBtnPay = "";
                 }
             }
-            $('.billList').html(billHtmls);
+            $('.billList').html(billHtmls).show();
+        }
+        else {
+            $('.billList').hide();
+            $('.nodataDiv').css({"display": "flex"});
         }
     });
 }

@@ -8,11 +8,15 @@ function list() {
 
 function waterElectricity() {
     getInvoke(constants.URLS.WHETHERCONFIRMCONTRACT, function (res) {
-        if (res.data.needConfirm) {
-            $("#lbAlert").html("您的租约处于待确认状态，不能查看智能水电表，请先确认租约。");
-            $(".msg-alert").show();
+        if (res.succeeded) {
+            if (res.data.needConfirm) {
+                $("#lbAlert").html("您的租约处于待确认状态，不能查看智能水电表，请先确认租约。");
+                $(".msg-alert").show();
+            } else {
+                window.location.href = "waterElectricity.html";
+            }
         } else {
-            window.location.href = "waterElectricity.html";
+            mui.toast(res.message);
         }
     }, function (err) {
         mui.toast(err.message);
@@ -25,11 +29,15 @@ function closeAlert() {
 
 function gateLock() {
     getInvoke(constants.URLS.WHETHERCONFIRMCONTRACT, function (res) {
-        if (res.data.needConfirm) {
-            $("#lbAlert").html("您的租约处于待确认状态，不能查看智能门锁，请先确认租约。");
-            $(".msg-alert").show();
+        if (res.succeeded) {
+            if (res.data.needConfirm) {
+                $("#lbAlert").html("您的租约处于待确认状态，不能查看智能门锁，请先确认租约。");
+                $(".msg-alert").show();
+            } else {
+                window.location.href = "gateLock.html";
+            }
         } else {
-            window.location.href = "gateLock.html";
+            mui.toast(res.message);
         }
     }, function (err) {
         mui.toast(err.message);

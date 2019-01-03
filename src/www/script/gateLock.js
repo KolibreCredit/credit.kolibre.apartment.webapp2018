@@ -31,6 +31,8 @@ function remoteOpenLock() {
 }
 
 function showAddLockPassword() {
+    $("#divAlert1 .msg-res").hide();
+    $("#divAlert1 .msg-loading").hide();
     $("#divAlert1 .msg-body").show();
     $("#divAlert1").show();
 }
@@ -92,9 +94,7 @@ var selectLockDevice = function (index) {
 $(document).ready(function () {
     $('.nodataDiv').hide();
     getInvoke(constants.URLS.GETTENANTLOCKDEVICES, function (res) {
-        if (res.data.length == 0) {
-            $('.nodataDiv').css({"display": "flex"});
-        } else {
+        if (res.succeeded && res.data.length > 0) {
             var item = null;
             var lockItems = [];
             var tplLockItem = $("#tplLockItem").html();
@@ -116,6 +116,8 @@ $(document).ready(function () {
                     }
                 }
             });
+        } else {
+            $('.nodataDiv').css({"display": "flex"});
         }
     }, function (err) {
         mui.toast(err.message);

@@ -5,11 +5,8 @@ function findAllLeaseOrder(deviceId) {
     $('.billList').html('');
     $('.nodataDiv').hide();
     getInvoke(constants.URLS.GETENERGYMETERORDERS.format(deviceId), function (res) {
-        if (res.data.length == 0) {
-            $('.billList').html("");
-            $('.nodataDiv').show();
-        }
-        else {
+        if (res.succeeded && res.data.length > 0) {
+
             billLists = res.data;
             var tplBill = $('#tplBill').html();
             var billHtmls = "";
@@ -124,6 +121,9 @@ function findAllLeaseOrder(deviceId) {
                 free = "";
             }
             $('.billList').html(billHtmls);
+        }
+        else {
+            $('.nodataDiv').css({"display": "flex"});
         }
     });
 }
