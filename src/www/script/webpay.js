@@ -1,7 +1,7 @@
 /**
  * Created by long.jiang on 2017/6/21.
  */
-var deposits = "";
+var deposits = [];
 var totalAmount = 0;
 var amount = "";
 var paymentTime = "";
@@ -282,7 +282,7 @@ $(document).ready(function () {
     if (getURLQuery("orderId").toUpperCase() == "X-KC-DEPOSIT") {
         document.title = "充值";
         $(".category").eq(1).show();
-        deposits = getCookie(constants.COOKIES.DEPOSIT).split("$");
+        deposits = decodeURI(getCookie(constants.COOKIES.DEPOSIT)).split("$");
         $("#lbApartmentName").html(deposits[0]);
         $("#lbRoomNumber").html(deposits[1]);
         $("#lbDeviceType").html(deposits[2]);

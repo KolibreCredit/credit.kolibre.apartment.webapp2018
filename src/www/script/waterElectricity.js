@@ -52,8 +52,6 @@ function billTip(curTip) {
 var billLists = null;
 
 function findAllTenantEnergyMeters() {
-    $('.billList').html('');
-    $('.nodataDiv').hide();
     getInvoke(constants.URLS.GETTENANTENERGYMETERS, function (res) {
         if (res.succeeded && res.data.length > 0) {
             billLists = res.data;
@@ -64,8 +62,8 @@ function findAllTenantEnergyMeters() {
             var item = null;
             var subItem = null;
             var itemBtnPay = "";
-            var btnPay = "<span onclick=\"createTransaction('{0}')\" class=\"billbtnPay\">去支付</span>";
-            var btnDeposit = "<span onclick=\"deposit('{0}','{1}','{2}','{3}')\" class=\"billbtnDeposit\">去充值</span>";
+            var btnPay = "<span onclick=\"createTransaction('{0}')\" class=\"billbtnPay\">支付账单</span>";
+            var btnDeposit = "<span onclick=\"deposit('{0}','{1}','{2}','{3}')\" class=\"billbtnDeposit\">余额充值</span>";
             var title11 = "", title12 = "", title13 = "";
             var title21 = "", title22 = "", title23 = "", title24 = "", title25 = "none", title26 = "";
             for (var i = 0; i < billLists.length; i++) {
@@ -121,16 +119,19 @@ function findAllTenantEnergyMeters() {
                 }
             }
             $('.billList').html(billHtmls).show();
+            $('.nodataDiv').hide();
         }
         else {
-            $('.billList').hide();
+            $('.billList').html("").hide();
             $('.nodataDiv').css({"display": "flex"});
         }
+    }, function (err) {
+        mui.toast(err.message);
     });
 }
 
 function deposit(apartmentName, roomNumber, deviceType, deviceId) {
-    setCookie(constants.COOKIES.DEPOSIT, apartmentName + "$" + roomNumber + "$" + deviceType + "$" + deviceId);
+    setCookie(constants.COOKIES.DEPOSIT, encodeURI(apartmentName + "$" + roomNumber + "$" + deviceType + "$" + deviceId));
     createTransaction("X-KC-DEPOSIT");
 }
 

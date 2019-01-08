@@ -77,15 +77,15 @@ var constants = {
         CANCELROOMSOURCERESERVATION: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/CancelRoomSourceReservation",
         GETSETTLEMENTORDERS: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Order/GetSettlementOrders?settlement={0}",
         RENDERAGREEMENTHTMLTEMPLATE: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/RenderAgreementHtmlTemplate",
-        GETTENANTENERGYMETERS: "https://kc-talos-dev.fengniaowu.com/api/TenantDevice/GetTenantEnergyMeters",
-        GETENERGYMETERORDERS: "https://kc-talos-dev.fengniaowu.com/api/TenantDevice/GetEnergyMeterOrders?deviceId={0}&orderState=All",
-        TENANTENERGYMETERRECHAGE: "https://kc-talos-dev.fengniaowu.com/api/TenantDevice/TenantEnergyMeterRechage",
+        GETTENANTENERGYMETERS: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/GetTenantEnergyMeters",
+        GETENERGYMETERORDERS: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/GetEnergyMeterOrders?deviceId={0}&orderState=All",
+        TENANTENERGYMETERRECHAGE: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/TenantEnergyMeterRechage",
         WHETHERCONFIRMCONTRACT:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/WhetherConfirmContract",
-        GETTENANTLOCKDEVICES:"https://kc-talos-dev.fengniaowu.com/api/TenantDevice/GetTenantLockDevices",
-        REMOTEOPENLOCK:"https://kc-talos-dev.fengniaowu.com/api/TenantDevice/RemoteOpenLock",
-        ADDLOCKPASSWORD:"https://kc-talos-dev.fengniaowu.com/api/TenantDevice/AddLockPassword",
-        GETLOCKTEMPORARYPASSWORD:"https://kc-talos-dev.fengniaowu.com/api/TenantDevice/GetLockTemporaryPassword?deviceId={0}&name={1}&cellphone={2}",
-        GETLOCKOPENRECORDS:"https://kc-talos-dev.fengniaowu.com/api/TenantDevice/GetLockOpenRecords?deviceId={0}&index={1}&count={2}"
+        GETTENANTLOCKDEVICES:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/GetTenantLockDevices",
+        REMOTEOPENLOCK:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/RemoteOpenLock",
+        ADDLOCKPASSWORD:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/AddLockPassword",
+        GETLOCKTEMPORARYPASSWORD:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/GetLockTemporaryPassword?deviceId={0}&name={1}&cellphone={2}",
+        GETLOCKOPENRECORDS:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/GetLockOpenRecords?deviceId={0}&index={1}&count={2}"
     },
     COOKIES: {
         XKCSID: 'X-KC-SID',

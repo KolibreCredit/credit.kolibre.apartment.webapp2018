@@ -5,6 +5,9 @@ var uesrInfo = null;
 
 function hideAlert() {
     $("#divAlert").hide();
+    setTimeout(function () {
+        window.location.href = "gateLock.html";
+    }, 500);
 }
 
 function temporary(index) {

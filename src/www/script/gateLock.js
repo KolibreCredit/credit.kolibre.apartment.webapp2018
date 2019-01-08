@@ -92,9 +92,9 @@ var selectLockDevice = function (index) {
 };
 
 $(document).ready(function () {
-    $('.nodataDiv').hide();
     getInvoke(constants.URLS.GETTENANTLOCKDEVICES, function (res) {
         if (res.succeeded && res.data.length > 0) {
+            $(".gateLock").show();
             var item = null;
             var lockItems = [];
             var tplLockItem = $("#tplLockItem").html();
@@ -116,7 +116,9 @@ $(document).ready(function () {
                     }
                 }
             });
+            $('.nodataDiv').hide();
         } else {
+            $(".gateLock").hide();
             $('.nodataDiv').css({"display": "flex"});
         }
     }, function (err) {
