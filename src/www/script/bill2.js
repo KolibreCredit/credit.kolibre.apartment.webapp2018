@@ -129,11 +129,13 @@ function findAllLeaseOrder(deviceId) {
 }
 
 function createTransaction(orderId) {
-    if (isWeixin()) {
-        var redirect_uri = encodeURIComponent(constants.URLS.WEBPAYURL.format(orderId));
-        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + constants.CONFIGS.APPID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base#wechat_redirect";
+    var isWxMini = window.__wxjs_environment === 'miniprogram';
+    if (isWxMini) {
+        wx.miniProgram.navigateTo({url: '/pages/bill/wxpay?orderId={0}&goto={1}&deviceId={2}'.format(orderId, "bill2", deviceId)});
     } else {
-        window.location.href = constants.URLS.WEBPAYURL.format(orderId);
+        setCookie(constants.COOKIES.DEVICEID, deviceId);
+        var redirect_uri = encodeURIComponent(constants.URLS.WEBPAYURL.format(orderId, "bill2"));
+        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + constants.CONFIGS.APPID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base#wechat_redirect";
     }
 }
 
@@ -142,7 +144,7 @@ function createStage(orderId) {
 }
 
 function view(orderId) {
-    window.location.href = "billView.html?orderId={0}".format(orderId);
+    window.location.href = "billView.html?orderId={0}&goto=bill2&deviceId={1}".format(orderId,deviceId);
 }
 
 function confirmList() {

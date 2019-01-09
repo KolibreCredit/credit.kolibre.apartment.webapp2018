@@ -33,7 +33,7 @@ var getMeterState = function (meterState) {
         default:
             return "";
     }
-}
+};
 
 function bill2(deviceId) {
     window.location.href = "bill2.html?deviceId={0}".format(deviceId);
@@ -131,16 +131,23 @@ function findAllTenantEnergyMeters() {
 }
 
 function deposit(apartmentName, roomNumber, deviceType, deviceId) {
-    setCookie(constants.COOKIES.DEPOSIT, encodeURI(apartmentName + "$" + roomNumber + "$" + deviceType + "$" + deviceId));
-    createTransaction("X-KC-DEPOSIT");
+    var isWxMini = window.__wxjs_environment === 'miniprogram';
+    if (isWxMini) {
+        wx.miniProgram.navigateTo({url: '/pages/bill/wxpay2?orderId=apartmentName={0}&roomNumber={1}&deviceType={2}&deviceId={3}'.format(encodeURI(apartmentName), encodeURI(roomNumber), encodeURI(deviceType), encodeURI(deviceId))});
+    } else {
+        setCookie(constants.COOKIES.DEPOSIT, encodeURI(apartmentName + "$" + roomNumber + "$" + deviceType + "$" + deviceId));
+        var redirect_uri = encodeURIComponent(constants.URLS.WEBPAYURL2);
+        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + constants.CONFIGS.APPID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base#wechat_redirect";
+    }
 }
 
 function createTransaction(orderId) {
-    if (isWeixin()) {
-        var redirect_uri = encodeURIComponent(constants.URLS.WEBPAYURL.format(orderId));
-        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + constants.CONFIGS.APPID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base#wechat_redirect";
+    var isWxMini = window.__wxjs_environment === 'miniprogram';
+    if (isWxMini) {
+        wx.miniProgram.navigateTo({url: '/pages/bill/wxpay?orderId={0}&goto={1}'.format(orderId, "waterElectricity")});
     } else {
-        window.location.href = constants.URLS.WEBPAYURL.format(orderId);
+        var redirect_uri = encodeURIComponent(constants.URLS.WEBPAYURL.format(orderId, "waterElectricity"));
+        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + constants.CONFIGS.APPID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base#wechat_redirect";
     }
 }
 

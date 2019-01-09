@@ -170,23 +170,19 @@ function filterCanPay(orderId) {
 
 function createTransaction(orderId) {
     if (filterCanPay(orderId)) {
-        if (isWeixin()) {
-            var redirect_uri = encodeURIComponent(constants.URLS.WEBPAYURL.format(orderId));
-            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + constants.CONFIGS.APPID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base#wechat_redirect";
-        } else {
-            window.location.href = constants.URLS.WEBPAYURL.format(orderId);
-        }
+        var redirect_uri = encodeURIComponent(constants.URLS.WEBPAYURL.format(orderId, "bill"));
+        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + constants.CONFIGS.APPID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base#wechat_redirect";
     } else {
         $(".msg-alert").show();
     }
 }
 
 function createStage(orderId) {
-    window.location.href = "recognitionface.html?orderId={0}".format(orderId);
+  window.location.href = "recognitionface.html?orderId={0}".format(orderId);
 }
 
 function view(orderId) {
-    window.location.href = "billView.html?orderId={0}".format(orderId);
+    window.location.href = "billView.html?orderId={0}&goto=bill".format(orderId);
 }
 
 function confirmList() {

@@ -1,25 +1,24 @@
 /**
  * Created by long.jiang on 2017/6/21.
  */
-var totalAmount = 0;
+var deviceId = "";
 var amount = "";
-var paymentTime = "";
+var paymentTime = new Date().format("yyyy-MM-dd");
 //
 var transactionId = "";
-var orderModel = "";
 var isTransaction = true;
 var isPost = true;
-var goto = "";
+var lastIndex = -1;
 //
 var validateAmount = function () {
     amount = $("#txtNotPaidAmount").val().replace(",", "");
     if (amount == "") {
-        mui.toast("支付金额不能为空!");
+        mui.toast("充值金额不能为空!");
         return false;
     }
     amount = parseInt((parseFloat(amount) * 100).toFixed());
-    if (amount > totalAmount || amount == "0") {
-        mui.toast("支付金额输入错误!");
+    if (amount == "0") {
+        mui.toast("充值金额输入错误!");
         return false;
     }
     return true;
@@ -28,18 +27,14 @@ var validateAmount = function () {
 var createTransaction = function (transactionMethod, callSuccess) {
     if (isPost && validateAmount()) {
         var data = {
-            orderId: orderId,
-            orderModel: orderModel,
+            deviceId: deviceId,
             amount: amount,
-            transactionCategory: "In",
-            transactionMethod: transactionMethod,
-            paymentSource: "Fengniaowu"
+            transactionMethod: transactionMethod
         };
         isPost = false;
-        isDeposit = false;
         $("#lbTitle").html(" 正在提交...");
         $(".msg-post").show();
-        postInvoke(constants.URLS.CREATETRANSACTION, data, function (res) {
+        postInvoke(constants.URLS.TENANTENERGYMETERRECHAGE, data, function (res) {
             isPost = true;
             $(".msg-post").hide();
             if (res.succeeded) {
@@ -57,11 +52,10 @@ var createTransaction = function (transactionMethod, callSuccess) {
 function zhifubao() {
     createTransaction("AliPay", function (res) {
         transactionId = res.data.transactionId;
-        window.location.href = "precreate.html?transactionId={0}&amount={1}&paymentTime={2}&goto={3}".format(transactionId, amount, paymentTime.substring(0, 10), goto);
+        window.location.href = "precreate.html?transactionId={0}&amount={1}&paymentTime={2}&goto=waterElectricity".format(transactionId, amount, paymentTime.substring(0, 10));
     });
 }
 
-//创建交易流水
 var weixinpay = function () {
     createTransaction("WeiXin", function (res) {
         transactionId = res.data.transactionId;
@@ -122,53 +116,27 @@ var queryTransaction = function () {
             isTransaction = true;
             if (res.succeeded) {
                 if (res.data.transactionState === "Succeed") {
-                    if (goto.toUpperCase() == "WATERELECTRICITY") {
-                        window.location.href = "waterElectricity.html";
-                    } else if (goto.toUpperCase() == "BILL2") {
-                        var deviceId = getCookie(constants.COOKIES.DEVICEID);
-                        window.location.href = "bill2.html?deviceId={0}".format(deviceId);
-                    } else {
-                        window.location.href = "bill.html";
-                    }
+                    setCookie(constants.COOKIES.DEPOSIT, "");
+                    window.location.href = "waterElectricity.html";
                 }
             }
         });
     }
 };
 
-var queryOrderbyOrderId = function () {
-    $("#lbTitle").html(" 正在加载...");
-    $(".msg-post").show();
-    orderId = getURLQuery("orderId");
-    getInvoke(constants.URLS.GETORDERBYORDERIDV2.format(orderId), function (res) {
-        $(".msg-post").hide();
-        if (res.succeeded) {
-            paymentTime = res.data.paymentTime;
-            totalAmount = res.data.totalAmount;
-            orderModel = res.data.orderModel;
-            $("#lbTotalAmount").html((res.data.totalAmount * 0.01).toFixed(2));
-            $("#lbNotPaidAmount").html((res.data.repayAmount * 0.01).toFixed(2));
-            $("#txtNotPaidAmount").val((res.data.repayAmount * 0.01).toFixed(2));
-            if (res.serviceCharge > 0) {
-                $("#lbFree").html((res.data.serviceCharge * 0.01).toFixed(2));
-                $("#divFee").show();
-            }
-            if (res.penaltyAmount > 0) {
-                $("#lbPenalty").html((res.data.penaltyAmount * 0.01).toFixed(2));
-                $("#divPenalty").show();
-            }
-            if (res.paidAmount > 0) {
-                $("#lbPaidAmount").html((res.data.paidAmount * 0.01).toFixed(2));
-                $("#divPaidAmount").show();
-            }
-            $("#txtNotPaidAmount").focus();
-        }
-    }, function (err) {
-        $(".msg-post").hide();
-    });
-};
+var itemAmounts = [30, 50, 100, 200, 500, 1000];
+function itemSelect(index) {
+    if (lastIndex != index) {
+        lastIndex = index;
+        $('.item').removeClass('active').eq(lastIndex).addClass('active');
+        $("#txtNotPaidAmount").val(itemAmounts[lastIndex]);
+    }
+}
 
 $(document).ready(function () {
-    goto = getURLQuery("goto");
-    queryOrderbyOrderId();
+    var deposits = decodeURI(getCookie(constants.COOKIES.DEPOSIT)).split("$");
+    $("#lbApartmentName").html(deposits[0]);
+    $("#lbRoomNumber").html(deposits[1]);
+    $("#lbDeviceType").html(deposits[2]);
+    deviceId = deposits[3];
 });

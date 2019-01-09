@@ -5,7 +5,7 @@ var waitTimer = null;
 var isTransaction = true;
 var transactionId = "";
 var amount = "";
-var isDeposit = false;
+var goto = "";
 //
 var queryTransaction = function () {
     if (transactionId != "" && isTransaction) {
@@ -14,16 +14,19 @@ var queryTransaction = function () {
             isTransaction = true;
             if (res.data.transactionState == "Succeed") {
                 clearInterval(waitTimer);
-                var isWxMini = window.__wxjs_environment === 'miniprogram';
-                if (isWxMini) {
+                if (goto.toUpperCase() == "MINIBILL") {
                     wx.miniProgram.navigateTo({url: '/pages/bill/bill'});
-                } else {
-                    if (isDeposit) {
-                        setCookie(constants.COOKIES.DEPOSIT, "");
-                        window.location.href = "waterElectricity.html";
-                    } else {
-                        window.location.href = "bill.html";
-                    }
+                }
+                else if (goto.toUpperCase() == "WATERELECTRICITY") {
+                    setCookie(constants.COOKIES.DEPOSIT, "");
+                    window.location.href = "waterElectricity.html";
+                }
+                else if (goto.toUpperCase() == "BILL2") {
+                    var deviceId = getCookie(constants.COOKIES.DEVICEID);
+                    window.location.href = "bill2.html?deviceId={0}".format(deviceId);
+                }
+                else {
+                    window.location.href = "bill.html";
                 }
             }
         });
@@ -31,15 +34,13 @@ var queryTransaction = function () {
 };
 
 $(document).ready(function () {
+    goto = getURLQuery("goto") || "";
     transactionId = getURLQuery("transactionId");
     amount = getURLQuery("amount");
     paymentTime = getURLQuery("paymentTime");
-    isDeposit = (getURLQuery("deposit") == "1" ? true : false);
     $("#lbTotalAmount").html((amount / 100).toFixed(2));
     $("#lbPaymentTime").html(paymentTime);
-    var pay = {
-        transactionId: transactionId
-    };
+    var pay = {transactionId: transactionId};
     postInvoke(constants.URLS.ORDERPAYMENT, pay, function (res) {
         if (res.succeeded) {
             $(".spinner").hide();

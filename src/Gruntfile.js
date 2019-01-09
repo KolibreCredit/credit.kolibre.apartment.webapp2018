@@ -1,5 +1,4 @@
 'use strict';
-
 module.exports = function (grunt) {
     grunt.file.preserveBOM = true;
     grunt.initConfig({
@@ -156,6 +155,7 @@ module.exports = function (grunt) {
                     'www/viewtousu.html',
                     'www/waterElectricity.html',
                     'www/webpay.html',
+                    'www/webpay2.html',
                     'www/weilaiyu.html',
                     'www/xishe.html',
                     'www/yifangtiandi.html',
@@ -184,8 +184,12 @@ module.exports = function (grunt) {
                         to: 'wxa74d300625108685'
                     },
                     {
-                        from: 'https://m.fengniaowu.com/webpay.html?orderId={0}',
-                        to: 'https://dev.fengniaowu.com/webpay.html?orderId={0}'
+                        from: 'https://h.fengniaowu.com/webpay.html?orderId={0}&goto={1}',
+                        to: 'https://dev.fengniaowu.com/webpay.html?orderId={0}&goto={1}'
+                    },
+                    {
+                        from: 'https://h.fengniaowu.com/webpay2.html',
+                        to: 'https://dev.fengniaowu.com/webpay2.html'
                     }
                 ]
             },
@@ -202,8 +206,12 @@ module.exports = function (grunt) {
                         to: 'wx4a172ee460dacedd'
                     },
                     {
-                        from: 'https://dev.fengniaowu.com/webpay.html?orderId={0}',
-                        to: 'https://m.fengniaowu.com/webpay.html?orderId={0}'
+                        from: 'https://dev.fengniaowu.com/webpay.html?orderId={0}&goto={1}',
+                        to: 'https://h.fengniaowu.com/webpay.html?orderId={0}&goto={1}'
+                    },
+                    {
+                        from: 'https://dev.fengniaowu.com/webpay2.html',
+                        to: 'https://h.fengniaowu.com/webpay2.html'
                     }
                 ]
             }

@@ -1,7 +1,7 @@
 $(document).ready(function () {
     var deviceId = getURLQuery("deviceId");
     getInvoke(constants.URLS.GETLOCKOPENRECORDS.format(deviceId, 0, 200), function (res) {
-        if (res.succeeded) {
+        if (res.succeeded && res.data.data.length > 0) {
             var doorOpenRecords = res.data.data;
             var openRecords = [];
             var tplOpenRecord = $("#tplOpenRecord").html();
@@ -14,6 +14,6 @@ $(document).ready(function () {
             $('.nodataDiv').css({"display": "flex"});
         }
     }, function (err) {
-        $('.nodataDiv').css({"display": "flex"});
+        mui.toast(err.message);
     });
 });

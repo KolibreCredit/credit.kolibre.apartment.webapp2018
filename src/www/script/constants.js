@@ -4,7 +4,8 @@
 var constants = {
     URLS: {
         BILL: "bill.html",
-        WEBPAYURL: "https://dev.fengniaowu.com/webpay.html?orderId={0}",
+        WEBPAYURL: "https://dev.fengniaowu.com/webpay.html?orderId={0}&goto={1}",
+        WEBPAYURL2: "https://dev.fengniaowu.com/webpay2.html",
         //
         SEND: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/ValidateCode/Send",
         VERIFY: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/ValidateCode/Verify",
@@ -92,7 +93,8 @@ var constants = {
         TAG: 'X-KC-TAG',
         CONTRACTCONFIRMINFOID: "X-KC-CONTRACTCONFIRMINFOID",
         INDEXURL: "X-KC-INDEXURL",
-        DEPOSIT: "X-KC-DEPOSIT"
+        DEPOSIT: "X-KC-DEPOSIT",
+        DEVICEID:"X-KF-DEVICEID"
     },
     REGEX: {
         CELLPHONE: /^(13|14|15|16|17|18|19|10)\d{9}$/,

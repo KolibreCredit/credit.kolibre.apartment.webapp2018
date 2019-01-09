@@ -1,10 +1,15 @@
 /**
  * Created by long.jiang on 2016/12/14.
  */
+var goto = "";
 var orderId = "";
 var item = null;
+var deviceId = "";
+
 $(document).ready(function () {
     orderId = getURLQuery("orderId");
+    goto = getURLQuery("goto");
+    deviceId = getURLQuery("deviceId") || "";
     getInvoke(constants.URLS.GETORDERBYORDERID.format(orderId), function (res) {
         if (res.succeeded && res.data != null) {
             item = res.data;
@@ -128,9 +133,10 @@ function createTransaction() {
     if (item.canPay) {
         var isWxMini = window.__wxjs_environment === 'miniprogram';
         if (isWxMini) {
-            wx.miniProgram.navigateTo({url: '/pages/bill/wxpay?orderId=' + orderId});
+            wx.miniProgram.navigateTo({url: '/pages/bill/wxpay?orderId={0}&goto={1}&deviceId={1}'.format(orderId, goto, deviceId)});
         } else {
-            var redirect_uri = encodeURIComponent(constants.URLS.WEBPAYURL.format(orderId));
+            setCookie(constants.COOKIES.DEVICEID, deviceId);
+            var redirect_uri = encodeURIComponent(constants.URLS.WEBPAYURL.format(orderId, goto));
             window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + constants.CONFIGS.APPID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base#wechat_redirect";
         }
     } else {
