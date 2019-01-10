@@ -133,7 +133,7 @@ function findAllTenantEnergyMeters() {
 function deposit(apartmentName, roomNumber, deviceType, deviceId) {
     var isWxMini = window.__wxjs_environment === 'miniprogram';
     if (isWxMini) {
-        wx.miniProgram.navigateTo({url: '/pages/bill/wxpay2?orderId=apartmentName={0}&roomNumber={1}&deviceType={2}&deviceId={3}'.format(encodeURI(apartmentName), encodeURI(roomNumber), encodeURI(deviceType), encodeURI(deviceId))});
+        wx.miniProgram.navigateTo({url: '/pages/bill/wxpay2?apartmentName={0}&roomNumber={1}&deviceType={2}&deviceId={3}'.format(encodeURI(apartmentName), encodeURI(roomNumber), encodeURI(deviceType), encodeURI(deviceId))});
     } else {
         setCookie(constants.COOKIES.DEPOSIT, encodeURI(apartmentName + "$" + roomNumber + "$" + deviceType + "$" + deviceId));
         var redirect_uri = encodeURIComponent(constants.URLS.WEBPAYURL2);

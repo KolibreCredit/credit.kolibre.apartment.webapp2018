@@ -111,7 +111,7 @@ function findAllLeaseOrder(index) {
                 }
                 else if (item.orderState == 'Canceled') {
                     monthUrl = "images/months/{0}".format(moment(item.checkoutTime).format('MM') + ".png");
-                    lbTime = '退租日期：' + moment(item.checkoutTime).format('YYYY-MM-DD');
+                    lbTime = '取消日期：' + moment(item.checkoutTime).format('YYYY-MM-DD HH:mm');
                     lbState = '已取消';
                     lbStateClass = "Canceled";
                     //
@@ -178,7 +178,7 @@ function createTransaction(orderId) {
 }
 
 function createStage(orderId) {
-  window.location.href = "recognitionface.html?orderId={0}".format(orderId);
+    window.location.href = "recognitionface.html?orderId={0}".format(orderId);
 }
 
 function view(orderId) {

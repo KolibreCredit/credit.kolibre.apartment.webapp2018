@@ -37,9 +37,9 @@ $(document).ready(function () {
             }
             else if (item.orderState == "Canceled") {
                 tipUrl = "images/20180103/Canceled.png";
-                tipTitle = "已退租";
-                tipTitle1 = "退租日";
-                tipTitle2 = item.checkoutTime.substring(0, 10);
+                tipTitle = "已取消";
+                tipTitle1 = "取消日";
+                tipTitle2 = item.checkoutTime.substring(0, 16);
             }
             else {
                 tipUrl = "images/20180103/Paid.png";

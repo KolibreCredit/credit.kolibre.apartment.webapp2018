@@ -86,7 +86,7 @@ function findAllLeaseOrder(deviceId) {
                 }
                 else if (item.orderState == 'Canceled') {
                     monthUrl = "images/months/{0}".format(moment(item.checkoutTime).format('MM') + ".png");
-                    lbTime = '退租日期：' + moment(item.checkoutTime).format('YYYY-MM-DD');
+                    lbTime = '取消日期：' + moment(item.checkoutTime).format('YYYY-MM-DD HH:mm');
                     lbState = '已取消';
                     lbStateClass = "Canceled";
                     //
