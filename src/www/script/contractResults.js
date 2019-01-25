@@ -17,6 +17,15 @@ function sendWaitTimer() {
     }
 }
 
+function promptly(){
+    var isWxMini = window.__wxjs_environment === 'miniprogram';
+    if (isWxMini) {
+        wx.miniProgram.reLaunch({url: '/pages/bill/bill'});
+    } else {
+       bill();
+    }
+}
+
 function index() {
     var isWxMini = window.__wxjs_environment === 'miniprogram';
     if (isWxMini) {

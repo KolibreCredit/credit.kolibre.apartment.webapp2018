@@ -10,11 +10,12 @@ function filterOrderState(orderState) {
     }
     else if (orderState == "ApproachingOverdue") {
         state = "快到期";
-
+    }
+    else if (orderState == "BeDue") {
+        state = "已到期";
     }
     else if (orderState == "Overdue") {
         state = "已逾期";
-
     }
     else if (orderState == "Canceled") {
         state = "已退租";
