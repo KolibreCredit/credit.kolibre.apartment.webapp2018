@@ -2,6 +2,7 @@
  * Created by long.jiang on 2016/12/14.
  */
 var contractId = "";
+
 //
 function apply() {
     $(".msg-post").show();
@@ -39,6 +40,9 @@ function filterOrderState(orderState) {
     }
     else if (orderState == "ApproachingOverdue") {
         state = "快到期";
+    }
+    else if (orderState == "BeDue") {
+        state = "已到期";
     }
     else if (orderState == "Overdue") {
         state = "已逾期";

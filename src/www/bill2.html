@@ -7,7 +7,7 @@
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.525" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.528" rel="stylesheet"/>
     <style type="text/css">
         input[type=text], input[type=password] {
             padding: 5px;
@@ -84,28 +84,32 @@
             margin-top: 11px;
         }
 
-        .top .state {
+        .billItem .state {
             float: right;
             color: #999999;
         }
 
-        .state.createdColor {
+        .created .state {
             color: #ff8c14;
         }
 
-        .state.approachingoverdueColor {
+        .approachingoverdue .state {
             color: #ff8c14;
         }
 
-        .state.paidColor {
+        .paid .state {
             color: #ff8c14;
         }
 
-        .state.overdueColor {
+        .overdue .state {
             color: #f55452;
         }
 
-        .state.canceledColor {
+        .canceled .state {
+            color: #999999;
+        }
+
+        .frozen .state {
             color: #999999;
         }
 
@@ -194,6 +198,11 @@
         .overdue .treat {
             background: #fff3e7;
             color: #ff8c14;
+        }
+
+        .frozen .treat {
+            background: rgba(224, 224, 224, 0.7);
+            color: #8e8e8e;
         }
 
         .stage {
@@ -296,6 +305,20 @@
             box-shadow: 0 2px 4px 0 rgba(78, 40, 0, 0.20);
         }
 
+        .bottom .billbtnFrozen {
+            border: none;
+            border-radius: 90px;
+            line-height: 28px;
+            font-size: 14px;
+            color: #FFFFFF;
+            position: absolute;
+            right: 20px;
+            top: 8px;
+            background-color: rgba(204, 204, 204, 1);
+            width: 78px;
+            text-align: center;
+        }
+
         .paid .bottom {
             display: none;
         }
@@ -382,7 +405,7 @@
         <div class="billItem {4}">
             <div class="top" onclick="view('{0}')">
                 <img src="{1}" class="month"/>{2}<img class="ic_grey_arrow" src="images/ic_grey_arrow.png"/><span
-                    class="state {4}Color">{3}</span>
+                    class="state">{3}</span>
             </div>
             <div class="billType">
                 <div class="col2">
@@ -407,6 +430,6 @@
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/moment@2.17.1/min/moment.min.js"></script>
-<script src="script/constants.js?ver=18.12.525"></script>
-<script src="script/service.js?ver=18.12.525"></script>
-<script src="script/bill2.js?ver=18.12.525"></script>
+<script src="script/constants.js?ver=18.12.528"></script>
+<script src="script/service.js?ver=18.12.528"></script>
+<script src="script/bill2.js?ver=18.12.528"></script>

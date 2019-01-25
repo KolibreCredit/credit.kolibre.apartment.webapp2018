@@ -7,7 +7,7 @@
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.525" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.528" rel="stylesheet"/>
     <style type="text/css">
         label {
             font-size: 14px;
@@ -65,6 +65,21 @@
             width: 100%;
             display: none;
             bottom: 0;
+            z-index: 1;
+        }
+
+        .divFrozen {
+            position: fixed;
+            text-align: center;
+            width: 100%;
+            display: none;
+            bottom: 0;
+            z-index: 2;
+            height: 50px;
+            line-height: 50px;
+            background-color: rgba(204, 204, 204, 1);
+            color: rgba(255, 255, 255, 1);
+            font-size: 18px;
         }
 
         .btnStage {
@@ -102,12 +117,18 @@
         .leaseInfoItems {
             display: none;
         }
+
+        .frozen {
+            display: none;
+        }
+
         td {
             text-align: center;
             border: 1px solid #EDEDED;
             color: #333333;
             font-size: 14px;
         }
+
         p {
             margin: 0;
         }
@@ -134,6 +155,9 @@
     <div class="divPay">
         <div onclick="createStage()" class="btnStage">申请分期</div>
         <div onclick="createTransaction()" class="btnPay">立即支付</div>
+    </div>
+    <div class="divFrozen">
+        已冻结
     </div>
     <div class="msg-alert" style="z-index:2">
         <table style='width:100%;height:100%'>
@@ -178,7 +202,8 @@
     <div style="line-height:26px;position:relative">
         <label style="font-size:14px;color:#333333">¥</label>
         <label style="font-size:24px;color:#333333;font-weight:bold">{3}</label>
-        <span class="{5}" style="height:26px;padding:0 10px;border-radius:100px 0 0 100px;position:absolute;right:-20px;top:0;color:#ffffff">{4}</span>
+        <span class="{5}"
+              style="height:26px;padding:0 10px;border-radius:100px 0 0 100px;position:absolute;right:-20px;top:0;color:#ffffff">{4}</span>
     </div>
     <div style="line-height:36px">
         <label>待支付：¥{6}</label>
@@ -205,6 +230,8 @@
     <div style="line-height:36px">
         <label>账单周期</label><span>{13}～{14}</span>
     </div>
+    <div class="frozen">
+    </div>
 </script>
 <script type="text/html" id="tplLeaseInfo1">
     <div style="height:10px"></div>
@@ -217,7 +244,8 @@
     <div style="line-height:26px;position:relative">
         <label style="font-size:14px;color:#333333">¥</label>
         <label style="font-size:24px;color:#333333;font-weight:bold">{3}</label>
-        <span class="{5}" style="height:26px;padding:0 10px;border-radius:100px 0 0 100px;position:absolute;right:-20px;top:0;color:#ffffff">{4}</span>
+        <span class="{5}"
+              style="height:26px;padding:0 10px;border-radius:100px 0 0 100px;position:absolute;right:-20px;top:0;color:#ffffff">{4}</span>
     </div>
     <div style="line-height:36px">
         <label>待支付：¥{6}</label>
@@ -233,6 +261,8 @@
     </div>
     <div style="line-height:36px">
         <label>账单周期</label><span>{10}～{11}</span>
+    </div>
+    <div class="frozen">
     </div>
     <div class="leaseInfoItems" style="padding-top:10px">
     </div>
@@ -248,7 +278,8 @@
     <div style="line-height:26px;position:relative">
         <label style="font-size:14px;color:#333333">¥</label>
         <label style="font-size:24px;color:#333333;font-weight:bold">{3}</label>
-        <span class="{5}" style="height:26px;padding:0 10px;border-radius:100px 0 0 100px;position:absolute;right:-20px;top:0;color:#ffffff">{4}</span>
+        <span class="{5}"
+              style="height:26px;padding:0 10px;border-radius:100px 0 0 100px;position:absolute;right:-20px;top:0;color:#ffffff">{4}</span>
     </div>
     <div style="line-height:36px">
         <label>待支付：¥{6}</label>
@@ -264,6 +295,8 @@
     </div>
     <div style="line-height:36px">
         <label>账单周期</label><span>{10}～{11}</span>
+    </div>
+    <div class="frozen">
     </div>
 </script>
 <script type="text/html" id="tplLeaseInfoItems">
@@ -289,10 +322,18 @@
         </tr>
     </table>
 </script>
+<script type="text/html" id="tplFrozen">
+    <div style="line-height:36px">
+        <label>冻结时间</label><span>{0}</span>
+    </div>
+    <div style="line-height:36px;white-space:nowrap;position:relative">
+        <label style="position:absolute">冻结原因</label><div style="overflow:hidden;text-overflow:ellipsis;margin-left:65px;font-size:14px;color:#333333">{1}</div>
+    </div>
+</script>
 </body>
 </html>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
-<script src="script/constants.js?ver=18.12.525"></script>
-<script src="script/service.js?ver=18.12.525"></script>
-<script src="script/billView.js?ver=18.12.5253366"></script>
+<script src="script/constants.js?ver=18.12.528"></script>
+<script src="script/service.js?ver=18.12.528"></script>
+<script src="script/billView.js?ver=18.12.5283366"></script>

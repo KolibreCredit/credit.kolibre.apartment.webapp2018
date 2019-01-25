@@ -1,7 +1,3 @@
-function bill() {
-    window.location.href = constants.URLS.BILL;
-}
-
 function list() {
     window.location.href = "list.html";
 }

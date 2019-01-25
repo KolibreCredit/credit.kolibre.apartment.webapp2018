@@ -62,7 +62,7 @@ function findAllLeaseOrder(index) {
                     free = "(含{0}元手续费、{1}元违约金)".format((item.serviceCharge / 100).toFixed(2), (item.penaltyAmount / 100).toFixed(2));
                 }
                 if (item.orderState == 'Created') {
-                    monthUrl = "images/months/{0}".format(moment(item.paymentTime).format('MM') + (item.isCurrent ? "s.png" : ".png"));
+                    monthUrl = "images/months/{0}".format(moment(item.paymentTime).format('MM') + (item.frozen ? ".png" : (item.isCurrent ? "s.png" : ".png")));
                     lbTime = '到期日：' + moment(item.paymentTime).format('YYYY-MM-DD');
                     lbState = (item.isCurrent ? "待支付" : "未支付");
                     lbStateClass = (item.isCurrent ? "Created" : "");
@@ -75,10 +75,10 @@ function findAllLeaseOrder(index) {
                     }
                     lbTip = treat.format("待");
                     lbTip2 = (item.orderModel == "Staging" ? stage.format("分") : "");
-                    btnBillPay = (item.isCurrent ? '<span class="billbtnPay btnActive" onclick="createTransaction(\'' + item.orderId + '\')">立即支付</span>' : '<span class="billbtnNotPay">立即支付</span>');
+                    btnBillPay = (item.frozen ? "<span class=\"billbtnFrozen\">已冻结</span>" : (item.isCurrent ? '<span class="billbtnPay btnActive" onclick="createTransaction(\'' + item.orderId + '\')">立即支付</span>' : '<span class="billbtnNotPay">立即支付</span>'));
                 }
                 else if (item.orderState == 'ApproachingOverdue') {
-                    monthUrl = "images/months/{0}".format(moment(item.paymentTime).format('MM') + "s.png");
+                    monthUrl = "images/months/{0}".format(moment(item.paymentTime).format('MM') + (item.frozen ? ".png" : "s.png"));
                     lbTime = '到期日：' + moment(item.paymentTime).format('YYYY-MM-DD');
                     lbState = '快到期';
                     lbStateClass = "ApproachingOverdue";
@@ -91,7 +91,7 @@ function findAllLeaseOrder(index) {
                     }
                     lbTip = treat.format("待");
                     lbTip2 = (item.orderModel == "Staging" ? stage.format("分") : "");
-                    btnBillPay = '<span class="billbtnPay btnActive" onclick="createTransaction(\'' + item.orderId + '\')">立即支付</span>';
+                    btnBillPay = (item.frozen ? '<span class="billbtnFrozen">已冻结</span>' : '<span class="billbtnPay btnActive" onclick="createTransaction(\'' + item.orderId + '\')">立即支付</span>');
                 }
                 else if (item.orderState == 'Overdue' || item.orderState == 'BeDue') {
                     monthUrl = "images/months/{0}".format(moment(item.paymentTime).format('MM') + "s.png");
@@ -107,7 +107,7 @@ function findAllLeaseOrder(index) {
                     }
                     lbTip = treat.format("待");
                     lbTip2 = (item.orderModel == "Staging" ? stage.format("分") : "");
-                    btnBillPay = '<span class="billbtnPay btnActive" onclick="createTransaction(\'' + item.orderId + '\')">立即支付</span>';
+                    btnBillPay = (item.frozen ? '<span class="billbtnFrozen">已冻结</span>' : '<span class="billbtnPay btnActive" onclick="createTransaction(\'' + item.orderId + '\')">立即支付</span>');
                 }
                 else if (item.orderState == 'Canceled') {
                     monthUrl = "images/months/{0}".format(moment(item.checkoutTime).format('MM') + ".png");
@@ -121,7 +121,6 @@ function findAllLeaseOrder(index) {
                     lbTip2 = "";
                     //
                     btnBillPay = "";
-                    btnBillStage = "";
                 }
                 else {
                     monthUrl = "images/months/{0}".format(moment(item.actualPaymentTime).format('MM') + "s.png");
@@ -135,16 +134,19 @@ function findAllLeaseOrder(index) {
                     lbTip = "";
                     lbTip2 = (item.orderModel == "Staging" ? stage.format("分") : "");
                     btnBillPay = "";
-                    btnBillStage = "";
                 }
                 if (item.canStage) {
                     btnBillStage = (item.isCurrent ? '<span class="billbtnStage" onclick="createStage(\'' + item.orderId + '\')">申请分期</span>' : '<span class="billbtnNotStage">申请分期</span>');
                 } else {
                     btnBillStage = "";
                 }
+                if (item.frozen) {
+                    lbStateClass += " frozen";
+                }
                 billHtmls += tplBill.format(item.orderId, monthUrl, lbTime, lbState, lbStateClass.toLowerCase(), item.roomNumber, (item.orderType == "CustomDeposit" ? item.orderTypeName : getOrderType(item.orderType)), item.apartmentName, totalAmount, notPaidAmount, free, lbTip, lbTip2, btnBillStage + btnBillPay);
                 free = "";
             }
+
             if (orderState == "NotPaid") {
                 $("#lbRecentOrderAmount").text(res.data.recentOrderAmount);
                 $(".recentDays").eq((res.data.recentOrderAmount == 0 ? 0 : 1)).show();

@@ -47,7 +47,7 @@ $(document).ready(function () {
                 tipTitle1 = "实付时间";
                 tipTitle2 = item.actualPaymentTime.substring(0, 16);
             }
-            if (item.isCurrent) {
+            if (!item.frozen && item.isCurrent) {
                 $(".footer").show();
                 $(".divPay").show();
                 if (item.canStage) {
@@ -122,6 +122,13 @@ $(document).ready(function () {
                     item.orderStartTime.substring(0, 10),
                     item.orderEndTime.substring(0, 10));
                 $("#divLeaseInfo").html(htmlLeaseInfo);
+            }
+            if (item.frozen) {
+                setTimeout(function () {
+                    var tplFrozen = $("#tplFrozen").html();
+                    $(".frozen").html(tplFrozen.format(item.frozenTime.substring(0, 16), item.frozenReason)).show();
+                    $(".divFrozen").show();
+                }, 0);
             }
         }
     }, function (err) {

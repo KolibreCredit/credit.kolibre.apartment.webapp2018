@@ -16,9 +16,16 @@ var validateAmount = function () {
         mui.toast("充值金额不能为空!");
         return false;
     }
-    amount = parseInt((parseFloat(amount) * 100).toFixed());
-    if (amount == "0") {
-        mui.toast("充值金额输入错误!");
+    if (parseFloat(amount) == 0) {
+        mui.toast("充值金额输入不能为零!");
+        return false;
+    }
+    if (parseFloat(amount) < 0) {
+        mui.toast("支付金额不能小于零!");
+        return false;
+    }
+    if (parseFloat(amount) > 100000) {
+        mui.toast("支付金额不能大于10万!");
         return false;
     }
     return true;
@@ -125,6 +132,7 @@ var queryTransaction = function () {
 };
 
 var itemAmounts = [30, 50, 100, 200, 500, 1000];
+
 function itemSelect(index) {
     if (lastIndex != index) {
         lastIndex = index;

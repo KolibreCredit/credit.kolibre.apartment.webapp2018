@@ -8,7 +8,23 @@ function sendWaitTimer() {
         $('#lbWaitCount').text(waitCount + '秒');
     } else {
         clearInterval(waitTimer);
-        bill();
+        var isWxMini = window.__wxjs_environment === 'miniprogram';
+        if (isWxMini) {
+            wx.miniProgram.reLaunch({url: '/pages/bill/bill'});
+        } else {
+            bill();
+        }
+    }
+}
+
+function index() {
+    var isWxMini = window.__wxjs_environment === 'miniprogram';
+    if (isWxMini) {
+        wx.miniProgram.reLaunch({
+            url: '/pages/index/index'
+        });
+    } else {
+        window.location.href = "index.html";
     }
 }
 
