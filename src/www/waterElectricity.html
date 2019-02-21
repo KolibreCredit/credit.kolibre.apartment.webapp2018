@@ -6,72 +6,88 @@
     <meta name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <link href="packages/swiper@4.4.6/dist/css/swiper.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.529" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.532" rel="stylesheet"/>
     <style type="text/css">
+        .curApartment {
+            height: 50px;
+            line-height: 50px;
+            font-size: 16px;
+            color: #646464;
+            padding: 0 20px;
+            text-align: center;
+            background-color: #FFFFFF;
+            border-bottom: #E5E5E5 solid 1px;
+        }
+
+        .moreApartments {
+            display: none;
+        }
+
+        .apartments {
+            position: fixed;
+            top: 50px;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 2;
+            background-color: rgba(0, 0, 0, 0.4);
+            display: none;
+        }
+
+        .itemApartment {
+            height: 40px;
+            line-height: 40px;
+            color: #646464;
+            font-size: 18px;
+        }
+
+        .active {
+            color: #FB9328;
+        }
+
         .billList {
             padding: 0;
             margin: 0;
             display: none;
+            position: relative;
         }
-        .apartmentItem {
-            height: 50px;
-            line-height: 50px;
-            font-size: 16px;
-            color: #646464;
-            padding: 0 20px;
-        }
+
         .billItem {
             background: #ffffff;
             position: relative;
-            padding-bottom: 10px;
-        }
-        .billItem .top {
-            padding: 0 20px;
-            font-size: 16px;
-            color: #646464;
-            height: 50px;
-            line-height: 50px;
-            position: relative;
-        }
-        .top .icon {
-            width: 24px;
-            height: 24px;
-            position: absolute;
-            top: 12px;
-            left: 20px;
+            padding-top: 30px;
         }
 
+        .billItem .top {
+            font-size: 14px;
+            color: #313B41;
+            text-align: center;
+            position: relative;
+        }
         .top .state {
-            float: right;
             color: #F55452;
         }
         .billItem .billType {
-            padding: 0 20px;
-            color: rgba(153, 153, 153, 1);
-            font-size: 14px;
-        }
-        .billType span {
-            font-size: 20px;
+            margin-top:260px;
+            font-size: 24px;
             color: #000000;
-            margin-left:5px
-        }
-        .billType label {
-            color: #000000;
-            margin-left:2px
         }
         .treat {
-            background: #fff3e7;
+            background-color: #fff3e7;
             color: #ff8c14;
             font-size: 12px;
             text-align: center;
-            padding: 2px;
+            width: 16px;
+            height: 20px;
+            line-height:20px;
+            position: absolute;
+            top: 1px;
         }
         .billItem .bottom {
-            height: 60px;
-            text-align: right;
-            padding-top: 15px;
-            padding-right: 20px;
+            margin-top: 30px;
+            text-align: center;
         }
         .bottom .billbtnList {
             font-size: 14px;
@@ -85,7 +101,6 @@
             width: 80px;
             text-align: center;
         }
-
         .bottom .billbtnPay {
             font-size: 14px;
             color: #ffffff;
@@ -118,12 +133,77 @@
             bottom: 0;
             display: none;
         }
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+
+        .swiper-slide img {
+            height: 180px;
+            width: 180px;
+        }
+        .swiper-pagination-bullet-active {
+            background:#FF8C14;
+        }
+        .PrePayment {
+            height: 22px;
+            width: 130px;
+            border-radius: 57px;
+            background-color: rgba(255, 254, 251, 1);
+            box-shadow: 0px 0px 10px 0px rgba(176, 190, 197, 1);
+            display: inline-block;
+            text-align: center;
+            color:#313B41;
+            font-size: 14px;
+        }
+        .PostPayment{
+            width: 130px;
+            height: 22px;
+            border-radius: 57px;
+            background-color: rgba(255, 254, 251, 1);
+            box-shadow: 0px 0px 10px 0px rgba(255, 140, 20, 0.4);
+            display: inline-block;
+            text-align: center;
+            color:#FF8F34;
+            font-size: 14px;
+        }
     </style>
     <script src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
 </head>
-<body style="background:#f4f4f4">
+<body>
 <div class="mui-content" style="background:none">
     <div class="billList">
+        <div class="curApartment">
+            <span id="lbApartmentName"></span><span style="margin-right:5px" id="lbRoomNumber"></span><img
+                class="moreApartments" src="images/more1.png"
+                style="width: 18px;height:18px;position:absolute;top:16px"/>
+        </div>
+        <div id="divCurDevice">
+        </div>
+        <div class="swiper-container" style="position:absolute;top:140px">
+            <div class="swiper-wrapper">
+            </div>
+            <div style="height:40px"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+    <div class="apartments" onclick="hideApartments()">
+        <div id="divApartments" style="height:auto;background-color:#FFFFFF;text-align:center">
+        </div>
     </div>
     <div class="nodataDiv" style="padding:0 20px;flex-direction:column;align-items:center;justify-content:center">
         <div style="text-align:center">
@@ -134,32 +214,46 @@
         </div>
     </div>
     <div id="divBillTip" style="position:absolute;left:20px;right:20px;border-radius:4px;background-color:rgba(255,140,20,0.98);box-shadow:0px 0px 10px 0px rgba(0,0,0,0.2);padding:20px;color: rgba(255, 255, 255, 1);font-size:15px;display:none">
-        管家添加了新的电表账单，为了不影响正常使用，请及时支付账单。
+        管家添加了新的账单，为了不影响正常使用，请及时支付账单。
         <img src="images/20181224/tip2.png" style="position:absolute;width:31px;height:14px;bottom:-14px"/>
     </div>
     <div style="height:10px">
     </div>
-    <script type="text/html" id="tplApartmentItem">
-        <div class="apartmentItem">{0}<span style="margin-left:5px">{1}室</span></div>
+    <script type="text/html" id="tplItemApartment">
+        <div class="itemApartment" onclick="itemApartment({2})">{0}<span style="margin-left:5px">{1}室</span></div>
     </script>
     <script type="text/html" id="tplBillItem">
         <div class="billItem">
-            <div class="top" style="padding-left:50px">
-                <img src="images/20181224/{0}" class="icon"/>{1}（{2}）<span class="treat" style="display:{3}">待</span>
-                <span class="state" style="float:right">{4}</span>
-            </div>
-            <div class="billType">
-                <div style="padding-left:30px;line-height:30px">
-                    {5}<span>{6}</span><label>{7}</label>
+            <div class="top">
+                <div class="{2}">
+                    {0}（{1}）
                 </div>
-                <div style="padding-left:30px;line-height:30px;position:relative;display:{13}">
-                    {8}<span style="color:{11}">{9}</span><label style="color:{11}">{10}</label><img src="images/20181224/tip.png" onclick="billTip(this)" style="cursor:pointer;width:16px;height:16px;margin-left:8px;position:absolute;top:8px;display:{12}"/>
+                <div style="margin-top:10px;text-align:center">
+                    <span class="state">{3}</span>
                 </div>
             </div>
+            <div class="billType" style="display:{4}">
+                <div style="line-height:30px;text-align:center;position: relative">
+                    <span>{7}</span><label style="margin-right:2px">{8}</label><span class="treat" style="display:{9}">待</span>
+                </div>
+                <div style="color:#999999;font-size:12px;text-align:center">
+                   {6}
+                </div>
+            </div>
+            <div class="billType" style="display:{5}">
+                <div style="line-height:30px;text-align:center;color:#8A9BA4;font-size:24px">
+                    设备离线
+                </div>
+            </div>
+            <img src="images/line3.png" style="width:100%;padding-left:20px;padding-right:20px"/>
             <div class="bottom">
-                <span onclick="bill2('{14}')" class="billbtnList">查看账单</span> {15}
+                <div style="line-height:30px;color:#999999;position:relative">
+                   <span style="margin-right:2px">{10}</span><span style="color:#FEB420;margin-right:2px">{11}</span><label>{12}</label><img src="images/20181224/tip.png" onclick="billTip(this)" style="cursor:pointer;width:16px;height:16px;margin-left:5px;position:absolute;top:8px;display:{13}"/>
+                </div>
+                <div style="margin-top:20px">
+                    <span onclick="bill2('{14}')" class="billbtnList" style="margin-right:10px">查看账单</span>{15}
+                </div>
             </div>
-            <img src="images/line3.png" style="width:100%;padding-left:20px;display:{16}"/>
         </div>
     </script>
 </div>
@@ -167,7 +261,8 @@
 </html>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="packages/swiper@4.4.6/dist/js/swiper.min.js"></script>
 <script src="packages/moment@2.17.1/min/moment.min.js"></script>
-<script src="script/constants.js?ver=18.12.529"></script>
-<script src="script/service.js?ver=18.12.529"></script>
-<script src="script/waterElectricity.js?ver=18.12.529"></script>
+<script src="script/constants.js?ver=18.12.532"></script>
+<script src="script/service.js?ver=18.12.532"></script>
+<script src="script/waterElectricity.js?ver=18.12.532"></script>

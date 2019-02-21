@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>智能水电表</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.529" rel="stylesheet"/>
+    <style type="text/css">
+        .billList {
+            padding: 0;
+            margin: 0;
+            display: none;
+        }
+        .apartmentItem {
+            height: 50px;
+            line-height: 50px;
+            font-size: 16px;
+            color: #646464;
+            padding: 0 20px;
+        }
+        .billItem {
+            background: #ffffff;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        .billItem .top {
+            padding: 0 20px;
+            font-size: 16px;
+            color: #646464;
+            height: 50px;
+            line-height: 50px;
+            position: relative;
+        }
+        .top .icon {
+            width: 24px;
+            height: 24px;
+            position: absolute;
+            top: 12px;
+            left: 20px;
+        }
+
+        .top .state {
+            float: right;
+            color: #F55452;
+        }
+        .billItem .billType {
+            padding: 0 20px;
+            color: rgba(153, 153, 153, 1);
+            font-size: 14px;
+        }
+        .billType span {
+            font-size: 20px;
+            color: #000000;
+            margin-left:5px
+        }
+        .billType label {
+            color: #000000;
+            margin-left:2px
+        }
+        .treat {
+            background: #fff3e7;
+            color: #ff8c14;
+            font-size: 12px;
+            text-align: center;
+            padding: 2px;
+        }
+        .billItem .bottom {
+            height: 60px;
+            text-align: right;
+            padding-top: 15px;
+            padding-right: 20px;
+        }
+        .bottom .billbtnList {
+            font-size: 14px;
+            color: #FF8C14;
+            outline: none;
+            background: #FFFFFF;
+            padding: 4px 0;
+            border-radius: 100px;
+            border: 1px solid #FF8C14;
+            display: inline-block;
+            width: 80px;
+            text-align: center;
+        }
+
+        .bottom .billbtnPay {
+            font-size: 14px;
+            color: #ffffff;
+            outline: none;
+            background: #ff8c14;
+            border: 1px solid #ff8c14;
+            border-radius: 100px;
+            padding: 4px 0;
+            display: inline-block;
+            width: 80px;
+            text-align: center;
+        }
+        .bottom .billbtnDeposit {
+            font-size: 14px;
+            color: #ffffff;
+            outline: none;
+            background: #EFB420;
+            border: 1px solid #EFB420;
+            border-radius: 100px;
+            padding: 4px 0;
+            display: inline-block;
+            width: 80px;
+            text-align: center;
+        }
+        .nodataDiv {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            display: none;
+        }
+    </style>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
+</head>
+<body style="background:#f4f4f4">
+<div class="mui-content" style="background:none">
+    <div class="billList">
+    </div>
+    <div class="nodataDiv" style="padding:0 20px;flex-direction:column;align-items:center;justify-content:center">
+        <div style="text-align:center">
+            <img style="width:100%" src="images/20181224/waterElectricity.png"/>
+        </div>
+        <div style="font-size:16px;color: #999999;margin-top:20px">
+            亲，您还没有使用智能水电表哦～
+        </div>
+    </div>
+    <div id="divBillTip" style="position:absolute;left:20px;right:20px;border-radius:4px;background-color:rgba(255,140,20,0.98);box-shadow:0px 0px 10px 0px rgba(0,0,0,0.2);padding:20px;color: rgba(255, 255, 255, 1);font-size:15px;display:none">
+        管家添加了新的电表账单，为了不影响正常使用，请及时支付账单。
+        <img src="images/20181224/tip2.png" style="position:absolute;width:31px;height:14px;bottom:-14px"/>
+    </div>
+    <div style="height:10px">
+    </div>
+    <script type="text/html" id="tplApartmentItem">
+        <div class="apartmentItem">{0}<span style="margin-left:5px">{1}室</span></div>
+    </script>
+    <script type="text/html" id="tplBillItem">
+        <div class="billItem">
+            <div class="top" style="padding-left:50px">
+                <img src="images/20181224/{0}" class="icon"/>{1}（{2}）<span class="treat" style="display:{3}">待</span>
+                <span class="state" style="float:right">{4}</span>
+            </div>
+            <div class="billType">
+                <div style="padding-left:30px;line-height:30px">
+                    {5}<span>{6}</span><label>{7}</label>
+                </div>
+                <div style="padding-left:30px;line-height:30px;position:relative;display:{13}">
+                    {8}<span style="color:{11}">{9}</span><label style="color:{11}">{10}</label><img src="images/20181224/tip.png" onclick="billTip(this)" style="cursor:pointer;width:16px;height:16px;margin-left:8px;position:absolute;top:8px;display:{12}"/>
+                </div>
+            </div>
+            <div class="bottom">
+                <span onclick="bill2('{14}')" class="billbtnList">查看账单</span> {15}
+            </div>
+            <img src="images/line3.png" style="width:100%;padding-left:20px;display:{16}"/>
+        </div>
+    </script>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="packages/moment@2.17.1/min/moment.min.js"></script>
+<script src="script/constants.js?ver=18.12.529"></script>
+<script src="script/service.js?ver=18.12.529"></script>
+<script src="script/waterElectricity20190218.js?ver=18.12.529"></script>
