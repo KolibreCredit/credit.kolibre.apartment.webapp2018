@@ -8,7 +8,7 @@
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <link href="packages/mui@3.4.0/examples/hello-mui/css/mui.picker.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.532" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.535" rel="stylesheet"/>
     <style type="text/css">
         input[type=text] {
             padding: 5px;
@@ -178,7 +178,7 @@
     <div id="divFooter0" class="divFooter">
         <button class="btnActive" onclick="confirmTenantInfo()" style="border-radius:inherit">确认并提交</button>
     </div>
-    <div id="divCredentialType" class="mui-popover mui-popover-action mui-popover-bottom mui-scroll-wrapper"  style="height:225px;bottom:0;top:auto">
+    <div id="divCredentialType" class="mui-popover mui-popover-action mui-popover-bottom mui-scroll-wrapper"  style="height:310px;bottom:0;top:auto">
         <div class="mui-scroll">
             <ul class="mui-table-view">
                 <li class="mui-table-view-cell">
@@ -194,7 +194,13 @@
                     <a data-key="3">港澳通行证</a>
                 </li>
                 <li class="mui-table-view-cell">
-                    <a data-key="4">其他证件</a>
+                    <a data-key="4">港澳居民居住证</a>
+                </li>
+                <li class="mui-table-view-cell">
+                    <a data-key="5">台湾居民居住证</a>
+                </li>
+                <li class="mui-table-view-cell">
+                    <a data-key="6">其他证件</a>
                 </li>
             </ul>
         </div>
@@ -356,9 +362,9 @@
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/mui@3.4.0/examples/hello-mui/js/mui.picker.min.js"></script>
-<script src="script/constants.js?ver=18.12.532"></script>
-<script src="script/service.js?ver=18.12.532"></script>
-<script src="script/confirmTenant.js?ver=18.12.532"></script>
+<script src="script/constants.js?ver=18.12.535"></script>
+<script src="script/service.js?ver=18.12.535"></script>
+<script src="script/confirmTenant.js?ver=18.12.535"></script>
 <script type="text/javascript">
     mui('#divDecoration').scroll({scrollX: false, scrollY: true});
     mui('body').on('tap', '#divCredentialType a', function () {

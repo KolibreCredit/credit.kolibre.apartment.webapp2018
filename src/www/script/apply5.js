@@ -264,7 +264,16 @@ $(document).ready(function () {
             else if (contractConfirmInfo.credentialType == "HongKongMacao") {
                 $("#lbCredentialFacePhoto").text("港澳通行证正面");
                 $("#lbCredentialBackPhoto").text("港澳通行证反面");
-            } else {
+            }
+            else if (contractConfirmInfo.credentialType == "HongKongMacaoResidencePermit") {
+                $("#lbCredentialFacePhoto").text("港澳居民居住证正面");
+                $("#lbCredentialBackPhoto").text("港澳居民居住证反面");
+            }
+            else if (contractConfirmInfo.credentialType == "TaiwanResidencePermit") {
+                $("#lbCredentialFacePhoto").text("台湾居民居住证正面");
+                $("#lbCredentialBackPhoto").text("台湾居民居住证反面");
+            }
+            else {
                 $("#lbCredentialFacePhoto").text("其他证件正面");
                 $("#lbCredentialBackPhoto").text("其他证件反面");
             }

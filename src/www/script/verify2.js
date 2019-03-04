@@ -7,7 +7,7 @@ var credentialTabIndex = -1;
 var realName = "";
 var credentialNo = "";
 //
-var credentialTypes = ["IDCard", "Passport", "TaiwanPermit", "HongKongMacao", "Other"];
+var credentialTypes = ["IDCard", "Passport", "TaiwanPermit", "HongKongMacao","HongKongMacaoResidencePermit","TaiwanResidencePermit","Other"];
 var kinds = ["IDCardFace", "IDCardBack", "Selfie"];
 var credentialFacePhotoUrl = "";
 var credentialBackPhotoUrl = "";
@@ -91,6 +91,16 @@ function twoFactorVerify() {
             $(".chooseTip").html("有效港澳通行证");
             $("#lbTitle1").html("港澳通行证<span style=\"color:#f58a00\">正面</span>");
             $("#lbTitle2").html("港澳通行证<span style=\"color:#f58a00\">反面</span>");
+        }
+        else if (credentialTabIndex == 4) {
+            $(".chooseTip").html("有效港澳居民居住证");
+            $("#lbTitle1").html("港澳居民居住证<span style=\"color:#f58a00\">正面</span>");
+            $("#lbTitle2").html("港澳居民居住证<span style=\"color:#f58a00\">反面</span>");
+        }
+        else if (credentialTabIndex == 5) {
+            $(".chooseTip").html("有效台湾居民居住证");
+            $("#lbTitle1").html("台湾居民居住证<span style=\"color:#f58a00\">正面</span>");
+            $("#lbTitle2").html("台湾居民居住证<span style=\"color:#f58a00\">反面</span>");
         }
         else {
             $(".chooseTip").html("有效其他证件");

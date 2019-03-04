@@ -3,7 +3,7 @@
  */
 var url = "";
 var credentialTabIndex = -1;
-var credentialTypes = ["IDCard", "Passport", "TaiwanPermit", "HongKongMacao", "Other"];
+var credentialTypes = ["IDCard", "Passport", "TaiwanPermit", "HongKongMacao", "HongKongMacaoResidencePermit", "TaiwanResidencePermit", "Other"];
 var credentialFacePhotoUrl = "";
 var credentialBackPhotoUrl = "";
 var selfiePhotoUrl = "";
@@ -76,8 +76,20 @@ $(document).ready(function () {
                 $("#lbTitle2").html("港澳通行证反面");
                 // $("#txtCredentialType").val("港澳通行证");
             }
-            else {
+            else if (tenantInfo.credentialType == "HongKongMacaoResidencePermit") {
                 credentialTabIndex = 4;
+                $("#lbTitle1").html("港澳居民居住证正面");
+                $("#lbTitle2").html("港澳居民居住证反面");
+                // $("#txtCredentialType").val("其他证件");
+            }
+            else if (tenantInfo.credentialType == "TaiwanResidencePermit") {
+                credentialTabIndex = 5;
+                $("#lbTitle1").html("台湾居民居住证正面");
+                $("#lbTitle2").html("台湾居民居住证反面");
+                // $("#txtCredentialType").val("其他证件");
+            }
+            else {
+                credentialTabIndex = 6;
                 $("#lbTitle1").html("其他证件正面");
                 $("#lbTitle2").html("其他证件反面");
                 // $("#txtCredentialType").val("其他证件");

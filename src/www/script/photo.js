@@ -28,6 +28,18 @@ $(document).ready(function () {
                 $("#lbCredentialType").text("港澳通行证");
                 $("#imgSelfiePhotoUrl").attr("src", "images/photo/other3.png");
             }
+            else if (tenantInfo.credentialType == "HongKongMacaoResidencePermit") {
+                $("#lbTitle1").html("港澳居民居住证正面");
+                $("#lbTitle2").html("港澳居民居住证反面");
+                $("#lbCredentialType").text("港澳居民居住证");
+                $("#imgSelfiePhotoUrl").attr("src", "images/photo/other3.png");
+            }
+            else if (tenantInfo.credentialType == "TaiwanResidencePermit") {
+                $("#lbTitle1").html("台湾居民居住证正面");
+                $("#lbTitle2").html("台湾居民居住证反面");
+                $("#lbCredentialType").text("台湾居民居住证");
+                $("#imgSelfiePhotoUrl").attr("src", "images/photo/other3.png");
+            }
             else {
                 $("#lbTitle1").html("其他证件正面");
                 $("#lbTitle2").html("其他证件反面");
