@@ -7,7 +7,7 @@
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.535" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.536" rel="stylesheet"/>
     <style type="text/css">
         .mui-table-view {
             margin-top: 10px;
@@ -110,26 +110,59 @@
             position: fixed;
             left: 0;
             right: 0;
-            top: 0;
+            top: 50px;
             z-index: 2;
         }
-        .leasesList {
-            margin-top: 30px;
+        table {
+            width: 100%;
+            height: 50px;
+        }
+        table td {
+            width: 20%;
+            height: 100%;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer
+        }
+
+        table td span {
+            padding: 0 15px 10px 15px;
+            border-bottom: 2px solid #ffffff;
+            color: #666666;
+        }
+
+        table td.active span {
+            border-bottom: 2px solid #ff8c14;
+            color: #ff8c14;
+        }
+        .leases{
+            margin-top: 60px;
+        }
+        .leases.active {
+            margin-top: 90px;
         }
     </style>
 </head>
 <body style="background-color:#f7f7f7">
 <div class="mui-content" style="background:none">
+    <div style="position: fixed; width: 100%; left: 0; top: 0; background:#ffffff;z-index:2">
+        <table class="selectTable">
+            <tr>
+                <td class="active" onclick="selectTabToggle(0)"><span>租房合同</span></td>
+                <td onclick="selectTabToggle(1)"><span>日租订单</span></td>
+            </tr>
+        </table>
+    </div>
     <div id="divTip">
         <img src="images/tip.png" style="width:14px;height:14px;margin-top:8px;margin-right:10px"/>您有<span id="lbConfirmCount">0</span>个待确认租约
     </div>
-    <div id="divLeases">
+    <div id="divLeases" class="leases">
     </div>
     <div id="divNoData" style="display:none">
-        <div style="margin-top:40%;text-align:center;cursor:pointer;">
+        <div style="margin-top:40%;text-align:center">
             <img src="images/nodata1.png" style="width: 100px;height:100px">
         </div>
-        <div style="margin-top: 30px;font-size: 16px;color:#999999;text-align:center">
+        <div class="tip" style="margin-top: 30px;font-size: 16px;color:#999999;text-align:center">
             亲，您还没有租约哦
         </div>
     </div>
@@ -208,7 +241,7 @@
                     <img src="images/iconroom.png"
                          style="height:16px;width:16px;vertical-align:middle;margin-right:2px"/>{2}室
                 </div>
-                <div class="mui-ellipsis" style="font-size:16px;color:#646464">¥{3}/月，按{4}</div>
+                <div class="mui-ellipsis" style="font-size:16px;color:#646464">¥{3}/{11}，按{4}</div>
                 <img class="ic_grey_arrow" src="images/ic_grey_arrow.png"/>
             </div>
         </div>
@@ -222,6 +255,6 @@
 </script>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
-<script src="script/constants.js?ver=18.12.535"></script>
-<script src="script/service.js?ver=18.12.535"></script>
-<script src="script/list.js?ver=18.12.535"></script>
+<script src="script/constants.js?ver=18.12.536"></script>
+<script src="script/service.js?ver=18.12.536"></script>
+<script src="script/list.js?ver=18.12.536"></script>

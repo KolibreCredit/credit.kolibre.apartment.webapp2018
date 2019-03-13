@@ -370,6 +370,20 @@ var getPayPeriod = function (payPeriod) {
     return rentalType;
 };
 
+var getPayPeriod2 = function (payPeriod) {
+    var rentalType = "";
+    if (payPeriod == 0) {
+        rentalType = "全额付";
+    }
+    else if (payPeriod == 1) {
+        rentalType = "一天一付";
+    }
+    else if (payPeriod == 2) {
+        rentalType = "两天一付";
+    }
+    return rentalType;
+};
+
 var getCleaningState = function (cleaningState) {
     var cleaning = "";
     if (cleaningState == "Created") {

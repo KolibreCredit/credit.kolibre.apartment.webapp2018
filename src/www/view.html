@@ -7,7 +7,7 @@
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.535" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.536" rel="stylesheet"/>
     <style type="text/css">
         label {
             font-size: 16px;
@@ -114,6 +114,9 @@
         }
 
         .checkout {
+            display: none;
+        }
+        .dailyRent {
             display: none;
         }
     </style>
@@ -229,19 +232,19 @@
             </div>
         </div>
         <div class="monthlyAmount" style="line-height:36px;margin-top:15px">
-            <label>月租金</label><span>¥{2}/月</span>
+            <label>{0}租金</label><span>¥{2}/{0}</span>
         </div>
         <div class="stagesMonthRents" style="line-height:36px;margin-top:15px">
-            <label>月租金</label>
+            <label>{0}租金</label>
         </div>
         <div class="stagesMonthRents">
             {2}
         </div>
-        <div style="line-height:36px">
+        <div style="line-height:36px" class="dailyRent">
             <label>物业费</label><span>¥{3}/月</span>
         </div>
         <div style="line-height:36px">
-            <label>房租押金</label><span>¥{4}</span>
+            <label>房租押金</label><span>¥{4}{15}</span>
         </div>
         <div style="line-height:36px" class="accessCardDepositAmount">
             <label>门禁卡押金</label><span>¥{5}</span>
@@ -249,7 +252,7 @@
         <div class="customDeposits">
         </div>
         <div style="line-height:36px">
-            <label>合同租期</label><span>{6}月</span>
+            <label>合同租期</label><span>{6}{1}</span>
         </div>
         <div style="line-height:36px">
             <label>合同起始日期</label><span>{7}</span>
@@ -297,6 +300,6 @@
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/moment@2.17.1/min/moment.min.js"></script>
-<script src="script/constants.js?ver=18.12.535"></script>
-<script src="script/service.js?ver=18.12.535"></script>
-<script src="script/view.js?ver=18.12.535"></script>
+<script src="script/constants.js?ver=18.12.536"></script>
+<script src="script/service.js?ver=18.12.536"></script>
+<script src="script/view.js?ver=18.12.536"></script>

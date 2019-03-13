@@ -1,7 +1,17 @@
 /**
  * Created by long.jiang on 2016/12/14.
  */
+var currentTabIndex = -1;
 var currentContractId = "";
+
+function selectTabToggle(index) {
+    if (currentTabIndex != index) {
+        currentTabIndex = index;
+        $('.selectTable td').removeClass('active');
+        $('.selectTable td:eq(' + index + ')').addClass('active');
+        getCurrentcontracts(index);
+    }
+}
 
 function apply() {
     var data = {contractId: currentContractId};
@@ -71,9 +81,25 @@ function hideQuash() {
     $(".msg-alert").hide();
 }
 
-function getCurrentcontracts() {
+function getCurrentcontracts(tabIndex) {
     getInvoke(constants.URLS.GETCURRENTCONTRACTS, function (res) {
+        var jsonData = [];
         if (res.succeeded && res.data.length > 0) {
+            if (tabIndex == 0) {
+                for (var i = 0; i < res.data.length; i++) {
+                    if (res.data[i].rentalMode == "MonthlyRent") {
+                        jsonData.push(res.data[i]);
+                    }
+                }
+            } else {
+                for (var i = 0; i < res.data.length; i++) {
+                    if (res.data[i].rentalMode == "DailyRent") {
+                        jsonData.push(res.data[i]);
+                    }
+                }
+            }
+        }
+        if (jsonData.length > 0) {
             var leasesHtml = "";
             var tplLeases = $("#tplLeases").html();
             var item = null;
@@ -88,13 +114,13 @@ function getCurrentcontracts() {
             var icon = "";
             var quash = "block";
             var confirmCount = 0;
-            for (var i = 0; i < res.data.length; i++) {
+            for (var i = 0; i < jsonData.length; i++) {
                 icon = "";
                 titleColor = "";
                 title = "";
                 btnControls = "";
                 quash = "block";
-                item = res.data[i];
+                item = jsonData[i];
                 if (item.confirmed) {
                     if (item.checkoutStatus == "NotCheckout") {
                         btnControls = btnEviction.format(item.contractId);
@@ -132,24 +158,25 @@ function getCurrentcontracts() {
                     item.apartmentName,
                     item.roomNumber,
                     (item.monthlyAmount / 100).toFixed(2),
-                    item.yueFu ? "月付" : getPayPeriod(item.payPeriod),
+                    item.yueFu ? "月付" : (item.rentalMode == "MonthlyRent" ? getPayPeriod(item.payPeriod) : getPayPeriod2(item.payPeriod)),
                     btnControls,
                     icon,
                     titleColor,
                     title,
-                    item.contractId, quash);
+                    item.contractId, quash, (item.rentalMode == "MonthlyRent" ? "月" : "天"));
             }
             if (confirmCount > 0) {
                 $("#lbConfirmCount").html(confirmCount);
-                $("#divTip").show()
-                $("#divLeases").html(leasesHtml).addClass("leasesList");
+                $("#divTip").show();
+                $("#divLeases").html(leasesHtml).addClass("active");
             } else {
-                $("#divLeases").html(leasesHtml).removeClass("leasesList");
+                $("#divTip").hide();
+                $("#divLeases").html(leasesHtml).removeClass("active");
             }
         } else {
             $("#divTip").hide();
-            $("#divLeases").html("");
-            $("#divNoData").show();
+            $("#divLeases").html("").removeClass("active");
+            $("#divNoData").show().find(".tip").html((currentTabIndex == 0 ? "亲，您还没有租约哦" : "亲，您还没有日租订单呢"));
         }
     }, function (err) {
         mui.toast(err.message);
@@ -165,7 +192,8 @@ $(document).ready(function () {
                 else if (!res.data.confirmed) {
                     window.location.href = "confirmTenant.html?url={0}".format("list.html");
                 } else {
-                    getCurrentcontracts();
+                    //getCurrentcontracts(0);
+                    selectTabToggle(0);
                 }
             }
         }

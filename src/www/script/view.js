@@ -137,20 +137,25 @@ $(document).ready(function () {
                 isStagesMonthRents = false;
             }
             var tplLeaseInfo = $("#tplLeaseInfo").html();
-            var htmlLeaseInfo = tplLeaseInfo.format(
-                "", "", (isStagesMonthRents ? arrStagesMonthRents.join("") : (item.monthlyAmount / 100).toFixed(2)),
+            var htmlLeaseInfo = tplLeaseInfo.format((item.rentalMode == "MonthlyRent" ? "月" : "日"), (item.rentalMode == "MonthlyRent" ? "月" : "天"),(isStagesMonthRents ? arrStagesMonthRents.join("") : (item.monthlyAmount / 100).toFixed(2)),
                 (item.propertyManagementAmount / 100).toFixed(2),
                 (item.depositAmount / 100).toFixed(2),
                 (item.accessCardDepositAmount / 100).toFixed(2),
                 item.term,
                 item.rentStartTime.substring(0, 10),
                 item.rentEndTime.substring(0, 10),
-                getPayPeriod(item.payPeriod),
+                (item.rentalMode == "MonthlyRent" ? getPayPeriod(item.payPeriod) : getPayPeriod2(item.payPeriod)),
                 (item.contractPictures ? "纸质合同" : "电子合同"),
                 imageStorageLocation,
-                templateName, item.contractNotes, item.contractId);
+                templateName, item.contractNotes, item.contractId,(item.rentalMode == "MonthlyRent" ? "" : "/间"));
             $("#divLeaseInfo").html(htmlLeaseInfo);
             setTimeout(function () {
+                if (item.rentalMode == "MonthlyRent") {
+                    $(".dailyRent").show();
+                }
+                else {
+                    $(".dailyRent").hide();
+                }
                 if (item.customDeposits != null && item.customDeposits.length > 0) {
                     var customDeposit = null;
                     var htmlCustomDeposit = [];
