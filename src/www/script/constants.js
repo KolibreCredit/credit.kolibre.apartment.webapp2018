@@ -57,10 +57,15 @@ var constants = {
         GETLOANAPPLYRESULT: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/StageOrder/GetLoanApplyResult",
         FACERECOGNITION: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/StageOrder/FaceRecognition",
         RENDERPRECONFIGUREHTMLTEMPLATE: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Contract/RenderPreConfigureHtmlTemplate",
+        GETTENANTDOMESTICCONFIGREPAIRBYCONTRACTID:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/GetTenantDomesticConfigRepairByContractId?contractId={0}",
+        GETTENANTDOMESTICCONFIGCLEANINGBYCONTRACTID:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/GetTenantDomesticConfigCleaningByContractId?contractId={0}",
         CREATECLEANING: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/CreateCleaning",
+        UPDATECLEANINGEVALUATIONS:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/UpdateCleaningEvaluations",
+        UPDATEREPAIREVALUATIONS:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/UpdateRepairEvaluations",
         GETTENANTCLEANINGS: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/GetTenantCleanings",
         GETTENANTCLEANING: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/GetTenantCleaning?id={0}",
         CANCELCLEANING: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/CancelCleaning",
+
         CREATEREPAIR: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/CreateRepair",
         GETTENANTREPAIRS: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/GetTenantRepairs",
         GETTENANTREPAIR: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/GetTenantRepair?id={0}",
@@ -86,7 +91,17 @@ var constants = {
         REMOTEOPENLOCK:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/RemoteOpenLock",
         ADDLOCKPASSWORD:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/AddLockPassword",
         GETLOCKTEMPORARYPASSWORD:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/GetLockTemporaryPassword?deviceId={0}&name={1}&cellphone={2}",
-        GETLOCKOPENRECORDS:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/GetLockOpenRecords?deviceId={0}&index={1}&count={2}"
+        GETLOCKOPENRECORDS:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/GetLockOpenRecords?deviceId={0}&index={1}&count={2}",
+        INVOICEGETCONTRACTS:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/GetContracts?contractId={0}",
+        GETINVOICEORDER:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/tenant/GetInvoiceOrders?contractId={0}&forContract=true",
+        GETTENANTINVOICETITLES:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/GetTenantInvoiceTitles",
+        ADDINVOICETITLE:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/AddInvoiceTitle",
+        UPDATEINVOICETITLE:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/UpdateInvoiceTitle",
+        DELETEINVOICETITLE:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/DeleteInvoiceTitle",
+        CREATEINVOICEINFO:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/tenant/CreateInvoiceInfo",
+        MODIFYINVOICEINFO:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/ModifyInvoiceInfo",
+        GETINVOICEINFOS:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/GetInvoiceInfos",
+        GETINVOICEINFO:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/tenant/GetInvoiceInfo?invoiceInfoId={0}"
     },
     COOKIES: {
         XKCSID: 'X-KC-SID',
@@ -94,7 +109,12 @@ var constants = {
         CONTRACTCONFIRMINFOID: "X-KC-CONTRACTCONFIRMINFOID",
         INDEXURL: "X-KC-INDEXURL",
         DEPOSIT: "X-KC-DEPOSIT",
-        DEVICEID:"X-KF-DEVICEID"
+        DEVICEID:"X-KF-DEVICEID",
+        INVOICE:"X-KF-INVOICE",
+        INVOICE1:"X-KF-INVOICE1",
+        INVOICE2:"X-KF-INVOICE2",
+        INVOICE3:"X-KF-INVOICE3",
+        INVOICE4:"X-KF-INVOICE4"
     },
     REGEX: {
         CELLPHONE: /^(13|14|15|16|17|18|19|10)\d{9}$/,
@@ -105,7 +125,8 @@ var constants = {
         BANKCARDNO: /^\d{15,19}$/,
         CHECKCODE: /^\d{6}$/,
         FLOOR: /^\d{1,5}$/,
-        AMOUNT: /^\d{1,7}(\.\d{1,2})?$/
+        AMOUNT: /^\d{1,7}(\.\d{1,2})?$/,
+        EMAIL:/^[A-Za-z0-9\u4e00-\u9fa5]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
     },
     msgInfo: {
         postData: "数据正在提交请稍后",

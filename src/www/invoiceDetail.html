@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>账单详情</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <link href="packages/cssLct@1.0.0/css/flowChart.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.540" rel="stylesheet"/>
+    <style type="text/css">
+        label {
+            font-size: 14px;
+            color: #999999;
+        }
+
+        span {
+            display: block;
+            float: right;
+            font-size: 14px;
+            color: #333333;
+        }
+
+        #wrapper {
+            z-index: 1;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 90px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        #scroller {
+            float: left;
+            z-index: 1;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            height: auto;
+            -webkit-transform: translateZ(0);
+            -moz-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            -o-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-text-size-adjust: none;
+            -moz-text-size-adjust: none;
+            -ms-text-size-adjust: none;
+            -o-text-size-adjust: none;
+            text-size-adjust: none;
+        }
+
+        #scroller ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+
+        #scroller li {
+            display: block;
+            float: left;
+            width: 140px;
+            height: 100%;
+            position: relative;
+            padding-top: 10px;
+        }
+
+        .itemLab {
+            margin-top: 20px;
+            text-align: center;
+            position: relative;
+            height: 26px;
+        }
+
+        .itemLab .line {
+            width: 100%;
+            height: 2px;
+        }
+
+        .itemLab .title {
+            position: absolute;
+            height: 26px;
+            left: 0;
+            right: 0;
+            top: 0;
+            text-align: center;
+        }
+
+        .itemLab .title div {
+            font-size: 14px;
+            color: #646464;
+            background: rgba(204, 204, 204, 0.25);
+            border-radius: 100px;
+            width: 130px;
+            height: 26px;
+            line-height: 26px;
+            display: inline-block;
+        }
+
+        .taxpayerNo {
+            display: none;
+        }
+
+        .invoiceNo {
+            display: none;
+        }
+
+        .invoicePictures {
+            display: none;
+        }
+
+        .hasMailed {
+            display: none;
+        }
+
+        .invoiceStateTip {
+            display: none;
+        }
+        .flowChart {
+            padding: 0;
+        }
+        .flowChart .dashed {
+            margin-left: 5px;
+            height: 92%;
+        }
+        .flowChart .oneNode {
+            position: relative;
+        }
+
+        .flowChart-left {
+            width: 20px;
+        }
+
+        .oneNode img {
+            width: 12px;
+            height: 12px;
+            position: absolute;
+            top: 2px;
+            left:-20px;
+        }
+
+        .flowChart .NodeDetail {
+            border: none;
+            box-shadow: none;
+            font-size: 14px;
+            color: #333333;
+            margin: 0;
+            padding: 0 0 8px 0;
+        }
+        .more {
+            width: 24px;
+            height: 24px;
+            position: absolute;
+            right: 5px;
+            top: 10px;
+        }
+    </style>
+</head>
+<body style="background:#f4f4f4">
+<div class="mui-content">
+    <div class="invoiceStateTip" style="position:fixed;left:0;right:0;top:0;z-index:1">
+        <div style="background-color:#FFF4EB;height:40px;line-height:40px;font-size: 14px;color:#FD8B14;text-align:center">
+            电子发票已发送至您的邮箱
+        </div>
+    </div>
+    <div class="invoiceStateTip" style="height:40px"></div>
+    <div style="height:20px"></div>
+    <div style="text-align:center">
+        <img id="imgInvoiceState" style="width: 50px;height:50px;display:none"/>
+    </div>
+    <div style="margin-top:20px;text-align:center">
+        <span id="lbInvoiceState" style="float:none;font-size: 18px;color:#646464"></span>
+    </div>
+    <div style="padding:0 20px">
+        <div class="itemLab">
+            <img src="images/fuwu/line2.png" class="line"/>
+            <div class="title">
+                <div>
+                    发票信息
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="height:20px"></div>
+    <div id="divInvoceInfo" style="padding:0 20px">
+    </div>
+    <div style="height:20px"></div>
+    <div style="padding:0 20px">
+        <div class="itemLab">
+            <img src="images/fuwu/line2.png" class="line"/>
+            <div class="title">
+                <div>
+                    收件信息
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="divInvoceInfo2" style="padding:0 20px">
+    </div>
+    <div style="height:10px;background-color:#f4f4f4"></div>
+    <div style="height:40px;line-height:40px;padding:0 20px;background-color:#FFFFFF" onclick="billList()">
+        <label style="font-size:14px;color:#333333">账单信息</label><span style="color:#FD8B14">查看</span>
+    </div>
+    <div style="height:10px;background-color:#f4f4f4"></div>
+    <div id="divModifyRecords" style="padding:0 20px;display:none">
+        <div style="height: 40px;line-height:40px;font-size:14px;color: #333333;position:relative" onclick="showModifyRecords()">
+            修改申请记录 <img src="images/more3s.png" class="more"/>
+        </div>
+        <div class="flowChart" style="background-color:#FFFFFF;">
+            <div class="flowChart-left">
+                <div style="height:3px"></div>
+                <div class="dashed"></div>
+            </div>
+            <div class="flowChart-right">
+            </div>
+        </div>
+        <div class="retracting" style="height:40px;line-height:40px;color:#FD8B14;font-size:14px;text-align:center" onclick="hideModifyRecords()">点击收起</div>
+    </div>
+    <div style="position:fixed;left:0;right:0;bottom:0;z-index:1">
+        <div style="height: 50px;line-height:50px;color:#FFFFFF;font-size:18px;text-align:center;background:#FB9329"
+             onclick="modify()">
+            修改申请
+        </div>
+    </div>
+    <div style="height:60px;background-color:#f4f4f4"></div>
+</div>
+<div>
+</div>
+<script type="text/html" id="tplItem">
+    <div style="line-height:36px">
+        <label>发票内容</label><span style="float:right">{0}</span>
+    </div>
+    <div style="line-height:36px">
+        <label>开票金额</label><span style="float:right">{1}元</span>
+    </div>
+</script>
+<script type="text/html" id="tplTotal">
+    <div style="line-height:36px">
+        <label style="color:#FD8B14">开票总额</label><span style="color:#FD8B14">{0}元</span>
+    </div>
+</script>
+<script type="text/html" id="tplInvoceInfo">
+    <div style="line-height:36px">
+        <label>发票抬头</label><span>{0}</span>
+    </div>
+    <div class="taxpayerNo" style="line-height:36px">
+        <label>发票税号</label><span>{1}</span>
+    </div>
+    <div class="contents">
+        {2}
+    </div>
+    <div style="line-height:36px">
+        <label>申请时间</label><span>{3}</span>
+    </div>
+    <div class="invoiceNo" style="line-height:36px">
+        <label>发票号码</label><span>{4}</span>
+    </div>
+    <div class="invoiceNo" style="line-height:36px">
+        <label>开票日期</label><span>{5}</span>
+    </div>
+    <div class="invoicePictures" style="line-height:36px">
+        <label>发票附件</label>
+    </div>
+    <div class="invoicePictures">
+        <div id="wrapper">
+            <div id="scroller">
+                <ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="tplDigital">
+    <div style="height:20px"></div>
+    <div style="line-height:36px">
+        <label>电子邮箱</label><span>{0}</span>
+    </div>
+</script>
+<script type="text/html" id="tplPaper">
+    <div style="line-height:36px">
+        <label>收件人</label><span>{0}</span>
+    </div>
+    <div style="line-height:36px">
+        <label>联系电话</label><span>{1}</span>
+    </div>
+    <div style="line-height:36px">
+        <label>所在地区</label><span>{2}</span>
+    </div>
+    <div style="line-height:36px">
+        <label>详细地址</label><span>{3}</span>
+    </div>
+    <div style="line-height:36px">
+        <label>是否邮寄</label><span>{4}</span>
+    </div>
+    <div style="line-height:36px" class="hasMailed">
+        <label>快递公司</label><span>{5}</span>
+    </div>
+    <div style="line-height:36px" class="hasMailed">
+        <label>快递单号</label><span>{6}</span>
+    </div>
+</script>
+<script type="text/html" id="tplPaper1">
+    <div style="line-height:36px">
+        <label>是否邮寄</label><span>否</span>
+    </div>
+</script>
+<script type="text/html" id="tplPicture">
+    <li>
+        <div style="width:120px">
+            <img src="{0}" style="width:100%;height:80px;border-radius:4px">
+        </div>
+    </li>
+</script>
+<script type="text/html" id="tplModifyRecord">
+    <div class="oneNode">
+        <img src="images/tipsTime.png"/>
+        <div class="NodeDetail">
+            {0}
+        </div>
+    </div>
+</script>
+</body>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="packages/iscroll@5.2.0/build/iscroll.js"></script>
+<script src="packages/iscroll@5.2.0/demos/demoUtils.js"></script>
+<script src="script/constants.js?ver=18.12.540"></script>
+<script src="script/service.js?ver=18.12.540"></script>
+<script src="script/invoiceDetail.js?ver=18.12.540"></script>

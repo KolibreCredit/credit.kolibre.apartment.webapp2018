@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>按账单开票</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.540" rel="stylesheet"/>
+    <style type="text/css">
+        .step0 {
+            display: none;
+        }
+
+        .step1 {
+            display: none;
+        }
+
+        .contract {
+            background: #FFFFFF;
+            overflow-y: auto;
+            padding: 10px 0;
+            height: 180px;
+        }
+
+        .contract .item {
+            height: 40px;
+            line-height: 40px;
+            font-size: 18px;
+            color: #646464;
+            text-align: center;
+        }
+
+        .contract .active {
+            color: #FB9328;
+        }
+
+        .billList {
+            padding: 0;
+            margin: 0;
+        }
+
+        .billItem {
+            margin-top: 10px;
+            background: #ffffff;
+            position: relative;
+            box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.1);
+            border: 1px solid #FFFFFF;
+        }
+
+        .billItem .select {
+            display: none;
+        }
+
+        .active {
+            border: 1px solid rgba(251, 147, 41, 1);
+        }
+
+        .active .select {
+            display: block;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 30px;
+            height: 24px;
+        }
+
+        .billItem .top {
+            padding: 0 20px;
+            height: 40px;
+            line-height: 40px;
+            position: relative;
+        }
+
+        .top .icon {
+            width: 28px;
+            height: 28px;
+            position: absolute;
+            top: 6px;
+            left: 10px;
+        }
+
+        .top .orderType {
+            color: #646464;
+            font-size: 16px;
+            margin-left: 30px;
+        }
+
+        .top .invoiceAmount {
+            float: right;
+            color: #646464;
+            font-size: 16px;
+        }
+
+        .billPayContent {
+            height: 40px;
+            line-height: 40px;
+            font-size: 14px;
+            color: #646464;
+            position: relative;
+        }
+
+        .billPayContent .icon {
+            height: 12px;
+            width: 12px;
+            position: absolute;
+            top: 12px;
+            left: 10px;
+        }
+
+        .billPayContent .actualPaymentTime {
+            margin-left: 30px;
+        }
+        .check3,.check3s {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            top: 12px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="mui-content" style="background:none">
+    <div class="step0" style="position:fixed;left:0;right:0;top:0;background:#FFFFFF;z-index:1">
+        <div style="height:50px;line-height:50px;font-size:18px;color:#313B41;text-align:center;position:relative;border-bottom:1px solid #E5E5E5"
+             onclick="showContract()">
+            <span style="margin-right:5px" id="lbContractInfo"></span><img
+                style="width:18px;height:18px;position:absolute;top:16px" src="images/more1.png"/>
+        </div>
+    </div>
+    <div id="divContract"
+         style="position:fixed;left:0;right:0;bottom:0;top:50px;z-index:2;background-color: rgba(0,0,0,0.4);display:none">
+        <div class="contract">
+        </div>
+    </div>
+    <div class="step0" style="margin-top:50px;padding-top:10px">
+        <div class="billList"></div>
+        <div id="divNodata2" style="display:none">
+            <div style="margin-top:30%;text-align:center">
+                <img src="images/nodata4.png" style="width:283px;height:219px"/>
+            </div>
+            <div style="margin-top:10px;font-size:16px;color:#999999;text-align:center">
+                暂无可开票账单
+            </div>
+        </div>
+    </div>
+    <div class="step1" style="position:fixed;left:0;right:0;bottom:0;z-index:1">
+        <div style="height:50px;line-height:50px;background-color: rgba(255, 255, 255, 1);box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.1);position:relative;font-size: 16px;color:#646464;padding:0 20px">
+            <img src="images/check3.png" class="check3" onclick="allItemBillSelect()" />
+            <img src="images/check3s.png" class="check3s" onclick="allItemBillDelete()" style="display:none"/>
+            <span style="margin-left:30px">全选</span>
+            <span style="float:right" id="lbInvoiceAmount">5个账单, 共12500.00元</span>
+        </div>
+        <div style="height: 50px;line-height:50px;color:#FFFFFF;font-size:18px;text-align:center;background:#FB9329" onclick="invoice2()">
+            下一步
+        </div>
+    </div>
+    <div id="divNodata" style="display:none">
+        <div style="margin-top:40%;text-align:center">
+            <img src="images/nodata3.png" style="width:283px;height:219px"/>
+        </div>
+        <div style="margin-top:20px;font-size: 16px;color:#999999;text-align:center">
+            暂无租约信息，请稍后再试
+        </div>
+    </div>
+    <div style="height:110px">
+    </div>
+    <div class="msg-alert" style="z-index:2">
+        <table style='width:100%;height:100%'>
+            <tr>
+                <td style='vertical-align:middle;text-align:center'>
+                    <div class="msg-body">
+                        <div style="margin-top:30px;text-align:center">
+                            <img src="images/tip5.png" style="height:40px;width:40px"/>
+                        </div>
+                        <div style="margin-top:20px;font-size:18px;color:#646464;line-height:25px;font-weight:bold">
+                            请先确认租约
+                        </div>
+                        <div style="margin-top:20px;font-size:14px;color:#646464;line-height:28px;padding-left:20px;padding-right:20px;text-align:center">
+                            该账单对应的租约处于待确认状态，不能进行账单支付操作，请先确认租约。
+                        </div>
+                        <div style="margin-top:40px">
+                            <button class="btnActive"
+                                    style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:90%;border:none"
+                                    onclick="confirmList()">去确认
+                            </button>
+                        </div>
+                        <div style="margin-top:20px;text-align:center">
+                            <span style="font-size:14px;color:#ff8c14" onclick="closeApply()">暂不确认</span>
+                        </div>
+                        <div style="height:20px"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/html" id="tplItem">
+        <div class="{0}" onclick="itemContractSelect({2})">
+            {1}
+        </div>
+    </script>
+    <script type="text/html" id="tplBillItem">
+        <div style="padding:0 20px">
+            <div class="billItem" onclick="itemBillSelect({0})">
+                <div class="top">
+                    <img src="{1}" class="icon"/><span class="orderType">{2}</span><span
+                        class="invoiceAmount">{3}元</span>
+                </div>
+                <img src="images/line3.png" style="width:100%;height:1px"/>
+                <div class="billPayContent">
+                    <img src="images/zhouqi.png" class="icon"/><span class="actualPaymentTime">支付时间:{4}</span>
+                </div>
+                <img src="images/selectv2.png" class="select"/>
+            </div>
+        </div>
+    </script>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="packages/moment@2.17.1/min/moment.min.js"></script>
+<script src="script/constants.js?ver=18.12.540"></script>
+<script src="script/service.js?ver=18.12.540"></script>
+<script src="script/invoice.js?ver=18.12.540"></script>

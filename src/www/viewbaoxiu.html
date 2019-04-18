@@ -6,8 +6,10 @@
     <meta name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <link href="packages/raty@2.5.2/demo/css/application.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="packages/tooltips@1.0.0/css/tooltips.css"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.536" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.541" rel="stylesheet"/>
     <style type="text/css">
         label {
             font-size: 14px;
@@ -72,20 +74,221 @@
             position: relative;
             padding-top: 10px;
         }
-        .step1 {
+
+        #wrapper1 {
+            z-index: 1;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 90px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        #scroller1 {
+            float: left;
+            z-index: 1;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            height: auto;
+            -webkit-transform: translateZ(0);
+            -moz-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            -o-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-text-size-adjust: none;
+            -moz-text-size-adjust: none;
+            -ms-text-size-adjust: none;
+            -o-text-size-adjust: none;
+            text-size-adjust: none;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        #scroller1 ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+
+        #scroller1 li {
+            display: block;
+            float: left;
+            width: 140px;
+            height: 100%;
+            position: relative;
+            padding-top: 10px;
+        }
+
+        .evaluations {
             display: none;
         }
-        .btnNext {
+
+        .service {
+            display: none;
+        }
+
+        .process {
+            display: none;
+        }
+
+        .star img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .tag {
+            padding: 0 40px;
+            margin-top: 5px;
+        }
+
+        .tag div {
+            width: 140px;
+            height: 36px;
+            border-radius: 18px;
+            background-color: rgba(242, 242, 242, 1);
+            float: left;
+            text-align: center;
+            line-height: 36px;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #999999;
+        }
+
+        .tag .active {
+            width: 140px;
+            height: 36px;
+            border-radius: 18px;
+            background-color: rgba(253, 139, 20, 0.1);
+            border: 1px solid rgba(253, 139, 20, 0.1);
+            color: #FD8B14;
+        }
+
+        .tag div:nth-child(even) {
+            float: right;
+        }
+
+        .tags {
+            margin-top: 5px;
+        }
+
+        .tags div {
+            width: auto;
+            height: 24px;
+            line-height: 22px;
+            border-radius: 12px;
+            background-color: rgba(253, 139, 20, 0.1);
+            border: 1px solid rgba(253, 139, 20, 0.1);
+            color: rgba(253, 139, 20, 1);
+            font-size: 12px;
+            display: inline-block;
+            float: left;
+            margin-right: 10px;
+            padding: 0 6px;
+            margin-top: 15px;
+        }
+
+        .step1 {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50px;
+        }
+
+        .btnNext, .btnEvaluations, .btnPay {
             height: 50px;
             line-height: 50px;
             background: #fb9329;
             text-align: center;
             font-size: 18px;
             color: #FFFFFF;
-            position: fixed;
-            bottom: 0;
+            display: none;
+        }
+
+        .evaluationsLeft {
+            box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+            background: #FFFFFF;
+            color: #FB9329;
+            float: left;
+            width: 50%;
+        }
+
+        .payRight {
+            float: right;
+            width: 50%;
+        }
+
+        .itemLab {
+            margin-top: 20px;
+            text-align: center;
+            position: relative;
+            height: 26px;
+        }
+
+        .itemLab .line {
+            width: 100%;
+            height: 2px;
+        }
+
+        .itemLab .title {
+            position: absolute;
+            height: 26px;
             left: 0;
             right: 0;
+            top: 0;
+            text-align: center;
+        }
+
+        .itemLab .title div {
+            font-size: 14px;
+            color: #646464;
+            background: rgba(204, 204, 204, 0.25);
+            border-radius: 100px;
+            width: 130px;
+            height: 26px;
+            line-height: 26px;
+            display: inline-block;
+        }
+
+        .pt .cont {
+            background-color: rgba(255, 140, 20, 0.98);
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+            color: #FFFFFF;
+            font-size: 16px;
+        }
+
+        .pt-down .out {
+            border-color: #FF8C14 transparent transparent;
+        }
+
+        .pt-down .in {
+            border-color: #FF8C14 transparent transparent;
+        }
+
+        @media only screen and (max-width: 320px) {
+            .tag {
+                padding: 0 20px;
+            }
+
+            .tag div {
+                width: 130px;
+            }
+
+            .tag .active {
+                width: 130px;
+            }
+
+            .itemLab .title div {
+                width: 100px;
+            }
         }
     </style>
 </head>
@@ -93,11 +296,121 @@
 <div class="mui-content">
     <div id="divLeaseInfo">
     </div>
-    <div class="step1">
+    <div style="height:10px;background-color:#f4f4f4" class="service"></div>
+    <div style="padding:0 20px" class="service">
+        <div class="itemLab">
+            <img src="images/fuwu/line2.png" class="line"/>
+            <div class="title">
+                <div>服务费用</div>
+            </div>
+        </div>
+        <div style="line-height:30px;margin-top:20px;position:relative">
+            <label>服务单价</label><img id="imgQuestion" src="images/question.png"
+                                    style="width:20px;height:20px;float:right;margin-top:5px"/><span
+                id="lbCollectFees"></span>
+        </div>
+        <div style="line-height:30px">
+            <label>服务账单</label><span id="lbOrderAmount"></span>
+        </div>
         <div style="height:60px">
+        </div>
+    </div>
+    <div style="height:10px;background-color:#f4f4f4" class="process"></div>
+    <div style="padding:0 20px" class="process">
+        <div class="itemLab">
+            <img src="images/fuwu/line2.png" class="line"/>
+            <div class="title">
+                <div>
+                    处理信息
+                </div>
+            </div>
+        </div>
+        <div style="line-height:30px;margin-top:20px">
+            <label>进度描述</label><span id="lbProcessDescription"></span>
+        </div>
+        <div style="line-height:30px" class="useTime">
+            <label>服务用时</label><span id="lbUseTime"></span>
+        </div>
+        <div style="line-height:30px">
+            <label>图片</label><span id="lbProcessDescriptionPictures"></span>
+        </div>
+        <div id="wrapper1">
+            <div id="scroller1">
+                <ul id="imgProcessDescriptionPictures">
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div style="height:10px;background-color:#f4f4f4" class="evaluations"></div>
+    <div style="padding:0 20px" class="evaluations">
+        <div class="itemLab">
+            <img src="images/fuwu/line2.png" class="line"/>
+            <div class="title">
+                <div>
+                    评价信息
+                </div>
+            </div>
+        </div>
+        <div style="text-align:center;white-space:nowrap;margin-top:30px">
+            <div id="divStar" class="star" style="display:inline-block"></div>
+        </div>
+        <div style="text-align:center;color: rgba(153,153,153,1);font-size:14px;margin-top:10px" id="divTipInfo">
+        </div>
+        <div id="divTagInfo" class="tags">
+        </div>
+        <div style="clear:both"></div>
+        <div style="color: rgba(153,153,153,1);font-size:14px;margin-top:20px">
+            评价内容
+        </div>
+        <div id="divTagDescription" style="margin-top:5px;color: rgba(51, 51, 51, 1);font-size: 14px">
+        </div>
+    </div>
+    <div style="height:50px">
+    </div>
+    <div class="step1">
+        <div class="btnEvaluations" onclick="showEvaluations()">
+            评价本次服务
+        </div>
+        <div class="btnPay" onclick="payOrder()">
+            去支付
         </div>
         <div class="btnNext" onclick="cancelRepair()">
             取消申请
+        </div>
+    </div>
+    <div id="divEvaluations"
+         style="position:fixed;left:0;right:0;top:0;bottom:0;background-color:rgba(0,0,0,0.6);display:none;z-index:2">
+        <div style="position:absolute;bottom:0;right:0;left:0;background-color:#FFFFFF;height:auto;border-top-left-radius:6px;border-top-right-radius:6px">
+            <div style="height:60px;position:relative">
+                <img src="images/close.png" style="width:24px;height:24px;position: absolute;top:20px;right:20px"
+                     onclick="hideEvaluations()"/>
+            </div>
+            <div style="text-align:center;position:relative">
+                <img src="images/fuwu/line2.png" style="width:100%;height:2px"/>
+                <div style="position:absolute;top:4px;left:0;right:0;text-align:center">
+                    <div style="font-size:14px;color:#646464;background:rgba(204,204,204,0.25);border-radius:100px;width:110px;height:26px;line-height:26px;display:inline-block">
+                        评价信息
+                    </div>
+                </div>
+            </div>
+            <div style="text-align:center;white-space:nowrap;margin-top:30px">
+                <div id="star" class="star" style="display:inline-block"></div>
+            </div>
+            <div style="text-align:center;color: rgba(153,153,153,1);font-size:14px;margin-top:10px" id="divTip">
+                您的评价会帮助我们做的更好
+            </div>
+            <div id="divTag" class="tag">
+            </div>
+            <div style="clear:both"></div>
+            <div style="padding:0 20px;margin-top:20px">
+                <textarea type="text" id="txtDescription" maxlength="300" placeholder="您对此次的服务请评价"
+                          style="width:100%;background-color:#F9F9F9;border:none;height:50px;font-size:12px;color:#646464"></textarea>
+            </div>
+            <div style="height:70px"></div>
+            <div onclick="updateCleaningEvaluations()"
+                 style="height:50px;text-align:center;color:#FFFFFF;font-size:18px;line-height:50px;background-color:#FD8B14;position:fixed;bottom:0;left:0;right:0">
+                提交评价
+            </div>
         </div>
     </div>
     <div class="msg-post">
@@ -114,6 +427,34 @@
             </tr>
         </table>
     </div>
+    <div class="msg-alert" style="z-index:3">
+        <table style='width:100%;height:100%'>
+            <tr>
+                <td style='vertical-align:middle'>
+                    <div style="background-color:#FFFFFF;border-radius: 6px;">
+                        <div style="height:40px"></div>
+                        <div>
+                            <img src="images/success1.png" style="width:50px;height:50px"/>
+                        </div>
+                        <div style="font-size:18px;color:#646464">
+                            评价成功
+                        </div>
+                        <div style="font-size:14px;color:#646464">
+                            感谢您的评价
+                        </div>
+                        <div style="height:40px"></div>
+                        <div style="padding:0 60px">
+                            <div style="width:100%;height:44px;line-height:44px;border-radius:100px;border: 1px solid rgba(251, 147,41, 1);color:#FD8B14;font-size:18px"
+                                 onclick="hideAlert()">
+                                返回
+                            </div>
+                        </div>
+                        <div style="height:30px"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 <script type="text/html" id="tplView">
     <div style="padding-left:20px;padding-right:20px">
@@ -123,10 +464,10 @@
         <div style="text-align:center;font-size:18px;color:#646464;margin-top:10px">
             {1}
         </div>
-        <div style="text-align:center;margin-top:20px;position:relative">
-            <img src="images/fuwu/line2.png" style="width:100%;height:2px"/>
-            <div style="position:absolute;top:4px;left:0;right:0;text-align:center">
-                <div style="font-size:14px;color:#646464;background:rgba(204,204,204,0.25);border-radius:100px;width:110px;height:26px;line-height:26px;display:inline-block">
+        <div class="itemLab">
+            <img src="images/fuwu/line2.png" class="line"/>
+            <div class="title">
+                <div>
                     报修信息
                 </div>
             </div>
@@ -175,6 +516,8 @@
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/iscroll@5.2.0/build/iscroll.js"></script>
 <script src="packages/iscroll@5.2.0/demos/demoUtils.js"></script>
-<script src="script/constants.js?ver=18.12.536"></script>
-<script src="script/service.js?ver=18.12.536"></script>
-<script src="script/viewbaoxiu.js?ver=18.12.536"></script>
+<script src="packages/raty@2.5.2/lib/jquery.raty.min.js"></script>
+<script src="packages/tooltips@1.0.0/js/jquery.pure.tooltips.js"></script>
+<script src="script/constants.js?ver=18.12.541fasdfsadf"></script>
+<script src="script/service.js?ver=18.12.541"></script>
+<script src="script/viewbaoxiu.js?ver=18.12.541dddd"></script>

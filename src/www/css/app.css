@@ -1,3 +1,7 @@
+html {
+    touch-action: none;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -164,18 +168,21 @@ button:enabled:active {
 }
 
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
-    font-size:14px;
-    color:#bababa;
+    font-size: 14px;
+    color: #bababa;
 }
+
 input:-moz-placeholder, textarea:-moz-placeholder {
-    font-size:14px;
-    color:#bababa;
+    font-size: 14px;
+    color: #bababa;
 }
+
 input::-moz-placeholder, textarea::-moz-placeholder {
-    font-size:14px;
-    color:#bababa;
+    font-size: 14px;
+    color: #bababa;
 }
+
 input:-ms-input-placeholder, textarea:-ms-input-placeholder {
-    font-size:14px;
-    color:#bababa;
+    font-size: 14px;
+    color: #bababa;
 }

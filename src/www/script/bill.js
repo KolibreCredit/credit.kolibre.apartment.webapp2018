@@ -1,4 +1,4 @@
-var currentTab = 0;
+var currentTab = -1;
 var billLists = null;
 
 function selectTabToggle(index) {
@@ -196,5 +196,6 @@ function closeApply() {
 }
 
 $(document).ready(function () {
-    findAllLeaseOrder(0);
+    var index = getURLQuery("index") || "0";
+    selectTabToggle(parseInt(index));
 });

@@ -394,7 +394,11 @@ var getCleaningState = function (cleaningState) {
     }
     else if (cleaningState == "Suspended") {
         cleaning = "挂起中";
-    } else {
+    }
+    else if (cleaningState == "Canceled") {
+        cleaning = "已取消";
+    }
+    else {
         cleaning = "已完成";
     }
     return cleaning;
@@ -484,6 +488,19 @@ function getRepairType(repairType) {
     }
 }
 
+function getInvoiceState(invoiceState) {
+    switch (invoiceState) {
+        case  "Applying":
+            return "申请中";
+        case  "Invoiced":
+            return "已开票";
+        case  "Mailed":
+            return "已邮寄";
+        default:
+            return "其他";
+    }
+}
+
 function bill() {
     getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
         if (res.succeeded) {
@@ -498,4 +515,15 @@ function fuwu() {
             window.location.href = "fuwu.html";
         }
     });
+}
+
+function sleep(milliscond) {
+    var now = new Date();
+    var exitTime = now.getTime() + milliscond;
+    while (true) {
+        now = new Date();
+        if (now.getTime() > exitTime) {
+            return;
+        }
+    }
 }

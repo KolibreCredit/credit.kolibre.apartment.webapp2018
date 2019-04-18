@@ -63,6 +63,17 @@ function hideError() {
     }, 1000);
 }
 
+function filterResConfig(item) {
+    if (domesticConfig.length > 0) {
+        for (var i = 0; i < domesticConfig.length; i++) {
+            if (item == domesticConfig[i].configType) {
+                return domesticConfig[i];
+            }
+        }
+    }
+    return null;
+}
+
 function createRepair() {
     if (!ispostData) {
         mui.toast(constants.msgInfo.postData);
@@ -91,6 +102,7 @@ function createRepair() {
         mui.toast(constants.msgInfo.pictureUrls);
         return false;
     }
+    var currentConfig = filterResConfig(repairType);
     var data = {
         contractId: contractId,
         tenantName: tenantName,
@@ -98,6 +110,7 @@ function createRepair() {
         repairType: repairType,
         description: description,
         pictures: pictureUrls,
+        configContents: currentConfig,
         repairStartTime: repairStartTime + ":00",
         repairEndTime: repairEndTime + ":00"
     }
@@ -107,6 +120,7 @@ function createRepair() {
         ispostData = true;
         $(".msg-post").hide();
         if (res.succeeded) {
+            $("#divCollectFees").html(currentConfig == null ? "" : (currentConfig.isCollectFees ? "服务完成后生成服务账单可线上进行支付" : ""));
             $("#lbRepairDate").html(pickerValue);
             $("#divSucce").show();
         } else {
@@ -121,6 +135,14 @@ function createRepair() {
     });
 }
 
+var domesticConfig = [];
+
+function getTenantDomesticConfigRepair() {
+    getInvoke(constants.URLS.GETTENANTDOMESTICCONFIGREPAIRBYCONTRACTID.format(contractId), function (res) {
+        domesticConfig = res.data;
+    });
+}
+
 $(document).ready(function () {
     tplItem = $("#tplItem").html();
     tplAddImg = $("#tplAddImg").html();
@@ -132,6 +154,7 @@ $(document).ready(function () {
     });
     contractId = getURLQuery("contractId");
     repairType = getURLQuery("repairType");
+    getTenantDomesticConfigRepair();
     loadPictureUrls();
     //
     var signUrl = constants.URLS.SIGNATURE.format(encodeURIComponent(window.location.href));

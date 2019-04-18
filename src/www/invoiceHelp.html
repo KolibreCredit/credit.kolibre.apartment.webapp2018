@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发票助手</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.540" rel="stylesheet"/>
+    <style type="text/css">
+        .mui-table-view-cell {
+            color: #646464;
+            font-size: 16px;
+        }
+
+        .mui-table-view-cell > .mui-slider-right > .mui-btn-f4 {
+            border: 1px solid #f4f4f4;
+            background-color: #f4f4f4;
+            color: #646464;
+        }
+        .mui-table-view:after {
+            height: 0;
+        }
+
+        .title {
+            width: 70px;
+            height: 20px;
+            line-height: 20px;
+            border-radius: 10px;
+            background-color: rgba(255, 243, 231, 1);
+            display: inline-block;
+            text-align: center;
+            font-size: 12px;
+            color: #FF8C14;
+            margin-left: 15px;
+        }
+
+        .acquiesce {
+            width: 50px;
+            height: 20px;
+            line-height: 20px;
+            border-radius: 10px;
+            background-color: #E5F8F9;
+            display: inline-block;
+            text-align: center;
+            font-size: 12px;
+            color: #30A6AC;
+            margin-left: 15px;
+        }
+        .edit2 {
+            width: 24px;
+            height: 24px;
+            float: right;
+        }
+        .cancel {
+            float: left;
+            width: 120px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 100px;
+            border: 1px solid rgba(253, 139, 20, 1);
+            color: #FD8B14;
+            display: block;
+            text-align: center;
+        }
+        .confirm {
+            float: right;
+            width: 120px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 100px;
+            background-color: rgba(253, 139, 20, 1);
+            color: #FFFFFF;
+            display: block;
+            text-align: center;
+        }
+        @media only screen and (max-width: 320px) {
+            .cancel{
+               width: 100px;
+            }
+
+            .confirm {
+               width: 100px;
+            }
+        }
+    </style>
+</head>
+<body style="background-color:#f4f4f4">
+<div class="mui-content" style="background-color:#f4f4f4">
+    <div id="divInvoiceTitles" style="background-color:#FFFFFF">
+        <ul class="mui-table-view">
+        </ul>
+    </div>
+    <div id="divNodata" style="display:none">
+        <div style="margin-top:40%;text-align:center">
+            <img src="images/nodata5.png" style="width:283px;height:219px"/>
+        </div>
+        <div style="margin-top:20px;font-size: 16px;color:#999999;text-align:center">
+            暂无发票抬头
+        </div>
+    </div>
+    <div style="height:60px"></div>
+    <div style="position:fixed;left:0;right:0;bottom:0;z-index:1">
+        <div style="height: 50px;line-height:50px;color:#FFFFFF;font-size:18px;text-align:center;background:#FB9329"
+             onclick="addInvoiceTitle()">
+            添加抬头
+        </div>
+    </div>
+    <div id="divDelete"  style="position:fixed;left:0;right:0;bottom:0;top:0;z-index:2;background-color: rgba(0,0,0,0.5);display:none">
+        <div style="position:absolute;width:100%;left:100%;top:50%;-webkit-transform: translate(-100%,-50%);transform:translate(-100%,-50%);padding:0 20px">
+            <div style="border-radius: 6px;background-color: rgba(255, 255, 255, 1);box-shadow: 0px 15px 25px 0px rgba(0, 0, 0, 0.2);">
+                <div style="height:20px"></div>
+                <div style="text-align:center">
+                    <img src="images/delete.png" style="width: 80px;height: 80px"/>
+                </div>
+                <div style="text-align:center;font-size:16px;color:#646464;margin-top:20px">
+                    是否确认删除<span style="color:#FD8B14" id="lbTitleName"></span>的抬头信息？
+                </div>
+                <div style="margin-top:30px;padding:0 30px;font-size:18px">
+                    <span onclick="hideDelete()" class="cancel">
+                        取消
+                    </span>
+                    <span onclick="deleteInvoiceTitle()" class="confirm">
+                        确定
+                    </span>
+                </div>
+                <div style="clear:both"></div>
+                <div style="height:30px"></div>
+            </div>
+        </div>
+    </div>
+    <script id="tplItem" type="text/html">
+        <li class="mui-table-view-cell">
+            <div class="mui-slider-right mui-disabled">
+                <a class="mui-btn mui-btn-f4" onclick="acquiesce({3})">设为默认</a>
+                <a class="mui-btn mui-btn-red" onclick="showDelete({3})">删除</a>
+            </div>
+            <div class="mui-slider-handle">
+                <div style="width:85%;float:left" onclick="itemSelect({3})">
+                   {0}<span class="title">{1}</span><span class="acquiesce" style="display:{2}">默认</span>
+                </div>
+                <img src="images/edit2.png" class="edit2" onclick="edit({3})"/>
+            </div>
+            <div style="clear:both"></div>
+        </li>
+    </script>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="packages/moment@2.17.1/min/moment.min.js"></script>
+<script src="script/constants.js?ver=18.12.540"></script>
+<script src="script/service.js?ver=18.12.540"></script>
+<script src="script/invoiceHelp.js?ver=18.12.540"></script>

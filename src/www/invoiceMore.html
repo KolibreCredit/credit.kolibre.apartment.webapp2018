@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>更多信息</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.540" rel="stylesheet"/>
+    <style type="text/css">
+        .itemRow {
+            height: 60px;
+            line-height: 60px;
+            border-bottom: 1px solid rgba(216, 216, 216, 1);
+            position: relative;
+        }
+
+        .itemRow .icon {
+            color: #FB9329;
+            width: 8px;
+            margin-right: 2px;
+        }
+        input[type=text] {
+            background: none;
+            width: auto;
+            text-align: right;
+            border: none;
+            position: absolute;
+            right: 5px;
+            top: 8px;
+        }
+    </style>
+</head>
+<body style="background:#f4f4f4">
+<div class="mui-content" style="background:none">
+    <div style="background-color:#FFFFFF;padding:0 20px;font-size: 16px;color:#646464">
+        <div class="itemRow">
+            备注信息<input id="txtInvoiceNote" type="text" placeholder="请输入备注信息" maxlength="200"/>
+        </div>
+        <div class="itemRow">
+            地址<input id="txtAddress" type="text" placeholder="请输入地址" maxlength="100"/>
+        </div>
+        <div class="itemRow" style="position:relative">
+            电话<input id="txtPhoneNumber" type="text" placeholder="请输入电话" maxlength="20"/>
+        </div>
+        <div class="itemRow" style="position:relative">
+            开户行<input id="txtBankName" type="text" placeholder="请输入开户行" maxlength="20"/>
+        </div>
+        <div class="itemRow" style="border-bottom:none;position:relative">
+            帐号<input id="txtBankAccount" type="text" placeholder="请输入帐号" maxlength="20"/>
+        </div>
+    </div>
+    <div style="height:60px"></div>
+    <div style="position:fixed;left:0;right:0;bottom:0;z-index:1">
+        <div style="height: 50px;line-height:50px;color:#FFFFFF;font-size:18px;text-align:center;background:#FB9329"
+             onclick="saveInvoiceMore()">
+            确认信息
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="packages/moment@2.17.1/min/moment.min.js"></script>
+<script src="script/constants.js?ver=18.12.540"></script>
+<script src="script/service.js?ver=18.12.540"></script>
+<script src="script/invoiceMore.js?ver=18.12.540"></script>

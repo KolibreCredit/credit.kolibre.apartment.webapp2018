@@ -82,6 +82,7 @@ function hideQuash() {
 }
 
 function getCurrentcontracts(tabIndex) {
+    $("#divNoData").hide();
     getInvoke(constants.URLS.GETCURRENTCONTRACTS, function (res) {
         var jsonData = [];
         if (res.succeeded && res.data.length > 0) {

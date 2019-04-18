@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>申请保洁</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.536" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.541" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="packages/mui@3.4.0/examples/hello-mui/css/mui.picker.min.css"/>
+    <link rel="stylesheet" type="text/css" href="packages/tooltips@1.0.0/css/tooltips.css"/>
     <style type="text/css">
         .baoxiuList {
             padding: 0 20px;
         }
+
         .baoxiuList .item {
             width: 23%;
             text-align: center;
@@ -35,23 +38,25 @@
             font-size: 14px;
             color: #b5b3b3;
             text-align: center;
-            margin-top: 5px;
         }
-
         .baoxiuList .active .logo {
             background: #fb952b;
         }
-
         .baoxiuList .active .desc {
             color: #fb952b;
         }
-
+        .sortation {
+            height: 20px;
+            line-height: 20px;
+            display: none;
+        }
         input[type=text] {
             padding: 5px;
             border: 0;
             margin-bottom: 0;
             float: right;
         }
+
         textarea {
             margin-bottom: 0px;
             border: 1px solid #e2e2e2;
@@ -68,9 +73,17 @@
             position: absolute;
             top: 10px;
         }
+
+        .mui-media-body img {
+            position: absolute;
+            top: 12px;
+            left: 65px;
+        }
+
         .mui-table-view:before {
             height: 0;
         }
+
         .mui-table-view:after {
             height: 0;
         }
@@ -139,6 +152,16 @@
             top: 2px;
             right: 15px;
         }
+        .pt .cont {
+            background-color: rgba(255, 140, 20, 0.98);
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+            color: #FFFFFF;
+            font-size: 16px;
+        }
+        .pt-up .in {
+            border-color: transparent transparent #FF8C14;
+            left: 67px;
+        }
     </style>
     <script src="https://res.wx.qq.com/open/js/jweixin-1.3.2.js"></script>
 </head>
@@ -159,6 +182,8 @@
                 <div class="desc">
                     日常保洁
                 </div>
+                <div class="desc sortation">
+                </div>
             </div>
             <div class="item" onclick="selectItem(1)">
                 <div class="logo">
@@ -167,6 +192,8 @@
                 </div>
                 <div class="desc">
                     深度保洁
+                </div>
+                <div class="desc sortation">
                 </div>
             </div>
             <div class="item" onclick="selectItem(2)">
@@ -177,6 +204,8 @@
                 <div class="desc">
                     擦玻璃
                 </div>
+                <div class="desc sortation">
+                </div>
             </div>
             <div class="item" onclick="selectItem(3)">
                 <div class="logo">
@@ -186,6 +215,8 @@
                 <div class="desc">
                     消杀除虫
                 </div>
+                <div class="desc sortation">
+                </div>
             </div>
             <div style="clear:both"></div>
         </div>
@@ -193,6 +224,14 @@
     <div style="height:10px;background-color:#f4f4f4"></div>
     <div style="padding-left:5px">
         <ul class="mui-table-view mui-table-view-chevron">
+            <li class="mui-table-view-cell mui-media" id="liCollectFees" style="display:none">
+                <div class="mui-media-body">
+                    <span>服务单价</span><img id="imgQuestion" src="images/question.png" style="width:20px;height:20px;display:none"/><input type="text"
+                                                                                                             id="txtCollectFees"
+                                                                                                             style="width:180px;text-align:right"
+                                                                                                             readonly="readonly"/>
+                </div>
+            </li>
             <li class="mui-table-view-cell mui-media">
                 <div class="mui-media-body">
                     <span>联系人姓名</span><input type="text" id="txtRealName" placeholder="请输入联系人姓名" maxlength="10"
@@ -276,7 +315,9 @@
                         <div style="text-align:center;margin-top:20px;font-size:18px;color:#646464">
                             提交成功
                         </div>
-                        <div style="text-align:center;margin-top:20px;font-size:14px;color:#999999">
+                        <div id="divCollectFees" style="text-align:center;font-size:14px;color:#646464;margin-top:5px">
+                        </div>
+                        <div style="text-align:center;margin-top:5px;font-size:14px;color:#999999">
                             上门保洁时间：
                         </div>
                         <div id="lbRepairDate" style="text-align:center;font-size:18px;color:#646464">
@@ -285,7 +326,8 @@
                             请提前安排好自己的时间
                         </div>
                         <div style="padding:0 40px;margin-top:20px">
-                            <div onclick="hideSucce()" style="border:1px solid #fb9329;border-radius:100px;width:100%;height:42px;line-height:42px;font-size:18px;color:#fd8b14;">
+                            <div onclick="hideSucce()"
+                                 style="border:1px solid #fb9329;border-radius:100px;width:100%;height:42px;line-height:42px;font-size:18px;color:#fd8b14;">
                                 我知道了
                             </div>
                         </div>
@@ -310,7 +352,8 @@
                         <div id="lbError" style="text-align:center;margin-top:20px;font-size:14px;color:#999999">
                         </div>
                         <div style="padding:0 40px;margin-top:20px">
-                            <div onclick="hideError()" style="border:1px solid #fb9329;border-radius:100px;width:100%;height:42px;line-height:42px;font-size:18px;color:#fd8b14;">
+                            <div onclick="hideError()"
+                                 style="border:1px solid #fb9329;border-radius:100px;width:100%;height:42px;line-height:42px;font-size:18px;color:#fd8b14;">
                                 我知道了
                             </div>
                         </div>
@@ -344,9 +387,10 @@
 <script src="packages/mui@3.4.0/examples/hello-mui/js/mui.picker.min.js"></script>
 <script src="packages/iscroll@5.2.0/build/iscroll.js"></script>
 <script src="packages/iscroll@5.2.0/demos/demoUtils.js"></script>
-<script src="script/constants.js?ver=18.12.536"></script>
-<script src="script/service.js?ver=18.12.536"></script>
-<script src="script/baoji.js?ver=18.12.536"></script>
+<script src="packages/tooltips@1.0.0/js/jquery.pure.tooltips.js"></script>
+<script src="script/constants.js?ver=18.12.541"></script>
+<script src="script/service.js?ver=18.12.541"></script>
+<script src="script/baoji.js?ver=18.12.541"></script>
 <script type="text/javascript">
     (function ($) {
         $.init();

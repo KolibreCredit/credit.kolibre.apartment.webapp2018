@@ -147,7 +147,7 @@ $(document).ready(function () {
                 (item.rentalMode == "MonthlyRent" ? getPayPeriod(item.payPeriod) : getPayPeriod2(item.payPeriod)),
                 (item.contractPictures ? "纸质合同" : "电子合同"),
                 imageStorageLocation,
-                templateName, item.contractNotes, item.contractId,(item.rentalMode == "MonthlyRent" ? "" : "/间"));
+                templateName, item.contractNotes, item.contractId,(item.rentalMode == "MonthlyRent" ? "" : "/间"),(item.rentalMode == "MonthlyRent" ? "合同" : "订单"));
             $("#divLeaseInfo").html(htmlLeaseInfo);
             setTimeout(function () {
                 if (item.rentalMode == "MonthlyRent") {

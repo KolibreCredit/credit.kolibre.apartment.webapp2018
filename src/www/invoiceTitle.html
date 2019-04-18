@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发票抬头</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.540" rel="stylesheet"/>
+    <style type="text/css">
+        .itemRow {
+            height: 60px;
+            line-height: 60px;
+            border-bottom: 1px solid rgba(216, 216, 216, 1);
+            position: relative;
+        }
+
+        .itemRow .icon {
+            color: #FB9329;
+            width: 8px;
+            margin-right: 2px;
+        }
+
+        input[type=text] {
+            background: none;
+            width: auto;
+            text-align: right;
+            border: none;
+            position: absolute;
+            right: 20px;
+            top: 8px;
+        }
+
+        .check3, .check3s {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            top: 12px;
+            cursor: pointer;
+        }
+
+        .mui-switch {
+            border: 2px solid #B2B2B2;
+            background-color: #B2B2B2;
+        }
+
+        .mui-switch .mui-switch-handle {
+            left: 1px;
+        }
+
+        .mui-switch-blue.mui-active {
+            border: 2px solid #FB9329;
+            background-color: #FB9329;
+        }
+
+        .mui-switch-blue.mui-active .mui-switch-handle {
+            left: -1px;
+        }
+    </style>
+</head>
+<body style="background:#f4f4f4">
+<div class="mui-content" style="background:none">
+    <div style="background-color:#FFFFFF;padding:0 20px;font-size: 16px;color:#646464">
+        <div style="height:20px"></div>
+        <div style="height:20px;line-height:20px">
+            抬头类型
+        </div>
+        <div style="height:50px;line-height:50px;border-bottom:1px solid rgba(216,216,216,1)">
+            <div style="float:left;width:50%;position:relative" onclick="titleCategory(0)">
+                <img src="images/check3s.png" class="check3s"/><span
+                    style="margin-left:30px">公司抬头</span>
+            </div>
+            <div style="float:right;width:50%;position:relative" onclick="titleCategory(1)">
+                <img src="images/check3.png" class="check3"/><span style="margin-left:30px">个人/非公司抬头</span>
+            </div>
+            <div style="clear:both">
+            </div>
+        </div>
+        <div class="itemRow">
+            <span class="icon">*</span>发票抬头<input id="txtTitleName" type="text" placeholder="请输入准确的抬头名称" maxlength="50"/>
+        </div>
+        <div class="itemRow" style="display:none">
+            <span class="icon">*</span>发票税号<input id="txtTaxpayerNo" type="text" placeholder="请输入税号" maxlength="20"/>
+        </div>
+        <div class="itemRow" style="border-bottom:none;position:relative">
+            设为默认
+            <div class="mui-switch mui-switch-blue mui-switch-mini mui-active"
+                 style="position:absolute;top:16px;right:5px">
+                <div class="mui-switch-handle"></div>
+            </div>
+        </div>
+    </div>
+    <div style="height:60px"></div>
+    <div style="position:fixed;left:0;right:0;bottom:0;z-index:1">
+        <div style="height: 50px;line-height:50px;color:#FFFFFF;font-size:18px;text-align:center;background:#FB9329"
+             onclick="addInvoiceTitle()">
+            提交
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="packages/moment@2.17.1/min/moment.min.js"></script>
+<script src="script/constants.js?ver=18.12.540"></script>
+<script src="script/service.js?ver=18.12.540"></script>
+<script src="script/invoiceTitle.js?ver=18.12.540"></script>

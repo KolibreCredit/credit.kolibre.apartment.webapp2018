@@ -6,9 +6,48 @@
     <meta name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="packages/tooltips@1.0.0/css/tooltips.css"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.536" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.541" rel="stylesheet"/>
     <style type="text/css">
+        input[type=text] {
+            padding: 5px;
+            border: 0;
+            margin-bottom: 0;
+            float: right;
+        }
+
+        textarea {
+            margin-bottom: 0px;
+            border: 1px solid #e2e2e2;
+        }
+
+        .mui-media-body {
+            width: 110%;
+            position: relative;
+        }
+
+        .mui-media-body span {
+            font-size: 16px;
+            color: #646464;
+            position: absolute;
+            top: 10px;
+        }
+
+        .mui-media-body img {
+            position: absolute;
+            top: 12px;
+            left: 65px;
+        }
+
+        .mui-table-view:before {
+            height: 0;
+        }
+
+        .mui-table-view:after {
+            height: 0;
+        }
+
         .baoxiu {
             margin-top: 10px;
         }
@@ -37,6 +76,7 @@
             display: none;
             padding: 0 20px;
         }
+
         .baoxiuList .item {
             width: 23%;
             text-align: center;
@@ -52,15 +92,16 @@
             border-radius: 100%;
             display: inline-block;
         }
+
         .logo img {
             width: 40px;
             height: 40px;
         }
+
         .baoxiuList .item .desc {
             font-size: 14px;
             color: #b5b3b3;
             text-align: center;
-            margin-top: 5px;
         }
 
         .baoxiuList .active .logo {
@@ -69,6 +110,12 @@
 
         .baoxiuList .active .desc {
             color: #fb952b;
+        }
+
+        .sortation {
+            height: 20px;
+            line-height: 20px;
+            display: none;
         }
 
         .view-cell {
@@ -87,6 +134,18 @@
             top: 40px;
             width: 24px;
             height: 24px;
+        }
+
+        .pt .cont {
+            background-color: rgba(255, 140, 20, 0.98);
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+            color: #FFFFFF;
+            font-size: 16px;
+        }
+
+        .pt-up .in {
+            border-color: transparent transparent #FF8C14;
+            left: 67px;
         }
     </style>
 </head>
@@ -116,6 +175,8 @@
                 <div class="desc">
                     墙面
                 </div>
+                <div class="desc sortation">
+                </div>
             </div>
             <div class="item" onclick="selectItem(1)">
                 <div class="logo">
@@ -124,6 +185,8 @@
                 </div>
                 <div class="desc">
                     地板
+                </div>
+                <div class="desc sortation">
                 </div>
             </div>
             <div class="item" onclick="selectItem(2)">
@@ -134,6 +197,8 @@
                 <div class="desc">
                     门窗
                 </div>
+                <div class="desc sortation">
+                </div>
             </div>
             <div class="item" onclick="selectItem(3)">
                 <div class="logo">
@@ -142,6 +207,8 @@
                 </div>
                 <div class="desc">
                     天花板
+                </div>
+                <div class="desc sortation">
                 </div>
             </div>
             <div style="clear:both"></div>
@@ -157,6 +224,8 @@
                 <div class="desc">
                     洗衣机
                 </div>
+                <div class="desc sortation">
+                </div>
             </div>
             <div class="item" onclick="selectItem(1)">
                 <div class="logo">
@@ -165,6 +234,8 @@
                 </div>
                 <div class="desc">
                     空调
+                </div>
+                <div class="desc sortation">
                 </div>
             </div>
             <div class="item" onclick="selectItem(2)">
@@ -175,6 +246,8 @@
                 <div class="desc">
                     冰箱
                 </div>
+                <div class="desc sortation">
+                </div>
             </div>
             <div class="item" onclick="selectItem(3)">
                 <div class="logo">
@@ -183,6 +256,8 @@
                 </div>
                 <div class="desc">
                     电视机
+                </div>
+                <div class="desc sortation">
                 </div>
             </div>
             <div class="item" onclick="selectItem(4)">
@@ -193,6 +268,8 @@
                 <div class="desc">
                     微波炉
                 </div>
+                <div class="desc sortation">
+                </div>
             </div>
             <div class="item" onclick="selectItem(5)">
                 <div class="logo">
@@ -201,6 +278,8 @@
                 </div>
                 <div class="desc">
                     燃气灶
+                </div>
+                <div class="desc sortation">
                 </div>
             </div>
             <div class="item" onclick="selectItem(6)">
@@ -211,6 +290,8 @@
                 <div class="desc">
                     床
                 </div>
+                <div class="desc sortation">
+                </div>
             </div>
             <div class="item" onclick="selectItem(7)">
                 <div class="logo">
@@ -219,6 +300,8 @@
                 </div>
                 <div class="desc">
                     衣柜
+                </div>
+                <div class="desc sortation">
                 </div>
             </div>
             <div class="item" onclick="selectItem(8)">
@@ -229,6 +312,8 @@
                 <div class="desc">
                     餐桌
                 </div>
+                <div class="desc sortation">
+                </div>
             </div>
             <div class="item" onclick="selectItem(9)">
                 <div class="logo">
@@ -238,6 +323,8 @@
                 <div class="desc">
                     路由器
                 </div>
+                <div class="desc sortation">
+                </div>
             </div>
             <div class="item" onclick="selectItem(10)">
                 <div class="logo">
@@ -246,6 +333,8 @@
                 </div>
                 <div class="desc">
                     油烟机
+                </div>
+                <div class="desc sortation">
                 </div>
             </div>
             <div style="clear:both"></div>
@@ -261,6 +350,8 @@
                 <div class="desc">
                     普通门锁
                 </div>
+                <div class="desc sortation">
+                </div>
             </div>
             <div class="item" onclick="selectItem(1)">
                 <div class="logo">
@@ -270,6 +361,8 @@
                 <div class="desc">
                     电子门锁
                 </div>
+                <div class="desc sortation">
+                </div>
             </div>
             <div class="item" onclick="selectItem(2)">
                 <div class="logo">
@@ -278,6 +371,8 @@
                 </div>
                 <div class="desc">
                     防盗门锁
+                </div>
+                <div class="desc sortation">
                 </div>
             </div>
             <div style="clear:both"></div>
@@ -293,6 +388,8 @@
                 <div class="desc">
                     灯
                 </div>
+                <div class="desc sortation">
+                </div>
             </div>
             <div class="item" onclick="selectItem(1)">
                 <div class="logo">
@@ -301,6 +398,8 @@
                 </div>
                 <div class="desc">
                     插座
+                </div>
+                <div class="desc sortation">
                 </div>
             </div>
             <div class="item" onclick="selectItem(2)">
@@ -311,6 +410,8 @@
                 <div class="desc">
                     线路
                 </div>
+                <div class="desc sortation">
+                </div>
             </div>
             <div class="item" onclick="selectItem(3)">
                 <div class="logo">
@@ -319,6 +420,8 @@
                 </div>
                 <div class="desc">
                     卫浴灯
+                </div>
+                <div class="desc sortation">
                 </div>
             </div>
             <div class="item" onclick="selectItem(4)">
@@ -329,6 +432,8 @@
                 <div class="desc">
                     电闸
                 </div>
+                <div class="desc sortation">
+                </div>
             </div>
             <div class="item" onclick="selectItem(5)">
                 <div class="logo">
@@ -337,6 +442,8 @@
                 </div>
                 <div class="desc">
                     电表
+                </div>
+                <div class="desc sortation">
                 </div>
             </div>
             <div style="clear:both"></div>
@@ -352,6 +459,8 @@
                 <div class="desc">
                     水龙头
                 </div>
+                <div class="desc sortation">
+                </div>
             </div>
             <div class="item" onclick="selectItem(1)">
                 <div class="logo">
@@ -360,6 +469,8 @@
                 </div>
                 <div class="desc">
                     马桶
+                </div>
+                <div class="desc sortation">
                 </div>
             </div>
             <div class="item" onclick="selectItem(2)">
@@ -370,6 +481,8 @@
                 <div class="desc">
                     菜池
                 </div>
+                <div class="desc sortation">
+                </div>
             </div>
             <div class="item" onclick="selectItem(3)">
                 <div class="logo">
@@ -378,6 +491,8 @@
                 </div>
                 <div class="desc">
                     淋浴
+                </div>
+                <div class="desc sortation">
                 </div>
             </div>
             <div class="item" onclick="selectItem(4)">
@@ -388,6 +503,8 @@
                 <div class="desc">
                     地漏
                 </div>
+                <div class="desc sortation">
+                </div>
             </div>
             <div class="item" onclick="selectItem(5)">
                 <div class="logo">
@@ -396,6 +513,8 @@
                 </div>
                 <div class="desc">
                     阀门
+                </div>
+                <div class="desc sortation">
                 </div>
             </div>
             <div class="item" onclick="selectItem(6)">
@@ -406,11 +525,26 @@
                 <div class="desc">
                     疏通
                 </div>
+                <div class="desc sortation">
+                </div>
             </div>
             <div style="clear:both"></div>
         </div>
     </div>
-    <div onclick="selectRepairType()"  style="position: fixed;bottom:0;z-index:1;right:0;left:0;background-color:#ff8c14;height:48px;line-height: 48px;text-align: center;color:#ffffff;font-size:18px">
+    <div style="height:10px;background-color:#f4f4f4"></div>
+    <div style="padding-left:5px" id="divCollectFees">
+        <ul class="mui-table-view mui-table-view-chevron">
+            <li class="mui-table-view-cell mui-media">
+                <div class="mui-media-body">
+                    <span>服务单价</span><img id="imgQuestion" src="images/question.png"
+                                          style="width:20px;height:20px;display:none"/>
+                    <input type="text" id="txtCollectFees" style="width:180px;text-align:right" readonly="readonly"/>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div onclick="selectRepairType()"
+         style="position: fixed;bottom:0;z-index:1;right:0;left:0;background-color:#ff8c14;height:48px;line-height: 48px;text-align: center;color:#ffffff;font-size:18px">
         下一步
     </div>
     <div style="height:48px;background-color:#f4f4f4">
@@ -420,6 +554,7 @@
 </html>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
-<script src="script/constants.js?ver=18.12.536"></script>
-<script src="script/service.js?ver=18.12.536"></script>
-<script src="script/baoxiu.js?ver=18.12.536"></script>
+<script src="packages/tooltips@1.0.0/js/jquery.pure.tooltips.js"></script>
+<script src="script/constants.js?ver=18.12.541"></script>
+<script src="script/service.js?ver=18.12.541"></script>
+<script src="script/baoxiu.js?ver=18.12.541"></script>

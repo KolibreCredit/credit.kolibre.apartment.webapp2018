@@ -6,7 +6,6 @@ function findAllLeaseOrder(deviceId) {
     $('.nodataDiv').hide();
     getInvoke(constants.URLS.GETENERGYMETERORDERS.format(deviceId), function (res) {
         if (res.succeeded && res.data.length > 0) {
-
             billLists = res.data;
             var tplBill = $('#tplBill').html();
             var billHtmls = "";
