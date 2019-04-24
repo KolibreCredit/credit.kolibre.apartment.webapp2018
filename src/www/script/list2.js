@@ -28,11 +28,19 @@ function selectContract() {
 function getCurrentcontracts() {
     getInvoke(constants.URLS.GETCURRENTCONTRACTS, function (res) {
         $(".msg-post").hide();
+        var resData = [];
         if (res.succeeded && res.data.length > 0) {
+            for (var i = 0; i < res.data.length; i++) {
+                if (res.data[i].checkoutStatus != "Checkout") {
+                    resData.push(res.data[i]);
+                }
+            }
+        }
+        if (resData.length > 0) {
             var leasesHtml = "";
             var tplLeases = $("#tplLeases").html();
             var item = null;
-            contractsData = res.data;
+            contractsData = resData;
             for (var i = 0; i < contractsData.length; i++) {
                 item = contractsData[i];
                 leasesHtml += tplLeases.format(item.apartmentName, item.roomNumber, i);

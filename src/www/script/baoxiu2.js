@@ -10,7 +10,7 @@ var tplAddImg = "";
 var pickerValue = "";
 var repairStartTime = "";
 var repairEndTime = "";
-var ispostData = true;
+var isPostData = true;
 
 function loadPictureUrls() {
     var itemPictures = [];
@@ -52,14 +52,14 @@ function V2UploadImages(serverId) {
 function hideSucce() {
     $("#divSucce").hide();
     setTimeout(function () {
-        window.location.href = "fuwu.html";
+        window.location.href = "fuwu.html?tabIndex=1";
     }, 1000);
 }
 
 function hideError() {
     $("#divError").hide();
     setTimeout(function () {
-        window.location.href = "fuwu.html";
+        window.location.href = "fuwu.html?tabIndex=1";
     }, 1000);
 }
 
@@ -75,7 +75,7 @@ function filterResConfig(item) {
 }
 
 function createRepair() {
-    if (!ispostData) {
+    if (!isPostData) {
         mui.toast(constants.msgInfo.postData);
         return false;
     }
@@ -114,10 +114,10 @@ function createRepair() {
         repairStartTime: repairStartTime + ":00",
         repairEndTime: repairEndTime + ":00"
     }
-    ispostData = false;
+    isPostData = false;
     $(".msg-post").show();
     postInvoke(constants.URLS.CREATEREPAIR, data, function (res) {
-        ispostData = true;
+        isPostData = true;
         $(".msg-post").hide();
         if (res.succeeded) {
             $("#divCollectFees").html(currentConfig == null ? "" : (currentConfig.isCollectFees ? "服务完成后生成服务账单可线上进行支付" : ""));
@@ -128,7 +128,7 @@ function createRepair() {
             $("#divError").show();
         }
     }, function (err) {
-        ispostData = true;
+        isPostData = true;
         $(".msg-post").hide();
         $("#lbError").html(err.message);
         $("#divError").show();

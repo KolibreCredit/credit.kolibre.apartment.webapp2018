@@ -148,7 +148,7 @@ function invoice2() {
 
 //
 $(document).ready(function () {
-    contractId = getURLQuery("contractId") || "772648094ABE409EAD5C01670CD037AC";
+    contractId = getURLQuery("contractId") || "";
     orderId = getURLQuery("orderId");
     getContracts();
 });

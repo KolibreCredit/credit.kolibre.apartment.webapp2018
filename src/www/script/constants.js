@@ -62,6 +62,7 @@ var constants = {
         CREATECLEANING: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/CreateCleaning",
         UPDATECLEANINGEVALUATIONS:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/UpdateCleaningEvaluations",
         UPDATEREPAIREVALUATIONS:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/UpdateRepairEvaluations",
+        UPDATECOMPLAINSUGGESTIONEVALUATIONS:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/UpdateComplainSuggestionEvaluations",
         GETTENANTCLEANINGS: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/GetTenantCleanings",
         GETTENANTCLEANING: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/GetTenantCleaning?id={0}",
         CANCELCLEANING: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/CancelCleaning",

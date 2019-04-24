@@ -8,14 +8,14 @@ var evaluations = [{
 }, {
     score: 1,
     tip: "非常不满意，各方面都很差",
-    tag: ["态度不友好", "未按时上门服务", "服务拖延时间", "收取现金", "门前未电话联系", "技术不娴熟"]
+    tag: ["态度不友好", "未按时上门服务", "服务拖延时间", "收取现金", "上门前未电话联系", "技术不娴熟"]
 }, {
     score: 2,
     tip: "不满意，比较差",
     tag: ["态度不友好", "未按时上门服务", "服务拖延时间", "收取现金", "上门前未电话联系", "技术不娴熟"]
 }, {
     score: 3,
-    tip: "为一般，需要改进",
+    tip: "一般，需要改进",
     tag: ["态度不友好", "未按时上门服务", "服务拖延时间", "收取现金", "上门前未电话联系", "技术不娴熟"]
 }, {
     score: 4,
@@ -175,11 +175,17 @@ $(document).ready(function () {
                 , item.cleaningStartTime.substring(0, 16)
                 , item.cleaningEndTime.substring(11, 16)
                 , getCleaningTypes(item.cleaningType)
+                , item.performer
+                , item.performerCellphone
                 , item.updateTime.substring(0, 16)
                 , item.description
                 , itemPictures.join(""));
             $("#divLeaseInfo").html(htmlLeaseInfo);
             setTimeout(function () {
+                if (item.cleaningState == "Processed" || item.cleaningState == "Suspended") {
+                    $(".performer").show();
+                    $(".performerCellphone").show();
+                }
                 $("#scroller").css("width", "{0}px".format((pictureUrls.length + 1) * 130 + 40));
                 new IScroll('#wrapper', {
                     preventDefault: false,
@@ -187,28 +193,35 @@ $(document).ready(function () {
                     scrollY: false,
                     mouseWheel: false
                 });
-            }, 10);
+            }, 100);
             // 费用信息
-            if (item.configContents != null && item.configContents.isCollectFees) {
-                var unitPrice = (item.configContents.unitPrice * 0.01).toFixed(0);
-                $("#lbCollectFees").text(item.chargingMode == "TimeFree" ? unitPrice + "元/小时" : unitPrice + "元/次");
-                if (item.cleaningState == "Canceled") {
-                    $("#lbOrderAmount").css({"color": "#F55452"}).text("已取消申请服务，未生成服务账单");
-                }
-                else if (item.cleaningState == "Succeed") {
-                    $("#lbOrderAmount").text((item.orderAmount * 0.01).toFixed(0) + "元");
-                }
-                else {
-                    $("#lbOrderAmount").css({"color": "#FD8B14"}).text("服务完成后生成服务账单");
+            if (item.configContents != null) {
+                if (item.configContents.isCollectFees) {
+                    var unitPrice = (item.configContents.unitPrice * 0.01).toFixed(0);
+                    $("#lbCollectFees").text(item.configContents.chargingMode == "TimeFree" ? unitPrice + "元/小时" : unitPrice + "元/次");
+                    if (item.cleaningState == "Canceled") {
+                        $("#lbOrderAmount").css({"color": "#F55452"}).text("已取消申请服务，未生成服务账单");
+                    }
+                    else if (item.cleaningState == "Succeed") {
+                        $("#lbOrderAmount").text((item.orderAmount * 0.01).toFixed(0) + "元");
+                    }
+                    else {
+                        $("#lbOrderAmount").css({"color": "#FD8B14"}).text("服务完成后生成服务账单");
+                    }
+                    $("#imgQuestion").show();
+                } else {
+                    $("#lbCollectFees").text("免费");
+                    $("#lbOrderAmount").text("不生成账单");
                 }
                 $(".service").show();
             }
             if (item.cleaningState == "Succeed") {
                 // 处理进度
-                $("#lbProcessDescription").text(item.processDescription);
-                if (item.configContents != null && item.chargingMode == "TimeFree") {
-                    $("#lbUseTime").text((item.useTime * 0.01).toFixed(0));
-                    $(".useTime").show();
+                if (item.processDescription != null) {
+                    $(".processDescription").show().find("span").html(item.processDescription);
+                }
+                if (item.configContents != null && item.configContents.chargingMode == "TimeFree") {
+                    $(".useTime").show().find("span").text((item.useTime * 0.01).toFixed(2) + "小时");
                 }
                 if (item.processDescriptionPictures != null) {
                     var processDescriptionPictures = item.processDescriptionPictures.split(",");
@@ -216,7 +229,7 @@ $(document).ready(function () {
                     for (var i = 0; i < processDescriptionPictures.length; i++) {
                         itemProcessPictures.push(tplPicture.format(processDescriptionPictures[i]));
                     }
-                    $("#imgProcessDescriptionPictures").html(itemProcessPictures.join(""));
+                    $("#scroller1 ul").html(itemProcessPictures.join(""));
                     setTimeout(function () {
                         $("#scroller1").css("width", "{0}px".format((itemProcessPictures.length + 1) * 130 + 40));
                         new IScroll('#wrapper1', {
@@ -225,13 +238,13 @@ $(document).ready(function () {
                             scrollY: false,
                             mouseWheel: false
                         });
-                    }, 10);
+                    },100);
                 } else {
-                    $("#wrapper1").hide();
-                    $("#lbProcessDescriptionPictures").text("无");
+                    $("#lbProcessDescriptionPictures").html("无");
                 }
                 $(".process").show();
                 // 评价
+                var count = 0;
                 if (item.evaluations != null) {
                     $('#divStar').raty({
                         score: item.evaluations.level,
@@ -248,17 +261,16 @@ $(document).ready(function () {
                     $("#divTagInfo").html(infoTags.join(""));
                     $("#divTagDescription").html(item.evaluations.description);
                     $(".evaluations").show();
-                }
-                //
-                var count = 0;
-                if (item.evaluations == null) {
+                } else {
                     count = 1;
+                    $(".evaluationsTip").show();
                     $(".btnEvaluations").show();
                 }
                 if (item.canPay) {
                     orderId = item.orderId;
                     count = count + 1;
                     $(".btnPay").show();
+                    $(".serviceTip").show();
                 }
                 if (count == 2) {
                     $(".btnEvaluations").addClass("evaluationsLeft");

@@ -176,6 +176,15 @@ function setCookie(key, auth) {
     document.cookie = key + '=' + auth + ';path=/;domain=.fengniaowu.com';
 }
 
+function deleteCookie(key) {
+    var date = new Date();
+    date.setTime(date.getTime() - 1);
+    var delValue = getCookie(key);
+    if (delValue != null) {
+        document.cookie = key + '=' + delValue + ';expires=' + date.toGMTString();
+    }
+}
+
 function getCookie(key) {
     var auth = '';
     var reg = new RegExp('(^| )' + key + '=([^;]*)(;|$)');
@@ -341,6 +350,10 @@ var getOrderType = function (orderType) {
             return "其他费用";
         case "Reservation":
             return "预定金";
+        case "RepairFee":
+            return "维修费";
+        default:
+            return "其他"
     }
 };
 

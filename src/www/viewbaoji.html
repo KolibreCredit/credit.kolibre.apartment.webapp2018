@@ -6,10 +6,10 @@
     <meta name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
-    <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.541" rel="stylesheet"/>
     <link href="packages/raty@2.5.2/demo/css/application.css" rel="stylesheet"/>
-    <link rel="stylesheet" type="text/css" href="packages/tooltips@1.0.0/css/tooltips.css"/>
+    <link href="packages/tooltips@1.0.0/css/tooltips.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.548" rel="stylesheet"/>
     <style type="text/css">
         label {
             font-size: 14px;
@@ -205,6 +205,7 @@
         .tag div:nth-child(even) {
             float: right;
         }
+
         .tags {
             margin-top: 5px;
         }
@@ -224,11 +225,12 @@
             padding: 0 6px;
             margin-top: 15px;
         }
-
+        .processDescription{
+            display: none;
+        }
         .useTime {
             display: none;
         }
-
         .itemLab {
             margin-top: 20px;
             text-align: center;
@@ -275,24 +277,50 @@
         .pt-down .in {
             border-color: #FF8C14 transparent transparent;
         }
+
         @media only screen and (max-width: 320px) {
             .tag {
                 padding: 0 20px;
             }
+
             .tag div {
                 width: 130px;
             }
+
             .tag .active {
                 width: 130px;
             }
+
             .itemLab .title div {
                 width: 100px;
             }
+        }
+        .evaluationsTip {
+            display: none;
+        }
+        .serviceTip {
+            display: none;
+        }
+        .performer{
+            display: none;
+        }
+        .performerCellphone {
+            display: none;
         }
     </style>
 </head>
 <body>
 <div class="mui-content">
+    <div class="serviceTip" style="position:fixed;left:0;right:0;top:0;background-color:#FFF3E7;z-index:2;text-align:center;font-size: 14px;color:#FF8C14">
+        服务已完成，请在线上支付服务费用
+    </div>
+    <div style="height:30px" class="serviceTip">
+    </div>
+    <div class="evaluationsTip" style="position:fixed;left:0;right:0;top:0;background-color:#FFF3E7;z-index:1;text-align:center;font-size: 14px;color:#FF8C14">
+        服务已完成，请评价本次服务
+    </div>
+    <div style="height:30px" class="evaluationsTip">
+    </div>
     <div id="divLeaseInfo">
     </div>
     <div style="height:10px;background-color:#f4f4f4" class="service"></div>
@@ -305,13 +333,11 @@
         </div>
         <div style="line-height:30px;margin-top:20px;position:relative">
             <label>服务单价</label><img id="imgQuestion" src="images/question.png"
-                                    style="width:20px;height:20px;float:right;margin-top:5px"/><span
+                                    style="width:20px;height:20px;float:right;margin-top:5px;display:none"/><span
                 id="lbCollectFees"></span>
         </div>
         <div style="line-height:30px">
             <label>服务账单</label><span id="lbOrderAmount"></span>
-        </div>
-        <div style="height:60px">
         </div>
     </div>
     <div style="height:10px;background-color:#f4f4f4" class="process"></div>
@@ -324,18 +350,18 @@
                 </div>
             </div>
         </div>
-        <div style="line-height:30px;margin-top:20px">
-            <label>进度描述</label><span id="lbProcessDescription"></span>
+        <div style="line-height:30px;margin-top:20px" class="processDescription">
+            <label>进度描述</label><span></span>
         </div>
         <div style="line-height:30px" class="useTime">
-            <label>服务用时</label><span id="lbUseTime"></span>
+            <label>服务用时</label><span></span>
         </div>
         <div style="line-height:30px">
             <label>图片</label><span id="lbProcessDescriptionPictures"></span>
         </div>
         <div id="wrapper1">
             <div id="scroller1">
-                <ul id="imgProcessDescriptionPictures">
+                <ul>
                 </ul>
             </div>
         </div>
@@ -364,7 +390,7 @@
         <div id="divTagDescription" style="margin-top:5px;color: rgba(51, 51, 51, 1);font-size: 14px">
         </div>
     </div>
-    <div style="height:50px"></div>
+    <div style="height:60px"></div>
     <div class="step1">
         <div class="btnEvaluations" onclick="showEvaluations()">
             评价本次服务
@@ -376,8 +402,7 @@
             取消申请
         </div>
     </div>
-    <div id="divEvaluations"
-         style="position:fixed;left:0;right:0;top:0;bottom:0;background-color:rgba(0,0,0,0.6);display:none;z-index:2">
+    <div id="divEvaluations"  style="position:fixed;left:0;right:0;top:0;bottom:0;background-color:rgba(0,0,0,0.6);display:none;z-index:2">
         <div style="position:absolute;bottom:0;right:0;left:0;background-color:#FFFFFF;height:auto;border-top-left-radius:6px;border-top-right-radius:6px">
             <div style="height:60px;position:relative">
                 <img src="images/close.png" style="width:24px;height:24px;position: absolute;top:20px;right:20px"
@@ -483,8 +508,14 @@
         <div style="line-height:30px">
             <label>保洁项目</label><span>{8}</span>
         </div>
+        <div style="line-height:30px" class="performer">
+            <label>执行人</label><span>{9}</span>
+        </div>
+        <div style="line-height:30px" class="performerCellphone">
+            <label>执行人手机号</label><span>{10}</span>
+        </div>
         <div style="line-height:36px;padding-bottom: 5px">
-            <label>更新时间</label><span>{9}</span>
+            <label>更新时间</label><span>{11}</span>
         </div>
     </div>
     <div style="height:10px;background-color:#f4f4f4"></div>
@@ -492,7 +523,7 @@
         <label>备注信息</label>
     </div>
     <div style="line-height:30px;padding:0 20px">
-        {10}
+        {12}
     </div>
     <div style="line-height:30px;padding-left:20px">
         <label>图片</label>
@@ -500,7 +531,7 @@
     <div id="wrapper">
         <div id="scroller">
             <ul>
-                {11}
+                {13}
             </ul>
         </div>
     </div>
@@ -514,6 +545,6 @@
 <script src="packages/iscroll@5.2.0/demos/demoUtils.js"></script>
 <script src="packages/raty@2.5.2/lib/jquery.raty.min.js"></script>
 <script src="packages/tooltips@1.0.0/js/jquery.pure.tooltips.js"></script>
-<script src="script/constants.js?ver=18.12.541"></script>
-<script src="script/service.js?ver=18.12.541"></script>
-<script src="script/viewbaoji.js?ver=18.12.541"></script>
+<script src="script/constants.js?ver=18.12.548"></script>
+<script src="script/service.js?ver=18.12.548"></script>
+<script src="script/viewbaoji.js?ver=18.12.548"></script>

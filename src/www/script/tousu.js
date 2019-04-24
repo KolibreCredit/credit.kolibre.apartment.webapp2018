@@ -6,7 +6,7 @@ var pictureUrls = [];
 var myScroll = null;
 var tplItem = ""
 var tplAddImg = "";
-var ispostData = true;
+var isPostData = true;
 
 function loadPictureUrls() {
     var itemPictures = [];
@@ -48,19 +48,19 @@ function V2UploadImages(serverId) {
 function hideSucce() {
     $("#divSucce").hide();
     setTimeout(function () {
-        window.location.href = "fuwu.html";
+        window.location.href = "fuwu.html?tabIndex=2";
     }, 1000);
 }
 
 function hideError() {
     $("#divError").hide();
     setTimeout(function () {
-        window.location.href = "fuwu.html";
+        window.location.href = "fuwu.html?tabIndex=2";
     }, 1000);
 }
 
 function createComplaintSuggestion() {
-    if (!ispostData) {
+    if (!isPostData) {
         mui.toast(constants.msgInfo.postData);
         return false;
     }
@@ -90,10 +90,10 @@ function createComplaintSuggestion() {
         complaintSuggestionContent: description,
         pictures: pictureUrls
     }
-    ispostData = false;
+    isPostData = false;
     $(".msg-post").show();
     postInvoke(constants.URLS.CREATECOMPLAINTSUGGESTION, data, function (res) {
-        ispostData = true;
+        isPostData = true;
         $(".msg-post").hide();
         if (res.succeeded) {
             $("#divSucce").show();
@@ -102,7 +102,7 @@ function createComplaintSuggestion() {
             $("#divError").show();
         }
     }, function (err) {
-        ispostData = true;
+        isPostData = true;
         $(".msg-post").hide();
         $("#lbError").html(err.message);
         $("#divError").show();

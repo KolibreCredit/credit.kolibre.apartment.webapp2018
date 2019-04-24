@@ -9,7 +9,7 @@
     <link href="packages/raty@2.5.2/demo/css/application.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="packages/tooltips@1.0.0/css/tooltips.css"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.541" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.548" rel="stylesheet"/>
     <style type="text/css">
         label {
             font-size: 14px;
@@ -105,8 +105,6 @@
             -ms-text-size-adjust: none;
             -o-text-size-adjust: none;
             text-size-adjust: none;
-            margin-left: 20px;
-            margin-right: 20px;
         }
 
         #scroller1 ul {
@@ -273,6 +271,30 @@
             border-color: #FF8C14 transparent transparent;
         }
 
+        .evaluationsTip {
+            display: none;
+        }
+
+        .serviceTip {
+            display: none;
+        }
+
+        .performer {
+            display: none;
+        }
+
+        .performerCellphone {
+            display: none;
+        }
+
+        .processDescription {
+            display: none;
+        }
+
+        .useTime {
+            display: none;
+        }
+
         @media only screen and (max-width: 320px) {
             .tag {
                 padding: 0 20px;
@@ -294,6 +316,18 @@
 </head>
 <body>
 <div class="mui-content">
+    <div class="serviceTip"
+         style="position:fixed;left:0;right:0;top:0;background-color:#FFF3E7;z-index:2;text-align:center;font-size: 14px;color:#FF8C14">
+        服务已完成，请在线上支付服务费用
+    </div>
+    <div style="height:30px" class="serviceTip">
+    </div>
+    <div class="evaluationsTip"
+         style="position:fixed;left:0;right:0;top:0;background-color:#FFF3E7;z-index:1;text-align:center;font-size: 14px;color:#FF8C14">
+        服务已完成，请评价本次服务
+    </div>
+    <div style="height:30px" class="evaluationsTip">
+    </div>
     <div id="divLeaseInfo">
     </div>
     <div style="height:10px;background-color:#f4f4f4" class="service"></div>
@@ -306,13 +340,11 @@
         </div>
         <div style="line-height:30px;margin-top:20px;position:relative">
             <label>服务单价</label><img id="imgQuestion" src="images/question.png"
-                                    style="width:20px;height:20px;float:right;margin-top:5px"/><span
+                                    style="width:20px;height:20px;float:right;margin-top:5px;display:none"/><span
                 id="lbCollectFees"></span>
         </div>
         <div style="line-height:30px">
             <label>服务账单</label><span id="lbOrderAmount"></span>
-        </div>
-        <div style="height:60px">
         </div>
     </div>
     <div style="height:10px;background-color:#f4f4f4" class="process"></div>
@@ -325,18 +357,18 @@
                 </div>
             </div>
         </div>
-        <div style="line-height:30px;margin-top:20px">
-            <label>进度描述</label><span id="lbProcessDescription"></span>
+        <div style="line-height:30px;margin-top:20px" class="processDescription">
+            <label>进度描述</label><span></span>
         </div>
         <div style="line-height:30px" class="useTime">
-            <label>服务用时</label><span id="lbUseTime"></span>
+            <label>服务用时</label><span></span>
         </div>
         <div style="line-height:30px">
             <label>图片</label><span id="lbProcessDescriptionPictures"></span>
         </div>
         <div id="wrapper1">
             <div id="scroller1">
-                <ul id="imgProcessDescriptionPictures">
+                <ul>
                 </ul>
             </div>
         </div>
@@ -365,7 +397,7 @@
         <div id="divTagDescription" style="margin-top:5px;color: rgba(51, 51, 51, 1);font-size: 14px">
         </div>
     </div>
-    <div style="height:50px">
+    <div style="height:60px">
     </div>
     <div class="step1">
         <div class="btnEvaluations" onclick="showEvaluations()">
@@ -487,17 +519,22 @@
         <div style="line-height:30px">
             <label>维修项目</label><span>{8}</span>
         </div>
-        <div style="line-height:36px;padding-bottom: 5px">
-            <label>更新时间</label><span>{9}</span>
+        <div style="line-height:30px" class="performer">
+            <label>执行人</label><span>{9}</span>
         </div>
-
+        <div style="line-height:30px" class="performerCellphone">
+            <label>执行人手机号</label><span>{10}</span>
+        </div>
+        <div style="line-height:36px;padding-bottom: 5px">
+            <label>更新时间</label><span>{11}</span>
+        </div>
     </div>
     <div style="height:10px;background-color:#f4f4f4"></div>
     <div style="line-height:30px;padding-left:20px;padding-top:10px">
         <label>备注信息</label>
     </div>
     <div style="line-height:20px;padding:0 20px">
-        {10}
+        {12}
     </div>
     <div style="line-height:30px;padding-left:20px">
         <label>图片</label>
@@ -505,10 +542,11 @@
     <div id="wrapper">
         <div id="scroller">
             <ul>
-                {11}
+                {13}
             </ul>
         </div>
     </div>
+    <div style="height:10px"></div>
 </script>
 </body>
 </html>
@@ -518,6 +556,6 @@
 <script src="packages/iscroll@5.2.0/demos/demoUtils.js"></script>
 <script src="packages/raty@2.5.2/lib/jquery.raty.min.js"></script>
 <script src="packages/tooltips@1.0.0/js/jquery.pure.tooltips.js"></script>
-<script src="script/constants.js?ver=18.12.541fasdfsadf"></script>
-<script src="script/service.js?ver=18.12.541"></script>
-<script src="script/viewbaoxiu.js?ver=18.12.541dddd"></script>
+<script src="script/constants.js?ver=18.12.548"></script>
+<script src="script/service.js?ver=18.12.548"></script>
+<script src="script/viewbaoxiu.js?ver=18.12.548"></script>

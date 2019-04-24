@@ -87,6 +87,7 @@ function confirmInvoiceInfo() {
     }
     postInvoke(apiUrl, data, function (res) {
         if (res.succeeded) {
+            deleteInvoice();
             mui.toast("发票信息提交成功");
             setTimeout(function () {
                 window.location.href = "invoiceList.html";
@@ -98,7 +99,6 @@ function confirmInvoiceInfo() {
         mui.toast(res.message);
     });
 }
-
 //
 var email = "";
 var receiverName = "";
@@ -169,6 +169,13 @@ function submitInvoiceInfo() {
 
 function closeInvoiceInfo() {
     $(".step1").hide();
+}
+
+function deleteInvoice() {
+    deleteCookie(constants.COOKIES.INVOICE);
+    deleteCookie(constants.COOKIES.INVOICE1);
+    deleteCookie(constants.COOKIES.INVOICE3);
+    deleteCookie(constants.COOKIES.INVOICE4);
 }
 
 var opr = "";
