@@ -238,7 +238,7 @@ $(document).ready(function () {
                             scrollY: false,
                             mouseWheel: false
                         });
-                    },100);
+                    }, 100);
                 } else {
                     $("#lbProcessDescriptionPictures").html("无");
                 }
@@ -252,13 +252,15 @@ $(document).ready(function () {
                         readOnly: true,
                         size: 20
                     }).css({"width": "auto"});
-                    var infoTags = [];
-                    var evaluationsTags = item.evaluations.lable.split(",");
-                    for (var i = 0; i < evaluationsTags.length; i++) {
-                        infoTags.push(infoTag.format(evaluationsTags[i]));
-                    }
                     $("#divTipInfo").html(item.evaluations.levelDescription);
-                    $("#divTagInfo").html(infoTags.join(""));
+                    if (item.evaluations.lable != "") {
+                        var infoTags = [];
+                        var evaluationsTags = item.evaluations.lable.split(",");
+                        for (var i = 0; i < evaluationsTags.length; i++) {
+                            infoTags.push(infoTag.format(evaluationsTags[i]));
+                        }
+                        $("#divTagInfo").html(infoTags.join(""));
+                    }
                     $("#divTagDescription").html(item.evaluations.description);
                     $(".evaluations").show();
                 } else {

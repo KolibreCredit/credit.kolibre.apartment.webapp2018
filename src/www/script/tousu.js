@@ -2,7 +2,7 @@
  * Created by long.jiang on 2016/12/14.
  */
 var contractId = "";
-var pictureUrls = [];
+var pictureUrls = [""];
 var myScroll = null;
 var tplItem = ""
 var tplAddImg = "";
