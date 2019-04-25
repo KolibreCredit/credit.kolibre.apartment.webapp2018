@@ -143,7 +143,7 @@ function tagList(score) {
 $(document).ready(function () {
     $('#star').raty({
         score: 0,
-        path: 'images/star4',
+        path: 'images/star5',
         size: 20,
         click: function (score) {
             tagList(score);
@@ -172,15 +172,16 @@ $(document).ready(function () {
             setTimeout(function () {
                 $("#scroller").css("width", "{0}px".format((pictureUrls.length + 1) * 130 + 40));
                 new IScroll('#wrapper', {
-                    preventDefault: false,
                     scrollX: true,
                     scrollY: false,
-                    mouseWheel: false
+                    eventPassthrough: true
                 });
             }, 100);
             if (item.complaintSuggestionState == "Succeed") {
                 // 处理
+                var isProcess = false;
                 if (item.processDescription != null) {
+                    isProcess = true;
                     $(".processDescription").show().find("span").html(item.processDescription);
                 }
                 if (item.processDescriptionPictures != null) {
@@ -193,16 +194,17 @@ $(document).ready(function () {
                     setTimeout(function () {
                         $("#scroller1").css("width", "{0}px".format((itemDescriptionPictures.length + 1) * 130 + 40));
                         new IScroll('#wrapper1', {
-                            preventDefault: false,
                             scrollX: true,
                             scrollY: false,
-                            mouseWheel: false
+                            eventPassthrough: true
                         });
                     }, 100);
                 } else {
-                    $("#lbProcessDescriptionPictures").html("无");
+                    $("#lbProcessDescriptionPictures").html((isProcess ? "无" : ""));
                 }
-                $(".process").show();
+                if (isProcess) {
+                    $(".process").show();
+                }
                 // 评价
                 if (item.evaluations != null) {
                     $('#divStar').raty({
@@ -211,7 +213,6 @@ $(document).ready(function () {
                         readOnly: true,
                         size: 20
                     }).css({"width": "auto"});
-
                     $("#divTipInfo").html(item.evaluations.levelDescription);
                     if (item.evaluations.lable != "") {
                         var infoTags = [];

@@ -8,7 +8,7 @@
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <link href="packages/raty@2.5.2/demo/css/application.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.550" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.551" rel="stylesheet"/>
     <style type="text/css">
         label {
             font-size: 14px;
@@ -123,24 +123,30 @@
             position: relative;
             padding-top: 10px;
         }
+
         .process {
             display: none;
         }
+
         .processDescription {
             display: none;
         }
+
         .evaluations {
             display: none;
         }
-        .evaluationsTip{
+
+        .evaluationsTip {
             display: none;
         }
+
         .step1 {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
         }
+
         .btnNext, .btnEvaluations {
             height: 50px;
             line-height: 50px;
@@ -150,9 +156,16 @@
             color: #FFFFFF;
             display: none;
         }
+
         .star img {
             width: 20px;
             height: 20px;
+        }
+
+        .star1 img {
+            width: 30px;
+            height: 30px;
+            margin: 0 5px;
         }
 
         .tag {
@@ -223,7 +236,7 @@
             height: 26px;
             left: 0;
             right: 0;
-            top: 0;
+            top: 2px;
             text-align: center;
         }
 
@@ -237,6 +250,7 @@
             line-height: 26px;
             display: inline-block;
         }
+
         @media only screen and (max-width: 320px) {
             .tag {
                 padding: 0 20px;
@@ -258,8 +272,9 @@
 </head>
 <body>
 <div class="mui-content">
-    <div class="evaluationsTip" style="position:fixed;left:0;right:0;top:0;background-color:#FFF3E7;z-index:1;text-align:center;font-size: 14px;color:#FF8C14">
-       服务已完成，请评价本次服务
+    <div class="evaluationsTip"
+         style="position:fixed;left:0;right:0;top:0;background-color:#FFF3E7;z-index:1;text-align:center;font-size: 14px;color:#FF8C14">
+        服务已完成，请评价本次服务
     </div>
     <div style="height:30px" class="evaluationsTip">
     </div>
@@ -323,7 +338,8 @@
             取消申请
         </div>
     </div>
-    <div id="divEvaluations" style="position:fixed;left:0;right:0;top:0;bottom:0;background-color:rgba(0,0,0,0.6);display:none;z-index:2">
+    <div id="divEvaluations"
+         style="position:fixed;left:0;right:0;top:0;bottom:0;background-color:rgba(0,0,0,0.6);display:none;z-index:2">
         <div style="position:absolute;bottom:0;right:0;left:0;background-color:#FFFFFF;height:auto;border-top-left-radius:6px;border-top-right-radius:6px">
             <div style="height:60px;position:relative">
                 <img src="images/close.png" style="width:24px;height:24px;position: absolute;top:20px;right:20px"
@@ -338,7 +354,7 @@
                 </div>
             </div>
             <div style="text-align:center;white-space:nowrap;margin-top:30px">
-                <div id="star" class="star" style="display:inline-block"></div>
+                <div id="star" class="star1" style="display:inline-block"></div>
             </div>
             <div style="text-align:center;color: rgba(153,153,153,1);font-size:14px;margin-top:10px" id="divTip">
                 您的评价会帮助我们做的更好
@@ -453,8 +469,7 @@
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/iscroll@5.2.0/build/iscroll.js"></script>
-<script src="packages/iscroll@5.2.0/demos/demoUtils.js"></script>
 <script src="packages/raty@2.5.2/lib/jquery.raty.min.js"></script>
-<script src="script/constants.js?ver=18.12.550"></script>
-<script src="script/service.js?ver=18.12.550"></script>
-<script src="script/viewtousu.js?ver=18.12.550"></script>
+<script src="script/constants.js?ver=18.12.551"></script>
+<script src="script/service.js?ver=18.12.551"></script>
+<script src="script/viewtousu.js?ver=18.12.551"></script>

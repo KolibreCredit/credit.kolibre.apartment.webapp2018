@@ -7,7 +7,7 @@
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.550" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.551" rel="stylesheet"/>
     <style type="text/css">
         label {
             font-size: 14px;
@@ -82,6 +82,19 @@
             font-size: 18px;
         }
 
+        .divInvoice {
+            position: fixed;
+            text-align: center;
+            width: 100%;
+            display: none;
+            bottom: 0;
+            z-index: 2;
+            height: 50px;
+            line-height: 50px;
+            background-color: #FB9329;
+            color: rgba(255, 255, 255, 1);
+            font-size: 18px;
+        }
         .btnStage {
             background: #ffffff;
             height: 50px;
@@ -158,6 +171,9 @@
     </div>
     <div class="divFrozen">
         已冻结
+    </div>
+    <div class="divInvoice" onclick="invoice()">
+        申请开票
     </div>
     <div class="msg-alert" style="z-index:2">
         <table style='width:100%;height:100%'>
@@ -334,6 +350,6 @@
 </html>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
-<script src="script/constants.js?ver=18.12.550"></script>
-<script src="script/service.js?ver=18.12.550"></script>
-<script src="script/billView.js?ver=18.12.550"></script>
+<script src="script/constants.js?ver=18.12.551"></script>
+<script src="script/service.js?ver=18.12.551"></script>
+<script src="script/billView.js?ver=18.12.551"></script>

@@ -150,7 +150,7 @@ function hideAlert() {
 $(document).ready(function () {
     $('#star').raty({
         score: 0,
-        path: 'images/star4',
+        path: 'images/star5',
         size: 20,
         click: function (score) {
             tagList(score);
@@ -182,16 +182,15 @@ $(document).ready(function () {
                 , itemPictures.join(""));
             $("#divLeaseInfo").html(htmlLeaseInfo);
             setTimeout(function () {
-                if (item.cleaningState == "Processed" || item.cleaningState == "Suspended") {
+                if (item.cleaningState == "Processed") {
                     $(".performer").show();
                     $(".performerCellphone").show();
                 }
                 $("#scroller").css("width", "{0}px".format((pictureUrls.length + 1) * 130 + 40));
                 new IScroll('#wrapper', {
-                    preventDefault: false,
                     scrollX: true,
                     scrollY: false,
-                    mouseWheel: false
+                    eventPassthrough: true
                 });
             }, 100);
             // 费用信息
@@ -217,13 +216,17 @@ $(document).ready(function () {
             }
             if (item.cleaningState == "Succeed") {
                 // 处理进度
+                var isProcess = false;
                 if (item.processDescription != null) {
+                    isProcess = true;
                     $(".processDescription").show().find("span").html(item.processDescription);
                 }
                 if (item.configContents != null && item.configContents.chargingMode == "TimeFree") {
+                    isProcess = true;
                     $(".useTime").show().find("span").text((item.useTime * 0.01).toFixed(2) + "小时");
                 }
                 if (item.processDescriptionPictures != null) {
+                    isProcess = true;
                     var processDescriptionPictures = item.processDescriptionPictures.split(",");
                     var itemProcessPictures = [];
                     for (var i = 0; i < processDescriptionPictures.length; i++) {
@@ -233,16 +236,17 @@ $(document).ready(function () {
                     setTimeout(function () {
                         $("#scroller1").css("width", "{0}px".format((itemProcessPictures.length + 1) * 130 + 40));
                         new IScroll('#wrapper1', {
-                            preventDefault: false,
                             scrollX: true,
                             scrollY: false,
-                            mouseWheel: false
+                            eventPassthrough: true
                         });
                     }, 100);
                 } else {
-                    $("#lbProcessDescriptionPictures").html("无");
+                    $("#lbProcessDescriptionPictures").html((isProcess ? "无" : ""));
                 }
-                $(".process").show();
+                if (isProcess) {
+                    $(".process").show();
+                }
                 // 评价
                 var count = 0;
                 if (item.evaluations != null) {

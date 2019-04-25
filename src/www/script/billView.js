@@ -5,6 +5,12 @@ var goto = "";
 var orderId = "";
 var item = null;
 var deviceId = "";
+var contractId = "";
+
+function invoice() {
+    window.location.href = "invoice.html?contractId={0}".format(contractId);
+}
+
 
 $(document).ready(function () {
     orderId = getURLQuery("orderId");
@@ -46,6 +52,10 @@ $(document).ready(function () {
                 tipTitle = "已完成";
                 tipTitle1 = "实付时间";
                 tipTitle2 = item.actualPaymentTime.substring(0, 16);
+                /*if (item.canInvoice) {
+                    contractId = item.contractId;
+                    $(".divInvoice").show();
+                }*/
             }
             if (!item.frozen && item.isCurrent) {
                 $(".footer").show();
