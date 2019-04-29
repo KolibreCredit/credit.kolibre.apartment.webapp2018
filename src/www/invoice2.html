@@ -7,8 +7,19 @@
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.552" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.558" rel="stylesheet"/>
     <style type="text/css">
+        input[type=text] {
+            background: none;
+            width: 65%;
+            text-align: right;
+            border: none;
+            position: absolute;
+            right: 0;
+            top: 10px;
+            padding: 10px 0;
+        }
+
         table {
             width: 100%;
             height: 50px;
@@ -46,21 +57,22 @@
             margin-right: 2px;
         }
 
-        .itemNeedMail{
+        .itemRow span {
+            white-space: nowrap;
+            width: 65%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: right;
+        }
+
+        .itemNeedMail {
             display: none;
         }
+
         .itemTitle {
             display: block;
         }
-        input[type=text] {
-            background: none;
-            width: auto;
-            text-align: right;
-            border: none;
-            position: absolute;
-            right: 20px;
-            top: 8px;
-        }
+
         .check3, .check3s {
             position: absolute;
             width: 24px;
@@ -68,6 +80,7 @@
             top: 12px;
             cursor: pointer;
         }
+
         .needMail, .needMails {
             position: absolute;
             width: 24px;
@@ -75,22 +88,35 @@
             top: 18px;
             cursor: pointer;
         }
+
         .ic_grey_arrow {
             width: 18px;
             height: 18px;
             position: absolute;
-            top: 18px;
-            right: 10px;
+            top: 20px;
+            right: 0;
         }
+
         .tabItem {
             display: none;
         }
+
+        .itemNeed {
+            border-bottom: none;
+        }
+
         .step1 {
             display: none;
         }
+
         .step1 span {
             float: right;
+            white-space: nowrap;
+            width: 65%;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
+
         .close {
             width: 14px;
             height: 14px;
@@ -98,13 +124,14 @@
             top: 20px;
             right: 20px;
         }
+
         .invoiceTips div {
             display: none;
         }
     </style>
 </head>
 <body style="background:#f4f4f4">
-<div class="mui-content" style="background:none">
+<div class="mui-content" style="background:none;display:block">
     <div style="position: fixed; width: 100%;left:0;top:0;background:#ffffff;z-index:1">
         <table class="selectTable">
             <tr>
@@ -123,7 +150,7 @@
             <div style="float:left;width:50%;position:relative" onclick="tabItemTitleCategory(0)">
                 <img src="images/check3s.png" class="check3s"/><span style="margin-left:30px">公司抬头</span>
             </div>
-            <div style="float:right;width:50%;position:relative" onclick="tabItemTitleCategory(1)">
+            <div style="float:right;width:50%;position:relative;text-align:right" onclick="tabItemTitleCategory(1)">
                 <img src="images/check3.png" class="check3"/><span style="margin-left:30px">个人/非公司抬头</span>
             </div>
             <div style="clear:both">
@@ -131,15 +158,14 @@
         </div>
         <div class="itemRow" onclick="invoiceHelp()">
             <span class="icon">*</span>发票抬头<input id="txtTitleName" type="text" placeholder="请选择发票抬头"
-                                                  readonly="readonly"/><img
+                                                  readonly="readonly" style="right:20px"/><img
                 class="ic_grey_arrow" src="images/ic_grey_arrow.png"/>
         </div>
         <div class="itemRow itemTitle">
-            <span class="icon">*</span>发票税号<input id="txtTaxpayerNo" type="text" placeholder="纳税人识别号"
-                                                  readonly="readonly"/>
+            <span class="icon">*</span>发票税号<input id="txtTaxpayerNo" type="text" placeholder="纳税人识别号" maxlength="20"/>
         </div>
-        <div class="itemRow" style="border-bottom:none" onclick="invoiceMore()">
-            更多信息<input id="txtInvoiceNotes" type="text" placeholder="请填写备注、地址等（非必填）" readonly="readonly"/><img
+        <div class="itemRow itemInvoiceNotes" style="border-bottom:none" onclick="invoiceMore()">
+            更多信息<input id="txtInvoiceNotes" type="text" style="right:20px" placeholder="请填写备注、地址等（非必填）" readonly="readonly"/><img
                 class="ic_grey_arrow" src="images/ic_grey_arrow.png"/>
         </div>
     </div>
@@ -159,40 +185,38 @@
     </div>
     <div style="background-color:#FFFFFF;padding:0 20px;font-size: 16px;color:#646464" class="tabItem">
         <div class="itemRow" style="border-bottom:none">
-            <span class="icon">*</span>电子邮箱<input id="txtEmail" type="text" placeholder="请填写电子邮箱地址" maxlength="50"/>
+            <span class="icon">*</span>电子邮箱<input id="txtEmail" type="text" placeholder="请填写电子邮箱地址" maxlength="20"/>
         </div>
     </div>
     <div style="background-color:#FFFFFF;padding:0 20px;font-size: 16px;color:#646464" class="tabItem">
         <div class="itemRow itemNeed">
-            <div style="display:flex">
-                <div style="width:50%">
-                    <span class="icon">*</span>是否需要邮寄
+            <div style="width:50%;float:left">
+                <span class="icon">*</span>是否需要邮寄
+            </div>
+            <div style="width:50%;float:left">
+                <div style="float:left;width:50%;position:relative;text-align:right" onclick="tabItemNeedMail(0)">
+                    <img src="images/check3.png" class="needMails"/><span style="margin-left:30px">是</span>
                 </div>
-                <div style="width:50%">
-                    <div style="float:left;width:50%;position:relative" onclick="tabItemNeedMail(0)">
-                        <img src="images/check3.png" class="needMails"/><span style="margin-left:30px">是</span>
-                    </div>
-                    <div style="float:right;width:50%;position:relative" onclick="tabItemNeedMail(1)">
-                        <img src="images/check3s.png" class="needMail"/><span style="margin-left:30px">否</span>
-                    </div>
-                    <div style="clear:both"></div>
+                <div style="float:right;width:50%;position:relative;text-align:right" onclick="tabItemNeedMail(1)">
+                    <img src="images/check3s.png" class="needMail"/><span style="margin-left:30px">否</span>
                 </div>
             </div>
+            <div style="clear:both"></div>
         </div>
         <div class="itemRow itemNeedMail">
             <span class="icon">*</span>收件人<input id="txtReceiverName" type="text" placeholder="请填写收件人姓名"
-                                                 maxlength="50"/>
+                                                 maxlength="20"/>
         </div>
         <div class="itemRow itemNeedMail">
             <span class="icon">*</span>联系电话<input id="txtReceiverPhone" type="text" placeholder="请填写收件人联系电话"
-                                                  maxlength="20"/>
+                                                  maxlength="13"/>
         </div>
         <div class="itemRow itemNeedMail">
             <span class="icon">*</span>所在地区<input id="txtMailDistrict" type="text" placeholder="省份/城市/地区"
                                                   maxlength="100"/>
         </div>
         <div class="itemRow itemNeedMail" style="border-bottom:none">
-            <span class="icon">*</span>详细地址<input id="txtMailAddress" type="text" placeholder="省份/城市/地区"
+            <span class="icon">*</span>详细地址<input id="txtMailAddress" type="text" placeholder="请输入详细地址"
                                                   maxlength="100"/>
         </div>
     </div>
@@ -207,7 +231,8 @@
         <div style="position:absolute;left:0;right:0;bottom:0;height:auto;background-color:#FFFFFF;border-radius: 6px;font-size:18px;color:#646464">
             <div style="padding:0 20px;position:relative" class="invoiceTips">
                 <img src="images/close3.png" class="close" onclick="closeInvoiceInfo()"/>
-                <div style="height:60px;line-height:60px;text-align:center;border-bottom:1px solid #D8D8D8" id="lbInvoiceMedium"></div>
+                <div style="height:60px;line-height:60px;text-align:center;border-bottom:1px solid #D8D8D8"
+                     id="lbInvoiceMedium"></div>
                 <div style="height:40px;line-height:40px" id="lbInvoiceMedium2">
                     发票类型<span></span>
                 </div>
@@ -232,11 +257,12 @@
                 <div style="height:40px;line-height:40px" id="lbMailDistrict">
                     所在地区<span></span>
                 </div>
-                <div style="height:40px;line-height:40px" id="lbMailAddress">
-                    详细地址<span></span>
+                <div style="height:40px;line-height:40px;white-space:nowrap" id="lbMailAddress">
+                    详细地址<span style="white-space:nowrap"></span>
                 </div>
             </div>
-            <div style="height: 50px;line-height:50px;color:#FFFFFF;font-size:18px;text-align:center;background:#FB9329"  onclick="confirmInvoiceInfo()">
+            <div style="height: 50px;line-height:50px;color:#FFFFFF;font-size:18px;text-align:center;background:#FB9329"
+                 onclick="confirmInvoiceInfo()">
                 确认提交
             </div>
         </div>
@@ -250,10 +276,36 @@
         </div>
     </script>
 </div>
+<div class="mui-content" style="background:none;display:none">
+    <div style="background-color:#FFFFFF;padding:0 20px;font-size: 16px;color:#646464">
+        <div class="itemRow">
+            备注信息<input id="txtInvoiceNote" type="text" placeholder="请输入备注信息" maxlength="200"/>
+        </div>
+        <div class="itemRow">
+            地址<input id="txtAddress" type="text" placeholder="请输入地址" maxlength="100"/>
+        </div>
+        <div class="itemRow" style="position:relative">
+            电话<input id="txtPhoneNumber" type="text" placeholder="请输入电话" maxlength="13"/>
+        </div>
+        <div class="itemRow" style="position:relative">
+            开户行<input id="txtBankName" type="text" placeholder="请输入开户行" maxlength="20"/>
+        </div>
+        <div class="itemRow" style="border-bottom:none;position:relative">
+            帐号<input id="txtBankAccount" type="text" placeholder="请输入帐号" maxlength="20"/>
+        </div>
+    </div>
+    <div style="height:60px"></div>
+    <div style="position:fixed;left:0;right:0;bottom:0;z-index:1">
+        <div style="height: 50px;line-height:50px;color:#FFFFFF;font-size:18px;text-align:center;background:#FB9329"
+             onclick="saveInvoiceMore()">
+            确认信息
+        </div>
+    </div>
+</div>
 </body>
 </html>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
-<script src="script/constants.js?ver=18.12.552"></script>
-<script src="script/service.js?ver=18.12.552"></script>
-<script src="script/invoice2.js?ver=18.12.552"></script>
+<script src="script/constants.js?ver=18.12.558"></script>
+<script src="script/service.js?ver=18.12.558"></script>
+<script src="script/invoice2.js?ver=18.12.558"></script>

@@ -2,26 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>账单详情</title>
+    <title>开票详情</title>
     <meta name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <link href="packages/cssLct@1.0.0/css/flowChart.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.552" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.558" rel="stylesheet"/>
     <style type="text/css">
         label {
             font-size: 14px;
             color: #999999;
         }
-
         span {
             display: block;
             float: right;
             font-size: 14px;
             color: #333333;
+            width: 65%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: right;
         }
-
         #wrapper {
             z-index: 1;
             top: 0;
@@ -123,15 +126,19 @@
         .invoiceStateTip {
             display: none;
         }
+
         .flowChart {
             padding: 0;
         }
+
         .flowChart .dashed {
             margin-left: 5px;
             height: 92%;
         }
+
         .flowChart .oneNode {
             position: relative;
+            display: none;
         }
 
         .flowChart-left {
@@ -143,7 +150,7 @@
             height: 12px;
             position: absolute;
             top: 2px;
-            left:-20px;
+            left: -20px;
         }
 
         .flowChart .NodeDetail {
@@ -154,6 +161,7 @@
             margin: 0;
             padding: 0 0 8px 0;
         }
+
         .more {
             width: 24px;
             height: 24px;
@@ -176,7 +184,7 @@
         <img id="imgInvoiceState" style="width: 50px;height:50px;display:none"/>
     </div>
     <div style="margin-top:20px;text-align:center">
-        <span id="lbInvoiceState" style="float:none;font-size: 18px;color:#646464"></span>
+        <span id="lbInvoiceState" style="float:none;font-size:18px;color:#646464;display:inline"></span>
     </div>
     <div style="padding:0 20px">
         <div class="itemLab">
@@ -202,6 +210,7 @@
             </div>
         </div>
     </div>
+    <div style="height:20px"></div>
     <div id="divInvoceInfo2" style="padding:0 20px">
     </div>
     <div style="height:10px;background-color:#f4f4f4"></div>
@@ -210,7 +219,8 @@
     </div>
     <div style="height:10px;background-color:#f4f4f4"></div>
     <div id="divModifyRecords" style="padding:0 20px;display:none">
-        <div style="height: 40px;line-height:40px;font-size:14px;color: #333333;position:relative" onclick="showModifyRecords()">
+        <div style="height: 40px;line-height:40px;font-size:14px;color: #333333;position:relative"
+             onclick="showModifyRecords()">
             修改申请记录 <img src="images/more3s.png" class="more"/>
         </div>
         <div class="flowChart" style="background-color:#FFFFFF;">
@@ -221,7 +231,9 @@
             <div class="flowChart-right">
             </div>
         </div>
-        <div class="retracting" style="height:40px;line-height:40px;color:#FD8B14;font-size:14px;text-align:center" onclick="hideModifyRecords()">点击收起</div>
+        <div class="retracting" style="height:40px;line-height:40px;color:#FD8B14;font-size:14px;text-align:center"
+             onclick="hideModifyRecords()">点击收起
+        </div>
     </div>
     <div style="position:fixed;left:0;right:0;bottom:0;z-index:1">
         <div style="height: 50px;line-height:50px;color:#FFFFFF;font-size:18px;text-align:center;background:#FB9329"
@@ -235,10 +247,10 @@
 </div>
 <script type="text/html" id="tplItem">
     <div style="line-height:36px">
-        <label>发票内容</label><span style="float:right">{0}</span>
+        <label>发票内容</label><span>{0}</span>
     </div>
     <div style="line-height:36px">
-        <label>开票金额</label><span style="float:right">{1}元</span>
+        <label>开票金额</label><span>{1}元</span>
     </div>
 </script>
 <script type="text/html" id="tplTotal">
@@ -297,7 +309,7 @@
         <label>详细地址</label><span>{3}</span>
     </div>
     <div style="line-height:36px">
-        <label>是否邮寄</label><span>{4}</span>
+        <label>是否已邮寄</label><span>{4}</span>
     </div>
     <div style="line-height:36px" class="hasMailed">
         <label>快递公司</label><span>{5}</span>
@@ -332,7 +344,6 @@
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/iscroll@5.2.0/build/iscroll.js"></script>
-<script src="packages/iscroll@5.2.0/demos/demoUtils.js"></script>
-<script src="script/constants.js?ver=18.12.552"></script>
-<script src="script/service.js?ver=18.12.552"></script>
-<script src="script/invoiceDetail.js?ver=18.12.552"></script>
+<script src="script/constants.js?ver=18.12.558"></script>
+<script src="script/service.js?ver=18.12.558"></script>
+<script src="script/invoiceDetail.js?ver=18.12.558"></script>

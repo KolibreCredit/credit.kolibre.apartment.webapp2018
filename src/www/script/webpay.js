@@ -8,7 +8,6 @@ var paymentTime = "";
 var transactionId = "";
 var orderModel = "";
 var isTransaction = true;
-var isPost = true;
 var goto = "";
 //
 var validateAmount = function () {
@@ -26,7 +25,12 @@ var validateAmount = function () {
 };
 
 var createTransaction = function (transactionMethod, callSuccess) {
-    if (isPost && validateAmount()) {
+    if (!isTransaction) {
+        mui.toast(constants.msgInfo.transaction);
+        return false;
+    }
+    if (isTransaction && validateAmount()) {
+        isTransaction = false;
         var data = {
             orderId: orderId,
             orderModel: orderModel,
@@ -35,20 +39,18 @@ var createTransaction = function (transactionMethod, callSuccess) {
             transactionMethod: transactionMethod,
             paymentSource: "Fengniaowu"
         };
-        isPost = false;
-        isDeposit = false;
-        $("#lbTitle").html(" 正在提交...");
+        $("#lbTitle").html("正在提交...");
         $(".msg-post").show();
         postInvoke(constants.URLS.CREATETRANSACTION, data, function (res) {
-            isPost = true;
             $(".msg-post").hide();
             if (res.succeeded) {
                 callSuccess(res);
             } else {
+                isTransaction = true;
                 mui.toast(res.message);
             }
         }, function (err) {
-            isPost = true;
+            isTransaction = true;
             $(".msg-post").hide();
         });
     }
@@ -56,6 +58,7 @@ var createTransaction = function (transactionMethod, callSuccess) {
 
 function zhifubao() {
     createTransaction("AliPay", function (res) {
+        isTransaction = true;
         transactionId = res.data.transactionId;
         window.location.href = "precreate.html?transactionId={0}&amount={1}&paymentTime={2}&goto={3}".format(transactionId, amount, paymentTime.substring(0, 10), goto);
     });
@@ -116,12 +119,11 @@ function weixin() {
 }
 
 var queryTransaction = function () {
-    if (transactionId != "" && isTransaction) {
-        isTransaction = false;
+    if (transactionId != "") {
         getInvoke(constants.URLS.GETTRANSACTION.format(transactionId), function (res) {
-            isTransaction = true;
             if (res.succeeded) {
                 if (res.data.transactionState === "Succeed") {
+                    isTransaction = true;
                     if (goto.toUpperCase() == "WATERELECTRICITY") {
                         window.location.href = "waterElectricity.html";
                     } else if (goto.toUpperCase() == "BILL2") {

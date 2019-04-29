@@ -7,7 +7,6 @@ var paymentTime = new Date().format("yyyy-MM-dd");
 //
 var transactionId = "";
 var isTransaction = true;
-var isPost = true;
 var lastIndex = -1;
 //
 var validateAmount = function () {
@@ -32,25 +31,29 @@ var validateAmount = function () {
 };
 
 var createTransaction = function (transactionMethod, callSuccess) {
-    if (isPost && validateAmount()) {
+    if (!isTransaction) {
+        mui.toast(constants.msgInfo.transaction);
+        return false;
+    }
+    if (isTransaction && validateAmount()) {
+        isTransaction = false;
         var data = {
             deviceId: deviceId,
             amount: amount,
             transactionMethod: transactionMethod
         };
-        isPost = false;
         $("#lbTitle").html(" 正在提交...");
         $(".msg-post").show();
         postInvoke(constants.URLS.TENANTENERGYMETERRECHAGE, data, function (res) {
-            isPost = true;
             $(".msg-post").hide();
             if (res.succeeded) {
                 callSuccess(res);
             } else {
+                isTransaction = true;
                 mui.toast(res.message);
             }
         }, function (err) {
-            isPost = true;
+            isTransaction = true;
             $(".msg-post").hide();
         });
     }
@@ -58,6 +61,7 @@ var createTransaction = function (transactionMethod, callSuccess) {
 
 function zhifubao() {
     createTransaction("AliPay", function (res) {
+        isTransaction = true;
         transactionId = res.data.transactionId;
         window.location.href = "precreate.html?transactionId={0}&amount={1}&paymentTime={2}&goto=waterElectricity".format(transactionId, amount, paymentTime.substring(0, 10));
     });
@@ -117,12 +121,11 @@ function weixin() {
 }
 
 var queryTransaction = function () {
-    if (transactionId != "" && isTransaction) {
-        isTransaction = false;
+    if (transactionId != "") {
         getInvoke(constants.URLS.GETTRANSACTION.format(transactionId), function (res) {
-            isTransaction = true;
             if (res.succeeded) {
                 if (res.data.transactionState === "Succeed") {
+                    isTransaction = true;
                     setCookie(constants.COOKIES.DEPOSIT, "");
                     window.location.href = "waterElectricity.html";
                 }

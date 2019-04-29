@@ -95,6 +95,8 @@ function totalInvoiceAmount() {
 
 //
 function itemBillSelect(itemIndex) {
+    $(".check3").show();
+    $(".check3s").hide();
     var itemObj = $(".billList .billItem").eq(itemIndex);
     if (itemObj.hasClass("active")) {
         itemObj.removeClass("active");
@@ -140,10 +142,25 @@ function invoice2() {
             content: itemOrder.invoiceContent
         });
     }
-    var data = {invoiceInfoId: "", orderIds: orderIds, contents: contents};
+    var data = {
+        requestId: constants.COOKIES.INVOICE1,
+        cacheData: {
+            invoiceInfoId: "",
+            orderIds: orderIds,
+            contents: contents
+        }
+    };
     setCookie(constants.COOKIES.INVOICE, "create");
-    setCookie(constants.COOKIES.INVOICE1, JSON.stringify(data));
-    window.location.href = "invoice2.html";
+    setCookie(constants.COOKIES.INVOICE0, "0");
+    postInvoke(constants.URLS.SAVEREQUESTDATA, data, function (res) {
+        if (res.succeeded) {
+            window.location.href = "invoice2.html";
+        } else {
+            mui.toast(res.message);
+        }
+    }, function (err) {
+        mui.toast(err.message);
+    });
 }
 
 //

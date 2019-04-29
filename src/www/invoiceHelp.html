@@ -7,7 +7,7 @@
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.552" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.558" rel="stylesheet"/>
     <style type="text/css">
         .mui-table-view-cell {
             color: #646464;
@@ -19,8 +19,16 @@
             background-color: #f4f4f4;
             color: #646464;
         }
+
         .mui-table-view:after {
             height: 0;
+        }
+
+        .titleName {
+            display: inline-block;
+            width: 46%;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .title {
@@ -48,11 +56,15 @@
             color: #30A6AC;
             margin-left: 15px;
         }
+
         .edit2 {
             width: 24px;
             height: 24px;
             float: right;
+            position: absolute;
+            top: 5px;
         }
+
         .cancel {
             float: left;
             width: 120px;
@@ -64,6 +76,7 @@
             display: block;
             text-align: center;
         }
+
         .confirm {
             float: right;
             width: 120px;
@@ -76,12 +89,12 @@
             text-align: center;
         }
         @media only screen and (max-width: 320px) {
-            .cancel{
-               width: 100px;
+            .cancel {
+                width: 100px;
             }
 
             .confirm {
-               width: 100px;
+                width: 100px;
             }
         }
     </style>
@@ -107,7 +120,8 @@
             添加抬头
         </div>
     </div>
-    <div id="divDelete"  style="position:fixed;left:0;right:0;bottom:0;top:0;z-index:2;background-color: rgba(0,0,0,0.5);display:none">
+    <div id="divDelete"
+         style="position:fixed;left:0;right:0;bottom:0;top:0;z-index:2;background-color: rgba(0,0,0,0.5);display:none">
         <div style="position:absolute;width:100%;left:100%;top:50%;-webkit-transform: translate(-100%,-50%);transform:translate(-100%,-50%);padding:0 20px">
             <div style="border-radius: 6px;background-color: rgba(255, 255, 255, 1);box-shadow: 0px 15px 25px 0px rgba(0, 0, 0, 0.2);">
                 <div style="height:20px"></div>
@@ -133,14 +147,15 @@
     <script id="tplItem" type="text/html">
         <li class="mui-table-view-cell">
             <div class="mui-slider-right mui-disabled">
-                <a class="mui-btn mui-btn-f4" onclick="acquiesce({3})">设为默认</a>
-                <a class="mui-btn mui-btn-red" onclick="showDelete({3})">删除</a>
+                <a class="mui-btn mui-btn-f4" onclick="acquiesce({4})" style="display:{3}">设为默认</a>
+                <a class="mui-btn mui-btn-red" onclick="showDelete({4})">删除</a>
             </div>
             <div class="mui-slider-handle">
-                <div style="width:85%;float:left" onclick="itemSelect({3})">
-                   {0}<span class="title">{1}</span><span class="acquiesce" style="display:{2}">默认</span>
+                <div style="width:85%;float:left;white-space:nowrap" onclick="itemSelect({4})">
+                    <span class="titleName">{0}</span><span class="title">{1}</span><span class="acquiesce"
+                                                                                          style="display:{2}">默认</span>
                 </div>
-                <img src="images/edit2.png" class="edit2" onclick="edit({3})"/>
+                <img src="images/edit2.png" class="edit2" onclick="edit({4})"/>
             </div>
             <div style="clear:both"></div>
         </li>
@@ -151,6 +166,6 @@
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/moment@2.17.1/min/moment.min.js"></script>
-<script src="script/constants.js?ver=18.12.552"></script>
-<script src="script/service.js?ver=18.12.552"></script>
-<script src="script/invoiceHelp.js?ver=18.12.552"></script>
+<script src="script/constants.js?ver=18.12.558"></script>
+<script src="script/service.js?ver=18.12.558"></script>
+<script src="script/invoiceHelp.js?ver=18.12.558"></script>

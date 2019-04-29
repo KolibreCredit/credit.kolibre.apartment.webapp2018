@@ -2,16 +2,13 @@
  * Created by long.jiang on 2017/6/21.
  */
 var waitTimer = null;
-var isTransaction = true;
 var transactionId = "";
 var amount = "";
 var goto = "";
 //
 var queryTransaction = function () {
-    if (transactionId != "" && isTransaction) {
-        isTransaction = false;
+    if (transactionId != "") {
         getInvoke(constants.URLS.GETTRANSACTION.format(transactionId), function (res) {
-            isTransaction = true;
             if (res.data.transactionState == "Succeed") {
                 clearInterval(waitTimer);
                 if (goto.toUpperCase() == "MINIBILL") {

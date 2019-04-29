@@ -2,53 +2,100 @@ var item = null;
 var invoiceInfoId = "";
 
 function billList() {
-    window.location.href = "bill.html?index=1";
+    window.location.replace("bill.html?index=1");
 }
 
 function modify() {
     var data1 = {
-        invoiceInfoId: invoiceInfoId,
-        orderIds: [],
-        contents: item.contents
+        requestId: constants.COOKIES.INVOICE1,
+        cacheData: {
+            invoiceInfoId: invoiceInfoId,
+            orderIds: [],
+            contents: item.contents
+        }
     };
     var data2 = {
-        titleName: item.titleName,
-        titleCategory: item.titleCategory,
-        taxpayerNo: (item.titleCategory == "Enterprise" ? item.taxpayerNo : "")
+        requestId: constants.COOKIES.INVOICE2,
+        cacheData: {
+            titleCategory: item.titleCategory,
+            titleName: item.titleName,
+            taxpayerNo: (item.titleCategory == "Enterprise" ? item.taxpayerNo : "")
+        }
     };
     var data3 = {
-        invoiceNote: item.invoiceNote,
-        address: item.address,
-        phoneNumber: item.phoneNumber,
-        bankName: item.bankName,
-        bankAccount: item.bankAccount
+        requestId: constants.COOKIES.INVOICE3,
+        cacheData: {
+            invoiceNote: item.invoiceNote,
+            address: item.address,
+            phoneNumber: item.phoneNumber,
+            bankName: item.bankName,
+            bankAccount: item.bankAccount
+        }
     };
     var data4 = {
-        invoiceMedium: item.invoiceMedium,
-        email: item.email,
-        needMail: item.needMail,
-        receiverName: item.receiverName,
-        receiverPhone: item.receiverPhone,
-        mailDistrict: item.mailDistrict,
-        mailAddress: item.mailAddress
+        requestId: constants.COOKIES.INVOICE4,
+        cacheData: {
+            email: item.email,
+            needMail: item.needMail,
+            receiverName: item.receiverName,
+            receiverPhone: item.receiverPhone,
+            mailDistrict: item.mailDistrict,
+            mailAddress: item.mailAddress
+        }
     };
+    var isSave = true;
     setCookie(constants.COOKIES.INVOICE, "modify");
-    setCookie(constants.COOKIES.INVOICE1, JSON.stringify(data1));
-    setCookie(constants.COOKIES.INVOICE2, JSON.stringify(data2));
-    setCookie(constants.COOKIES.INVOICE3, JSON.stringify(data3));
-    setCookie(constants.COOKIES.INVOICE4, JSON.stringify(data4));
-    window.location.href = "invoice2.html";
+    setCookie(constants.COOKIES.INVOICE0, (item.invoiceMedium == "Digital" ? 0 : 1));
+    postInvoke(constants.URLS.SAVEREQUESTDATA, data1, function (res) {
+        if (!res.succeeded) {
+            isSave = false;
+            mui.toast(res.message);
+        }
+    }, function (err) {
+        isSave = false;
+        mui.toast(err.message);
+    });
+    if (!isSave) return false;
+    postInvoke(constants.URLS.SAVEREQUESTDATA, data2, function (res) {
+        if (!res.succeeded) {
+            isSave = false;
+            mui.toast(res.message);
+        }
+    }, function (err) {
+        isSave = false;
+        mui.toast(err.message);
+    });
+    if (!isSave) return false;
+    postInvoke(constants.URLS.SAVEREQUESTDATA, data3, function (res) {
+        if (!res.succeeded) {
+            isSave = false;
+            mui.toast(res.message);
+        }
+    }, function (err) {
+        isSave = false;
+        mui.toast(err.message);
+    });
+    if (!isSave) return false;
+    postInvoke(constants.URLS.SAVEREQUESTDATA, data4, function (res) {
+        if (res.succeeded) {
+            window.location.href = "invoice2.html";
+        } else {
+            mui.toast(res.message);
+        }
+    }, function (err) {
+        mui.toast(err.message);
+    });
 }
 
 function showModifyRecords() {
     $(".more").attr("src", "images/more3s.png");
-    $(".flowChart").css({"display": "flex"});
+    $(".flowChart .oneNode").show();
     $(".retracting").show();
 }
 
 function hideModifyRecords() {
     $(".more").attr("src", "images/more3.png");
-    $(".flowChart").css({"display": "none"});
+    $(".flowChart .oneNode").hide();
     $(".retracting").hide();
 }
 
@@ -78,7 +125,7 @@ $(document).ready(function () {
             $("#divInvoceInfo").html(tplInvoceInfo.format(item.titleName
                 , (item.titleCategory == "Enterprise" ? item.taxpayerNo : "")
                 , itemContents.join(""), item.createTime.substring(0, 16)
-                , (item.invoiceState == "Applying" ? "" : item.taxpayerNo)
+                , (item.invoiceState == "Applying" ? "" : item.invoiceNo)
                 , (item.invoiceState == "Applying" ? "" : item.invoiceTime.substring(0, 16))
             ));
             //
@@ -116,13 +163,13 @@ $(document).ready(function () {
                     itemInvoicePictures.push(tplPicture.format(pictureUrls[i]));
                 }
                 $("#scroller").css("width", "{0}px".format((pictureUrls.length + 1) * 130 + 40)).find("ul").html(itemInvoicePictures.join(""));
-                sleep(100);
-                myScroll = new IScroll('#wrapper', {
-                    preventDefault: false,
-                    scrollX: true,
-                    scrollY: false,
-                    mouseWheel: false
-                });
+                setTimeout(function () {
+                    myScroll = new IScroll('#wrapper', {
+                        scrollX: true,
+                        scrollY: false,
+                        eventPassthrough: true
+                    });
+                }, 100);
             }
             if (item.hasMailed) {
                 $(".hasMailed").show();
@@ -136,53 +183,56 @@ $(document).ready(function () {
                     itemModify = item.modifyRecords[i];
                     itemModifys.push(tplItemModify.format(itemModify.modifyTime));
                     if (itemModify.invoiceMedium != null) {
-                        itemModifys.push(tplItemModify.format("发票类型修改前：" + (itemModify.invoiceMedium == "Digital" ? "电子发票" : "纸质发票")));
+                        itemModifys.push(tplItemModify.format("发票类型：修改前是 " + (itemModify.invoiceMedium == "Digital" ? "电子发票" : "纸质发票")));
                     }
                     if (itemModify.titleCategory != null) {
-                        itemModifys.push(tplItemModify.format("抬头类型修改前：" + (itemModify.titleCategory == "Enterprise" ? "公司抬头" : "个人/非公司抬头")));
+                        itemModifys.push(tplItemModify.format("抬头类型：修改前是 " + (itemModify.titleCategory == "Enterprise" ? "公司抬头" : "个人/非公司抬头")));
                     }
                     if (itemModify.titleName != null) {
-                        itemModifys.push(tplItemModify.format("发票抬头修改前：" + itemModify.titleName));
+                        itemModifys.push(tplItemModify.format("发票抬头：修改前是 " + itemModify.titleName));
                     }
                     if (itemModify.taxpayerNo != null) {
-                        itemModifys.push(tplItemModify.format("发票税号修改前：" + itemModify.taxpayerNo));
+                        itemModifys.push(tplItemModify.format("发票税号：修改前是 " + itemModify.taxpayerNo));
                     }
                     if (itemModify.invoiceNote != null) {
-                        itemModifys.push(tplItemModify.format("备注信息修改前：" + itemModify.invoiceNote));
+                        itemModifys.push(tplItemModify.format("备注信息：修改前是 " + itemModify.invoiceNote));
                     }
                     if (itemModify.address != null) {
-                        itemModifys.push(tplItemModify.format("地址修改前：" + itemModify.address));
+                        itemModifys.push(tplItemModify.format("地址：修改前是 " + itemModify.address));
                     }
                     if (itemModify.phoneNumber != null) {
-                        itemModifys.push(tplItemModify.format("电话修改前：" + itemModify.phoneNumber));
+                        itemModifys.push(tplItemModify.format("电话：修改前是 " + itemModify.phoneNumber));
                     }
                     if (itemModify.bankName != null) {
-                        itemModifys.push(tplItemModify.format("开户行修改前：" + itemModify.bankName));
+                        itemModifys.push(tplItemModify.format("开户行：修改前是 " + itemModify.bankName));
                     }
                     if (itemModify.bankAccount != null) {
-                        itemModifys.push(tplItemModify.format("帐号修改前：" + itemModify.bankAccount));
+                        itemModifys.push(tplItemModify.format("帐号：修改前是 " + itemModify.bankAccount));
                     }
                     if (itemModify.email != null) {
-                        itemModifys.push(tplItemModify.format("电子邮箱修改前：" + itemModify.email));
+                        itemModifys.push(tplItemModify.format("电子邮箱：修改前是 " + itemModify.email));
                     }
                     if (itemModify.needMail != null) {
-                        itemModifys.push(tplItemModify.format("是否需要邮寄修改前：" + (itemModify.needMail ? "是" : "否")));
+                        itemModifys.push(tplItemModify.format("是否需要邮寄：修改前" + (itemModify.needMail ? "是" : "否")));
                     }
                     if (itemModify.receiverName != null) {
-                        itemModifys.push(tplItemModify.format("收件人修改前：" + itemModify.receiverName));
+                        itemModifys.push(tplItemModify.format("收件人：修改前是 " + itemModify.receiverName));
                     }
                     if (itemModify.receiverPhone != null) {
-                        itemModifys.push(tplItemModify.format("联系电话修改前：" + itemModify.receiverPhone));
+                        itemModifys.push(tplItemModify.format("联系电话：修改前是 " + itemModify.receiverPhone));
                     }
                     if (itemModify.mailDistrict != null) {
-                        itemModifys.push(tplItemModify.format("所在地区修改前：" + itemModify.mailDistrict));
+                        itemModifys.push(tplItemModify.format("所在地区：修改前是 " + itemModify.mailDistrict));
                     }
                     if (itemModify.mailAddress != null) {
-                        itemModifys.push(tplItemModify.format("详细地址修改前：" + itemModify.mailAddress));
+                        itemModifys.push(tplItemModify.format("详细地址：修改前是 " + itemModify.mailAddress));
                     }
                     itemModifyRecords.push(tplModifyRecord.format(itemModifys.join("")));
                 }
                 $("#divModifyRecords").show().find(".flowChart-right").html(itemModifyRecords.join(""));
+                setTimeout(function () {
+                    $(".flowChart .oneNode").eq(0).show();
+                }, 10);
             }
         }
     }, function (err) {

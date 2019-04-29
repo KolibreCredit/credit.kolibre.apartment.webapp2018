@@ -176,15 +176,6 @@ function setCookie(key, auth) {
     document.cookie = key + '=' + auth + ';path=/;domain=.fengniaowu.com';
 }
 
-function deleteCookie(key) {
-    var date = new Date();
-    date.setTime(date.getTime() - 1);
-    var delValue = getCookie(key);
-    if (delValue != null) {
-        document.cookie = key + '=' + delValue + ';expires=' + date.toGMTString();
-    }
-}
-
 function getCookie(key) {
     var auth = '';
     var reg = new RegExp('(^| )' + key + '=([^;]*)(;|$)');
@@ -239,8 +230,8 @@ function postInvoke(url, data, callSuccess, callError) {
             }
         },
         error: function () {
-            if (!callError({message: "服务繁忙，请稍后"})) {
-                return false;
+            if (typeof callError != 'undefined' && callError instanceof Function) {
+                callError({message: "服务繁忙，请稍后"});
             }
         }
     });
@@ -271,8 +262,8 @@ function getInvoke(url, callSuccess, callError) {
             }
         },
         error: function () {
-            if (!callError({message: "服务繁忙，请稍后"})) {
-                return false;
+            if (typeof callError != 'undefined' && callError instanceof Function) {
+                callError({message: "服务繁忙，请稍后"});
             }
         }
     });
@@ -291,8 +282,8 @@ function getInvoke2(url, callSuccess, callError) {
             callSuccess(res);
         },
         error: function () {
-            if (!callError({message: "服务繁忙，请稍后"})) {
-                return false;
+            if (typeof callError != 'undefined' && callError instanceof Function) {
+                callError({message: "服务繁忙，请稍后"});
             }
         }
     });
@@ -305,9 +296,6 @@ function signInvoke(signUrl, callSuccess) {
         contentType: 'application/json',
         success: function (res) {
             callSuccess(res);
-        },
-        error: function () {
-            alert('获取认证异常');
         }
     });
 }

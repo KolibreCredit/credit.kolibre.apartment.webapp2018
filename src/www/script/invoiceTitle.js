@@ -1,6 +1,7 @@
 var categoryIndex = -1;
 var asDefault = true;
 var resItem = null;
+
 //
 function titleCategory(tabIndex) {
     if (categoryIndex != tabIndex) {
@@ -14,8 +15,14 @@ function titleCategory(tabIndex) {
         }
     }
 }
+
 //
+var isPostData = true;
 function addInvoiceTitle() {
+    if (!isPostData) {
+        mui.toast(constants.msgInfo.postData);
+        return false;
+    }
     var titleName = $("#txtTitleName").val();
     if (titleName == "") {
         mui.toast("发票抬头名称不能为空");
@@ -49,19 +56,23 @@ function addInvoiceTitle() {
             asDefault: asDefault
         };
     }
+    isPostData = false;
     postInvoke((resItem == null ? constants.URLS.ADDINVOICETITLE : constants.URLS.UPDATEINVOICETITLE), data, function (res) {
+        isPostData = true;
         if (res.succeeded) {
             mui.toast("发票抬头提交成功");
             setTimeout(function () {
-                window.location.href = "invoiceHelp.html";
+               window.location.href = "invoiceHelp.html";
             }, 1000);
         } else {
             mui.toast(res.message);
         }
     }, function (res) {
+        isPostData = true;
         mui.toast(res.message);
     });
 }
+
 //
 $(document).ready(function () {
     var itemInvoiceTitle = getURLQuery("itemInvoiceTitle");

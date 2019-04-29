@@ -121,7 +121,6 @@ module.exports = function (grunt) {
                     'www/invoiceDetail.html',
                     'www/invoiceHelp.html',
                     'www/invoiceList.html',
-                    'www/invoiceMore.html',
                     'www/invoiceTitle.html',
                     'www/kangdou.html',
                     'www/lease.html',

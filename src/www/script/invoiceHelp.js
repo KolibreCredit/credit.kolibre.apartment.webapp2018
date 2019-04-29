@@ -14,7 +14,6 @@ function hideDelete() {
     }, 100);
 }
 
-
 function getInvoiceTitles() {
     $("#divNodata").hide();
     getInvoke(constants.URLS.GETTENANTINVOICETITLES, function (res) {
@@ -24,11 +23,12 @@ function getInvoiceTitles() {
             var tplItem = $("#tplItem").html();
             for (var i = 0; i < invoiceTitles.length; i++) {
                 item = invoiceTitles[i];
-                items.push(tplItem.format(item.titleName, (item.titleCategory == "Enterprise" ? "公司抬头" : "个人抬头"), (item.asDefault ? "inline-block" : "none"), i));
+                items.push(tplItem.format(item.titleName, (item.titleCategory == "Enterprise" ? "公司抬头" : "个人抬头"), (item.asDefault ? "inline-block" : "none"), (item.asDefault ? "none" : "flex"), i));
             }
-            $("#divInvoiceTitles ul").html(items.join("")).show();
+            $("#divInvoiceTitles").show().find("ul").html(items.join(""));
         }
         else {
+            $("#divInvoiceTitles").hide();
             $("#divNodata").show();
         }
     });
@@ -67,7 +67,7 @@ function deleteInvoiceTitle() {
         if (res.succeeded) {
             mui.toast("发票抬头删除成功");
             setTimeout(function () {
-                mui.swipeoutClose($(".mui-table-view-cell").eq(selectIndex)[0]);
+                hideDelete();
                 getInvoiceTitles();
             }, 1000);
         } else {
@@ -87,8 +87,24 @@ function addInvoiceTitle() {
 }
 
 function itemSelect(tabIndex) {
-    setCookie(constants.COOKIES.INVOICE2, JSON.stringify(invoiceTitles[tabIndex]));
-    window.location.href = "invoice2.html";
+    var item = invoiceTitles[tabIndex];
+    var data = {
+        requestId: constants.COOKIES.INVOICE2,
+        cacheData: {
+            titleCategory: item.titleCategory,
+            titleName: item.titleName,
+            taxpayerNo: (item.titleCategory == "Enterprise" ? item.taxpayerNo : "")
+        }
+    };
+    postInvoke(constants.URLS.SAVEREQUESTDATA, data, function (res) {
+        if (res.succeeded) {
+            window.location.href = "invoice2.html";
+        } else {
+            mui.toast(res.message);
+        }
+    }, function (err) {
+        mui.toast(err.message);
+    });
 }
 
 $(document).ready(function () {

@@ -134,10 +134,10 @@ function findAllLeaseOrder(index) {
                     lbTip = "";
                     lbTip2 = (item.orderModel == "Staging" ? stage.format("分") : "");
                     btnBillPay = "";
-                   /* if (item.canInvoice) {
+                   if (item.canInvoice) {
                         btnBillPay = '<span class="billbtnPay btnActive" onclick="invoice(\'' + item.contractId + '\')">申请开票</span>';
                         lbStateClass = "paid invoice";
-                    }*/
+                    }
                 }
                 if (item.canStage) {
                     btnBillStage = (item.isCurrent ? '<span class="billbtnStage" onclick="createStage(\'' + item.orderId + '\')">申请分期</span>' : '<span class="billbtnNotStage">申请分期</span>');
