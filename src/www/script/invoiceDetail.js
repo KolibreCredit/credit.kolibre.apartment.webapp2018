@@ -90,12 +90,14 @@ function modify() {
 function showModifyRecords() {
     $(".more").attr("src", "images/more3s.png");
     $(".flowChart .oneNode").show();
+    $(".retractingMore").hide();
     $(".retracting").show();
 }
 
 function hideModifyRecords() {
     $(".more").attr("src", "images/more3.png");
-    $(".flowChart .oneNode").hide();
+    $(".flowChart .oneNode").hide().eq(0).show();
+    $(".retractingMore").show();
     $(".retracting").hide();
 }
 
@@ -183,56 +185,60 @@ $(document).ready(function () {
                     itemModify = item.modifyRecords[i];
                     itemModifys.push(tplItemModify.format(itemModify.modifyTime));
                     if (itemModify.invoiceMedium != null) {
-                        itemModifys.push(tplItemModify.format("发票类型：修改前是 " + (itemModify.invoiceMedium == "Digital" ? "电子发票" : "纸质发票")));
+                        itemModifys.push(tplItemModify.format("发票类型：修改前 " + (itemModify.invoiceMedium == "Digital" ? "电子发票" : "纸质发票")));
                     }
                     if (itemModify.titleCategory != null) {
-                        itemModifys.push(tplItemModify.format("抬头类型：修改前是 " + (itemModify.titleCategory == "Enterprise" ? "公司抬头" : "个人/非公司抬头")));
+                        itemModifys.push(tplItemModify.format("抬头类型：修改前 " + (itemModify.titleCategory == "Enterprise" ? "公司抬头" : "个人/非公司抬头")));
                     }
                     if (itemModify.titleName != null) {
-                        itemModifys.push(tplItemModify.format("发票抬头：修改前是 " + itemModify.titleName));
+                        itemModifys.push(tplItemModify.format("发票抬头：修改前 " + itemModify.titleName));
                     }
                     if (itemModify.taxpayerNo != null) {
-                        itemModifys.push(tplItemModify.format("发票税号：修改前是 " + itemModify.taxpayerNo));
+                        itemModifys.push(tplItemModify.format("发票税号：修改前 " + itemModify.taxpayerNo));
                     }
                     if (itemModify.invoiceNote != null) {
-                        itemModifys.push(tplItemModify.format("备注信息：修改前是 " + itemModify.invoiceNote));
+                        itemModifys.push(tplItemModify.format("备注信息：修改前 " + itemModify.invoiceNote));
                     }
                     if (itemModify.address != null) {
-                        itemModifys.push(tplItemModify.format("地址：修改前是 " + itemModify.address));
+                        itemModifys.push(tplItemModify.format("地址：修改前 " + itemModify.address));
                     }
                     if (itemModify.phoneNumber != null) {
-                        itemModifys.push(tplItemModify.format("电话：修改前是 " + itemModify.phoneNumber));
+                        itemModifys.push(tplItemModify.format("电话：修改前 " + itemModify.phoneNumber));
                     }
                     if (itemModify.bankName != null) {
-                        itemModifys.push(tplItemModify.format("开户行：修改前是 " + itemModify.bankName));
+                        itemModifys.push(tplItemModify.format("开户行：修改前 " + itemModify.bankName));
                     }
                     if (itemModify.bankAccount != null) {
-                        itemModifys.push(tplItemModify.format("帐号：修改前是 " + itemModify.bankAccount));
+                        itemModifys.push(tplItemModify.format("帐号：修改前 " + itemModify.bankAccount));
                     }
                     if (itemModify.email != null) {
-                        itemModifys.push(tplItemModify.format("电子邮箱：修改前是 " + itemModify.email));
+                        itemModifys.push(tplItemModify.format("电子邮箱：修改前 " + itemModify.email));
                     }
                     if (itemModify.needMail != null) {
-                        itemModifys.push(tplItemModify.format("是否需要邮寄：修改前" + (itemModify.needMail ? "是" : "否")));
+                        itemModifys.push(tplItemModify.format("是否需要邮寄：修改前 " + (itemModify.needMail ? "是" : "否")));
                     }
                     if (itemModify.receiverName != null) {
-                        itemModifys.push(tplItemModify.format("收件人：修改前是 " + itemModify.receiverName));
+                        itemModifys.push(tplItemModify.format("收件人：修改前 " + itemModify.receiverName));
                     }
                     if (itemModify.receiverPhone != null) {
-                        itemModifys.push(tplItemModify.format("联系电话：修改前是 " + itemModify.receiverPhone));
+                        itemModifys.push(tplItemModify.format("联系电话：修改前 " + itemModify.receiverPhone));
                     }
                     if (itemModify.mailDistrict != null) {
-                        itemModifys.push(tplItemModify.format("所在地区：修改前是 " + itemModify.mailDistrict));
+                        itemModifys.push(tplItemModify.format("所在地区：修改前 " + itemModify.mailDistrict));
                     }
                     if (itemModify.mailAddress != null) {
-                        itemModifys.push(tplItemModify.format("详细地址：修改前是 " + itemModify.mailAddress));
+                        itemModifys.push(tplItemModify.format("详细地址：修改前 " + itemModify.mailAddress));
                     }
                     itemModifyRecords.push(tplModifyRecord.format(itemModifys.join("")));
                 }
                 $("#divModifyRecords").show().find(".flowChart-right").html(itemModifyRecords.join(""));
+                if (item.modifyRecords.length > 1) {
+                    $(".more").show();
+                    $(".retractingMore").show();
+                }
                 setTimeout(function () {
                     $(".flowChart .oneNode").eq(0).show();
-                }, 10);
+                }, 100);
             }
         }
     }, function (err) {

@@ -6,8 +6,10 @@
     <meta name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <link href="packages/mui@3.4.0/examples/hello-mui/css/mui.picker.css" rel="stylesheet"/>
+    <link href="packages/mui@3.4.0/examples/hello-mui/css/mui.poppicker.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.558" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.564" rel="stylesheet"/>
     <style type="text/css">
         input[type=text] {
             background: none;
@@ -115,6 +117,7 @@
             width: 65%;
             overflow: hidden;
             text-overflow: ellipsis;
+            text-align: right;
         }
 
         .close {
@@ -127,6 +130,42 @@
 
         .invoiceTips div {
             display: none;
+        }
+
+        .mui-poppicker-header {
+            text-align: center;
+        }
+
+        .mui-poppicker-header span {
+            position: absolute;
+            font-size: 18px;
+            color: #000000;
+            top: 10px;
+            left: 60px;
+            right: 60px;
+            margin: auto;
+        }
+
+        .mui-poppicker-btn-cancel {
+            border: none;
+            background-color: #eee;
+            color: #666666;
+        }
+
+        .mui-poppicker-btn-ok {
+            border: none;
+            background-color: #eee;
+            color: #333333;
+        }
+
+        .mui-poppicker-header .mui-btn {
+            font-size: 16px;
+        }
+        .mui-poppicker-body {
+            border-top: none;
+        }
+        .mui-picker {
+            background-color: #FFFFFF;
         }
     </style>
 </head>
@@ -165,7 +204,8 @@
             <span class="icon">*</span>发票税号<input id="txtTaxpayerNo" type="text" placeholder="纳税人识别号" maxlength="20"/>
         </div>
         <div class="itemRow itemInvoiceNotes" style="border-bottom:none" onclick="invoiceMore()">
-            更多信息<input id="txtInvoiceNotes" type="text" style="right:20px" placeholder="请填写备注、地址等（非必填）" readonly="readonly"/><img
+            更多信息<input id="txtInvoiceNotes" type="text" style="right:20px" placeholder="请填写备注、地址等（非必填）"
+                       readonly="readonly"/><img
                 class="ic_grey_arrow" src="images/ic_grey_arrow.png"/>
         </div>
     </div>
@@ -211,9 +251,10 @@
             <span class="icon">*</span>联系电话<input id="txtReceiverPhone" type="text" placeholder="请填写收件人联系电话"
                                                   maxlength="13"/>
         </div>
-        <div class="itemRow itemNeedMail">
+        <div class="itemRow itemNeedMail" id="pickerCity">
             <span class="icon">*</span>所在地区<input id="txtMailDistrict" type="text" placeholder="省份/城市/地区"
-                                                  maxlength="100"/>
+                                                  maxlength="100" readonly="readonly" style="right:20px"/><img
+                class="ic_grey_arrow" src="images/ic_grey_arrow.png"/>
         </div>
         <div class="itemRow itemNeedMail" style="border-bottom:none">
             <span class="icon">*</span>详细地址<input id="txtMailAddress" type="text" placeholder="请输入详细地址"
@@ -228,10 +269,10 @@
         </div>
     </div>
     <div class="step1" style="position:fixed;left:0;right:0;bottom:0;top:0;z-index:2;background-color: rgba(0,0,0,0.4)">
-        <div style="position:absolute;left:0;right:0;bottom:0;height:auto;background-color:#FFFFFF;border-radius: 6px;font-size:18px;color:#646464">
+        <div style="position:absolute;left:0;right:0;bottom:0;height:auto;background-color:#FFFFFF;border-radius: 6px;font-size:16px;color:#646464">
             <div style="padding:0 20px;position:relative" class="invoiceTips">
                 <img src="images/close3.png" class="close" onclick="closeInvoiceInfo()"/>
-                <div style="height:60px;line-height:60px;text-align:center;border-bottom:1px solid #D8D8D8"
+                <div style="height:60px;line-height:60px;text-align:center;border-bottom:1px solid #D8D8D8;font-size:18px"
                      id="lbInvoiceMedium"></div>
                 <div style="height:40px;line-height:40px" id="lbInvoiceMedium2">
                     发票类型<span></span>
@@ -306,6 +347,31 @@
 </html>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
-<script src="script/constants.js?ver=18.12.558"></script>
-<script src="script/service.js?ver=18.12.558"></script>
-<script src="script/invoice2.js?ver=18.12.558"></script>
+<script src="packages/mui@3.4.0/examples/hello-mui/js/mui.picker.js"></script>
+<script src="packages/mui@3.4.0/examples/hello-mui/js/mui.poppicker.js"></script>
+<script src="packages/mui@3.4.0/examples/hello-mui/js/city.data-3.js"></script>
+<script src="script/constants.js?ver=18.12.564"></script>
+<script src="script/service.js?ver=18.12.564"></script>
+<script src="script/invoice2.js?ver=18.12.564"></script>
+<script type="text/javascript">
+    (function (mui, doc) {
+        mui.init();
+        mui.ready(function () {
+            //级联示例
+            var cityPicker3 = new mui.PopPicker({
+                layer: 3
+            });
+            cityPicker3.setData(cityData3);
+            $(".mui-poppicker-header").append("<span>选择地址</span>");
+            var pickerCity = doc.getElementById('pickerCity');
+            var txtMailDistrict = doc.getElementById('txtMailDistrict');
+            pickerCity.addEventListener('tap', function () {
+                cityPicker3.show(function (items) {
+                    txtMailDistrict.value = (items[0] || {}).text + (items[1] || {}).text + ($.extend(true, {text: ""}, items[2])).text;
+                    //返回 false 可以阻止选择框的关闭
+                    // return false;
+                });
+            }, false);
+        });
+    })(mui, document);
+</script>
