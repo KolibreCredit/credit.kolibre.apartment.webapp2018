@@ -42,8 +42,9 @@ function cancelComplaintSuggestion() {
         $(".msg-post").hide();
         if (res.succeeded) {
             mui.toast(constants.msgInfo.cancelCleaning);
-            sleep(1000);
-            window.location.replace("fuwu.html?tabIndex=2");
+            setTimeout(function () {
+                window.location.replace("fuwu.html?tabIndex=2");
+            }, 1000);
         } else {
             mui.toast(res.message);
         }

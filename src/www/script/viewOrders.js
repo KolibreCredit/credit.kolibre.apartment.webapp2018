@@ -38,7 +38,7 @@ $(document).ready(function () {
             for (var i = 0; i < orders.length; i++) {
                 order = orders[i];
                 monthUrl = "images/months/{0}".format(moment(order.paymentTime).format('MM') + "s.png");
-                htmlOrderInfos.push(tplOrderInfo.format(monthUrl, (order.orderType == "CustomDeposit" ? order.orderTypeName : getOrderType(order.orderType)),
+                htmlOrderInfos.push(tplOrderInfo.format(monthUrl, (order.orderType == "CustomDeposit" ? getOrderTypeName(order.orderTypeName) : getOrderType(order.orderType)),
                     (order.totalAmount / 100).toFixed(2),
                     order.orderState.toLowerCase(),
                     filterOrderState(order.orderState),

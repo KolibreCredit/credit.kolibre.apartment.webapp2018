@@ -345,6 +345,13 @@ var getOrderType = function (orderType) {
     }
 };
 
+var getOrderTypeName = function (orderTypeName) {
+    if (orderTypeName.length > 7) {
+        return orderTypeName.substring(0, 7) + "...";
+    }
+    return orderTypeName;
+};
+
 var getPayPeriod = function (payPeriod) {
     var rentalType = "";
     if (payPeriod == 3) {

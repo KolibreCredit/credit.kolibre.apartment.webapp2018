@@ -6,9 +6,9 @@
     <meta name="viewport"
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
-    <link href="packages/swiper@4.4.6/dist/css/swiper.min.css" rel="stylesheet"/>
+    <link href="packages/swiper@4.5.0/dist/css/swiper.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.564" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.569" rel="stylesheet"/>
     <style type="text/css">
         .curApartment {
             height: 50px;
@@ -66,14 +66,17 @@
             text-align: center;
             position: relative;
         }
+
         .top .state {
             color: #F55452;
         }
+
         .billItem .billType {
-            margin-top:260px;
+            margin-top: 260px;
             font-size: 24px;
             color: #000000;
         }
+
         .treat {
             background-color: #fff3e7;
             color: #ff8c14;
@@ -81,14 +84,16 @@
             text-align: center;
             width: 16px;
             height: 20px;
-            line-height:20px;
+            line-height: 20px;
             position: absolute;
             top: 1px;
         }
+
         .billItem .bottom {
             margin-top: 30px;
             text-align: center;
         }
+
         .bottom .billbtnList {
             font-size: 14px;
             color: #FF8C14;
@@ -101,6 +106,7 @@
             width: 80px;
             text-align: center;
         }
+
         .bottom .billbtnPay {
             font-size: 14px;
             color: #ffffff;
@@ -112,7 +118,9 @@
             display: inline-block;
             width: 80px;
             text-align: center;
+            margin-left: 10px;
         }
+
         .bottom .billbtnDeposit {
             font-size: 14px;
             color: #ffffff;
@@ -125,6 +133,7 @@
             width: 80px;
             text-align: center;
         }
+
         .nodataDiv {
             position: absolute;
             left: 0;
@@ -133,6 +142,7 @@
             bottom: 0;
             display: none;
         }
+
         .swiper-slide {
             text-align: center;
             font-size: 18px;
@@ -156,9 +166,11 @@
             height: 180px;
             width: 180px;
         }
+
         .swiper-pagination-bullet-active {
-            background:#FF8C14;
+            background: #FF8C14;
         }
+
         .PrePayment {
             height: 22px;
             width: 130px;
@@ -167,10 +179,11 @@
             box-shadow: 0px 0px 10px 0px rgba(176, 190, 197, 1);
             display: inline-block;
             text-align: center;
-            color:#313B41;
+            color: #313B41;
             font-size: 14px;
         }
-        .PostPayment{
+
+        .PostPayment {
             width: 130px;
             height: 22px;
             border-radius: 57px;
@@ -178,7 +191,7 @@
             box-shadow: 0px 0px 10px 0px rgba(255, 140, 20, 0.4);
             display: inline-block;
             text-align: center;
-            color:#FF8F34;
+            color: #FF8F34;
             font-size: 14px;
         }
     </style>
@@ -194,11 +207,7 @@
         </div>
         <div id="divCurDevice">
         </div>
-        <div class="swiper-container" style="position:absolute;top:140px">
-            <div class="swiper-wrapper">
-            </div>
-            <div style="height:40px"></div>
-            <div class="swiper-pagination"></div>
+        <div id="divCurSwiper">
         </div>
     </div>
     <div class="apartments" onclick="hideApartments()">
@@ -213,12 +222,35 @@
             亲，您还没有使用智能水电表哦～
         </div>
     </div>
-    <div id="divBillTip" style="position:absolute;left:20px;right:20px;border-radius:4px;background-color:rgba(255,140,20,0.98);box-shadow:0px 0px 10px 0px rgba(0,0,0,0.2);padding:20px;color: rgba(255, 255, 255, 1);font-size:15px;display:none">
+    <div id="divBillTip"
+         style="position:absolute;left:20px;right:20px;border-radius:4px;background-color:rgba(255,140,20,0.98);box-shadow:0px 0px 10px 0px rgba(0,0,0,0.2);padding:20px;color: rgba(255, 255, 255, 1);font-size:15px;display:none">
         管家添加了新的账单，为了不影响正常使用，请及时支付账单。
         <img src="images/20181224/tip2.png" style="position:absolute;width:31px;height:14px;bottom:-14px"/>
     </div>
     <div style="height:10px">
     </div>
+    <div class="msg-post" style="z-index:2">
+        <table style='width:100%;height:100%'>
+            <tr>
+                <td style='vertical-align:middle'>
+                    <div>
+                        <img src="images/loading.gif" style="width:auto;height:40px">
+                    </div>
+                    <div style="font-size:16px">
+                        正在查询...
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/html" id="tplSwiperItem">
+        <div class="swiper-container" style="position:absolute;top:140px">
+            <div class="swiper-wrapper">
+            </div>
+            <div style="height:40px"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </script>
     <script type="text/html" id="tplItemApartment">
         <div class="itemApartment" onclick="itemApartment({2})">{0}<span style="margin-left:5px">{1}室</span></div>
     </script>
@@ -234,10 +266,11 @@
             </div>
             <div class="billType" style="display:{4}">
                 <div style="line-height:30px;text-align:center;position: relative">
-                    <span>{7}</span><label style="margin-right:2px">{8}</label><span class="treat" style="display:{9}">待</span>
+                    <span>{7}</span><label style="margin-right:2px">{8}</label><span class="treat"
+                                                                                     style="display:{9}">待</span>
                 </div>
                 <div style="color:#999999;font-size:12px;text-align:center">
-                   {6}
+                    {6}
                 </div>
             </div>
             <div class="billType" style="display:{5}">
@@ -247,11 +280,17 @@
             </div>
             <img src="images/line3.png" style="width:100%;padding-left:20px;padding-right:20px"/>
             <div class="bottom">
-                <div style="line-height:30px;color:#999999;position:relative">
-                   <span style="margin-right:2px">{10}</span><span style="color:#FEB420;margin-right:2px">{11}</span><label>{12}</label><img src="images/20181224/tip.png" onclick="billTip(this)" style="cursor:pointer;width:16px;height:16px;margin-left:5px;position:absolute;top:8px;display:{13}"/>
+                <div style="line-height:30px;color:#999999;position:relative;display:{16}">
+                    <span style="margin-right:2px">{10}</span><span
+                        style="color:#FEB420;margin-right:2px">{11}</span><label>{12}</label><img
+                        src="images/20181224/tip.png" onclick="billTip(this)"
+                        style="cursor:pointer;width:16px;height:16px;margin-left:5px;position:absolute;top:8px;display:{13}"/>
+                </div>
+                <div style="line-height:30px;color:#999999;position:relative;display:{17}">
+                    暂无待支付账单
                 </div>
                 <div style="margin-top:20px">
-                    <span onclick="bill2('{14}')" class="billbtnList" style="margin-right:10px">查看账单</span>{15}
+                    <span onclick="bill2('{14}')" class="billbtnList">查看账单</span>{15}
                 </div>
             </div>
         </div>
@@ -261,8 +300,7 @@
 </html>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
-<script src="packages/swiper@4.4.6/dist/js/swiper.min.js"></script>
-<script src="packages/moment@2.17.1/min/moment.min.js"></script>
-<script src="script/constants.js?ver=18.12.564"></script>
-<script src="script/service.js?ver=18.12.564"></script>
-<script src="script/waterElectricity.js?ver=18.12.564"></script>
+<script src="packages/swiper@4.5.0/dist/js/swiper.min.js"></script>
+<script src="script/constants.js?ver=18.12.569"></script>
+<script src="script/service.js?ver=18.12.569"></script>
+<script src="script/waterElectricity.js?ver=18.12.569"></script>

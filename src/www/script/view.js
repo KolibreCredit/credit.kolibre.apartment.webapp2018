@@ -99,7 +99,7 @@ $(document).ready(function () {
                 if (i < 3) {
                     order = orders[i];
                     monthUrl = "images/months/{0}".format(moment(order.paymentTime).format('MM') + "s.png");
-                    htmlOrderInfos.push(tplOrderInfo.format(monthUrl, (order.orderType == "CustomDeposit" ? order.orderTypeName : getOrderType(order.orderType)),
+                    htmlOrderInfos.push(tplOrderInfo.format(monthUrl, (order.orderType == "CustomDeposit" ?getOrderTypeName(order.orderTypeName) : getOrderType(order.orderType)),
                         (order.totalAmount / 100).toFixed(2),
                         order.orderState.toLowerCase(),
                         filterOrderState(order.orderState),
@@ -162,7 +162,7 @@ $(document).ready(function () {
                     var tplCustomDeposit = $("#tplCustomDeposit").html();
                     for (var i = 0; i < item.customDeposits.length; i++) {
                         customDeposit = item.customDeposits[i];
-                        htmlCustomDeposit.push(tplCustomDeposit.format(customDeposit.name, (customDeposit.amount / 100).toFixed(2)));
+                        htmlCustomDeposit.push(tplCustomDeposit.format(getOrderTypeName(customDeposit.name),(customDeposit.amount / 100).toFixed(2)));
                     }
                     $(".customDeposits").html(htmlCustomDeposit.join("")).show();
                 }

@@ -41,9 +41,9 @@ var lastIndex = -1;
 var billLists = null;
 var tplApartmentItem = "";
 var tplBillItem = "";
+var tplSwiperItem = "";
 var btnPay = "<span onclick=\"createTransaction('{0}')\" class=\"billbtnPay\">支付账单</span>";
 var btnDeposit = "<span onclick=\"deposit('{0}','{1}','{2}','{3}')\" class=\"billbtnDeposit\">余额充值</span>";
-var swiper = null;
 
 //
 function hideApartments() {
@@ -61,6 +61,7 @@ function filterRoomDevices(index) {
     var itemBtnPay = "";
     var online1 = "none", online2 = "none";
     var title11 = "", title12 = "", title13 = "";
+    var online21 = "none", online22 = "none";
     var title21 = "", title22 = "", title23 = "";
     var item = billLists[lastIndex];
     var subItem = item.roomDevices[index];
@@ -81,6 +82,7 @@ function filterRoomDevices(index) {
         title21 = "可用余额";
         title22 = (subItem.balance / 100).toFixed(2);
         title23 = "元";
+        online21 = "block";
     } else {
         if (subItem.online) {
             online1 = "block";
@@ -96,19 +98,27 @@ function filterRoomDevices(index) {
         if (subItem.hasUnpaidOrder) {
             itemBtnPay = btnPay.format(subItem.orderId);
         }
+        if (subItem.orderAmount > 0) {
+            online21 = "block";
+        } else {
+            online22 = "block";
+        }
     }
     //
     var billHtmls = tplBillItem.format(getDeviceTypeDesc(subItem.deviceType)
         , (subItem.chargeModel == 'PrePayment' ? "预付费" : "后付费")
         , subItem.chargeModel
         , getMeterState(subItem.meterState)
-        , online1, online2, title11, title12, title13, (subItem.hasUnpaidOrder ? "inline" : "none")
+        , online1, online2
+        , title11, title12, title13, (subItem.hasUnpaidOrder ? "inline" : "none")
         , title21, title22, title23
         , (subItem.chargeModel == 'PrePayment' ? "none" : "inline")
-        , subItem.deviceId, itemBtnPay);
+        , subItem.deviceId, itemBtnPay, online21, online22);
 
     $("#divCurDevice").html(billHtmls);
 }
+
+var swiper = null;
 
 //
 function filterTenantEnergyMeters(index) {
@@ -118,6 +128,7 @@ function filterTenantEnergyMeters(index) {
         var deviceCount = item.roomDevices.length;
         $("#lbApartmentName").html(item.apartmentName);
         $("#lbRoomNumber").html(item.roomNumber + '室');
+        $("#divCurSwiper").html(tplSwiperItem);
         var itemDevice = null;
         var devicesHtmls = "";
         var tplItemDevices = "<div class='swiper-slide'><img src='images/20190219/{0}'/></div>";
@@ -134,7 +145,6 @@ function filterTenantEnergyMeters(index) {
             }
         }
         $(".swiper-wrapper").html(devicesHtmls);
-        filterRoomDevices(0);
         $('.billList').show();
         setTimeout(function () {
             if (deviceCount > 5) {
@@ -169,15 +179,19 @@ function filterTenantEnergyMeters(index) {
                 });
                 $(".swiper-pagination").hide();
             }
+            filterRoomDevices(0);
         }, 10);
     }
 }
 
 function findAllTenantEnergyMeters() {
+    $(".msg-post").show();
     getInvoke(constants.URLS.GETTENANTENERGYMETERS, function (res) {
+        $(".msg-post").hide();
         if (res.succeeded && res.data.length > 0) {
             tplApartmentItem = $("#tplApartmentItem").html();
             tplBillItem = $('#tplBillItem').html();
+            tplSwiperItem = $('#tplSwiperItem').html();
             billLists = res.data;
             filterTenantEnergyMeters(0);
             if (billLists.length > 1) {
@@ -202,6 +216,7 @@ function findAllTenantEnergyMeters() {
             $('.nodataDiv').css({"display": "flex"});
         }
     }, function (err) {
+        $(".msg-post").hide();
         mui.toast(err.message);
     });
 }
