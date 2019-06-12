@@ -60,4 +60,12 @@ $(document).ready(function () {
             }
         }
     });
+    getInvoke2(constants.URLS.GETREJECTEDINVOICECOUNT, function (res) {
+        if (res.succeeded) {
+            if (res.data > 0) {
+                $("#lbRejectedInvoiceCount").html("{0}条申请被驳回".format(res.data > 99 ? "99+" : res.data));
+                $(".rejectedTip").css({"display": "inline-block"});
+            }
+        }
+    });
 });

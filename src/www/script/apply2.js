@@ -5,6 +5,7 @@
 var pictureUrls = [];
 var tplItem = "";
 var ispostData = true;
+
 //
 function apply() {
     if (!ispostData) {
@@ -28,8 +29,8 @@ function apply() {
         if (res.succeeded) {
             mui.toast(constants.msgInfo.imgContract);
             setTimeout(function () {
-               toApplys(res.data.nextStep);
-            },2000);
+                toApplys(res.data.nextStep);
+            }, 2000);
         } else {
             mui.toast(res.message);
         }

@@ -7,7 +7,7 @@ function hideAlert() {
     $("#divAlert").hide();
     setTimeout(function () {
         window.location.href = "gateLock.html";
-    }, 500);
+    }, 1000);
 }
 
 function temporary(index) {
@@ -41,19 +41,17 @@ function temporary(index) {
                 $("#divAlert .message1").html("授权成功");
                 $("#divAlert .message2").html((index == 1 ? "临时开锁密码已发送至用户手机" : "临时开锁密码已发送至用户手机"));
             } else {
-
                 $("#divAlert .icon").attr("src", "images/20181224/tip3.png");
                 $("#divAlert .message1").html("授权失败");
-                $("#divAlert .message2").html("请稍后再试～");
+                $("#divAlert .message2").html(res.message);
             }
             $("#divAlert .msg-res").show();
         }, function (err) {
             $("#divAlert .msg-loading").hide();
             $("#divAlert .icon").attr("src", "images/20181224/tip3.png");
             $("#divAlert .message1").html("授权失败");
-            $("#divAlert .message2").html("请稍后再试～");
+            $("#divAlert .message2").html(err.message);
             $("#divAlert .msg-res").show();
-            mui.toast(err.message);
         });
     }, 1000);
 }

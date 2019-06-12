@@ -8,24 +8,27 @@ var paymentTime = new Date().format("yyyy-MM-dd");
 var transactionId = "";
 var isTransaction = true;
 var lastIndex = -1;
+var op = "";
 //
 var validateAmount = function () {
-    amount = $("#txtNotPaidAmount").val().replace(",", "");
-    if (amount == "") {
-        mui.toast("充值金额不能为空!");
-        return false;
-    }
-    if (parseFloat(amount) == 0) {
-        mui.toast("充值金额输入不能为零!");
-        return false;
-    }
-    if (parseFloat(amount) < 0) {
-        mui.toast("支付金额不能小于零!");
-        return false;
-    }
-    if (parseFloat(amount) > 100000) {
-        mui.toast("支付金额不能大于10万!");
-        return false;
+    if (op == "deposit") {
+        amount = $("#txtNotPaidAmount").val().replace(",", "");
+        if (amount == "") {
+            mui.toast("充值金额不能为空!");
+            return false;
+        }
+        if (parseFloat(amount) == 0) {
+            mui.toast("充值金额输入不能为零!");
+            return false;
+        }
+        if (parseFloat(amount) < 0) {
+            mui.toast("支付金额不能小于零!");
+            return false;
+        }
+        if (parseFloat(amount) > 100000) {
+            mui.toast("支付金额不能大于10万!");
+            return false;
+        }
     }
     return true;
 };
@@ -39,12 +42,13 @@ var createTransaction = function (transactionMethod, callSuccess) {
         isTransaction = false;
         var data = {
             deviceId: deviceId,
-            amount: amount,
+            amount: parseFloat(amount) * 100,
             transactionMethod: transactionMethod
         };
         $("#lbTitle").html(" 正在提交...");
         $(".msg-post").show();
-        postInvoke(constants.URLS.TENANTENERGYMETERRECHAGE, data, function (res) {
+        var apiUrl = (op == "waterElectricityPay" ? constants.URLS.ENERGYMETERUSAGEPAYMENT : constants.URLS.TENANTENERGYMETERRECHAGE);
+        postInvoke(apiUrl, data, function (res) {
             $(".msg-post").hide();
             if (res.succeeded) {
                 callSuccess(res);
@@ -63,7 +67,7 @@ function zhifubao() {
     createTransaction("AliPay", function (res) {
         isTransaction = true;
         transactionId = res.data.transactionId;
-        window.location.href = "precreate.html?transactionId={0}&amount={1}&paymentTime={2}&goto=waterElectricity".format(transactionId, amount, paymentTime.substring(0, 10));
+        window.location.href = "precreate.html?transactionId={0}&amount={1}&paymentTime={2}&goto=waterElectricity".format(transactionId, parseFloat(amount) * 100, paymentTime.substring(0, 10));
     });
 }
 
@@ -146,8 +150,18 @@ function itemSelect(index) {
 
 $(document).ready(function () {
     var deposits = decodeURI(getCookie(constants.COOKIES.DEPOSIT)).split("$");
-    $("#lbApartmentName").html(deposits[0]);
-    $("#lbRoomNumber").html(deposits[1]);
-    $("#lbDeviceType").html(deposits[2]);
-    deviceId = deposits[3];
+    if (deposits[0] == "waterElectricityPay") {
+        op = deposits[0];
+        deviceId = deposits[1];
+        amount = deposits[2];
+        $("#lbAmount").html(amount);
+        $("#lbAmount1").html(amount);
+        $(".pay").show();
+    } else {
+        $("#lbApartmentName").html(deposits[0]);
+        $("#lbRoomNumber").html(deposits[1]);
+        $("#lbDeviceType").html(deposits[2]);
+        deviceId = deposits[3];
+        $(".deposit").show();
+    }
 });

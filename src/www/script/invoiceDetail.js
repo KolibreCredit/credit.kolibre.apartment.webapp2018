@@ -110,6 +110,10 @@ $(document).ready(function () {
             if (item.invoiceMedium == "Digital" && item.invoiceState == "Invoiced") {
                 $(".invoiceStateTip").show();
             }
+            if (item.invoiceState == "Rejected") {
+                $("#rejectedMsg").html("温馨提示：" + item.rejectComment);
+                $(".rejectedTip").show();
+            }
             $("#imgInvoiceState").attr("src", "images/invoce/{0}.png".format(item.invoiceState)).show();
             $("#lbInvoiceState").html(getInvoiceState(item.invoiceState));
             var tplItem = $("#tplItem").html();
@@ -127,8 +131,8 @@ $(document).ready(function () {
             $("#divInvoceInfo").html(tplInvoceInfo.format(item.titleName
                 , (item.titleCategory == "Enterprise" ? item.taxpayerNo : "")
                 , itemContents.join(""), item.createTime.substring(0, 16)
-                , (item.invoiceState == "Applying" ? "" : item.invoiceNo)
-                , (item.invoiceState == "Applying" ? "" : item.invoiceTime.substring(0, 16))
+                , (item.hasInvoiced ? item.invoiceNo : "")
+                , (item.hasInvoiced ? item.invoiceTime.substring(0, 16) : "")
             ));
             //
             if (item.invoiceMedium == "Digital") {
@@ -150,14 +154,14 @@ $(document).ready(function () {
                     $("#divInvoceInfo2").html(tplPaper1);
                 }
             }
-            sleep(100);
+            //
             if (item.titleCategory == "Enterprise") {
                 $(".taxpayerNo").show();
             }
             if (item.invoiceState != "Applying") {
                 $(".invoiceNo").show();
             }
-            if (item.invoiceState != "Applying" && item.invoicePictures != null) {
+            if (item.hasInvoiced && item.invoicePictures != null) {
                 $(".invoicePictures").show();
                 var pictureUrls = item.invoicePictures.split(",");
                 var tplPicture = $("#tplPicture").html(), itemInvoicePictures = [];

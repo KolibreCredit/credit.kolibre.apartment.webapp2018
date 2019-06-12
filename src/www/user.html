@@ -9,7 +9,7 @@
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <link href="packages/raty@2.5.2/demo/css/application.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.569" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.583" rel="stylesheet"/>
     <style type="text/css">
         .mui-content {
             background: none;
@@ -112,6 +112,7 @@
             background-size: 24px 24px;
             background-position: 0 18px;
         }
+
         ul.userManageList li a.item7 {
             background: url(images/invoice.png) no-repeat;
             background-size: 24px 24px;
@@ -153,6 +154,26 @@
         .category .item > div {
             color: #646464;
             font-size: 14px;
+        }
+
+        .rejectedTip {
+            right: 40px;
+            top: 21px;
+            color: #646464;
+            font-size: 14px;
+            position: absolute;
+            display: none;
+            height: 22px;
+            line-height: 22px;
+        }
+        .star {
+            background: #FB9329;
+            width: 8px;
+            height: 8px;
+            border-radius: 100%;
+            display: inline-block;
+            position: absolute;
+            top: 6px;
         }
     </style>
 </head>
@@ -205,8 +226,10 @@
             <li>
                 <a class="item6" href="settlement.html">退款情况</a>
             </li>
-            <li>
-                <a class="item7" href="invoiceList.html" style="border-bottom:none">开票记录</a>
+            <li style="position:relative">
+                <a class="item7" href="invoiceList.html" style="border-bottom:none">
+                    开票记录 <div class="rejectedTip"><span class="star"></span><span id="lbRejectedInvoiceCount" style="margin-left:15px"></span></div>
+                </a>
             </li>
             <li style="height:10px;background:#f8f8f8">
             </li>
@@ -230,7 +253,8 @@
                         <div style="margin-top:20px;font-size:18px;color:#646464;line-height:25px;font-weight:bold">
                             请先确认租约
                         </div>
-                        <div id="lbAlert" style="margin-top:20px;font-size:14px;color:#646464;line-height:28px;padding-left:20px;padding-right:20px;text-align:center">
+                        <div id="lbAlert"
+                             style="margin-top:20px;font-size:14px;color:#646464;line-height:28px;padding-left:20px;padding-right:20px;text-align:center">
                         </div>
                         <div style="margin-top:40px">
                             <button class="btnActive"
@@ -253,6 +277,6 @@
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/raty@2.5.2/lib/jquery.raty.min.js"></script>
-<script src="script/constants.js?ver=18.12.569"></script>
-<script src="script/service.js?ver=18.12.569"></script>
-<script src="script/user.js?ver=18.12.569"></script>
+<script src="script/constants.js?ver=18.12.583"></script>
+<script src="script/service.js?ver=18.12.583"></script>
+<script src="script/user.js?ver=18.12.583"></script>

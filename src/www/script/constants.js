@@ -96,6 +96,7 @@ var constants = {
         INVOICEGETCONTRACTS: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/GetContracts?contractId={0}",
         GETINVOICEORDER: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/tenant/GetInvoiceOrders?contractId={0}&forContract=true",
         GETTENANTINVOICETITLES: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/GetTenantInvoiceTitles",
+        //
         ADDINVOICETITLE: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/AddInvoiceTitle",
         UPDATEINVOICETITLE: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/UpdateInvoiceTitle",
         DELETEINVOICETITLE: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/DeleteInvoiceTitle",
@@ -105,7 +106,13 @@ var constants = {
         GETINVOICEINFO: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/tenant/GetInvoiceInfo?invoiceInfoId={0}",
         SAVEREQUESTDATA: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/SaveRequestData",
         GETREQUESTDATA: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/GetRequestData?requestId={0}",
-        CLEARDATACACHA:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/ClearDataCacha"
+        CLEARDATACACHA:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/ClearDataCacha",
+        GETREJECTEDINVOICECOUNT:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/GetRejectedInvoiceCount",
+        ENERGYMETERUSAGEPAYMENT:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/EnergyMeterUsagePayment",
+        ADDROOMSOURCECOLLECTION:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/AddRoomSourceCollection?roomId={0}",
+        CANCLEROOMSOURCECOLLECTION:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/CancleRoomSourceCollection?roomId={0}",
+        GETROOMSOURCECOLLECTIONINFOS:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/GetRoomSourceCollectionInfos",
+        GETROOMSOURCES:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/Room/GetRoomSourcePromotionInfos"
     },
     COOKIES: {
         XKCSID: 'X-KC-SID',

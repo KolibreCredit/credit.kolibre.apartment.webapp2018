@@ -44,12 +44,12 @@ var tplBillItem = "";
 var tplSwiperItem = "";
 var btnPay = "<span onclick=\"createTransaction('{0}')\" class=\"billbtnPay\">支付账单</span>";
 var btnDeposit = "<span onclick=\"deposit('{0}','{1}','{2}','{3}')\" class=\"billbtnDeposit\">余额充值</span>";
+var btnPayDeposit = "<span onclick=\"payDeposit('{0}','{1}')\" class=\"billbtnPay\">支付账单</span>";
 
 //
 function hideApartments() {
     $(".apartments").hide();
 }
-
 //
 function itemApartment(index) {
     $(".itemApartment").removeClass("active").eq(index).addClass('active');
@@ -97,6 +97,8 @@ function filterRoomDevices(index) {
         title23 = "元";
         if (subItem.hasUnpaidOrder) {
             itemBtnPay = btnPay.format(subItem.orderId);
+        } else {
+            itemBtnPay = (subItem.orderAmount > 0 ? btnPayDeposit.format(subItem.deviceId, (subItem.orderAmount / 100).toFixed(2)) : "");
         }
         if (subItem.orderAmount > 0) {
             online21 = "block";
@@ -112,7 +114,7 @@ function filterRoomDevices(index) {
         , online1, online2
         , title11, title12, title13, (subItem.hasUnpaidOrder ? "inline" : "none")
         , title21, title22, title23
-        , (subItem.chargeModel == 'PrePayment' ? "none" : "inline")
+        , (subItem.chargeModel == 'PrePayment' ? "none" : (subItem.hasUnpaidOrder ? "inline" : "none"))
         , subItem.deviceId, itemBtnPay, online21, online22);
 
     $("#divCurDevice").html(billHtmls);
@@ -227,6 +229,17 @@ function deposit(apartmentName, roomNumber, deviceType, deviceId) {
         wx.miniProgram.navigateTo({url: '/pages/bill/wxpay2?apartmentName={0}&roomNumber={1}&deviceType={2}&deviceId={3}'.format(encodeURI(apartmentName), encodeURI(roomNumber), encodeURI(deviceType), encodeURI(deviceId))});
     } else {
         setCookie(constants.COOKIES.DEPOSIT, encodeURI(apartmentName + "$" + roomNumber + "$" + deviceType + "$" + deviceId));
+        var redirect_uri = encodeURIComponent(constants.URLS.WEBPAYURL2);
+        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + constants.CONFIGS.APPID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base#wechat_redirect";
+    }
+}
+
+function payDeposit(deviceId, amount) {
+    var isWxMini = window.__wxjs_environment === 'miniprogram';
+    if (isWxMini) {
+        wx.miniProgram.navigateTo({url: '/pages/bill/wxpay2?op=waterElectricityPay&deviceId={0}&amount={1}'.format(encodeURI(deviceId), encodeURI(amount))});
+    } else {
+        setCookie(constants.COOKIES.DEPOSIT, encodeURI("waterElectricityPay$" + deviceId + "$" + amount));
         var redirect_uri = encodeURIComponent(constants.URLS.WEBPAYURL2);
         window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=" + constants.CONFIGS.APPID + "&redirect_uri=" + redirect_uri + "&response_type=code&scope=snsapi_base#wechat_redirect";
     }

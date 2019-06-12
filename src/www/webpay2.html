@@ -8,7 +8,7 @@
           content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.569" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.583" rel="stylesheet"/>
     <meta name="format-detection" content="telephone=no"/>
     <style type="text/css">
         body {
@@ -63,11 +63,17 @@
         .active img {
             display: block;
         }
+        .deposit{
+            display: none;
+        }
+        .pay {
+            display: none;
+        }
     </style>
     <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 </head>
 <body>
-<div style="background-color: white;">
+<div style="background-color: white" class="deposit">
     <div style="height:80px;padding-top:20px">
         <img src="images/20181224/fang.png" style="width:38px;height:38px;margin-left:20px"/>
         <span id="lbApartmentName" style="position:absolute;left:70px;font-size:14px"></span>
@@ -129,6 +135,17 @@
         </div>
     </div>
 </div>
+<div style="background-color: white" class="pay">
+    <div style="padding-left:20px">
+        <div class="title" style="height:60px;line-height:60px">
+            账单总额<span id="lbAmount" style="font-size:16px"></span>
+        </div>
+        <div class="title" style="border-top: 1px solid #e9e9e9;height:60px;line-height:60px">
+           支付金额<span id="lbAmount1" style="font-size:16px"></span>
+        </div>
+    </div>
+</div>
+
 <div style="font-size: 16px; color: #999999; line-height: 45px; height: 45px; padding-left:20px">
     支付方式
 </div>
@@ -169,6 +186,6 @@
 </html>
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
-<script src="script/constants.js?ver=18.12.569"></script>
-<script src="script/service.js?ver=18.12.569"></script>
-<script src="script/webpay2.js?ver=18.12.569"></script>
+<script src="script/constants.js?ver=18.12.583"></script>
+<script src="script/service.js?ver=18.12.583"></script>
+<script src="script/webpay2.js?ver=18.12.583"></script>

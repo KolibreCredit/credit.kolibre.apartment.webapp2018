@@ -504,6 +504,8 @@ function getInvoiceState(invoiceState) {
             return "已开票";
         case  "Mailed":
             return "已邮寄";
+        case "Rejected":
+            return "已驳回";
         default:
             return "其他";
     }
@@ -523,15 +525,4 @@ function fuwu() {
             window.location.href = "fuwu.html";
         }
     });
-}
-
-function sleep(milliscond) {
-    var now = new Date();
-    var exitTime = now.getTime() + milliscond;
-    while (true) {
-        now = new Date();
-        if (now.getTime() > exitTime) {
-            return;
-        }
-    }
 }

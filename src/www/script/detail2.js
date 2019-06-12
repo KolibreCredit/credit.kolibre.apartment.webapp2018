@@ -173,17 +173,6 @@ function hideAllConfig() {
 }
 
 function map(addr) {
-    /*var isWxMini = window.__wxjs_environment === 'miniprogram';
-    if (isWxMini) {
-        wx.miniProgram.navigateTo({
-            url: "/pages/index/map?cityName=" + item.cityName + "&addr=" + addr
-        });
-    } else {
-        if (addr.indexOf(item.cityName) == -1) {
-            addr = item.cityName + addr;
-        }
-        window.location.href = "map.html?addr=" + addr;
-    }*/
     if (addr.indexOf(item.cityName) == -1) {
         addr = item.cityName + addr;
     }
@@ -194,12 +183,41 @@ function appointment() {
     window.location.href = "detail21.html?roomId={0}".format(roomId);
 }
 
+function addCollection() {
+    getInvoke(constants.URLS.ADDROOMSOURCECOLLECTION.format(roomId), function (res) {
+        if (res.succeeded) {
+            $("#divMsg").html("收藏成功");
+            $(".msg-alert").show();
+            $(".shoucang").eq(0).hide();
+            $(".shoucang").eq(1).show();
+            setTimeout(function () {
+                $(".msg-alert").hide();
+            }, 2000);
+        } else {
+            mui.toast(res.message);
+        }
+    });
+}
+
+function cancleCollection() {
+    getInvoke(constants.URLS.CANCLEROOMSOURCECOLLECTION.format(roomId), function (res) {
+        if (res.succeeded) {
+            $("#divMsg").html("取消收藏");
+            $(".msg-alert").show();
+            $(".shoucang").eq(0).show();
+            $(".shoucang").eq(1).hide();
+            setTimeout(function () {
+                $(".msg-alert").hide();
+            }, 2000);
+        } else {
+            mui.toast(res.message);
+        }
+    });
+}
+
 $(document).ready(function () {
     roomId = getURLQuery("roomId");
     var reserve = getURLQuery("reserve") || "0"
-    if (reserve == "1") {
-        $(".reserve").hide();
-    }
     getInvoke(constants.URLS.GETROOMSOURCE.format(roomId), function (res) {
         if (res.succeeded) {
             item = res.data;
@@ -228,8 +246,18 @@ $(document).ready(function () {
                 (item.retailPrice > 0 ? (item.retailPrice * 0.01).toFixed(0) + "元/月<span>当前可入住</span>" : "敬请期待…"),
                 item.apartmentAddress,
                 item.subway,
-                getRoomSourceFeature(item.roomSourceFeature));
+                getRoomSourceFeature(item.roomSourceFeature),
+                (item.rentType == "ZhengZu" ? "整租" : "合租") + " / " + item.roomTypeName + " / " + (item.roomTypeSize * 0.0001).toFixed(2) + "㎡");
             $("#divProject").html(html2);
+            setTimeout(function () {
+                if (item.subway != null) {
+                    $(".subway").show();
+                }
+                if (item.roomSourceFeature.length > 0) {
+                    $(".roomSourceLine").show();
+                    $(".roomSourceFeature").show();
+                }
+            }, 100);
             //
             var html4 = "";
             var tpl4 = $("#tpl4").html();
@@ -284,6 +312,32 @@ $(document).ready(function () {
             $("#divTips").html(item.tips);
             if (item.tips == null || item.tips == "") {
                 $(".tips").hide();
+            }
+            //
+            if (item.isAvailable) {
+                if (item.isCollection) {
+                    $(".shoucang").eq(1).show();
+                } else {
+                    $(".shoucang").eq(0).show();
+                }
+            }
+            //
+            if (item.isAvailable) {
+                $(".reserve .item").eq(0).css({"width": "30%"}).show();
+                $(".reserve .item").eq(2).css({"width": "70%"});
+            }
+            if (item.contacts != null) {
+                $("#telContacts").attr("href", "tel:{0}".format(item.contacts));
+                $(".reserve .item").eq(1).css({"width": "50%"}).show();
+                $(".reserve .item").eq(2).css({"width": "50%"});
+            }
+            if (item.isAvailable && item.contacts != null) {
+                $(".reserve .item").eq(0).css({"width": "20%"}).show();
+                $(".reserve .item").eq(1).css({"width": "40%"}).show();
+                $(".reserve .item").eq(2).css({"width": "40%"});
+            }
+            if (reserve == "0") {
+                $(".reserve").show();
             }
         } else {
             mui.toast(res.message);
