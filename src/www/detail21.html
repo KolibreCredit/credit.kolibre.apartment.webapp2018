@@ -8,7 +8,7 @@
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <link href="packages/mui@3.4.0/examples/hello-mui/css/mui.picker.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.583" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.586" rel="stylesheet"/>
     <style type="text/css">
         input[type=text], input[type=password] {
             padding: 5px;
@@ -29,6 +29,19 @@
             line-height: 35px;
         }
 
+        .huxing {
+            font-size: 16px;
+            color: #333333;
+            line-height: 24px;
+            white-space: nowrap;
+        }
+
+        .apartmentAddress {
+            color: #333333;
+            line-height: 24px;
+            white-space: nowrap;
+        }
+
         .rent {
             font-size: 16px;
             color: #ef7b37;
@@ -40,6 +53,22 @@
             color: #333333;
             display: inline-block;
             margin-top: 4px;
+        }
+
+        .huxing span {
+            width: 215px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-top: 0;
+        }
+
+        .apartmentAddress span {
+            width: 215px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-top: 0;
         }
 
         .star {
@@ -66,17 +95,41 @@
             font-size: 16px;
             float: right;
         }
+        @media only screen and (max-width: 375px) {
+            .apartmentAddress span {
+                width: 180px;
+            }
+            .huxing span {
+                width: 180px;
+            }
+        }
+        @media only screen and (max-width: 320px) {
+            .apartmentAddress span {
+                width: 150px;
+            }
+            .huxing span {
+                width: 150px;
+            }
+        }
     </style>
 </head>
 <body style="background:#f4f4f4">
 <div class="mui-content">
     <div style="border-top:1px solid #cccccc;opacity:0.6"></div>
-    <div style="height: 110px;padding:20px;display:flex">
-        <div style="width: 110px;height:70px">
+    <div style="height: 150px;padding:20px;display:flex">
+        <div style="width: 110px;height:100px">
             <img id="imgUrl" style="width:110px;height:100%">
         </div>
         <div style="margin-left:15px;width:100%">
             <div class="projectName"></div>
+            <div class="huxing">
+                <img src="images/huxing.png" style="width:22px;height:22px;vertical-align:baseline"/>
+                <span></span>
+            </div>
+            <div class="apartmentAddress">
+                <img src="images/source1.png" style="width:22px;height:22px;vertical-align:baseline"/>
+                <span></span>
+            </div>
             <div class="rent"></div>
         </div>
     </div>
@@ -98,7 +151,8 @@
         <div id="dtAppointmentTime" class="mui-table-view-cell mui-media"
              style="box-shadow:0 1px 2px 0 rgba(0,0,0,0.05)">
             <span class="star">*</span><span>看房时间</span>
-            <label id="lbAppointmentTime" style="padding-left:10px;line-height:30px"></label>
+            <input type="text" id="lbAppointmentTime" placeholder="请选择看房时间" readonly="readonly"
+                   style="padding-left:10px;line-height:30px;width:50%"/>
             <img src="images/date.png" style="width: 24px;height:24px;position:absolute;right:20px;top:12px">
         </div>
         <div style="text-align:center;padding-top:40px;background:#f4f4f4">
@@ -106,7 +160,10 @@
         </div>
         <div style="height:50px;background:#f4f4f4">
         </div>
-        <div onclick="appointment()" class="container-bottom"  style="background-color:#fb9328;width:100%;height:50px; line-height: 50px;position: fixed;bottom:0;text-align:center;font-size: 18px;color:#ffffff">提交申请</div>
+        <div onclick="appointment()" class="container-bottom"
+             style="background-color:#fb9328;width:100%;height:50px; line-height: 50px;position: fixed;bottom:0;text-align:center;font-size: 18px;color:#ffffff">
+            提交申请
+        </div>
     </div>
     <div class="msg-alert" style="display:none">
         <table style='width:100%;height:100%'>
@@ -148,24 +205,7 @@
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/mui@3.4.0/examples/hello-mui/js/mui.picker.min.js"></script>
-<script src="script/constants.js?ver=18.12.583"></script>
-<script src="script/service.js?ver=18.12.583"></script>
-<script src="script/detail21.js?ver=18.12.583"></script>
-<script type="text/javascript">
-    var currentDate = new Date();
-    var dtOptions = {
-        beginDate: currentDate,
-        endYear: currentDate.getFullYear() + 4
-    };
-    $("#lbAppointmentTime").text(currentDate.format("yyyy-MM-dd hh:mm"));
-    (function ($dt) {
-        document.getElementById("dtAppointmentTime").addEventListener('tap', function () {
-            document.activeElement.blur();
-            var picker = new $dt.DtPicker(dtOptions);
-            picker.show(function (rs) {
-                $("#lbAppointmentTime").text(rs.text);
-                picker.dispose();
-            });
-        }, false);
-    })(mui);
-</script>
+<script src="packages/mui@3.4.0/examples/hello-mui/js/mui.poppicker.js"></script>
+<script src="script/constants.js?ver=18.12.586"></script>
+<script src="script/service.js?ver=18.12.586"></script>
+<script src="script/detail21.js?ver=18.12.586"></script>

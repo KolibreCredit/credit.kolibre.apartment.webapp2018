@@ -106,13 +106,14 @@ var constants = {
         GETINVOICEINFO: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/tenant/GetInvoiceInfo?invoiceInfoId={0}",
         SAVEREQUESTDATA: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/SaveRequestData",
         GETREQUESTDATA: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/GetRequestData?requestId={0}",
-        CLEARDATACACHA:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/ClearDataCacha",
-        GETREJECTEDINVOICECOUNT:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/GetRejectedInvoiceCount",
-        ENERGYMETERUSAGEPAYMENT:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/EnergyMeterUsagePayment",
-        ADDROOMSOURCECOLLECTION:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/AddRoomSourceCollection?roomId={0}",
-        CANCLEROOMSOURCECOLLECTION:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/CancleRoomSourceCollection?roomId={0}",
-        GETROOMSOURCECOLLECTIONINFOS:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/GetRoomSourceCollectionInfos",
-        GETROOMSOURCES:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/Room/GetRoomSourcePromotionInfos"
+        CLEARDATACACHA: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/ClearDataCacha",
+        GETREJECTEDINVOICECOUNT: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Invoice/GetRejectedInvoiceCount",
+        ENERGYMETERUSAGEPAYMENT: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/EnergyMeterUsagePayment",
+        ADDROOMSOURCECOLLECTION: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/AddRoomSourceCollection?roomId={0}",
+        CANCLEROOMSOURCECOLLECTION: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/CancleRoomSourceCollection?roomId={0}",
+        GETROOMSOURCECOLLECTIONINFOS: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/GetRoomSourceCollectionInfos",
+        GETROOMSOURCES: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Room/GetRoomSourcePromotionInfos",
+        GETRESERVATIONTIMES: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/GetReservationTimes"
     },
     COOKIES: {
         XKCSID: 'X-KC-SID',
@@ -231,7 +232,8 @@ var constants = {
         contactPhoneerr: "手机号码格式错误",
         appointmentName: "真实姓名不能为空",
         appointment: "预约信息提交成功",
-        transaction: "订单正在支付请稍后"
+        transaction: "订单正在支付请稍后",
+        appointmentTime: "请选择看房时间"
     },
     CONFIGS: {
         APPID: "wxa74d300625108685",
