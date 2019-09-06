@@ -4,7 +4,7 @@ var item = null;
 var waitTimer = null;
 var waitCount = 60;
 var isSendCaptcha = true;
-
+//
 function sendWaitTimer() {
     if (waitCount > 0) {
         $('.lbSmsCode').text(waitCount + 'S');
@@ -161,6 +161,5 @@ $(document).ready(function () {
                 appointmentTimeResult.value = items[0].value + " " + items[1].value + ":" + items[2].value;
             });
         }, false);
-
     });
 });

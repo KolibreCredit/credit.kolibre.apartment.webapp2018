@@ -1,6 +1,7 @@
 var myLockDevices = null;
 var mySwiper = null;
 var deviceId = "";
+var coolkit = "";
 
 function showRemoteOpenLock() {
     $("#divAlert0").show();
@@ -72,12 +73,57 @@ function addLockPassword() {
     }, 1000);
 }
 
+function showSetLockPassword() {
+    $("#divAlert3").show();
+}
+
+function hideSetLockPassword() {
+    $("#divAlert3").hide();
+}
+
+function setLockPassword() {
+    var password = "";
+    var inputs = $("#divPassword>input");
+    inputs.each(function () {
+        password = password + $(this).val();
+    });
+    if (password == "") {
+        mui.toast(constants.msgInfo.password);
+        return false;
+    }
+    var arrPass = ["000000", "111111", "222222", "333333", "444444", "555555", "666666", "777777", "888888", "999999", "012345", "123456", "234567", "345678", "456789", "987654", "876543", "765432", "654321", "543210", "123123", "112233"];
+    if (arrPass.indexOf(password) != -1) {
+        mui.toast(constants.msgInfo.passwordsimple);
+        return false;
+    }
+    var data = {
+        deviceId: deviceId,
+        password: password
+    };
+    postInvoke(constants.URLS.SETLOCKPASSWORD, data, function (res) {
+        if (res.succeeded) {
+            $("#divAlert3 ").hide();
+            setTimeout(function () {
+                $("#divAlert4").show();
+            }, 200);
+        } else {
+            mui.toast(res.message);
+        }
+    }, function (err) {
+        mui.toast(err.message);
+    });
+}
+
 function temporary() {
     window.location.href = "temporary.html?deviceId={0}".format(deviceId);
 }
 
 function lockOpenRecords() {
     window.location.href = "lockOpenRecords.html?deviceId={0}".format(deviceId);
+}
+
+function lockPasswords() {
+    window.location.href = "lockPasswords.html?deviceId={0}".format(deviceId);
 }
 
 var selectLockDevice = function (index) {
@@ -89,10 +135,36 @@ var selectLockDevice = function (index) {
     } else {
         $("#divRemoteOpenLock").hide();
     }
+    if (selectItem.supplier == "Coolkit") {
+        $(".category .coolkit").show();
+    } else {
+        $(".category .coolkit").hide();
+    }
+    if (coolkit == "coolkit") {
+        $("#divAddLockPassword").hide();
+    } else {
+        $("#divAddLockPassword").show();
+    }
 };
 
+function shouContactUs() {
+    $("#divAlert2").show();
+}
+
+function hideContactUs() {
+    $("#divAlert2").hide();
+}
+
 $(document).ready(function () {
-    getInvoke(constants.URLS.GETTENANTLOCKDEVICES, function (res) {
+    coolkit = getURLQuery("coolkit") || "other";
+    if (coolkit == "coolkit") {
+        $('#divContactUs').css({"display": "inline"});
+    } else {
+        $('#divContactUs').css({"display": "none"});
+    }
+    setCookie(constants.COOKIES.COOLKIT, coolkit);
+    var apiUrl = (coolkit == "coolkit" ? constants.URLS.GETCOOLKITLOCKS : constants.URLS.GETTENANTLOCKDEVICES);
+    getInvoke(apiUrl, function (res) {
         if (res.succeeded && res.data.length > 0) {
             $(".gateLock").show();
             var item = null;

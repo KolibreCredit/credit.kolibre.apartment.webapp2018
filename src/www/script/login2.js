@@ -156,7 +156,7 @@ var enumLoginState = function (loginState) {
         mui.toast(constants.msgInfo.loginErr3);
     }
     else {
-        mui.toast(constants.msgInfo.loginErr4);
+        mui.toast(constants.msgInfo.logiErr4);
     }
 };
 

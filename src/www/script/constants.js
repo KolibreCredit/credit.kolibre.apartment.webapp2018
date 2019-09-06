@@ -113,7 +113,13 @@ var constants = {
         CANCLEROOMSOURCECOLLECTION: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/CancleRoomSourceCollection?roomId={0}",
         GETROOMSOURCECOLLECTIONINFOS: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/GetRoomSourceCollectionInfos",
         GETROOMSOURCES: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Room/GetRoomSourcePromotionInfos",
-        GETRESERVATIONTIMES: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/GetReservationTimes"
+        GETRESERVATIONTIMES: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/GetReservationTimes",
+        GETCOOLKITLOCKS:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/GetCoolkitLocks",
+        GETLOCKTEMPORARYPASSWORD:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/GetLockTemporaryPassword?deviceId={0}&name={1}&cellphone={2}",
+        GETCOOLKITDOOROPENRECORD:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/GetCoolkitDoorOpenRecord?deviceId={0}&index={1}&count={2}",
+        GETLOCKPASSWORDS:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/GetLockPasswords?deviceId={0}",
+        SETLOCKPASSWORD:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/SetLockPassword",
+        DELETEPASSWORD:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/DeletePassword"
     },
     COOKIES: {
         XKCSID: 'X-KC-SID',
@@ -127,7 +133,8 @@ var constants = {
         INVOICE1: "X-KF-INVOICE1",
         INVOICE2: "X-KF-INVOICE2",
         INVOICE3: "X-KF-INVOICE3",
-        INVOICE4: "X-KF-INVOICE4"
+        INVOICE4: "X-KF-INVOICE4",
+        COOLKIT: "X-KC-COOLKIT"
     },
     REGEX: {
         CELLPHONE: /^(13|14|15|16|17|18|19|10)\d{9}$/,
@@ -155,6 +162,7 @@ var constants = {
         password: '密码不能为空',
         passworderr: '密码格式错误',
         passwordsame: '密码不一致,重新输入',
+        passwordsimple: '密码过于简单，重新输入',
         register: '注册成功',
         registererr: '注册失败',
         agreement1: '请同意蜂鸟屋注册服务协议',
@@ -165,6 +173,7 @@ var constants = {
         loginErr2: '用户未设置登录密码',
         loginErr3: '用户被锁定',
         loginErr4: '用户未注册',
+        loginErr5: '向右滑动完成验证',
         tokenerr: '请点击发送验证码',
         credentialType: "请选择证件类型",
         realName: "姓名不能为空",
