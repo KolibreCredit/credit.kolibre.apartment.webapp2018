@@ -42,7 +42,7 @@ function getLockPasswords() {
             var btnDelete = "";
             for (var i = 0; i < doorOpenRecords.length; i++) {
                 item = doorOpenRecords[i];
-                if (item.canDelete || i == 1) {
+                if (item.canDelete) {
                     btnDelete = canDelete.format(item.passwordId);
                 }
                 if (item.passwordState == "Deleting") {
