@@ -35,7 +35,7 @@ function temporary(index) {
     $("#divAlert .msg-res").hide();
     $("#divAlert").show();
     setTimeout(function () {
-        var apiUrl = (coolkit == "coolkit" ? constants.URLS.GETLOCKTEMPORARYPASSWORD : constants.URLS.GETLOCKTEMPORARYPASSWORD);
+        var apiUrl = (coolkit == "coolkit" ? constants.URLS.COOLKITSENDTEMPORARYPASSWORD : constants.URLS.GETLOCKTEMPORARYPASSWORD);
         getInvoke(apiUrl.format(deviceId, realName, cellphone), function (res) {
             $("#divAlert .msg-loading").hide();
             if (res.succeeded) {
@@ -66,4 +66,5 @@ $(document).ready(function () {
             uesrInfo = res.data;
         }
     });
+
 });

@@ -115,7 +115,7 @@ var constants = {
         GETROOMSOURCES: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Room/GetRoomSourcePromotionInfos",
         GETRESERVATIONTIMES: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/GetReservationTimes",
         GETCOOLKITLOCKS:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/GetCoolkitLocks",
-        GETLOCKTEMPORARYPASSWORD:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/GetLockTemporaryPassword?deviceId={0}&name={1}&cellphone={2}",
+        COOLKITSENDTEMPORARYPASSWORD:"http://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/CoolkitSendTemporaryPassword?deviceId={0}&name={1}&cellphone={2}",
         GETCOOLKITDOOROPENRECORD:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/GetCoolkitDoorOpenRecord?deviceId={0}&index={1}&count={2}",
         GETLOCKPASSWORDS:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/GetLockPasswords?deviceId={0}",
         SETLOCKPASSWORD:"https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/SetLockPassword",

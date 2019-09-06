@@ -155,6 +155,15 @@ function hideContactUs() {
     $("#divAlert2").hide();
 }
 
+function validateNum() {
+    var value = event.target.value;
+    if (/^\d{1}$/.test(value)) {
+        return true;
+    } else {
+        event.target.value = value.substring(0, 1);
+    }
+}
+
 $(document).ready(function () {
     coolkit = getURLQuery("coolkit") || "other";
     if (coolkit == "coolkit") {
