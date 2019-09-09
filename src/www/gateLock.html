@@ -9,7 +9,7 @@
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <link href="packages/swiper@4.0.5/dist/css/swiper.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.589" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.590" rel="stylesheet"/>
     <style type="text/css">
         input[type=text] {
             color: red;
@@ -19,9 +19,9 @@
             text-align: center;
             width: 45px;
             height: 45px;
-            border-left: 1px solid;
-            border-bottom: 1px solid;
-            border-top: 1px solid;
+            border-left: 1px solid #CCCCCC;
+            border-bottom: 1px solid #CCCCCC;
+            border-top: 1px solid #CCCCCC;
             padding: 0;
             color: black;
             margin-bottom: 0;
@@ -317,7 +317,7 @@
                             <input type="number" oninput="validateNum()"/>
                             <input type="number" oninput="validateNum()"/>
                             <input type="number" oninput="validateNum()"/>
-                            <input type="number" oninput="validateNum()" style="border-right:1px solid"/>
+                            <input type="number" oninput="validateNum()" style="border-right:1px solid #CCCCCC"/>
                         </div>
                         <div style="color:black;padding: 0 20px;margin-top:30px;text-align:left">
                             设置新密码后，原密码将失效，请务必记住新设置的密码
@@ -352,7 +352,7 @@
                         <div style="margin-top:30px;padding:0 20px">
                             <button class="btnActive"
                                     style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:100%;border:none"
-                                    onclick="hideAddLockPassword()">确定
+                                    onclick="hideSetLockPassword2()">确定
                             </button>
                         </div>
                         <div style="height:30px"></div>
@@ -382,9 +382,9 @@
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/swiper@4.0.5/dist/js/swiper.min.js"></script>
-<script src="script/constants.js?ver=18.12.589"></script>
-<script src="script/service.js?ver=18.12.589"></script>
-<script src="script/gateLock.js?ver=18.12.zzz589"></script>
+<script src="script/constants.js?ver=18.12.590"></script>
+<script src="script/service.js?ver=18.12.590"></script>
+<script src="script/gateLock.js?ver=18.12.590"></script>
 <script type="text/javascript">
     document.addEventListener('touchmove', function (e) {
         e.preventDefault();

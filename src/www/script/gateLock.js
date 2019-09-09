@@ -75,10 +75,19 @@ function addLockPassword() {
 
 function showSetLockPassword() {
     $("#divAlert3").show();
+    $("#divPassword>input").eq(0).focus();
 }
 
 function hideSetLockPassword() {
     $("#divAlert3").hide();
+    var inputs = $("#divPassword>input");
+    inputs.each(function () {
+        $(this).val("");
+    });
+}
+
+function hideSetLockPassword2() {
+    $("#divAlert4").hide();
 }
 
 function setLockPassword() {
@@ -157,11 +166,10 @@ function hideContactUs() {
 
 function validateNum() {
     var value = event.target.value;
-    if (/^\d{1}$/.test(value)) {
-        return true;
-    } else {
+    if (!/^\d{1}$/.test(value)) {
         event.target.value = value.substring(0, 1);
     }
+    $(event.target).next().focus();
 }
 
 $(document).ready(function () {
