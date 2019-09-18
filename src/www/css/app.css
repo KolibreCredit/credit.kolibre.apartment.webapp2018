@@ -1,3 +1,7 @@
+html {
+    -webkit-tap-highlight-color: none
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -181,4 +185,19 @@ input::-moz-placeholder, textarea::-moz-placeholder {
 input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     font-size: 14px;
     color: #bababa;
+}
+
+.footer {
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+}
+
+@media (max-height: 666px) {
+    .footer {
+        position: relative;
+        bottom: inherit;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
 }

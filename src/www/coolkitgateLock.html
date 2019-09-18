@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title lang-key="10029">智能门锁</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <link href="packages/swiper@4.0.5/dist/css/swiper.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.600" rel="stylesheet"/>
+    <style type="text/css">
+        .mui-content {
+            background: none;
+            text-align: center;
+        }
+
+        .bgImg {
+            width: auto;
+            height: 310px;
+            background: url(images/coolkit/gateLock.png) center no-repeat;
+            background-size: cover;
+            position: relative;
+        }
+
+        .gateLock {
+            display: none;
+        }
+
+        .category {
+            color: #333333;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .category .item {
+            margin-top: 15px;
+            border: 1px solid rgba(51, 51, 51, 0.4);
+            padding: 10px 0;
+            border-radius: 4px;
+        }
+
+        .category .item2 {
+            padding: 10px 0;
+        }
+
+        .item img {
+            width: 20px;
+            height: 20px;
+            margin-right: 15px;
+            vertical-align: middle;
+            margin-top: -4px;
+        }
+
+
+        .item2 img {
+            width: 255px;
+            height: 40px;
+        }
+
+        .nodataDiv {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            display: none;
+            z-index: 1;
+            background-color: #FFFFFF;
+        }
+
+        .swiper-slide {
+            display: block;
+            text-align: center;
+            background: none;
+        }
+
+        .slide-container {
+            width: 100%;
+        }
+
+        .slide-container .title {
+            color: rgba(255, 255, 255, 1);
+            font-size: 20px;
+        }
+
+        .slide-container .power {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .slide-container .power > div {
+            height: 22px;
+            border-radius: 57px;
+            background-color: rgba(255, 254, 251, 0.95);
+            box-shadow: 0px 0px 10px 0px rgba(255, 140, 20, 0.4);
+            text-align: center;
+            color: rgba(145, 118, 68, 1);
+            font-size: 14px;
+            display: inline-block;
+            padding: 0 10px;
+        }
+
+        .slide-container .other {
+            height: 220px;
+        }
+
+        .swiper-pagination-bullet {
+            opacity: 1;
+            background: #E5DFD3;
+        }
+
+        .swiper-pagination-bullet-active {
+            background: #AA956F;
+        }
+
+        .circle-load-svg {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+
+        .ipt-box-nick {
+            width: 100%;
+            height: 40px !important;
+            line-height: 40px !important;
+            position: relative !important;
+        }
+
+        .ipt-box-nick .ipt-real-nick {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100%;
+            height: 40px !important;
+            line-height: 40px !important;
+            opacity: 0 !important;
+            z-index: 3 !important;
+            margin-bottom: inherit;
+            padding: 0;
+        }
+
+        .ipt-box-nick .ipts-box-nick {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            z-index: 2 !important;
+            width: 100%;
+            height: 40px !important;
+            line-height: 40px !important;
+            overflow: hidden;
+        }
+
+        .ipt-box-nick .ipts-box-nick .ipt-fake-box {
+            height: 40px !important;
+            line-height: 40px !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            border: 1px solid #E0E0E0;
+            border-radius: 4px;
+        }
+
+        .ipt-box-nick .ipts-box-nick .ipt-fake-box input {
+            height: 38px !important;
+            font-size: 18px !important;
+            text-align: center !important;
+            padding: 0 !important;
+            border: none;
+            margin-bottom: inherit;
+            border-right: 1px solid #E0E0E0;
+            color: #333333;
+        }
+
+        .ipt-box-nick .ipt-active-nick {
+            height: 40px !important;
+            line-height: 40px !important;
+            text-align: center;
+            position: absolute !important;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
+
+        .ipt-box-nick .ipt-active-nick img {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+<div class="mui-content">
+    <div class="gateLock">
+        <div class="bgImg">
+            <div style="padding-top:30px">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                    </div>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+            <div style="text-align:center;position: absolute;bottom:40px;left:0;right:0">
+                <img id="imgOnline" src="images/coolkit/Lock1.png" style="width:180px;height:180px"/>
+            </div>
+            <div id="divLine" style="text-align:center;position:absolute;bottom:75px;left:0;right:0;display:none">
+                <img src="images/coolkit/line.png" style="width: 106px;height: 106px" class="circle-load-svg spin"/>
+            </div>
+        </div>
+        <div style="padding:0 70px;display:none" class="category">
+            <div class="item" onclick="showSetLockPassword()">
+                <img src="images/coolkit/7.png"/><span>设置密码</span>
+            </div>
+            <div class="item" onclick="lockPasswords()">
+                <img src="images/coolkit/6.png"/><span>密码管理</span>
+            </div>
+            <div class="item" onclick="temporary()">
+                <img src="images/coolkit/8.png"/><span>临时授权</span>
+            </div>
+            <div class="item" onclick="lockOpenRecords()">
+                <img src="images/coolkit/5.png"/><span>开锁记录</span>
+            </div>
+        </div>
+        <div class="category" style="display:none">
+            <div class="item2" onclick="showSetLockPassword()">
+                <img src="images/coolkit/71.png"/>
+            </div>
+            <div class="item2" onclick="lockPasswords()">
+                <img src="images/coolkit/61.png"/>
+            </div>
+            <div class="item2" onclick="temporary()">
+                <img src="images/coolkit/81.png"/>
+            </div>
+            <div class="item2" onclick="lockOpenRecords()">
+                <img src="images/coolkit/51.png"/>
+            </div>
+        </div>
+        <img onclick="shouContactUs()" src="images/coolkit/dianhua.png"
+             style="position:absolute;width:30px;height:30px;top:30px;right:30px;z-index:2"/>
+        <div class="footer" style="text-align:center">
+            <a style="color:#AA956F;text-decoration:none;border-bottom:1px solid #AA956F;display:inline-block;padding-bottom:2px"
+               onclick="loginOut()" lang-key="10002">退出登录</a>
+        </div>
+    </div>
+    <div class="nodataDiv" style="padding:0 20px;flex-direction:column;align-items:center;justify-content:center">
+        <div style="text-align:center">
+            <img style="width:80px;height:80px" src="images/coolkit/nodata.png"/>
+        </div>
+        <div style="font-size:16px;color: #999999;margin-top:20px">
+            <span langkey="10034">暂无智能门锁</span>
+        </div>
+        <div style="margin-top:30px;text-align:center">
+            <div onclick="shouContactUs()" lang-key="10035"
+                 style="width: 150px;height:44px;line-height:44px;color: #666666;font-size:16px; border-radius: 4px; border:1px solid #CED4DC">
+                联系客服
+            </div>
+        </div>
+        <div class="footer" style="text-align:center">
+            <a style="color:#AA956F;text-decoration:none;border-bottom:1px solid #AA956F;display:inline-block;padding-bottom:2px"
+               onclick="loginOut()" lang-key="10002">退出登录</a>
+        </div>
+    </div>
+    <div id="divContactUs" class="mui-popover mui-popover-action mui-popover-bottom">
+        <ul class="mui-table-view" style="margin:0;border-radius:initial">
+            <li class="mui-table-view-cell" style="color:#525252">
+                <a href="tel:4009215508" onclick="hideContactUs()">400-921-5508</a>
+            </li>
+            <li class="mui-table-view-cell" style="color:#525252">
+                <a href="tel:15801935395" onclick="hideContactUs()">15801935395</a>
+            </li>
+            <li style="height:6px;background-color:#999999"></li>
+            <li class="mui-table-view-cell" lang-key="10040" style="color:#525252" onclick="hideContactUs()">
+                取消
+            </li>
+        </ul>
+    </div>
+    <div id="divAlert2" class="msg-alert" style="z-index:2">
+        <table style='width:100%;height:100%'>
+            <tr>
+                <td style='vertical-align:middle;text-align:center'>
+                    <div style="padding:0 50px">
+                        <div class="msg-body" style="width:100%;background-color:#ffffff">
+                            <div style="font-size:18px;color:#000000;height:60px;line-height:60px;border-bottom:1px solid #CED4DC">
+                                400-921-5508
+                            </div>
+                            <div style="height:45px;line-height:45px">
+                                <span style="color:#007AFF;font-size:18px;width:50%;float:left;display:inline-block;border-right:1px solid #CED4DC"
+                                      onclick="hideContactUs()" lang-key="10040">取消
+                                </span>
+                                <a href="tel:4009215508" onclick="hideContactUs()"
+                                   style="color:#007AFF;font-size:18px;width:50%;float:right" lang-key="10086">呼叫</a>
+                            </div>
+                            <div style="clear:both"></div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="divAlert3" class="msg-alert" style="z-index:2">
+        <table style='width:100%;height:100%'>
+            <tr>
+                <td style='vertical-align:middle;text-align:center'>
+                    <div style="width:100%;background-color: rgba(255, 255, 255, 1);box-shadow: 0px 15px 25px 0px rgba(0, 0, 0, 0.2);border-radius:6px">
+                        <div style="text-align:center;height:70px;line-height:70px;color:#333333;font-size:18px"
+                             lang-key="10030">
+                            设置密码
+                        </div>
+                        <div style="color:#666666;font-size:14px;padding:0 10px" lang-key="10087">
+                            设置新密码后，原密码将失效，请妥善保管。
+                        </div>
+                        <div style="padding:0 20px;margin-top:20px">
+                            <div class="ipt-box-nick">
+                                <input id="txtCaptcha" type="tel" maxlength="6" class="ipt-real-nick"
+                                       placeholder="请在下方输入6位数字"/>
+                                <div class="ipts-box-nick">
+                                    <div class="ipt-fake-box">
+                                        <input type="text"/>
+                                        <input type="text"/>
+                                        <input type="text"/>
+                                        <input type="text"/>
+                                        <input type="text"/>
+                                        <input type="text" style="border-right: 1px solid #E0E0E0"/>
+                                    </div>
+                                </div>
+                                <div class="ipt-active-nick">
+                                    <img src="images/line.gif"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="divErrInfo" style="color:#FF5F5F;font-size:12px;padding:0 20px;margin-top:15px;display:none;text-align:left;line-height:20px">
+                        </div>
+                        <div style="margin-top:30px;padding:0 30px">
+                            <button style="background:#ffffff;height:44px;color:#666666;font-size:16px;width:45%;border:1px solid #E0E0E0;float:left"
+                                    onclick="hideSetLockPassword()" lang-key="10040">取消
+                            </button>
+                            <button style="background:#333333;height:44px;color:#ffffff;font-size:16px;width:45%;border:1px solid #666666;float:right"
+                                    onclick="setLockPassword()" lang-key="10041">确定
+                            </button>
+                        </div>
+                        <div style="height:20px;clear:both"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="divAlert4" class="msg-alert" style="z-index:2">
+        <table style='width:100%;height:100%'>
+            <tr>
+                <td style='vertical-align:middle;text-align:center'>
+                    <div style="width:100%;background-color: rgba(255, 255, 255, 1);box-shadow: 0px 15px 25px 0px rgba(0, 0, 0, 0.2)">
+                        <div style="height:30px"></div>
+                        <div style="text-align:center">
+                            <img src="images/coolkit/succee.png" style="height:40px;width:40px"/>
+                        </div>
+                        <div style="color:black;padding: 0 20px;margin-top:20px;text-align:center" lang-key="10088">
+                            设置成功
+                        </div>
+                        <div style="height:30px"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="tplLockItem" style="display:none">
+        <div class="swiper-slide">
+            <div class="slide-container">
+                <div class="title">
+                    {0}<span style="margin-left:5px">{1}</span><span lang-key="10089">室</span>
+                </div>
+                <div class="power">
+                    <div>
+                        <span lang-key="10090">剩余电量</span>：{2}%
+                    </div>
+                </div>
+                <div class="other"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="packages/swiper@4.0.5/dist/js/swiper.min.js"></script>
+<script src="script/constants.js?ver=18.12.600"></script>
+<script src="script/service.js?ver=18.12.600"></script>
+<script src="script/coolkitgateLock.js?ver=18.12.600"></script>
+<script type="text/javascript">
+    $(".ipt-real-nick").on("input", function () {
+        var $input = $(".ipt-fake-box input");
+        if (!$(this).val()) {
+            //无值光标顶置
+            $('.ipt-active-nick').css('left', '0px');
+        }
+        if (/^[0-9]*$/g.test($(this).val())) {
+            //有值只能是数字
+            //console.log($(this).val());
+            var pwd = $(this).val().trim();
+            var len = pwd.length;
+            for (var i = 0; i < len; i++) {
+                $input.eq(i).val(pwd[i]);
+                if ($input.eq(i).next()) {
+                    //模拟光标，先将图片容器定位，控制left值而已
+                    $('.ipt-active-nick').css('left', $input.eq(i).position().left + 4 + 'px');
+                }
+            }
+            $input.each(function () {
+                //将有值的当前input后的所有input清空
+                var index = $(this).index();
+                if (index >= len) {
+                    $(this).val("");
+                }
+            });
+        } else {
+            //清除val中的非数字，返回纯number的value
+            var arr = $(this).val().match(/\d/g);
+            $(this).val($(this).val().slice(0, $(this).val().lastIndexOf(arr[arr.length - 1]) + 1));
+        }
+    });
+</script>

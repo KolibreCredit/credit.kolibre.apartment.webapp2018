@@ -1,8 +1,6 @@
 $(document).ready(function () {
     var deviceId = getURLQuery("deviceId");
-    var coolkit = getCookie(constants.COOKIES.COOLKIT);
-    var apiUrl = (coolkit == "coolkit" ? constants.URLS.GETCOOLKITDOOROPENRECORD : constants.URLS.GETLOCKOPENRECORDS);
-    getInvoke(apiUrl.format(deviceId, 0, 200), function (res) {
+    getInvoke(constants.URLS.GETLOCKOPENRECORDS.format(deviceId, 0, 200), function (res) {
         if (res.succeeded && res.data.data.length > 0) {
             var doorOpenRecords = res.data.data;
             var openRecords = [];

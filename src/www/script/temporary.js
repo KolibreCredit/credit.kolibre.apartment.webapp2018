@@ -2,12 +2,11 @@ var deviceId = "";
 var realName = "";
 var cellphone = "";
 var uesrInfo = null;
-var coolkit = "";
 
 function hideAlert() {
     $("#divAlert").hide();
     setTimeout(function () {
-        window.location.href = "gateLock.html?coolkit=" + coolkit;
+        window.location.href = "gateLock.html";
     }, 1000);
 }
 
@@ -35,8 +34,7 @@ function temporary(index) {
     $("#divAlert .msg-res").hide();
     $("#divAlert").show();
     setTimeout(function () {
-        var apiUrl = (coolkit == "coolkit" ? constants.URLS.COOLKITSENDTEMPORARYPASSWORD : constants.URLS.GETLOCKTEMPORARYPASSWORD);
-        getInvoke(apiUrl.format(deviceId, realName, cellphone), function (res) {
+        getInvoke(constants.URLS.GETLOCKTEMPORARYPASSWORD.format(deviceId, realName, cellphone), function (res) {
             $("#divAlert .msg-loading").hide();
             if (res.succeeded) {
                 $("#divAlert .icon").attr("src", "images/20181224/tip4.png");
@@ -59,12 +57,10 @@ function temporary(index) {
 }
 
 $(document).ready(function () {
-    coolkit = getCookie(constants.COOKIES.COOLKIT);
     deviceId = getURLQuery("deviceId");
     getInvoke(constants.URLS.GETCURRENTTENANT, function (res) {
         if (res.succeeded) {
             uesrInfo = res.data;
         }
     });
-
 });

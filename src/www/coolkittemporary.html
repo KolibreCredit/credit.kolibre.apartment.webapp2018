@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title lang-key="10032">临时授权</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.600" rel="stylesheet"/>
+    <style type="text/css">
+        input[type=text] {
+            padding: 5px;
+            border: 0;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body style="background-color:#f0f0f0">
+<div class="mui-content" style="background:none">
+    <div style="height:160px;background-color: #AA956F">
+        <div style="height:30px"></div>
+        <div style="text-align:center">
+            <img src="images/coolkit/shijia.png" style="width: 30px;height: 30px"/>
+        </div>
+        <div style="height:20px"></div>
+        <div style="text-align:center;color:#ffffff;font-size:14px;padding:0 20px;line-height:26px" lang-key="10049">
+            临时授权有效期为2小时，
+        </div>
+        <div style="text-align:center;color:#ffffff;font-size:14px;padding:0 20px;line-height:26px" lang-key="10072">
+            授权成功即代表被授权人有权利进入您的房间。
+        </div>
+    </div>
+    <div style="padding-left:20px;background-color:#ffffff;font-size:16px;color: #646464;margin-top:10px">
+        <div style="border-bottom:1px solid #d8d8d8;height:60px;line-height:60px;white-space:nowrap;display:flex;align-items:center;padding-right:15px">
+            <span lang-key="10051">用户姓名</span>
+            <input id="txtRealName" type="text" placeholder="请输入用户姓名" lang-key="10053" maxlength="10" style="text-align:right"/>
+        </div>
+        <div style="height:60px;line-height:60px;white-space:nowrap;display:flex;align-items:center">
+            <span lang-key="10052">用户手机</span>
+            <input id="txtCellphone" type="text" placeholder="请输入用户手机" lang-key="10054" maxlength="11" style="text-align:right;padding-right:15px"/>
+        </div>
+    </div>
+    <div style="text-align:center;margin-top:70px;background-color:#f0f0f0;padding: 0 20px">
+        <button style="background:#333333;height:44px;color:#ffffff;font-size:16px;width:100%"
+                onclick="temporary()" lang-key="10055">确认授权
+        </button>
+    </div>
+</div>
+<div id="divAlert" class="msg-alert" style="z-index:2">
+    <table style='width:100%;height:100%'>
+        <tr>
+            <td style='vertical-align:middle;text-align:center'>
+                <div class="msg-loading" style="display:none">
+                    <img src="images/loading.gif" style="width:auto;height:40px">
+                </div>
+                <div class="msg-res"
+                     style="display:none;width:100%;background-color: rgba(255, 255, 255, 1);box-shadow: 0px 15px 25px 0px rgba(0, 0, 0, 0.2)">
+                    <div style="height:30px"></div>
+                    <div style="text-align:center">
+                        <img class="icon" src="images/coolkit/info.png" style="height:40px;width:40px"/>
+                    </div>
+                    <div class="message1"
+                         style="margin-top:20px;font-size:18px;color:#646464;line-height:25px;font-weight:bold">
+                    </div>
+                    <div class="message2" style="margin-top:10px;font-size:14px;color:#646464;line-height:25px">
+                    </div>
+                    <div style="height:30px"></div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="script/constants.js?ver=18.12.600"></script>
+<script src="script/service.js?ver=18.12.600"></script>
+<script src="script/coolkittemporary.js?ver=18.12.600"></script>

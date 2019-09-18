@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>中英文</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="packages/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container-fluid">
+    <h2>中英文查询</h2>
+    <div style="text-align:left;margin-top:20px">
+        <input type="text" placeholder="关键字查询" id="txtKeyword" style="width:30%"/> <input type="button" value="查询"
+                                                                                          onclick="query()"/>
+        <input type="button" value="新增"
+               onclick="addModal()"/>
+    </div>
+    <div style="margin-top:30px">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <td>资源编号</td>
+                <td>中文描述</td>
+                <td>英文描述</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+    </div>
+    <div class="modal fade" id="divModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        新增词汇
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">中文</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="请输入中文" id="txtChinese"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">英文</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="请输入英文" id="txtEnglish"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="text-align:center">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        取消
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="addLang()">
+                        提交
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="divModalEditor" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        词汇编辑
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">资源编号</label>
+                            <div class="col-sm-10">
+                                <span id="lbResourceId"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">中文</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="请输入中文" id="txtChinese2"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">英文</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" placeholder="请输入英文" id="txtEnglish2"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        取消
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="editorLang()">
+                        提交
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="tplItem">
+    <tr>
+        <td>{0}</td>
+        <td>{1}</td>
+        <td>{2}</td>
+        <td>
+            <button class="btn" data-toggle="modal" onclick="showModal({3})">编辑</button>
+        </td>
+    </tr>
+</script>
+
+<!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+<script src="packages/bootstrap@3.3.7/dist/js/bootstrap.js"></script>
+<script type="text/javascript">
+    var languages = [];
+    String.prototype.format = function (args) {
+        if (arguments.length > 0) {
+            var result = this;
+            var reg = null;
+            if (arguments.length == 1 && typeof (args) == "object") {
+                for (var key in args) {
+                    reg = new RegExp("({" + key + "})", "g");
+                    result = result.replace(reg, args[key]);
+                }
+            } else {
+                for (var i = 0; i < arguments.length; i++) {
+                    if (arguments[i] == undefined) {
+                        arguments[i] = "";
+                    }
+                    reg = new RegExp("({)" + i + "(})", "g");
+                    result = result.replace(reg, arguments[i]);
+                }
+            }
+            return result;
+        } else {
+            return this;
+        }
+    };
+
+    function postInvoke(url, data, callSuccess, callError) {
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(data),
+            url: url,
+            dataType: "json",
+            contentType: "application/json;charset=utf-8",
+            success: function (res) {
+                callSuccess(res);
+            },
+            error: function () {
+                if (typeof callError != 'undefined' && callError instanceof Function) {
+                    callError({message: "服务繁忙，请稍后"});
+                }
+            }
+        });
+    }
+
+    function getInvoke(url, callSuccess, callError) {
+        $.ajax({
+            type: 'GET',
+            url: url,
+            dataType: "json",
+            contentType: "application/json",
+            success: function (res) {
+                callSuccess(res);
+            },
+            error: function () {
+                if (typeof callError != 'undefined' && callError instanceof Function) {
+                    callError({message: "服务繁忙，请稍后"});
+                }
+            }
+        });
+    }
+
+    function query() {
+        var keyword = $("#txtKeyword").val();
+        getInvoke("https://kc-talos-dev.fengniaowu.com/api/English/QueryByChinese?chinese={0}".format(keyword), function (res) {
+            var tplItem = $("#tplItem").html();
+            languages = res.data;
+            var htmls = [];
+            languages.forEach(function (item, index) {
+                htmls.push(tplItem.format(item.resourceId, item.chinese, item.english, index));
+            });
+            $("#tbody").html(htmls.join(""));
+        });
+    }
+
+    function showModal(index) {
+        var itemlanguage = languages[index];
+        $("#lbResourceId").html(itemlanguage.resourceId);
+        $("#txtChinese2").val(itemlanguage.chinese);
+        $("#txtEnglish2").val(itemlanguage.english);
+        $('#divModalEditor').modal('show')
+    }
+
+    function addModal() {
+        $('#divModalAdd').modal('show')
+    }
+
+    function addLang() {
+        var chinese = $("#txtChinese").val();
+        var english = $("#txtEnglish").val();
+        getInvoke("https://kc-talos-dev.fengniaowu.com/api/English/Add?chinese={0}&english={1}".format(chinese, english), function (res) {
+            if (res.succeeded) {
+                $('#divModalAdd').modal('hide')
+                query();
+            }
+        });
+    }
+
+    function editorLang() {
+        var resourceId = $("#lbResourceId").html();
+        var chinese = $("#txtChinese2").val();
+        var english = $("#txtEnglish2").val();
+        getInvoke("https://kc-talos-dev.fengniaowu.com/api/English/UpdateById?id={0}&chinese={1}&english={2}".format(resourceId,chinese,english), function (res) {
+            if (res.succeeded) {
+                $('#divModalEditor').modal('hide')
+                query();
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        query();
+    });
+</script>
+</body>
+</html>

@@ -6,20 +6,39 @@ var waitTimer = null;
 var waitCount = 60;
 var isSendCaptcha = true;
 var isUserVerify = false;
+var slider = null;
 
 function sendWaitTimer() {
     if (waitCount > 0) {
-        $('#btnSendCaptcha').text(waitCount + '秒');
+        $('#btnSendCaptcha').text(waitCount + language.getLangValue("10011", '秒'));
         waitCount = waitCount - 1;
     } else {
         clearInterval(waitTimer);
-        $('#btnSendCaptcha').text('获取验证码');
+        $('#btnSendCaptcha').text(language.getLangValue("10006", '获取验证码'));
         waitCount = 60;
         isSendCaptcha = true;
     }
-    if (waitCount == 40) {
-        $("#divVoiceCall").show();
+}
+
+function showCaptcha() {
+    if (!isSendCaptcha) {
+        return false;
     }
+    var cellphone = $("#txtCellphone").val();
+    if (cellphone == '') {
+        mui.toast(constants.msgInfo.phone);
+        return false;
+    }
+    if (!constants.REGEX.CELLPHONE.test(cellphone)) {
+        mui.toast(constants.msgInfo.phoneerr);
+        return false;
+    }
+    $("#divAlert").show();
+}
+
+function hideCaptcha() {
+    slider.restore();
+    $("#divAlert").hide();
 }
 
 function sendCaptcha() {
@@ -35,7 +54,7 @@ function sendCaptcha() {
         mui.toast(constants.msgInfo.phoneerr);
         return false;
     }
-    var businessType = "TenantRegisterOrLogin";
+    var businessType = "HoupuTenantLogin";
     var data = {
         cellphone: cellphone,
         businessType: businessType
@@ -64,10 +83,6 @@ function hideloading() {
 }
 
 function loginByCaptcha() {
-    if (!isUserVerify) {
-        mui.toast(constants.msgInfo.loginErr5);
-        return false;
-    }
     var cellphone = $("#txtCellphone").val();
     if (cellphone == '') {
         mui.toast(constants.msgInfo.phone);
@@ -88,7 +103,7 @@ function loginByCaptcha() {
     }
     var verify = {
         cellphone: cellphone,
-        businessType: "TenantRegisterOrLogin",
+        businessType: "HoupuTenantLogin",
         validateCode: captcha
     };
     showloading();
@@ -101,10 +116,9 @@ function loginByCaptcha() {
                         setToken(res1.headers["x-KC-SID"]);
                         mui.toast(constants.msgInfo.loginSuccess);
                         setTimeout(function () {
-                            window.location.href = "gateLock.html?coolkit={0}".format("coolkit");
+                            window.location.href = "coolkitgateLock.html";
                         }, 1000);
-                    }
-                    else {
+                    } else {
                         enumLoginState(res1.data.loginState);
                     }
                 } else {
@@ -125,60 +139,43 @@ function loginByCaptcha() {
 var enumLoginState = function (loginState) {
     if (loginState == "PasswordError") {
         mui.toast(constants.msgInfo.loginErr1);
-    }
-    else if (loginState == "PasswordNotExist") {
+    } else if (loginState == "PasswordNotExist") {
         mui.toast(constants.msgInfo.loginErr2);
-    }
-    else if (loginState == "Locked") {
+    } else if (loginState == "Locked") {
         mui.toast(constants.msgInfo.loginErr3);
-    }
-    else {
+    } else {
         mui.toast(constants.msgInfo.loginErr4);
     }
 };
 
 function userVerify() {
-    var cellphone = $("#txtCellphone").val();
-    if (cellphone == '') {
-        mui.toast(constants.msgInfo.phone);
-        return false;
-    }
-    if (!constants.REGEX.CELLPHONE.test(cellphone)) {
-        mui.toast(constants.msgInfo.phoneerr);
-        return false;
-    }
-    var captcha = $("#txtCaptcha").val();
-    if (captcha == '') {
-        mui.toast(constants.msgInfo.captcha);
-        return false;
-    }
-    if (!constants.REGEX.CHECKCODE.test(captcha)) {
-        mui.toast(constants.msgInfo.captchaerr);
-        return false;
-    }
     return true;
 }
 
 $(document).ready(function () {
-    $('#divSlideVerify').slideVerify({
-        type: 1,		//类型
-        vOffset: 5,	//误差量，根据需求自行调整
-        explain: '向右滑动验证',
-        barSize: {
-            width: '100%',
-            height: '40px',
-        },
+    slider = new FtSlider({
+        id: "divSlideVerify",
+        width: "100%",
+        height: 40,
+        textMsg: language.getLangValue("10008", "向右滑动验证"),
+        successMsg: language.getLangValue("10010", "验证成功"),
         userVerify: userVerify,
-        ready: function () {
-        },
-        success: function () {
-            // alert('验证成功，添加你自己的代码！');
-            //......后续操作
-            isUserVerify = true;
-        },
-        error: function () {
-            //alert('验证失败！');
-            isUserVerify = false;
+        callback: function (res) {
+            isUserVerify = res;
+            if (isUserVerify) {
+                sendCaptcha();
+                setTimeout(function () {
+                    hideCaptcha();
+                }, 500);
+            }
         }
     });
+    $(".ft-slider").css({"line-height": "40px"});
+    $(".ft-slider-bar").css({"width": "40px", "height": "40px"});
+    getInvoke2(constants.URLS.GETCURRENTTENANT, function (res) {
+        if (res.data != null) {
+            window.location.replace("coolkitgateLock.html");
+        }
+    });
+    language.init();
 });

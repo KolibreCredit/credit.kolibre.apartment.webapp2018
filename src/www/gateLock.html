@@ -9,24 +9,8 @@
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <link href="packages/swiper@4.0.5/dist/css/swiper.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.590" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.600" rel="stylesheet"/>
     <style type="text/css">
-        input[type=text] {
-            color: red;
-        }
-
-        input[type=number] {
-            text-align: center;
-            width: 45px;
-            height: 45px;
-            border-left: 1px solid #CCCCCC;
-            border-bottom: 1px solid #CCCCCC;
-            border-top: 1px solid #CCCCCC;
-            padding: 0;
-            color: black;
-            margin-bottom: 0;
-        }
-
         .mui-content {
             background: none;
             text-align: center;
@@ -56,10 +40,6 @@
             box-shadow: 0px 5px 10px 0px rgba(209, 134, 0, 0.4);
             border: 1px solid rgba(255, 140, 20, 0.4);
             padding: 10px 0;
-        }
-
-        .category .coolkit {
-            display: none;
         }
 
         .item img {
@@ -164,23 +144,17 @@
             </div>
         </div>
         <div style="padding:0 70px" class="category">
-            <div class="item coolkit" onclick="showSetLockPassword()" style="display:none">
-                <img src="images/20181224/1.png"/>设置密码
-            </div>
-            <div class="item" id="divRemoteOpenLock" onclick="showRemoteOpenLock()" style="display:none">
+            <div id="divRemoteOpenLock" class="item" onclick="showRemoteOpenLock()" style="display:none">
                 <img src="images/20181224/1.png"/>远程开锁
             </div>
-            <div class="item" id="divAddLockPassword" onclick="showAddLockPassword()">
+            <div class="item" onclick="showAddLockPassword()">
                 <img src="images/20181224/2.png"/>获取密码
             </div>
-            <div class="item" onclick="temporary()">
+            <div id="divTemporary" class="item" onclick="temporary()">
                 <img src="images/20181224/3.png"/>临时授权
             </div>
             <div class="item" onclick="lockOpenRecords()">
                 <img src="images/20181224/4.png"/>开锁记录
-            </div>
-            <div class="item coolkit" onclick="lockPasswords()" style="display:none">
-                <img src="images/20181224/1.png"/>密码管理
             </div>
         </div>
     </div>
@@ -191,11 +165,6 @@
         <div style="font-size:16px;color: #999999;margin-top:20px">
             亲，您还没有使用智能门锁哦～
         </div>
-    </div>
-    <div id="divContactUs" onclick="shouContactUs()"
-         style="display:none;position: absolute;width:50px;height:50px;bottom:50px;right:10px;background-color:red;border-radius:50%;z-index:2">
-        <span style="display:block">联系</span>
-        <span style="display:block">我们</span>
     </div>
     <div id="divAlert0" class="msg-alert" style="z-index:2">
         <table style='width:100%;height:100%'>
@@ -276,91 +245,6 @@
             </tr>
         </table>
     </div>
-    <div id="divAlert2" class="msg-alert" style="z-index:2">
-        <table style='width:100%;height:100%'>
-            <tr>
-                <td style='vertical-align:middle;text-align:center'>
-                    <div style="text-align:center;z-index:2;position:relative">
-                        <img src="images/20180123/tel1.png" style="height:150px;width:150px"/>
-                    </div>
-                    <div class="msg-body" style="width:100%;background-color:#ffffff;margin-top:-95px">
-                        <div style="margin-top:56px;font-size:18px;color:#646464;line-height:25px;position: relative;z-index:3">
-                            如有任何疑问，请联系客服电话
-                        </div>
-                        <div style="font-size:18px;color:#ff8400;line-height:30px">
-                            4009215508
-                        </div>
-                        <div style="margin-top:30px;padding:0 35px">
-                            <button style="border:1px solid #ff8c14;border-radius:44px;height:44px;color:#ff8c14;font-size:18px;width:40%;float:left"
-                                    onclick="hideContactUs()">取消
-                            </button>
-                            <a href="tel:4009215508" onclick="hideContactUs()"
-                               style="border:1px solid #ff8c14;border-radius:44px;height:44px;line-height:44px;color:#ff8c14;font-size:18px;width:40%;float:right">呼叫</a>
-                        </div>
-                        <div style="height:30px;clear:both"></div>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div id="divAlert3" class="msg-alert" style="z-index:2">
-        <table style='width:100%;height:100%'>
-            <tr>
-                <td style='vertical-align:middle;text-align:center'>
-                    <div style="width:100%;background-color: rgba(255, 255, 255, 1);box-shadow: 0px 15px 25px 0px rgba(0, 0, 0, 0.2)">
-                        <div>
-                            <img src="images/20181224/2t.png" style="height:80px;width:80px"/>
-                        </div>
-                        <div id="divPassword">
-                            <input type="number" oninput="validateNum()"/>
-                            <input type="number" oninput="validateNum()"/>
-                            <input type="number" oninput="validateNum()"/>
-                            <input type="number" oninput="validateNum()"/>
-                            <input type="number" oninput="validateNum()"/>
-                            <input type="number" oninput="validateNum()" style="border-right:1px solid #CCCCCC"/>
-                        </div>
-                        <div style="color:black;padding: 0 20px;margin-top:30px;text-align:left">
-                            设置新密码后，原密码将失效，请务必记住新设置的密码
-                        </div>
-                        <div style="margin-top:30px;padding:0 20px">
-                            <button class="btnActive"
-                                    style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:40%;border:none;float:left"
-                                    onclick="hideSetLockPassword()">取消
-                            </button>
-                            <button class="btnActive"
-                                    style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:40%;border:none;float:right"
-                                    onclick="setLockPassword()">确定
-                            </button>
-                        </div>
-                        <div style="height:30px;clear:both"></div>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div id="divAlert4" class="msg-alert" style="z-index:2">
-        <table style='width:100%;height:100%'>
-            <tr>
-                <td style='vertical-align:middle;text-align:center'>
-                    <div style="width:100%;background-color: rgba(255, 255, 255, 1);box-shadow: 0px 15px 25px 0px rgba(0, 0, 0, 0.2)">
-                        <div>
-                            <img src="images/20181224/2t.png" style="height:80px;width:80px"/>
-                        </div>
-                        <div style="color:black;padding: 0 20px;margin-top:30px;text-align:left">
-                            设置成功
-                        </div>
-                        <div style="margin-top:30px;padding:0 20px">
-                            <button class="btnActive"
-                                    style="background:#ff8c14;border-radius:44px;height:44px;color:#ffffff;font-size:18px;width:100%;border:none"
-                                    onclick="hideSetLockPassword2()">确定
-                            </button>
-                        </div>
-                        <div style="height:30px"></div>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
     <script type="text/html" id="tplLockItem">
         <div class="swiper-slide">
             <div class="slide-container">
@@ -382,9 +266,9 @@
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/swiper@4.0.5/dist/js/swiper.min.js"></script>
-<script src="script/constants.js?ver=18.12.590"></script>
-<script src="script/service.js?ver=18.12.590"></script>
-<script src="script/gateLock.js?ver=18.12.590"></script>
+<script src="script/constants.js?ver=18.12.600"></script>
+<script src="script/service.js?ver=18.12.600"></script>
+<script src="script/gateLock.js?ver=18.12.600"></script>
 <script type="text/javascript">
     document.addEventListener('touchmove', function (e) {
         e.preventDefault();

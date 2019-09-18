@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title lang-key="10001">登录</title>
+    <meta http-equiv="Expires" content="0"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Cache-control" content="no-cache"/>
+    <meta http-equiv="Cache" content="no-cache"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
+    <link href="packages/ftslider@1.0.0/css/ft-slider.css" rel="stylesheet"/>
+    <!--App自定义的css-->
+    <link href="css/app.css?ver=18.12.600" rel="stylesheet"/>
+    <style type="text/css">
+        input[type=text], input[type=password] {
+            padding: 5px;
+            border: 0;
+            margin-bottom: 0;
+            background: none;
+        }
+    </style>
+</head>
+<body style="background-color:#ffffff">
+<div class="mui-content" style="background:none">
+    <div style="padding-left:30px;padding-right:30px;margin-top:40px">
+        <div style="font-size:28px;color:#333333;height:40px" lang-key="10003">
+            手机验证
+        </div>
+        <div style="font-size:16px;color:#333333;height:30px" lang-key="10004">
+            厚朴-门锁管理
+        </div>
+        <div style="border-bottom:1px solid #d8d8d8;margin-top:50px;font-size:14px;color:#333333">
+            <input type="text" id="txtCellphone" lang-key="10005" placeholder="请输入手机号" maxlength="11"/>
+        </div>
+        <div style="border-bottom:1px solid #d8d8d8;font-size:16px;color:#333333;margin-top:20px;position:relative">
+            <input type="text" id="txtCaptcha" placeholder="请输入验证码" maxlength="6" lang-key="10066"/><span
+                style="position:absolute;right:10px;top:10px;color:#9E723B;padding-left:10px;border-left:1px solid #9E723B"
+                id="btnSendCaptcha" onclick="showCaptcha()" lang-key="10006">获取验证码</span>
+        </div>
+        <div style="height:40px"></div>
+        <div style="text-align:center;margin-top:20px">
+            <button style="background:#333333;height:44px;color:#ffffff;font-size:18px;width:100%;border:none"
+                    onclick="loginByCaptcha()" lang-key="10001">登录
+            </button>
+        </div>
+    </div>
+    <div id="divLanguage" class="mui-popover mui-popover-action mui-popover-bottom">
+        <ul class="mui-table-view" style="margin:0;border-radius:initial">
+            <li class="mui-table-view-cell" data-key="cn" style="color:#525252">
+                中文
+            </li>
+            <li class="mui-table-view-cell" data-key="en" style="color:#525252">
+                English
+            </li>
+            <li style="height:6px;background-color:#999999"></li>
+            <li class="mui-table-view-cell" data-key="close" lang-key="10040" style="color:#525252">
+                取消
+            </li>
+        </ul>
+    </div>
+    <div style="display:inline-block;position:absolute;right:20px;top:40px">
+        <a href="#divLanguage" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined"
+           style="padding:5px 5px;color:#666666;border:1px solid #d8d8d8;background-color:#ffffff;font-size:14px">中文/EN</a>
+    </div>
+    <div class="footer" style="width:100%;text-align:center">
+        <img src="images/coolkit/logo.png" style="width:160px;height:60px"/>
+    </div>
+    <div id="divAlert" class="msg-alert" style="z-index:2">
+        <table style='width:100%;height:100%'>
+            <tr>
+                <td style='vertical-align:middle;text-align:center'>
+                    <div style="width:100%;background-color: rgba(255, 255, 255, 1);box-shadow: 0px 15px 25px 0px rgba(0, 0, 0, 0.2);border-radius:5px">
+                        <div style="height:30px"></div>
+                        <div style="color:#333333;padding:0 30px;text-align:center;position:relative">
+                            <span lang-key="10007">验证</span><img src="images/coolkit/close.png"
+                                                                  style="width: 16px;height:16px;position:absolute;top:0;right:30px"
+                                                                  onclick="hideCaptcha()"/>
+                        </div>
+                        <div style="height:30px"></div>
+                        <div style="padding:0 30px">
+                            <div id="divSlideVerify">
+                            </div>
+                        </div>
+                        <div style="height:30px"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="msg-post">
+        <table style='width:100%;height:100%'>
+            <tr>
+                <td style='vertical-align:middle'>
+                    <div>
+                        <img src="images/loading.gif" style="width:auto;height:40px">
+                    </div>
+                    <div style="font-size:16px" lang-key="10084">
+                        正在登录请等待...
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>
+<script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
+<script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
+<script src="packages/ftslider@1.0.0/js/ft-slider.min.js"></script>
+<script src="script/constants.js?ver=18.12.600"></script>
+<script src="script/service.js?ver=18.12.600"></script>
+<script src="script/coolkit.js?ver=18.12.600"></script>
+<script type="text/javascript">
+    mui('body').on('tap', '.mui-popover-action li', function () {
+        mui('#divLanguage').popover('toggle');
+        var dataKey = this.getAttribute("data-key");
+        if (dataKey != "" && dataKey != "close") {
+            language.translate(dataKey);
+        }
+    });
+</script>

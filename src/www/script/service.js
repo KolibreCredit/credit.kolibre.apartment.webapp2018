@@ -10,8 +10,7 @@ String.prototype.format = function (args) {
                 reg = new RegExp("({" + key + "})", "g");
                 result = result.replace(reg, args[key]);
             }
-        }
-        else {
+        } else {
             for (var i = 0; i < arguments.length; i++) {
                 if (arguments[i] == undefined) {
                     arguments[i] = "";
@@ -21,8 +20,7 @@ String.prototype.format = function (args) {
             }
         }
         return result;
-    }
-    else {
+    } else {
         return this;
     }
 };
@@ -100,6 +98,8 @@ StringBuffer.prototype.size = function () {
     return this.__strings__.length;
 }
 
+var langDefaultValue = localStorage.getItem("langValue") || "cn";
+
 function validPhone(value) {
     if (value && !/^\d{0,13}$/g.test(value)) {
         return value.replace(/[^0-9]/ig, '');
@@ -154,8 +154,7 @@ function replaceStr(str, start) {
     for (var i = 0; i < str.length; i++) {
         if (i >= start && i < end) {
             res += '*';
-        }
-        else {
+        } else {
             res += str[i];
         }
     }
@@ -212,26 +211,27 @@ function postInvoke(url, data, callSuccess, callError) {
         dataType: "json",
         contentType: "application/json;charset=utf-8",
         beforeSend: function (request) {
+            if (window.location.href.indexOf("coolkit") != -1) {
+                request.setRequestHeader(constants.COOKIES.XKCLANGUAGE, langDefaultValue);
+            }
             request.setRequestHeader(constants.COOKIES.XKCSID, getToken());
         },
         success: function (res) {
             if (res.code == 130078401) {
                 var rurl = encodeURIComponent(window.location.href);
                 window.location.href = constants.CONFIGS.LOGIN.replace('##rurl##', rurl);
-            }
-            else if (res.code == 130078500) {
+            } else if (res.code == 130078500) {
                 callSuccess({
                     succeeded: false,
-                    message: "服务繁忙，请稍后！"
+                    message: constants.msgInfo.error
                 });
-            }
-            else {
+            } else {
                 callSuccess(res);
             }
         },
         error: function () {
             if (typeof callError != 'undefined' && callError instanceof Function) {
-                callError({message: "服务繁忙，请稍后"});
+                callError({message: constants.msgInfo.error});
             }
         }
     });
@@ -244,26 +244,27 @@ function getInvoke(url, callSuccess, callError) {
         dataType: "json",
         contentType: "application/json",
         beforeSend: function (request) {
+            if (window.location.href.indexOf("coolkit") != -1) {
+                request.setRequestHeader(constants.COOKIES.XKCLANGUAGE, langDefaultValue);
+            }
             request.setRequestHeader(constants.COOKIES.XKCSID, getToken());
         },
         success: function (res) {
             if (res.code == 130078401) {
                 var rurl = encodeURIComponent(window.location.href);
                 window.location.href = constants.CONFIGS.LOGIN.replace('##rurl##', rurl);
-            }
-            else if (res.code == 130078500) {
+            } else if (res.code == 130078500) {
                 callSuccess({
                     succeeded: false,
-                    message: "服务繁忙，请稍后！"
+                    message: constants.msgInfo.error
                 });
-            }
-            else {
+            } else {
                 callSuccess(res);
             }
         },
         error: function () {
             if (typeof callError != 'undefined' && callError instanceof Function) {
-                callError({message: "服务繁忙，请稍后"});
+                callError({message: constants.msgInfo.error});
             }
         }
     });
@@ -276,6 +277,9 @@ function getInvoke2(url, callSuccess, callError) {
         dataType: "json",
         contentType: "application/json",
         beforeSend: function (request) {
+            if (window.location.href.indexOf("coolkit") != -1) {
+                request.setRequestHeader(constants.COOKIES.XKCLANGUAGE, langDefaultValue);
+            }
             request.setRequestHeader(constants.COOKIES.XKCSID, getToken());
         },
         success: function (res) {
@@ -283,7 +287,7 @@ function getInvoke2(url, callSuccess, callError) {
         },
         error: function () {
             if (typeof callError != 'undefined' && callError instanceof Function) {
-                callError({message: "服务繁忙，请稍后"});
+                callError({message: constants.msgInfo.error});
             }
         }
     });
@@ -356,23 +360,17 @@ var getPayPeriod = function (payPeriod) {
     var rentalType = "";
     if (payPeriod == 3) {
         rentalType = "季付";
-    }
-    else if (payPeriod == 6) {
+    } else if (payPeriod == 6) {
         rentalType = "半年付";
-    }
-    else if (payPeriod == 12) {
+    } else if (payPeriod == 12) {
         rentalType = "年付";
-    }
-    else if (payPeriod == 0) {
+    } else if (payPeriod == 0) {
         rentalType = "全额付";
-    }
-    else if (payPeriod == 1) {
+    } else if (payPeriod == 1) {
         rentalType = "月付";
-    }
-    else if (payPeriod == 2) {
+    } else if (payPeriod == 2) {
         rentalType = "两月一付";
-    }
-    else if (payPeriod == 5) {
+    } else if (payPeriod == 5) {
         rentalType = "五月一付";
     }
     return rentalType;
@@ -382,11 +380,9 @@ var getPayPeriod2 = function (payPeriod) {
     var rentalType = "";
     if (payPeriod == 0) {
         rentalType = "全额付";
-    }
-    else if (payPeriod == 1) {
+    } else if (payPeriod == 1) {
         rentalType = "一天一付";
-    }
-    else if (payPeriod == 2) {
+    } else if (payPeriod == 2) {
         rentalType = "两天一付";
     }
     return rentalType;
@@ -396,17 +392,13 @@ var getCleaningState = function (cleaningState) {
     var cleaning = "";
     if (cleaningState == "Created") {
         cleaning = "待处理";
-    }
-    else if (cleaningState == "Processed") {
+    } else if (cleaningState == "Processed") {
         cleaning = "处理中";
-    }
-    else if (cleaningState == "Suspended") {
+    } else if (cleaningState == "Suspended") {
         cleaning = "挂起中";
-    }
-    else if (cleaningState == "Canceled") {
+    } else if (cleaningState == "Canceled") {
         cleaning = "已取消";
-    }
-    else {
+    } else {
         cleaning = "已完成";
     }
     return cleaning;
