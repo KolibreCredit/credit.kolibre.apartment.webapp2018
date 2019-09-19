@@ -11,6 +11,7 @@ function hideDeletePassword() {
 }
 
 function deletePassword() {
+    $("#btnDelete").addClass("buttonloading");
     var data = {
         deviceId: deviceId,
         passwordId: passwordId
@@ -18,13 +19,16 @@ function deletePassword() {
     postInvoke(constants.URLS.DELETEPASSWORD, data, function (res) {
         if (res.succeeded) {
             setTimeout(function () {
+                $("#btnDelete").removeClass("buttonloading");
                 hideDeletePassword();
                 getLockPasswords();
             }, 1000);
         } else {
+            $("#btnDelete").removeClass("buttonloading");
             mui.toast(res.message);
         }
     }, function (err) {
+        $("#btnDelete").removeClass("buttonloading");
         mui.toast(err.message);
     });
 }
@@ -36,7 +40,7 @@ function getLockPasswords() {
             var openRecords = [];
             var tplOpenRecord = $("#tplOpenRecord").html();
             var canDelete = "<img class='del' passwordId='{0}' src='images/coolkit/del.png'/>";
-            var deleting = "<span>" + language.getLangValue("10044", "删除中") + "...</span>";
+            var deleting = "<span>" + language.getLangValue("10044", "删除中") + "</span>";
             var btnDelete = "";
             for (var i = 0; i < doorOpenRecords.length; i++) {
                 item = doorOpenRecords[i];

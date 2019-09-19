@@ -630,7 +630,7 @@ var constants = {
         GETTENANTCLEANINGS: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/GetTenantCleanings",
         GETTENANTCLEANING: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/GetTenantCleaning?id={0}",
         CANCELCLEANING: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/CancelCleaning",
-
+        //
         CREATEREPAIR: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/CreateRepair",
         GETTENANTREPAIRS: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/GetTenantRepairs",
         GETTENANTREPAIR: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/DomesticService/GetTenantRepair?id={0}",
@@ -678,6 +678,7 @@ var constants = {
         GETROOMSOURCECOLLECTIONINFOS: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/GetRoomSourceCollectionInfos",
         GETROOMSOURCES: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/Room/GetRoomSourcePromotionInfos",
         GETRESERVATIONTIMES: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/RoomSource/GetReservationTimes",
+        //
         GETCOOLKITLOCKS: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/GetCoolkitLocks",
         COOLKITSENDTEMPORARYPASSWORD: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/CoolkitSendTemporaryPassword?deviceId={0}&name={1}&cellphone={2}",
         GETCOOLKITDOOROPENRECORD: "https://kc-fengniaowu-talos.dev.kolibre.credit/api/TenantDevice/GetCoolkitDoorOpenRecord?deviceId={0}&index={1}&count={2}",

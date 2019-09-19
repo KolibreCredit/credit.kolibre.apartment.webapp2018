@@ -191,6 +191,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     position: absolute;
     bottom: 30px;
     width: 100%;
+    text-align: center;
 }
 
 @media (max-height: 666px) {

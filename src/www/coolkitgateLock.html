@@ -9,7 +9,7 @@
     <link href="packages/mui@3.4.0/dist/css/mui.min.css" rel="stylesheet"/>
     <link href="packages/swiper@4.0.5/dist/css/swiper.min.css" rel="stylesheet"/>
     <!--App自定义的css-->
-    <link href="css/app.css?ver=18.12.600" rel="stylesheet"/>
+    <link href="css/app.css?ver=18.12.603" rel="stylesheet"/>
     <style type="text/css">
         .mui-content {
             background: none;
@@ -196,6 +196,33 @@
         .ipt-box-nick .ipt-active-nick img {
             vertical-align: middle;
         }
+
+        .contactUs {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            top: 30px;
+            right: 30px;
+            z-index: 2;
+        }
+
+        .contactUs2 {
+            width: 150px;
+            height: 44px;
+            line-height: 44px;
+            color: #666666;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #CED4DC;
+        }
+
+        .loginOut {
+            color: #AA956F;
+            text-decoration: none;
+            border-bottom: 1px solid #AA956F;
+            display: inline-block;
+            padding-bottom: 2px
+        }
     </style>
 </head>
 <body>
@@ -245,11 +272,9 @@
                 <img src="images/coolkit/51.png"/>
             </div>
         </div>
-        <img onclick="shouContactUs()" src="images/coolkit/dianhua.png"
-             style="position:absolute;width:30px;height:30px;top:30px;right:30px;z-index:2"/>
-        <div class="footer" style="text-align:center">
-            <a style="color:#AA956F;text-decoration:none;border-bottom:1px solid #AA956F;display:inline-block;padding-bottom:2px"
-               onclick="loginOut()" lang-key="10002">退出登录</a>
+        <img onclick="shouContactUs()" src="images/coolkit/dianhua.png" class="contactUs"/>
+        <div class="footer">
+            <a class="loginOut" onclick="loginOut()" lang-key="10002">退出登录</a>
         </div>
     </div>
     <div class="nodataDiv" style="padding:0 20px;flex-direction:column;align-items:center;justify-content:center">
@@ -257,17 +282,15 @@
             <img style="width:80px;height:80px" src="images/coolkit/nodata.png"/>
         </div>
         <div style="font-size:16px;color: #999999;margin-top:20px">
-            <span langkey="10034">暂无智能门锁</span>
+            <span lang-key="10034">暂无智能门锁</span>
         </div>
         <div style="margin-top:30px;text-align:center">
-            <div onclick="shouContactUs()" lang-key="10035"
-                 style="width: 150px;height:44px;line-height:44px;color: #666666;font-size:16px; border-radius: 4px; border:1px solid #CED4DC">
+            <div onclick="shouContactUs()" lang-key="10035" class="contactUs2">
                 联系客服
             </div>
         </div>
-        <div class="footer" style="text-align:center">
-            <a style="color:#AA956F;text-decoration:none;border-bottom:1px solid #AA956F;display:inline-block;padding-bottom:2px"
-               onclick="loginOut()" lang-key="10002">退出登录</a>
+        <div class="footer">
+            <a class="loginOut" onclick="loginOut()" lang-key="10002">退出登录</a>
         </div>
     </div>
     <div id="divContactUs" class="mui-popover mui-popover-action mui-popover-bottom">
@@ -338,7 +361,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="divErrInfo" style="color:#FF5F5F;font-size:12px;padding:0 20px;margin-top:15px;display:none;text-align:left;line-height:20px">
+                        <div id="divErrInfo"
+                             style="color:#FF5F5F;font-size:12px;padding:0 20px;margin-top:15px;display:none;text-align:left;line-height:20px">
                         </div>
                         <div style="margin-top:30px;padding:0 30px">
                             <button style="background:#ffffff;height:44px;color:#666666;font-size:16px;width:45%;border:1px solid #E0E0E0;float:left"
@@ -393,9 +417,9 @@
 <script src="packages/jquery@3.1.1/dist/jquery.min.js"></script>
 <script src="packages/mui@3.4.0/dist/js/mui.min.js"></script>
 <script src="packages/swiper@4.0.5/dist/js/swiper.min.js"></script>
-<script src="script/constants.js?ver=18.12.600"></script>
-<script src="script/service.js?ver=18.12.600"></script>
-<script src="script/coolkitgateLock.js?ver=18.12.600"></script>
+<script src="script/constants.js?ver=18.12.603"></script>
+<script src="script/service.js?ver=18.12.603"></script>
+<script src="script/coolkitgateLock.js?ver=18.12.603"></script>
 <script type="text/javascript">
     $(".ipt-real-nick").on("input", function () {
         var $input = $(".ipt-fake-box input");
